@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Edd Norris Career Knowledge Graph",
+  "type":"object",
+  "required":["person","entries","relationships"],
+  "properties":{
+    "person":{"type":"object","required":["name","headline","summary"],"properties":{"name":{"type":"string"},"headline":{"type":"string"},"summary":{"type":"string"},"location":{"type":"string"},"links":{"type":"array","items":{"type":"object","properties":{"label":{"type":"string"},"url":{"type":"string"}}}}}},
+    "entries":{"type":"array","items":{"type":"object","required":["id","type","title","start","tags"],"properties":{"id":{"type":"string"},"type":{"enum":["role","project","company","education","skill","case-study","publication","award","service"]},"title":{"type":"string"},"organization":{"type":"string"},"start":{"type":"string"},"end":{"type":["string","null"]},"summary":{"type":"string"},"challenge":{"type":"string"},"actions":{"type":"array","items":{"type":"string"}},"outcomes":{"type":"array","items":{"type":"string"}},"evidence":{"type":"array","items":{"type":"object","properties":{"kind":{"type":"string"},"url":{"type":"string"},"caption":{"type":"string"}}}},"tags":{"type":"array","items":{"type":"string"}},"skills":{"type":"array","items":{"type":"string"}},"industries":{"type":"array","items":{"type":"string"}},"visibility":{"enum":["public","private","draft"]},"featured":{"type":"boolean"}}}},
+    "relationships":{"type":"array","items":{"type":"object","required":["from","to","kind"],"properties":{"from":{"type":"string"},"to":{"type":"string"},"kind":{"enum":["created","worked-at","used-skill","supports","evolved-into","related-to","produced-outcome","part-of"]},"weight":{"type":"number"}}}}
+  }
+}

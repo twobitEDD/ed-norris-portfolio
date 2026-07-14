@@ -1,0 +1,229 @@
+{
+  "person": {
+    "name": "Edd Norris",
+    "headline": "Software innovator, creative technologist, and environmental systems builder",
+    "summary": "I build useful systems that connect people, technology, and the living world.",
+    "location": "Oregon",
+    "links": [
+      { "label": "Email", "url": "mailto:hello@ednorris.com" },
+      { "label": "LinkedIn", "url": "https://linkedin.com/in/eddnorris" },
+      { "label": "GitHub", "url": "https://github.com/twobitEDD" }
+    ]
+  },
+  "practices": [
+    {
+      "id": "environmental",
+      "kicker": "Practice 01",
+      "title": "Environmental Systems & Technology",
+      "summary": "Software, data systems, operations, product strategy, and communication for agriculture, carbon, circular materials, and sustainability programs.",
+      "cta": "Visit consulting practice",
+      "href": "#contact",
+      "tone": "env"
+    },
+    {
+      "id": "creative",
+      "kicker": "Practice 02",
+      "title": "Games, Interactive Media & Product Storytelling",
+      "summary": "Games, web experiences, platform concepts, identity systems, and marketing tools built to earn attention and create participation.",
+      "cta": "Visit creative practice",
+      "href": "#contact",
+      "tone": "creative"
+    }
+  ],
+  "timeline": [
+    {
+      "id": "tl-foundation",
+      "era": "Foundation",
+      "title": "2Bit Entertainment",
+      "summary": "Game development, interactive products, creative direction, and the first durable body of public-facing work.",
+      "start": "2000",
+      "tags": ["games", "creative-technology"]
+    },
+    {
+      "id": "tl-expansion",
+      "era": "Expansion",
+      "title": "Software + marketing systems",
+      "summary": "Built websites, product experiences, operational tools, and sales assets that helped organizations explain and sell what they do.",
+      "start": "2010",
+      "tags": ["software", "marketing"]
+    },
+    {
+      "id": "tl-environmental",
+      "era": "Environmental practice",
+      "title": "CO2T / biochar / carbon infrastructure",
+      "summary": "Connected software, field operations, traceability, product development, and public communication around agriculture and carbon.",
+      "start": "2020",
+      "tags": ["environmental", "operations"]
+    },
+    {
+      "id": "tl-current",
+      "era": "Current",
+      "title": "ERGO.games and advisory work",
+      "summary": "Developing human-centered game platforms while packaging cross-disciplinary experience into consulting and employment-ready proof.",
+      "start": "2024",
+      "tags": ["games", "software", "platform"]
+    }
+  ],
+  "entries": [
+    {
+      "id": "org-2bit",
+      "type": "company",
+      "title": "2Bit Entertainment",
+      "start": "2000",
+      "end": null,
+      "summary": "Games, interactive experiences, and product development.",
+      "actions": [
+        "Founded and led a creative technology studio focused on games and interactive products.",
+        "Shipped web experiences, brand systems, and audience-centered design work."
+      ],
+      "outcomes": [
+        "Built a durable public portfolio across entertainment and product storytelling."
+      ],
+      "tags": ["games", "creative-technology", "marketing"],
+      "skills": ["game design", "web development", "creative direction"],
+      "industries": ["entertainment"],
+      "visibility": "public",
+      "featured": true,
+      "map": { "x": 8, "y": 15, "tone": "game" }
+    },
+    {
+      "id": "org-co2t",
+      "type": "company",
+      "title": "CO2T",
+      "start": "2020",
+      "end": null,
+      "summary": "Environmental products, carbon infrastructure, agriculture, software, and operations.",
+      "actions": [
+        "Led software architecture, product strategy, and operational systems for carbon and agriculture programs.",
+        "Connected traceability, e-commerce, field operations, and public communication."
+      ],
+      "outcomes": [
+        "Delivered integrated systems spanning biochar, agriculture, and carbon tracking."
+      ],
+      "tags": ["environmental", "agriculture", "software", "operations"],
+      "skills": ["product strategy", "software architecture", "operations"],
+      "industries": ["agriculture", "climate"],
+      "visibility": "public",
+      "featured": true,
+      "map": { "x": 7, "y": 70, "tone": "env" }
+    },
+    {
+      "id": "proj-ergo",
+      "type": "project",
+      "title": "ERGO.games",
+      "start": "2024",
+      "end": null,
+      "summary": "A comfortable browser-based console for independent web games.",
+      "actions": [
+        "Designed platform strategy and product architecture for a human-centered game hub.",
+        "Built Next.js experiences, entitlement models, and catalog systems."
+      ],
+      "outcomes": [
+        "Created a scalable foundation for indie web games and interactive entertainment."
+      ],
+      "tags": ["games", "platform", "software"],
+      "skills": ["product design", "Next.js", "platform strategy"],
+      "industries": ["entertainment"],
+      "visibility": "public",
+      "featured": true,
+      "map": { "x": 70, "y": 14, "tone": "game" }
+    },
+    {
+      "id": "skill-software",
+      "type": "skill",
+      "title": "Software Architecture",
+      "start": "2010",
+      "end": null,
+      "summary": "Full-stack systems, APIs, data models, and product infrastructure.",
+      "tags": ["software"],
+      "skills": ["TypeScript", "React", "Next.js", "PostgreSQL"],
+      "industries": ["technology"],
+      "visibility": "public",
+      "featured": false,
+      "map": { "x": 43, "y": 7, "tone": "tech" }
+    },
+    {
+      "id": "skill-marketing",
+      "type": "skill",
+      "title": "Brand & Marketing",
+      "start": "2005",
+      "end": null,
+      "summary": "Identity systems, narrative, and go-to-market assets.",
+      "tags": ["marketing"],
+      "skills": ["brand strategy", "copywriting", "visual systems"],
+      "industries": ["marketing"],
+      "visibility": "public",
+      "featured": false,
+      "map": { "x": 18, "y": 42, "tone": "market" }
+    },
+    {
+      "id": "proj-carbon",
+      "type": "project",
+      "title": "Carbon Tracking",
+      "start": "2021",
+      "end": null,
+      "summary": "Traceability and reporting for carbon and biochar programs.",
+      "tags": ["environmental", "software"],
+      "skills": ["data systems", "traceability"],
+      "industries": ["climate"],
+      "visibility": "public",
+      "featured": true,
+      "map": { "x": 72, "y": 72, "tone": "env" }
+    },
+    {
+      "id": "skill-web",
+      "type": "skill",
+      "title": "Web Platforms",
+      "start": "2008",
+      "end": null,
+      "summary": "Product sites, dashboards, and operational tools.",
+      "tags": ["software", "marketing"],
+      "skills": ["web development", "UX", "content systems"],
+      "industries": ["technology"],
+      "visibility": "public",
+      "featured": false,
+      "map": { "x": 70, "y": 45, "tone": "tech" }
+    }
+  ],
+  "relationships": [
+    { "from": "proj-ergo", "to": "org-2bit", "kind": "evolved-into", "weight": 0.7 },
+    { "from": "org-co2t", "to": "proj-carbon", "kind": "produced-outcome", "weight": 0.9 },
+    { "from": "skill-software", "to": "proj-ergo", "kind": "supports", "weight": 0.8 },
+    { "from": "skill-marketing", "to": "org-2bit", "kind": "supports", "weight": 0.6 },
+    { "from": "skill-web", "to": "org-co2t", "kind": "supports", "weight": 0.7 }
+  ],
+  "resumePresets": [
+    {
+      "id": "executive",
+      "label": "One-page executive résumé",
+      "description": "Leadership-focused, concise impact summary.",
+      "emphasis": ["product strategy", "software architecture", "operations"],
+      "includeTags": ["software", "environmental", "operations"],
+      "pages": 1
+    },
+    {
+      "id": "technical",
+      "label": "Two-page technical résumé",
+      "description": "Deep technical and systems detail.",
+      "emphasis": ["TypeScript", "Next.js", "software architecture", "platform strategy"],
+      "includeTags": ["software", "games", "platform"],
+      "pages": 2
+    },
+    {
+      "id": "full",
+      "label": "Full career specification",
+      "description": "Complete cross-disciplinary history.",
+      "emphasis": [],
+      "includeTags": ["games", "creative-technology", "marketing", "environmental", "agriculture", "software", "operations", "platform"],
+      "pages": 3
+    }
+  ],
+  "filters": [
+    { "id": "all", "label": "All" },
+    { "id": "games", "label": "Game development", "tags": ["games"] },
+    { "id": "environmental", "label": "Environmental", "tags": ["environmental", "agriculture"] },
+    { "id": "software", "label": "Software", "tags": ["software", "platform"] },
+    { "id": "marketing", "label": "Marketing", "tags": ["marketing"] },
+    { "id": "operations", "label": "Operations", "tags": ["operations"] }
+  ]
+}
