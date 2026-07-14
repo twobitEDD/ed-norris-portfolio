@@ -47,7 +47,7 @@ export function ScrollProgressRail() {
         {sections.map(({ id, num, label }) => (
           <a
             key={id}
-            href={`#${id}`}
+            href={`/#${id}`}
             className={cn(
               "group relative flex items-center justify-end gap-2 transition-opacity duration-300",
               active === id ? "opacity-100" : "opacity-40 hover:opacity-75",

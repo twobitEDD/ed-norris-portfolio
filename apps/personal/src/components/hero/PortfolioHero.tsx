@@ -24,17 +24,7 @@ export function PortfolioHero({ profile }: { profile: Profile }) {
             {profile.tagline}
           </motion.p>
           <motion.h1 variants={fadeUp} className="hero-title mt-5 font-display font-bold text-text-primary">
-            I build systems that{" "}
-            <span className="bg-gradient-to-r from-environment to-environment/80 bg-clip-text text-transparent">
-              connect people,
-            </span>{" "}
-            <span className="bg-gradient-to-r from-technology to-technology/80 bg-clip-text text-transparent">
-              technology,
-            </span>{" "}
-            and the{" "}
-            <span className="bg-gradient-to-r from-environment via-technology to-games bg-clip-text text-transparent">
-              living world.
-            </span>
+            {profile.headline}
           </motion.h1>
           <motion.p variants={fadeUp} className="mt-6 max-w-xl text-lg leading-relaxed text-text-secondary sm:text-xl">
             {profile.summary}

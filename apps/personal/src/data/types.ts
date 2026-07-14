@@ -11,6 +11,7 @@ export type Profile = {
   tagline: string;
   headline: string;
   summary: string;
+  proofStrip: string[];
   location: string;
   availability: string;
   links: { label: string; url: string }[];
@@ -29,6 +30,14 @@ export type Experience = {
   projects: string[];
   image?: string;
   featured?: boolean;
+};
+
+export type Education = {
+  id: string;
+  credential: string;
+  institution: string;
+  period?: { start: string; end?: string };
+  summary?: string;
 };
 
 export type Project = {
@@ -64,13 +73,28 @@ export type Skill = {
 
 export type GraphNode = {
   id: string;
-  type: "person" | "practice" | "project" | "skill" | "company" | "industry" | "outcome";
+  type:
+    | "person"
+    | "theme"
+    | "practice"
+    | "experience"
+    | "project"
+    | "skill"
+    | "company"
+    | "industry"
+    | "outcome";
   label: string;
   subtitle?: string;
   disciplines: Discipline[];
   period?: string;
   description?: string;
+  /** Richer narrative for theme hubs and story stops. */
+  connectionNarrative?: string;
   projectId?: string;
+  experienceId?: string;
+  /** Brand or era image for map detail panels (path under /public). */
+  image?: string;
+  imageAlt?: string;
 };
 
 export type GraphEdge = {
@@ -84,7 +108,14 @@ export type GraphEdge = {
     | "marketed"
     | "built-with"
     | "supports"
-    | "led-to";
+    | "led-to"
+    | "taught"
+    | "shaped"
+    | "evolved-into";
+  /** Short phrase shown on the map edge — how two nodes connect. */
+  connectionNote?: string;
+  /** Part of the guided through-line story path. */
+  throughLine?: boolean;
   weight?: number;
 };
 
@@ -110,6 +141,8 @@ export type Practice = {
   disciplines: Discipline[];
   href: string;
   offset?: boolean;
+  /** Optional brand tagline shown on practice cards. */
+  tagline?: string;
 };
 
 export const disciplineColors: Record<Discipline, string> = {

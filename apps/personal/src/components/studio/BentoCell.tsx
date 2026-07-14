@@ -1,40 +1,59 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { fadeUp } from "@/lib/motion";
 
 type BentoCellProps = {
   children: ReactNode;
   id?: string;
   className?: string;
   span?: "default" | "wide" | "tall" | "full";
-  delay?: number;
+  /** Defer paint for below-fold cells (content-visibility: auto). */
+  deferPaint?: boolean;
 };
 
-export function BentoCell({ children, id, className, span = "default", delay = 0 }: BentoCellProps) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-6% 0px" });
+export function BentoCell({
+  children,
+  id,
+  className,
+  span = "default",
+  deferPaint = false,
+}: BentoCellProps) {
+  const ref = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) {
+      setVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-4% 0px", threshold: 0.05 },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.article
+    <article
       ref={ref}
       id={id}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      variants={{
-        hidden: fadeUp.hidden,
-        visible: {
-          ...fadeUp.visible,
-          transition: {
-            ...(typeof fadeUp.visible.transition === "object" ? fadeUp.visible.transition : {}),
-            delay,
-          },
-        },
-      }}
       className={cn(
-        "bento-cell scroll-mt-24",
+        "bento-cell scroll-mt-28",
+        visible ? "bento-cell--visible" : "bento-cell--hidden",
+        deferPaint && "bento-cell--deferred",
         span === "wide" && "bento-cell--wide",
         span === "tall" && "bento-cell--tall",
         span === "full" && "bento-cell--full",
@@ -42,6 +61,6 @@ export function BentoCell({ children, id, className, span = "default", delay = 0
       )}
     >
       {children}
-    </motion.article>
+    </article>
   );
 }

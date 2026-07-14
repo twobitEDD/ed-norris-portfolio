@@ -10,3 +10,7 @@ dist/
 .vercel
 .turbo
 *.tsbuildinfo
+.env*
+
+# Large uncompressed image backups (compressed versions are committed)
+*-original.jpg

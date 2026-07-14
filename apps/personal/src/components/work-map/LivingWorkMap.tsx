@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ReactFlow,
   Background,
@@ -11,43 +11,36 @@ import {
   type NodeMouseHandler,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { graphNodes } from "@/data";
-import type { Discipline, GraphNode } from "@/data/types";
-import { disciplineLabels } from "@/data/types";
-import { buildFlowGraph, getStoryPath, type MapNodeData } from "@/lib/graph";
+import { graphNodes, themeFilterOptions } from "@/data";
+import type { GraphNode } from "@/data/types";
+import { buildFlowGraph, getStoryPath, getStoryStop, type MapNodeData } from "@/lib/graph";
 import { FilterPill } from "@/components/ui/FilterPill";
 import { GlowButton } from "@/components/ui/GlowButton";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/layout/SectionShell";
 import { TechnicalGrid } from "@/components/ui/TechnicalGrid";
+import { throughLineThesis } from "@/data/through-line";
 import { MapDetailPanel } from "./MapDetailPanel";
 import { MapNode } from "./MapNode";
+import { useInViewport } from "@/lib/useInViewport";
 
 const nodeTypes = { mapNode: MapNode };
 
-const filterOptions: { id: string; label: string; disciplines: Discipline[] }[] = [
-  { id: "all", label: "All", disciplines: [] },
-  { id: "environment", label: "Environmental", disciplines: ["environment"] },
-  { id: "games", label: "Games", disciplines: ["games"] },
-  { id: "software", label: "Software", disciplines: ["software"] },
-  { id: "marketing", label: "Marketing", disciplines: ["marketing"] },
-  { id: "operations", label: "Operations", disciplines: ["operations"] },
-  { id: "data", label: "Data", disciplines: ["data"] },
-];
-
 export function LivingWorkMap() {
+  const mapAreaRef = useRef<HTMLDivElement>(null);
+  const mapVisible = useInViewport(mapAreaRef, { threshold: 0.1, rootMargin: "80px 0px" });
   const [activeFilter, setActiveFilter] = useState("all");
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [storyIndex, setStoryIndex] = useState(-1);
 
-  const activeDisciplines = useMemo(() => {
-    const f = filterOptions.find((o) => o.id === activeFilter);
-    return f?.disciplines ?? [];
+  const activeThemeId = useMemo(() => {
+    const f = themeFilterOptions.find((o) => o.id === activeFilter);
+    return f?.themeId ?? null;
   }, [activeFilter]);
 
   const graph = useMemo(
-    () => buildFlowGraph(activeDisciplines, selectedNode?.id),
-    [activeDisciplines, selectedNode?.id],
+    () => buildFlowGraph([], selectedNode?.id, activeThemeId),
+    [activeThemeId, selectedNode?.id],
   );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(graph.nodes);
@@ -59,6 +52,7 @@ export function LivingWorkMap() {
   }, [graph, setNodes, setEdges]);
 
   const onNodeClick: NodeMouseHandler<Node<MapNodeData>> = useCallback((_, node) => {
+    setStoryIndex(-1);
     const found = graphNodes.find((n) => n.id === node.id) ?? null;
     setSelectedNode(found);
   }, []);
@@ -77,16 +71,18 @@ export function LivingWorkMap() {
     setSelectedNode(found);
   };
 
+  const storyStop = storyIndex >= 0 ? getStoryStop(storyIndex) : null;
+
   return (
     <SectionShell id="map" grid>
       <SectionHeading
         eyebrow="Knowledge graph"
         title="The living work map."
-        description="Explore how disciplines, projects, and outcomes connect — filter by focus or follow a guided story path."
+        description={throughLineThesis}
       />
 
       <div className="mt-8 flex flex-wrap gap-2">
-        {filterOptions.map((f) => (
+        {themeFilterOptions.map((f) => (
           <FilterPill
             key={f.id}
             active={activeFilter === f.id}
@@ -97,32 +93,52 @@ export function LivingWorkMap() {
         ))}
       </div>
 
-      <div className="relative mt-6 h-[min(70vh,640px)] overflow-hidden rounded-3xl border border-border bg-background-raised">
+      <div
+        ref={mapAreaRef}
+        className="relative mt-6 h-[min(70vh,640px)] overflow-hidden rounded-3xl border border-border bg-background-raised"
+      >
         <TechnicalGrid className="opacity-50" />
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onNodeClick={onNodeClick}
-          nodeTypes={nodeTypes}
-          fitView
-          minZoom={0.4}
-          maxZoom={1.4}
-          proOptions={{ hideAttribution: true }}
-          className="bg-transparent"
-        >
-          <Background color="rgba(148,163,184,0.08)" gap={24} />
-          <Controls className="!border-border !bg-panel !shadow-none [&>button]:!border-border [&>button]:!bg-panel-strong [&>button]:!text-text-primary" />
-        </ReactFlow>
-        <MapDetailPanel node={selectedNode} onClose={() => setSelectedNode(null)} />
+        {mapVisible ? (
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onNodeClick={onNodeClick}
+            nodeTypes={nodeTypes}
+            onlyRenderVisibleElements
+            fitView
+            fitViewOptions={{ padding: 0.15 }}
+            minZoom={0.3}
+            maxZoom={1.4}
+            proOptions={{ hideAttribution: true }}
+            className="bg-transparent"
+          >
+            <Background color="rgba(148,163,184,0.08)" gap={24} />
+            <Controls className="!border-border !bg-panel !shadow-none [&>button]:!border-border [&>button]:!bg-panel-strong [&>button]:!text-text-primary" />
+          </ReactFlow>
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            <p className="font-mono text-[10px] uppercase tracking-wider text-text-muted">Loading map…</p>
+          </div>
+        )}
+        <MapDetailPanel
+          node={selectedNode}
+          storyStop={storyStop}
+          onClose={() => {
+            setSelectedNode(null);
+            setStoryIndex(-1);
+          }}
+        />
       </div>
 
       <div className="mt-4 flex flex-wrap gap-3">
         <GlowButton onClick={resetMap} variant="ghost">
           Reset map
         </GlowButton>
-        <GlowButton onClick={tellStory}>Tell me a story</GlowButton>
+        <GlowButton onClick={tellStory}>
+          {storyIndex < 0 ? "Tell me a story" : `Story ${storyIndex + 1}/${getStoryPath().length} →`}
+        </GlowButton>
       </div>
     </SectionShell>
   );

@@ -5,7 +5,7 @@ export function HeroSection({ person }: { person: Person }) {
     <section className="grid min-h-[min(720px,90vh)] items-center gap-10 py-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
       <div>
         <p className="text-sm font-bold uppercase tracking-[0.14em] text-forest">
-          Software innovator · creative technologist · systems thinker
+          {person.headline}
         </p>
         <h1 className="mt-4 max-w-[900px] text-4xl font-bold leading-[0.98] sm:text-5xl lg:text-7xl">
           {person.summary}

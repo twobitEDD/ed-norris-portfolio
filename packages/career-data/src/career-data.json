@@ -1,13 +1,17 @@
 {
   "person": {
     "name": "Edd Norris",
-    "headline": "Software innovator, creative technologist, and environmental systems builder",
-    "summary": "I build useful systems that connect people, technology, and the living world.",
-    "location": "Oregon",
+    "headline": "I love building solutions, for fun and function.",
+    "summary": "Human-centered software across environment, brands, and education. I build for good.",
+    "location": "Cottage Grove, Oregon",
+    "availability": "Seeking Opportunities — Software Leadership, Sustainable Environment Technologies, Creative Technology Solutions",
     "links": [
-      { "label": "Email", "url": "mailto:hello@ednorris.com" },
+      { "label": "Email", "url": "mailto:EddNorris@2bitdev.com" },
       { "label": "LinkedIn", "url": "https://linkedin.com/in/eddnorris" },
-      { "label": "GitHub", "url": "https://github.com/twobitEDD" }
+      { "label": "GitHub", "url": "https://github.com/twobitEDD" },
+      { "label": "2Bit Entertainment", "url": "https://github.com/twobitENT" },
+      { "label": "CO2T.earth", "url": "https://co2t.earth" },
+      { "label": "CO2Trust", "url": "https://github.com/co2trust-org" }
     ]
   },
   "practices": [
@@ -15,51 +19,62 @@
       "id": "environmental",
       "kicker": "Practice 01",
       "title": "Environmental Systems & Technology",
-      "summary": "Software, data systems, operations, product strategy, and communication for agriculture, carbon, circular materials, and sustainability programs.",
-      "cta": "Visit consulting practice",
-      "href": "#contact",
+      "summary": "CO2T.earth biochar, soil stewardship, carbon reporting, and field operations — software and data infrastructure for sustainability programs.",
+      "tagline": "Built from Nature. Backed by Science.",
+      "cta": "Visit environmental practice",
+      "href": "/work#environmental",
       "tone": "env"
     },
     {
       "id": "creative",
       "kicker": "Practice 02",
       "title": "Games, Interactive Media & Product Storytelling",
-      "summary": "Games, web experiences, platform concepts, identity systems, and marketing tools built to earn attention and create participation.",
+      "summary": "Game platforms, web experiences, identity systems, and marketing tools built to earn attention and create participation.",
       "cta": "Visit creative practice",
-      "href": "#contact",
+      "href": "/work#creative",
       "tone": "creative"
     }
   ],
   "timeline": [
     {
-      "id": "tl-foundation",
-      "era": "Foundation",
-      "title": "2Bit Entertainment",
-      "summary": "Game development, interactive products, creative direction, and the first durable body of public-facing work.",
-      "start": "2000",
-      "tags": ["games", "creative-technology"]
+      "id": "tl-games",
+      "era": "Games foundation",
+      "title": "EA → Black Lantern → Seamless → Rocket",
+      "summary": "Game industry foundation — volunteer QA through gameplay programming and SCRUM product management on slot titles.",
+      "start": "2005",
+      "end": "2012",
+      "tags": ["games"]
     },
     {
-      "id": "tl-expansion",
-      "era": "Expansion",
-      "title": "Software + marketing systems",
-      "summary": "Built websites, product experiences, operational tools, and sales assets that helped organizations explain and sell what they do.",
-      "start": "2010",
+      "id": "tl-2bit",
+      "era": "2bit Entertainment",
+      "title": "Planet's Core & studio restart",
+      "summary": "Operational indie studio 2012–2014 building Planet's Core. Reopened 2018 as software production business — agency contracting for Google (via Uncorked), Dell, Washington University, and other clients.",
+      "start": "2012",
+      "tags": ["games", "creative-technology", "software"]
+    },
+    {
+      "id": "tl-software",
+      "era": "Software + marketing",
+      "title": "adidas, agencies, major-brand clients",
+      "summary": "adidas Future Team (full-time), then agency contracts via 2bit — Uncorked, Nice Touch, Fresh, Opus, TrustlessTeam, ERGnomes.",
+      "start": "2017",
+      "end": "2023",
       "tags": ["software", "marketing"]
     },
     {
       "id": "tl-environmental",
       "era": "Environmental practice",
-      "title": "CO2T / biochar / carbon infrastructure",
-      "summary": "Connected software, field operations, traceability, product development, and public communication around agriculture and carbon.",
-      "start": "2020",
+      "title": "OIBW → CO2T VP Operations",
+      "summary": "Oregon Institute for a Better Way (2022–2024), then VP Operations at CO2T.earth (Mar 2024–present). CO2T founded 2024.",
+      "start": "2022",
       "tags": ["environmental", "operations"]
     },
     {
       "id": "tl-current",
       "era": "Current",
       "title": "ERGO.games and advisory work",
-      "summary": "Developing human-centered game platforms while packaging cross-disciplinary experience into consulting and employment-ready proof.",
+      "summary": "Browser-based indie game hub and platform — human-centered UX with cross-disciplinary consulting proof.",
       "start": "2024",
       "tags": ["games", "software", "platform"]
     }
@@ -69,33 +84,96 @@
       "id": "org-2bit",
       "type": "company",
       "title": "2Bit Entertainment",
-      "start": "2000",
+      "start": "2012",
       "end": null,
-      "summary": "Games, interactive experiences, and product development.",
+      "summary": "Indie game studio (Planet's Core, 2012–2014) and software production business (2018–present).",
       "actions": [
-        "Founded and led a creative technology studio focused on games and interactive products.",
-        "Shipped web experiences, brand systems, and audience-centered design work."
+        "Founded operational indie studio and shipped Planet's Core (2012–2014).",
+        "Reopened 2018 as agency-backed software production for Google (via Uncorked), Dell, Washington University, and other clients."
       ],
       "outcomes": [
-        "Built a durable public portfolio across entertainment and product storytelling."
+        "Durable public portfolio across games, interactive products, and brand storytelling."
       ],
-      "tags": ["games", "creative-technology", "marketing"],
-      "skills": ["game design", "web development", "creative direction"],
-      "industries": ["entertainment"],
+      "tags": ["games", "creative-technology", "marketing", "software"],
+      "skills": ["game design", "Unity", "interactive development", "creative direction"],
+      "industries": ["entertainment", "technology"],
       "visibility": "public",
       "featured": true,
       "map": { "x": 8, "y": 15, "tone": "game" }
     },
     {
+      "id": "proj-planets-core",
+      "type": "project",
+      "title": "Planet's Core",
+      "start": "2012",
+      "end": "2014",
+      "summary": "2bit indie game — operational studio shipping title during founder era.",
+      "actions": [
+        "Founder-led technical design, art integration, and team management.",
+        "Shipped indie game as operational studio before 2014 pause."
+      ],
+      "outcomes": [
+        "Completed founder-era indie game development at 2bit Entertainment."
+      ],
+      "tags": ["games"],
+      "skills": ["game design", "Unity", "team management"],
+      "industries": ["entertainment"],
+      "visibility": "public",
+      "featured": false,
+      "map": { "x": 55, "y": 12, "tone": "game" }
+    },
+    {
+      "id": "client-google",
+      "type": "company",
+      "title": "Google",
+      "start": "2018",
+      "end": null,
+      "summary": "Software production client via Uncorked Studios — contractor/agency path, not direct Google employment.",
+      "tags": ["software", "marketing"],
+      "skills": ["interactive development"],
+      "industries": ["technology"],
+      "visibility": "public",
+      "featured": false,
+      "map": { "x": 35, "y": 28, "tone": "tech" }
+    },
+    {
+      "id": "client-dell",
+      "type": "company",
+      "title": "Dell",
+      "start": "2020",
+      "end": null,
+      "summary": "Interactive and software production client via Nice Touch agency contracting.",
+      "tags": ["software"],
+      "skills": ["interactive development"],
+      "industries": ["technology"],
+      "visibility": "public",
+      "featured": false,
+      "map": { "x": 30, "y": 35, "tone": "tech" }
+    },
+    {
+      "id": "client-wash-u",
+      "type": "company",
+      "title": "Washington University",
+      "start": "2020",
+      "end": null,
+      "summary": "Software production for university programs via Nice Touch agency contracting.",
+      "tags": ["software"],
+      "skills": ["interactive development"],
+      "industries": ["education", "technology"],
+      "visibility": "public",
+      "featured": false,
+      "map": { "x": 25, "y": 42, "tone": "tech" }
+    },
+    {
       "id": "org-co2t",
       "type": "company",
       "title": "CO2T",
-      "start": "2020",
+      "start": "2024",
       "end": null,
-      "summary": "Environmental products, carbon infrastructure, agriculture, software, and operations.",
+      "summary": "Founded 2024 — environmental products, carbon infrastructure, biochar, agriculture, software, and operations.",
       "actions": [
-        "Led software architecture, product strategy, and operational systems for carbon and agriculture programs.",
-        "Connected traceability, e-commerce, field operations, and public communication."
+        "VP Operations — strategic operations across carbon, biochar, and marketplace platforms.",
+        "Connected traceability, e-commerce, field operations, and public sustainability communication."
       ],
       "outcomes": [
         "Delivered integrated systems spanning biochar, agriculture, and carbon tracking."
@@ -129,40 +207,12 @@
       "map": { "x": 70, "y": 14, "tone": "game" }
     },
     {
-      "id": "skill-software",
-      "type": "skill",
-      "title": "Software Architecture",
-      "start": "2010",
-      "end": null,
-      "summary": "Full-stack systems, APIs, data models, and product infrastructure.",
-      "tags": ["software"],
-      "skills": ["TypeScript", "React", "Next.js", "PostgreSQL"],
-      "industries": ["technology"],
-      "visibility": "public",
-      "featured": false,
-      "map": { "x": 43, "y": 7, "tone": "tech" }
-    },
-    {
-      "id": "skill-marketing",
-      "type": "skill",
-      "title": "Brand & Marketing",
-      "start": "2005",
-      "end": null,
-      "summary": "Identity systems, narrative, and go-to-market assets.",
-      "tags": ["marketing"],
-      "skills": ["brand strategy", "copywriting", "visual systems"],
-      "industries": ["marketing"],
-      "visibility": "public",
-      "featured": false,
-      "map": { "x": 18, "y": 42, "tone": "market" }
-    },
-    {
       "id": "proj-carbon",
       "type": "project",
       "title": "Carbon Tracking",
-      "start": "2021",
+      "start": "2022",
       "end": null,
-      "summary": "Traceability and reporting for carbon and biochar programs.",
+      "summary": "Traceability and reporting for carbon and biochar programs at CO2T.earth.",
       "tags": ["environmental", "software"],
       "skills": ["data systems", "traceability"],
       "industries": ["climate"],
@@ -171,50 +221,52 @@
       "map": { "x": 72, "y": 72, "tone": "env" }
     },
     {
-      "id": "skill-web",
-      "type": "skill",
-      "title": "Web Platforms",
-      "start": "2008",
-      "end": null,
-      "summary": "Product sites, dashboards, and operational tools.",
-      "tags": ["software", "marketing"],
-      "skills": ["web development", "UX", "content systems"],
-      "industries": ["technology"],
+      "id": "org-adidas",
+      "type": "company",
+      "title": "adidas Future Team",
+      "start": "2017",
+      "end": "2018",
+      "summary": "Interactive developer — consumer experiences, rapid prototyping, hardware research.",
+      "tags": ["software", "marketing", "games"],
+      "skills": ["Unity", "rapid prototyping", "UX"],
+      "industries": ["retail", "technology"],
       "visibility": "public",
-      "featured": false,
-      "map": { "x": 70, "y": 45, "tone": "tech" }
+      "featured": true,
+      "map": { "x": 45, "y": 22, "tone": "market" }
     }
   ],
   "relationships": [
+    { "from": "org-2bit", "to": "proj-planets-core", "kind": "produced-outcome", "weight": 0.9 },
+    { "from": "org-2bit", "to": "client-google", "kind": "supports", "weight": 0.7, "note": "via Uncorked" },
+    { "from": "org-2bit", "to": "client-dell", "kind": "supports", "weight": 0.6, "note": "via Nice Touch" },
+    { "from": "org-2bit", "to": "client-wash-u", "kind": "supports", "weight": 0.6, "note": "via Nice Touch" },
     { "from": "proj-ergo", "to": "org-2bit", "kind": "evolved-into", "weight": 0.7 },
     { "from": "org-co2t", "to": "proj-carbon", "kind": "produced-outcome", "weight": 0.9 },
-    { "from": "skill-software", "to": "proj-ergo", "kind": "supports", "weight": 0.8 },
-    { "from": "skill-marketing", "to": "org-2bit", "kind": "supports", "weight": 0.6 },
-    { "from": "skill-web", "to": "org-co2t", "kind": "supports", "weight": 0.7 }
+    { "from": "org-adidas", "to": "org-2bit", "kind": "led-to", "weight": 0.8, "note": "restarted 2bit as external partner" }
   ],
   "resumePresets": [
     {
-      "id": "executive",
-      "label": "One-page executive résumé",
-      "description": "Leadership-focused, concise impact summary.",
+      "id": "softwareProductLeadership",
+      "label": "Software Product Leadership",
+      "description": "Technical depth with product and team leadership emphasis.",
       "emphasis": ["product strategy", "software architecture", "operations"],
-      "includeTags": ["software", "environmental", "operations"],
-      "pages": 1
-    },
-    {
-      "id": "technical",
-      "label": "Two-page technical résumé",
-      "description": "Deep technical and systems detail.",
-      "emphasis": ["TypeScript", "Next.js", "software architecture", "platform strategy"],
-      "includeTags": ["software", "games", "platform"],
+      "includeTags": ["software", "operations", "marketing"],
       "pages": 2
     },
     {
-      "id": "full",
-      "label": "Full career specification",
+      "id": "sustainabilityTechnology",
+      "label": "Sustainability Technology",
+      "description": "Environmental systems, carbon infrastructure, and product leadership.",
+      "emphasis": ["product strategy", "traceability", "operations"],
+      "includeTags": ["environmental", "software", "operations"],
+      "pages": 1
+    },
+    {
+      "id": "fullCareer",
+      "label": "Full Career",
       "description": "Complete cross-disciplinary history.",
       "emphasis": [],
-      "includeTags": ["games", "creative-technology", "marketing", "environmental", "agriculture", "software", "operations", "platform"],
+      "includeTags": ["games", "creative-technology", "marketing", "environmental", "software", "operations", "platform"],
       "pages": 3
     }
   ],

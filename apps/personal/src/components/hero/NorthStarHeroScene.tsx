@@ -29,7 +29,7 @@ export function NorthStarHeroScene() {
 
         <motion.div variants={fadeUp} className="mt-8 flex justify-end lg:absolute lg:bottom-24 lg:right-8">
           <StickyNote color="green" className="max-w-[210px]">
-            <p className="handwritten text-base leading-snug text-ink">Open to collaboration.</p>
+            <p className="handwritten text-base leading-snug text-ink">Seeking opportunities.</p>
             <p className="handwritten text-sm text-ink-soft">Building what&apos;s next.</p>
           </StickyNote>
         </motion.div>

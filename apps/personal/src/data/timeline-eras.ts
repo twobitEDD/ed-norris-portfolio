@@ -24,11 +24,11 @@ export const timelineEras: TimelineEra[] = [
   },
   {
     id: "era-2bit",
-    period: "2012–2018",
+    period: "2012–2014 · 2018–Present",
     title: "2Bit Entertainment",
-    organization: "Founder & creative technologist",
+    organization: "Founder · Software production business",
     summary:
-      "Founded 2bit Entertainment. Built games, interactive products, micro-manufacturing experiments, and community work including Innovation Academy mentoring and special education support.",
+      "Operational studio 2012–2014 building indie game Planet's Core. Reopened 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and smaller brands (restarted while at adidas as external partner).",
     disciplines: ["games", "marketing", "operations"],
     polaroidGradient: "linear-gradient(160deg, #6b5a8a, #2a2038)",
   },
@@ -36,9 +36,10 @@ export const timelineEras: TimelineEra[] = [
     id: "era-software",
     period: "2017–2023",
     title: "Software + marketing systems",
-    organization: "adidas · Fresh · Opus · Nice Touch · TrustlessTeam · ERGnomes",
+    organization:
+      "adidas · Google · Dell · Uncorked · Fresh · Opus · Nice Touch · TrustlessTeam · ERGnomes",
     summary:
-      "Contract and senior interactive development for major brands and agencies — AR/VR, Unity, rapid prototyping, blockchain gaming, and product storytelling.",
+      "Full-time adidas Future Team work plus agency-backed 2bit contracts — AR/VR, Unity, rapid prototyping, blockchain gaming, and product storytelling for public clients including Google, Dell, and Washington University.",
     disciplines: ["software", "marketing", "games"],
     polaroidGradient: "linear-gradient(160deg, #3d6a8a, #152535)",
   },
@@ -48,7 +49,7 @@ export const timelineEras: TimelineEra[] = [
     title: "CO2T / biochar / carbon infrastructure",
     organization: "Oregon Institute for a Better Way · CO2T.earth",
     summary:
-      "Software, operations, and product leadership for agriculture, carbon traceability, field operations, and sustainability communication.",
+      "Oregon Institute for a Better Way (2022–2024), then VP Operations at CO2T.earth (founded 2024) — software, operations, and product leadership for agriculture, carbon traceability, field operations, and sustainability communication.",
     disciplines: ["environment", "software", "operations", "data"],
     polaroidGradient: "linear-gradient(160deg, #4a6b42, #1a2e18)",
   },

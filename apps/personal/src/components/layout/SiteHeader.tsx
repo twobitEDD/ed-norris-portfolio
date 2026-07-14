@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 const links = [
-  { href: "/#work", label: "Work" },
+  { href: "/work", label: "Work" },
   { href: "/timeline", label: "Timeline" },
   { href: "/map", label: "Map" },
   { href: "/resume", label: "Résumé" },

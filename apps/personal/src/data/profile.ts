@@ -2,17 +2,20 @@ import type { Profile } from "./types";
 
 export const profile: Profile = {
   name: "Edd Norris",
-  tagline: "Systems thinker · builder · connector",
-  headline: "I build useful systems that connect people, technology, and the living world.",
+  tagline: "Technical Designer — UX & Software",
+  headline: "I love building solutions, for fun and function.",
   summary:
-    "Cross-disciplinary product and software leader working at the intersection of code, consequence, and creative systems — from carbon infrastructure to game platforms.",
+    "Human-centered software across environment, brands, and education. I build for good.",
+  proofStrip: ["Adidas", "Google", "CO2T"],
   location: "Cottage Grove, Oregon",
-  availability: "Open to collaboration — software leadership, environmental technology, and creative technology roles.",
+  availability:
+    "Seeking Opportunities — Software Leadership, Sustainable Environment Technologies, Creative Technology Solutions",
   links: [
-    { label: "Email", url: "mailto:hello@ednorris.com" },
+    { label: "Email", url: "mailto:EddNorris@2bitdev.com" },
     { label: "LinkedIn", url: "https://linkedin.com/in/eddnorris" },
     { label: "GitHub", url: "https://github.com/twobitEDD" },
     { label: "2Bit Entertainment", url: "https://github.com/twobitENT" },
+    { label: "CO2T.earth", url: "https://co2t.earth" },
     { label: "CO2Trust", url: "https://github.com/co2trust-org" },
   ],
   badges: [

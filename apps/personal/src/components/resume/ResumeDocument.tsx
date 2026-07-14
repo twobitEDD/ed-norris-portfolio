@@ -55,6 +55,24 @@ function ResumeDocument({ content }: { content: ResumeContent }) {
           ))}
         </View>
 
+        {content.education.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Education</Text>
+            {content.education.map((entry) => (
+              <View key={entry.id}>
+                <Text style={styles.jobTitle}>
+                  {entry.title} — {entry.organization}
+                </Text>
+                <Text style={styles.jobMeta}>
+                  {entry.period.start}
+                  {entry.period.end ? ` – ${entry.period.end}` : ""}
+                </Text>
+                {entry.summary ? <Text style={styles.body}>{entry.summary}</Text> : null}
+              </View>
+            ))}
+          </View>
+        )}
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Selected Projects</Text>
           {content.projects.map((p) => (

@@ -2,13 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { profile, projects, resumePresets } from "@/data";
+import { getProjectImage } from "@/data/career-images";
 import type { Project } from "@/data/types";
 import { disciplineColors } from "@/data/types";
+import { ContactCTAs } from "@/components/contact/ContactCTAs";
 import { IdentityBadgeRow } from "@/components/hero/IdentityBadgeRow";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
-import { MapTablet } from "@/components/map/MapTablet";
 import { Notebook } from "@/components/physical-ui/Notebook";
 import { Phone } from "@/components/physical-ui/Phone";
 import { Paper } from "@/components/physical-ui/Paper";
@@ -16,7 +18,7 @@ import { StickyNote } from "@/components/physical-ui/StickyNote";
 import { Tablet } from "@/components/physical-ui/Tablet";
 import { ResumePreview } from "@/components/resume/ResumePreview";
 import { BentoCell } from "@/components/studio/BentoCell";
-import { DeskCompass, DeskPatch, DeskPenCup, DeskPlant } from "@/components/studio/DeskProps";
+import { LazyMount } from "@/components/studio/LazyMount";
 import { StudioObject } from "@/components/studio/StudioObject";
 import {
   applyPreset,
@@ -25,6 +27,30 @@ import {
   type ResumeConfig,
 } from "@/lib/resume";
 
+const GameTablet = dynamic(
+  () => import("@/components/games/GameTablet").then((m) => m.GameTablet),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex min-h-[300px] items-center justify-center rounded-2xl border border-screen-border bg-screen-panel">
+        <p className="font-mono text-[10px] uppercase tracking-wider text-screen-muted">Loading game…</p>
+      </div>
+    ),
+  },
+);
+
+const MapTablet = dynamic(
+  () => import("@/components/map/MapTablet").then((m) => m.MapTablet),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex min-h-[360px] items-center justify-center rounded-2xl border border-screen-border bg-screen-panel">
+        <p className="font-mono text-[10px] uppercase tracking-wider text-screen-muted">Loading map…</p>
+      </div>
+    ),
+  },
+);
+
 const focusItems = [
   "ERGO.games platform",
   "Carbon tracking infrastructure",
@@ -32,19 +58,16 @@ const focusItems = [
   "Games that bring people together",
 ];
 
-const projectPhotos: Record<string, string> = {
+const fallbackPhotos: Record<string, string> = {
   "proj-ergo": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80",
-  "proj-co2t-platform":
-    "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80",
-  "proj-carbon-tracking":
-    "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80",
   "proj-2bit-games":
     "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80",
 };
 
 function ProjectCard({ project }: { project: Project }) {
   const accent = disciplineColors[project.disciplines[0]];
-  const photo = projectPhotos[project.id];
+  const brandImage = getProjectImage(project.id);
+  const photo = brandImage?.src ?? fallbackPhotos[project.id];
 
   return (
     <Link
@@ -56,9 +79,11 @@ function ProjectCard({ project }: { project: Project }) {
           {photo && (
             <Image
               src={photo}
-              alt=""
+              alt={brandImage?.alt ?? ""}
               fill
+              loading="lazy"
               className="object-cover transition duration-500 group-hover:scale-[1.04]"
+              style={{ objectPosition: brandImage?.objectPosition ?? "center" }}
               sizes="(max-width: 768px) 100vw, 280px"
             />
           )}
@@ -106,30 +131,40 @@ export function VerticalBento() {
   };
 
   return (
-    <section className="vertical-bento relative z-[2] -mt-[6svh] px-4 pb-24 pt-2 sm:-mt-[8svh] sm:px-8 sm:pt-4 lg:-mt-[10svh]">
-      <DeskPlant className="pointer-events-none absolute left-2 top-8 z-10 hidden lg:block" />
-      <DeskPatch className="pointer-events-none absolute left-[8%] top-[28%] z-10 hidden md:flex" />
-      <DeskPenCup className="pointer-events-none absolute right-[6%] top-[12%] z-10 hidden xl:block" />
-      <DeskCompass className="pointer-events-none absolute bottom-[18%] left-3 z-10 hidden lg:block" />
-
+    <section className="vertical-bento relative z-[2] px-4 pb-24 pt-10 sm:px-8 sm:pt-12 lg:pt-14">
       <div className="vertical-bento__grid mx-auto max-w-[920px]">
-        <BentoCell span="full" delay={0.02}>
-          <IdentityBadgeRow className="!px-0 !py-4" />
+        <BentoCell span="full" deferPaint className="bento-cell--badges">
+          <IdentityBadgeRow className="pb-2 sm:pb-4" />
         </BentoCell>
 
-        <BentoCell id="timeline" delay={0.08}>
+        <BentoCell id="game" deferPaint className="bento-cell--game">
+          <StudioObject rotate={-1.2} className="bento-cell--game-object">
+            <LazyMount minHeight="320px">
+              <GameTablet className="w-full" />
+            </LazyMount>
+          </StudioObject>
+        </BentoCell>
+
+        <BentoCell id="map" span="tall" deferPaint className="bento-cell--map">
+          <StudioObject rotate={0.6}>
+            <div className="relative pt-1 sm:pt-2">
+              <StickyNote color="pink" className="pointer-events-none absolute -right-2 -top-3 z-10 hidden max-w-[160px] sm:block">
+                <p className="handwritten text-sm leading-snug text-ink">One arc, not six careers.</p>
+              </StickyNote>
+              <LazyMount minHeight="380px">
+                <MapTablet className="w-full" />
+              </LazyMount>
+            </div>
+          </StudioObject>
+        </BentoCell>
+
+        <BentoCell id="timeline" deferPaint>
           <StudioObject rotate={-1.8}>
             <TimelinePaper />
           </StudioObject>
         </BentoCell>
 
-        <BentoCell id="map" span="tall" delay={0.1}>
-          <StudioObject rotate={0.6}>
-            <MapTablet className="w-full" />
-          </StudioObject>
-        </BentoCell>
-
-        <BentoCell delay={0.12} className="bento-cell--notebook">
+        <BentoCell deferPaint className="bento-cell--notebook">
           <div className="flex flex-col gap-5">
             <StudioObject rotate={2}>
               <Notebook title="Current focus">
@@ -146,7 +181,7 @@ export function VerticalBento() {
 
             <div className="flex flex-wrap gap-4">
               <StickyNote color="green" className="max-w-[210px]">
-                <p className="handwritten text-base leading-snug text-ink">Open to collaboration.</p>
+                <p className="handwritten text-base leading-snug text-ink">Seeking opportunities.</p>
                 <p className="handwritten text-sm text-ink-soft">Building what&apos;s next.</p>
               </StickyNote>
               <StickyNote color="yellow" className="max-w-[210px]">
@@ -157,7 +192,7 @@ export function VerticalBento() {
           </div>
         </BentoCell>
 
-        <BentoCell id="resume" span="wide" delay={0.14} className="bento-cell--resume">
+        <BentoCell id="resume" span="wide" deferPaint className="bento-cell--resume">
           <div className="grid gap-6 lg:grid-cols-[220px_1fr] lg:items-start">
             <StudioObject rotate={-2.5} className="flex justify-center lg:justify-start">
               <Phone>
@@ -221,9 +256,9 @@ export function VerticalBento() {
           </div>
         </BentoCell>
 
-        <BentoCell delay={0.16} className="bento-cell--work">
+        <BentoCell id="work" deferPaint className="bento-cell--work">
           <StudioObject rotate={0.5}>
-            <Paper torn className="mb-6">
+            <Paper className="mb-6">
               <h2 className="font-editorial text-2xl font-semibold text-ink sm:text-3xl">
                 Work that solves real problems.
               </h2>
@@ -233,7 +268,7 @@ export function VerticalBento() {
             </Paper>
           </StudioObject>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-6 sm:grid-cols-2 sm:gap-8">
             {featured.map((project) => (
               <StudioObject key={project.id} rotate={project.id.endsWith("ergo") ? -2 : 2}>
                 <ProjectCard project={project} />
@@ -242,14 +277,15 @@ export function VerticalBento() {
           </div>
         </BentoCell>
 
-        <BentoCell id="contact" span="wide" delay={0.18} className="bento-cell--contact">
+        <BentoCell id="contact" span="wide" deferPaint className="bento-cell--contact">
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
             <StudioObject rotate={-1}>
-              <Paper torn>
+              <Paper>
                 <h2 className="font-editorial text-2xl font-semibold text-ink sm:text-3xl">
                   Let&apos;s build something useful.
                 </h2>
                 <p className="mt-4 text-sm leading-relaxed text-ink-soft">{profile.availability}</p>
+                <ContactCTAs variant="desk" className="mt-6" />
               </Paper>
 
               <Notebook title="Contact" className="mt-6">

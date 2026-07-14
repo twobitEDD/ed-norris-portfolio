@@ -24,10 +24,10 @@ export const experiences: Experience[] = [
     organization: "2bit Entertainment",
     period: { start: "Apr 2018" },
     summary:
-      "Unity, AR/VR, machine learning, mobile development, rapid prototyping, hardware/software integration, and interactive design consulting.",
+      "Reopened 2bit in 2018 as a software production business — contracting through agencies (Nice Touch, Uncorked, and others) for clients including Google, Dell, and Washington University.",
     details: [
-      "Contract and studio work across games, interactive experiences, and product prototypes.",
-      "Technology consulting, project management, and design documentation.",
+      "Restarted while at adidas as an external partner after new management requested continued support.",
+      "Unity, AR/VR, rapid prototyping, and interactive design consulting for major brands and smaller clients.",
     ],
     disciplines: ["games", "software"],
     skills: ["Unity", "AR/VR", "rapid prototyping"],
@@ -129,7 +129,7 @@ export const experiences: Experience[] = [
       "Basketball Business Unit innovation — consumer experiences, rapid prototyping, hardware research, and product release event support.",
     details: [
       "Design and develop consumer experiences for Adidas Sports Performance.",
-      "Innovation exploration, hardware production research, project management.",
+      "Restarted 2bit as external partner when new management requested continued support after employee tenure.",
     ],
     disciplines: ["software", "marketing", "games"],
     skills: ["rapid prototyping", "UX", "hardware research"],
@@ -141,21 +141,44 @@ export const experiences: Experience[] = [
     title: "Software Specialist Student Mentor",
     organization: "Innovation Academy PDX",
     period: { start: "Sep 2015", end: "Aug 2017" },
-    summary: "Volunteer mentoring teaching software development and design to high school students.",
-    details: ["Ran after-school game development club alongside classroom support."],
+    summary:
+      "Volunteer mentoring — afterschool club teaching software development and design to high school students.",
+    details: [
+      "Mentored afterschool game development club alongside classroom support.",
+      "Taught software development and design principles to high school students.",
+    ],
     disciplines: ["operations", "games"],
     skills: ["teaching", "mentoring"],
     projects: [],
     featured: false,
   },
   {
+    id: "exp-id-tech",
+    title: "Game Development Instructor",
+    organization: "iD Tech Camps",
+    period: { start: "Jun 2015", end: "Aug 2015" },
+    summary:
+      "Summer camp instructor at Lewis & Clark College — guided students through week-long game development courses.",
+    details: [
+      "Helped operate the Portland branch camp; instructed classes of 8+ students.",
+      "Combined paid summer instruction with STEM education volunteer work.",
+    ],
+    disciplines: ["operations", "games"],
+    skills: ["teaching", "game development", "instruction"],
+    projects: [],
+    featured: false,
+  },
+  {
     id: "exp-pps",
-    title: "Special Education Paraprofessional",
+    title: "Special Education Educator",
     organization: "Portland Public Schools",
     period: { start: "Apr 2014", end: "Feb 2017" },
     summary:
       "Special education classroom support — informing later work on accessible technology and inclusive design.",
-    details: ["Supported nonverbal students; helped run game development after-school club."],
+    details: [
+      "Supported nonverbal students in public education settings.",
+      "Helped run game development after-school club alongside mentoring work.",
+    ],
     disciplines: ["operations"],
     skills: ["education", "community"],
     projects: [],
@@ -167,11 +190,14 @@ export const experiences: Experience[] = [
     organization: "2bit Entertainment",
     period: { start: "Jul 2012", end: "May 2014" },
     summary:
-      "Founded 2bit Entertainment — technical design, game art integration, team management, business strategy.",
-    details: ["Officially started studio July 2012 after Rocket Gaming and early prototypes."],
+      "Operational indie studio 2012–2014 building Planet's Core — technical design, game art integration, team management, and business strategy.",
+    details: [
+      "Shipped indie game development as founder-led studio after Rocket Gaming.",
+      "Officially started studio July 2012.",
+    ],
     disciplines: ["games", "operations", "marketing"],
     skills: ["Unity", "game design", "business strategy"],
-    projects: ["proj-2bit-games"],
+    projects: ["proj-2bit-games", "proj-planets-core"],
     featured: true,
   },
   {

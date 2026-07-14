@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/data";
+import { getProjectImage } from "@/data/career-images";
 import type { Project } from "@/data/types";
 import { disciplineColors } from "@/data/types";
 import { Paper } from "@/components/physical-ui/Paper";
@@ -11,12 +12,8 @@ import { StudioScene } from "@/components/studio/StudioScene";
 import { StudioObject } from "@/components/studio/StudioObject";
 import { StudioReveal } from "@/components/studio/StudioReveal";
 
-const projectPhotos: Record<string, string> = {
+const fallbackPhotos: Record<string, string> = {
   "proj-ergo": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80",
-  "proj-co2t-platform":
-    "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80",
-  "proj-carbon-tracking":
-    "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=600&q=80",
   "proj-2bit-games":
     "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80",
 };
@@ -27,7 +24,8 @@ const zIndexes = [1, 2, 3, 4, 5];
 
 function ProjectDevice({ project, index }: { project: Project; index: number }) {
   const accent = disciplineColors[project.disciplines[0]];
-  const photo = projectPhotos[project.id];
+  const brandImage = getProjectImage(project.id);
+  const photo = brandImage?.src ?? fallbackPhotos[project.id];
 
   return (
     <StudioObject rotate={rotations[index % rotations.length]}>
@@ -44,9 +42,10 @@ function ProjectDevice({ project, index }: { project: Project; index: number }) 
             {photo && (
               <Image
                 src={photo}
-                alt=""
+                alt={brandImage?.alt ?? ""}
                 fill
                 className="object-cover transition duration-500 group-hover:scale-[1.04]"
+                style={{ objectPosition: brandImage?.objectPosition ?? "center" }}
                 sizes="190px"
               />
             )}

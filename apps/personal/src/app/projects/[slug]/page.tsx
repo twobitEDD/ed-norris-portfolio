@@ -81,7 +81,7 @@ export default async function ProjectPage({ params }: Props) {
         )}
 
         <div className="mt-12">
-          <GlowButton href="/#projects" variant="ghost">
+          <GlowButton href="/#work" variant="ghost">
             ← Back to selected work
           </GlowButton>
         </div>

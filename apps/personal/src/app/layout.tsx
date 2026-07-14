@@ -14,9 +14,9 @@ const ibmPlexMono = IBM_Plex_Mono({
 const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
-  title: "Edd Norris — Systems builder",
+  title: "Edd Norris — Technical Designer",
   description:
-    "Creator studio portfolio: environmental systems, games, software, and product storytelling.",
+    "I love building solutions, for fun and function. Software & technology production specialist in Cottage Grove, Oregon.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

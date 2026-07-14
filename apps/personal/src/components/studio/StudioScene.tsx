@@ -30,7 +30,7 @@ export function StudioScene({
     >
       <div
         className={cn(
-          "relative mx-auto py-12 sm:py-16",
+          "relative mx-auto py-14 sm:py-20",
           bleed ? "max-w-none px-0" : "max-w-[1600px] px-4 sm:px-8",
         )}
       >

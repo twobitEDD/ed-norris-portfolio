@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { profile } from "@/data";
-import { practices } from "@/data";
+import { profile, practices } from "@/data";
 import { Paper } from "@/components/physical-ui/Paper";
 
 const roles = [
@@ -12,45 +11,48 @@ const roles = [
   "dad",
 ];
 
-function VennDiagram() {
-  return (
-    <div className="relative mt-6">
-      <svg viewBox="0 0 260 110" className="h-[100px] w-full max-w-[280px]" aria-hidden="true">
-        <circle cx="90" cy="58" r="42" fill="none" stroke="#7ea66a" strokeWidth="1.5" opacity="0.8" />
-        <circle cx="170" cy="58" r="42" fill="none" stroke="#4da4c9" strokeWidth="1.5" opacity="0.8" />
-        <circle cx="130" cy="38" r="42" fill="none" stroke="#8c5cc7" strokeWidth="1.5" opacity="0.65" />
-        <text x="62" y="64" className="fill-ink-soft text-[8px] font-medium uppercase tracking-wider">
-          People
-        </text>
-        <text x="148" y="64" className="fill-ink-soft text-[8px] font-medium uppercase tracking-wider">
-          Planet
-        </text>
-        <text x="108" y="30" className="fill-ink-soft text-[8px] font-medium uppercase tracking-wider">
-          Tech
-        </text>
-        <text x="108" y="78" className="fill-ink text-[8px] font-medium uppercase tracking-wider">
-          Where I work
-        </text>
-      </svg>
-      <p className="handwritten absolute -bottom-1 left-2 text-sm text-ink-soft">where I work.</p>
-    </div>
-  );
-}
+const disciplines = [
+  { label: "People", className: "text-environment border-environment/35 bg-environment/10" },
+  { label: "Technology", className: "text-technology border-technology/35 bg-technology/10" },
+  { label: "Planet", className: "text-environment border-environment/35 bg-environment/10" },
+];
 
 export function IntroPaper() {
   return (
-    <Paper torn pinned className="h-full">
+    <Paper className="h-full">
       <div className="flex gap-4">
         <div className="min-w-0 flex-1">
-          <p className="handwritten text-lg text-ink">Hi, I&apos;m Edd.</p>
+          <p className="handwritten text-lg text-ink">Hi, I&apos;m</p>
+          <p className="mt-0.5 font-editorial text-[1.35rem] font-semibold tracking-[-0.02em] text-ink sm:text-[1.65rem]">
+            {profile.name}
+          </p>
           <h1 className="mt-2 max-w-[22ch] font-editorial text-[1.75rem] font-semibold leading-[1.1] tracking-[-0.025em] text-ink sm:text-[2.5rem]">
-            I build useful systems that connect{" "}
-            <span className="text-environment">people</span>,{" "}
-            <span className="text-technology">technology</span>, and the{" "}
-            <span className="text-environment">living world.</span>
+            {profile.headline}
           </h1>
-          <VennDiagram />
-          <p className="mt-5 max-w-[40ch] text-sm leading-relaxed text-ink-soft">{profile.summary}</p>
+
+          <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft">
+            {profile.tagline}
+          </p>
+
+          <p
+            className="mt-2 font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-ink-soft/90"
+            aria-label="Selected employers and projects"
+          >
+            {profile.proofStrip.join(" · ")}
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-2" aria-label="Where I work">
+            {disciplines.map((d) => (
+              <span
+                key={d.label}
+                className={`rounded-full border px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider ${d.className}`}
+              >
+                {d.label}
+              </span>
+            ))}
+          </div>
+
+          <p className="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">{profile.summary}</p>
           <div className="mt-6 flex flex-wrap gap-2">
             {practices.map((practice) => (
               <Link

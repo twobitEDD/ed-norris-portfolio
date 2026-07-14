@@ -154,6 +154,7 @@ export function ResumeBuilder() {
               ["emphasizeLeadership", "Leadership emphasis"],
               ["emphasizeTechnical", "Technical depth"],
               ["includeSkills", "Include skills"],
+              ["includeEducation", "Include education"],
               ["includeLinks", "Include links"],
             ].map(([key, label]) => (
               <label key={key} className="flex items-center gap-2 text-text-secondary">

@@ -12,7 +12,7 @@ export function CountryWindow() {
       {/* Wood frame with mullions */}
       <div className="country-window relative h-[32vh] min-h-[260px] w-full overflow-hidden rounded-sm border-[6px] border-[#2a2218] shadow-[inset_0_0_50px_rgba(0,0,0,0.4),0_8px_32px_rgba(0,0,0,0.35)]">
         <Image
-          src="/window-day.jpg"
+          src="/window-day.webp"
           alt=""
           fill
           priority
@@ -23,7 +23,7 @@ export function CountryWindow() {
           sizes="100vw"
         />
         <Image
-          src="/window-night.jpg"
+          src="/window-night.webp"
           alt=""
           fill
           className={cn(

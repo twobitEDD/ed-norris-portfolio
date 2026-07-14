@@ -1,5 +1,8 @@
 import type { Practice, ResumePreset } from "./types";
 
+/** Default résumé builder preset (Prompt 17). */
+export const DEFAULT_RESUME_PRESET_ID = "softwareProductLeadership";
+
 export const practices: Practice[] = [
   {
     id: "environmental",
@@ -7,8 +10,9 @@ export const practices: Practice[] = [
     label: "Environmental Practice",
     title: "Environmental Systems & Technology",
     summary:
-      "Software, data infrastructure, field operations, carbon reporting, and sustainability communication.",
-    tags: ["Data Systems", "Agriculture", "Carbon", "Operations"],
+      "CO2T.earth biochar, soil stewardship, carbon reporting, and field operations — software and data infrastructure for sustainability programs.",
+    tagline: "Built from Nature. Backed by Science.",
+    tags: ["Biochar", "Soil Stewardship", "Carbon", "CO2T.earth"],
     disciplines: ["environment", "data", "operations"],
     href: "/work#environmental",
   },
@@ -28,17 +32,6 @@ export const practices: Practice[] = [
 
 export const resumePresets: ResumePreset[] = [
   {
-    id: "sustainabilityTechnology",
-    label: "Sustainability Technology",
-    description: "Environmental systems, carbon infrastructure, and product leadership.",
-    targetRole: "Sustainability Technology Lead",
-    tone: "executive",
-    pages: 1,
-    disciplines: ["environment", "software", "operations", "data"],
-    emphasizeLeadership: true,
-    emphasizeTechnical: true,
-  },
-  {
     id: "softwareProductLeadership",
     label: "Software Product Leadership",
     description: "Technical depth with product and team leadership emphasis.",
@@ -46,6 +39,17 @@ export const resumePresets: ResumePreset[] = [
     tone: "executive",
     pages: 2,
     disciplines: ["software", "operations"],
+    emphasizeLeadership: true,
+    emphasizeTechnical: true,
+  },
+  {
+    id: "sustainabilityTechnology",
+    label: "Sustainability Technology",
+    description: "Environmental systems, carbon infrastructure, and product leadership.",
+    targetRole: "Sustainability Technology Lead",
+    tone: "executive",
+    pages: 1,
+    disciplines: ["environment", "software", "operations", "data"],
     emphasizeLeadership: true,
     emphasizeTechnical: true,
   },

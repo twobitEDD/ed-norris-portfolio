@@ -51,6 +51,28 @@ export function ResumePreview({ content, className }: { content: ResumeContent; 
         </div>
       </section>
 
+      {content.education.length > 0 && (
+        <section className="mt-6">
+          <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+            Education
+          </h3>
+          <div className="mt-3 space-y-4">
+            {content.education.map((entry) => (
+              <div key={entry.id}>
+                <p className="font-semibold text-slate-900">
+                  {entry.title} — {entry.organization}
+                </p>
+                <p className="text-xs text-slate-500">
+                  {entry.period.start}
+                  {entry.period.end ? ` – ${entry.period.end}` : ""}
+                </p>
+                {entry.summary && <p className="mt-1 text-sm text-slate-700">{entry.summary}</p>}
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {content.projects.length > 0 && (
         <section className="mt-6">
           <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">

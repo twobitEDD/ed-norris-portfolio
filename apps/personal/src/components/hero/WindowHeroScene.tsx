@@ -40,7 +40,7 @@ export function WindowHeroScene() {
           <DeskPatch className="absolute bottom-10 left-[38%] z-30 hidden md:flex" />
 
           <StickyNote color="green" className="absolute bottom-2 right-[1%] z-20 max-w-[200px] lg:bottom-4">
-            <p className="handwritten text-base leading-snug text-ink">Open to collaboration.</p>
+            <p className="handwritten text-base leading-snug text-ink">Seeking opportunities.</p>
             <p className="handwritten text-sm text-ink-soft">Building what&apos;s next.</p>
           </StickyNote>
         </div>

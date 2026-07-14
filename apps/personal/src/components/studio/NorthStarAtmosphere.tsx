@@ -28,7 +28,7 @@ export function NorthStarAtmosphere() {
         }}
       >
         <Image
-          src="/northstar-day.jpg"
+          src="/northstar-day.webp"
           alt=""
           fill
           priority
@@ -37,7 +37,7 @@ export function NorthStarAtmosphere() {
           sizes="100vw"
         />
         <Image
-          src="/northstar-night.jpg"
+          src="/northstar-night.webp"
           alt=""
           fill
           priority
