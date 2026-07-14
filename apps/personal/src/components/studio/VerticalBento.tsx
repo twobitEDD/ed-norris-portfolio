@@ -6,8 +6,6 @@ import { useMemo, useState } from "react";
 import { profile, projects, resumePresets } from "@/data";
 import type { Project } from "@/data/types";
 import { disciplineColors } from "@/data/types";
-import { IntroPaper } from "@/components/hero/IntroPaper";
-import { PracticeTablet } from "@/components/hero/PracticeTablet";
 import { IdentityBadgeRow } from "@/components/hero/IdentityBadgeRow";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { MapTablet } from "@/components/map/MapTablet";
@@ -108,28 +106,14 @@ export function VerticalBento() {
   };
 
   return (
-    <section className="vertical-bento relative z-[2] -mt-[8svh] px-4 pb-24 pt-6 sm:-mt-[12svh] sm:px-8 sm:pt-8 lg:-mt-[15svh]">
+    <section className="vertical-bento relative z-[2] -mt-[6svh] px-4 pb-24 pt-2 sm:-mt-[8svh] sm:px-8 sm:pt-4 lg:-mt-[10svh]">
       <DeskPlant className="pointer-events-none absolute left-2 top-8 z-10 hidden lg:block" />
       <DeskPatch className="pointer-events-none absolute left-[8%] top-[28%] z-10 hidden md:flex" />
       <DeskPenCup className="pointer-events-none absolute right-[6%] top-[12%] z-10 hidden xl:block" />
       <DeskCompass className="pointer-events-none absolute bottom-[18%] left-3 z-10 hidden lg:block" />
 
       <div className="vertical-bento__grid mx-auto max-w-[920px]">
-        <BentoCell id="intro" span="wide" className="bento-cell--intro">
-          <StudioObject rotate={-1.2}>
-            <IntroPaper />
-          </StudioObject>
-        </BentoCell>
-
-        <BentoCell id="work" span="wide" delay={0.04}>
-          <StudioObject rotate={1}>
-            <div className="mx-auto max-w-[480px] lg:max-w-none">
-              <PracticeTablet />
-            </div>
-          </StudioObject>
-        </BentoCell>
-
-        <BentoCell span="full" delay={0.06}>
+        <BentoCell span="full" delay={0.02}>
           <IdentityBadgeRow className="!px-0 !py-4" />
         </BentoCell>
 
