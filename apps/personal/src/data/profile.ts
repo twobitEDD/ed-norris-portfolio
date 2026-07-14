@@ -5,7 +5,7 @@ export const profile: Profile = {
   tagline: "Technical Designer — UX & Software",
   headline: "I love building solutions, for fun and function.",
   summary:
-    "Human-centered software across environment, brands, and education. I build for good.",
+    "Human-centered software across environment, brands, and education — building technology that puts people first.",
   proofStrip: ["Adidas", "Google", "CO2T"],
   location: "Cottage Grove, Oregon",
   availability:

@@ -27,13 +27,13 @@ import {
   type ResumeConfig,
 } from "@/lib/resume";
 
-const GameTablet = dynamic(
-  () => import("@/components/games/GameTablet").then((m) => m.GameTablet),
+const PacManEasterEgg = dynamic(
+  () => import("@/components/games/PacManEasterEgg").then((m) => m.PacManEasterEgg),
   {
     ssr: false,
     loading: () => (
-      <div className="flex min-h-[300px] items-center justify-center rounded-2xl border border-screen-border bg-screen-panel">
-        <p className="font-mono text-[10px] uppercase tracking-wider text-screen-muted">Loading game…</p>
+      <div className="flex min-h-[120px] items-center justify-center rounded-2xl border border-dashed border-paper-cream/10 bg-wood-dark/20">
+        <p className="font-mono text-[9px] uppercase tracking-wider text-paper-cream/30">Loading…</p>
       </div>
     ),
   },
@@ -139,8 +139,8 @@ export function VerticalBento() {
 
         <BentoCell id="game" deferPaint className="bento-cell--game">
           <StudioObject rotate={-1.2} className="bento-cell--game-object">
-            <LazyMount minHeight="320px">
-              <GameTablet className="w-full" />
+            <LazyMount minHeight="140px">
+              <PacManEasterEgg className="w-full" />
             </LazyMount>
           </StudioObject>
         </BentoCell>

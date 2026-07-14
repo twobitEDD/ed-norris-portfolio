@@ -2,7 +2,7 @@
   "person": {
     "name": "Edd Norris",
     "headline": "I love building solutions, for fun and function.",
-    "summary": "Human-centered software across environment, brands, and education. I build for good.",
+    "summary": "Human-centered software across environment, brands, and education — building technology that puts people first.",
     "location": "Cottage Grove, Oregon",
     "availability": "Seeking Opportunities — Software Leadership, Sustainable Environment Technologies, Creative Technology Solutions",
     "links": [
@@ -48,8 +48,8 @@
     {
       "id": "tl-2bit",
       "era": "2bit Entertainment",
-      "title": "Planet's Core & studio restart",
-      "summary": "Operational indie studio 2012–2014 building Planet's Core. Reopened 2018 as software production business — agency contracting for Google (via Uncorked), Dell, Washington University, and other clients.",
+      "title": "Planet's Core & agency production",
+      "summary": "Operational indie studio 2012–2014 building Planet's Core. Re-established in 2018 as a software production business — agency contracting for Google (via Uncorked), Dell, Washington University, and other clients.",
       "start": "2012",
       "tags": ["games", "creative-technology", "software"]
     },
@@ -57,7 +57,7 @@
       "id": "tl-software",
       "era": "Software + marketing",
       "title": "adidas, agencies, major-brand clients",
-      "summary": "adidas Future Team (full-time), then agency contracts via 2bit — Uncorked, Nice Touch, Fresh, Opus, TrustlessTeam, ERGnomes.",
+      "summary": "adidas Future Team (full-time), then contract engagements via 2bit — Uncorked, Nice Touch, Fresh, Opus, TrustlessTeam, ERGnomes.",
       "start": "2017",
       "end": "2023",
       "tags": ["software", "marketing"]
@@ -89,7 +89,7 @@
       "summary": "Indie game studio (Planet's Core, 2012–2014) and software production business (2018–present).",
       "actions": [
         "Founded operational indie studio and shipped Planet's Core (2012–2014).",
-        "Reopened 2018 as agency-backed software production for Google (via Uncorked), Dell, Washington University, and other clients."
+        "Re-established in 2018 as agency-backed software production for Google (via Uncorked), Dell, Washington University, and other clients."
       ],
       "outcomes": [
         "Durable public portfolio across games, interactive products, and brand storytelling."
@@ -128,7 +128,7 @@
       "title": "Google",
       "start": "2018",
       "end": null,
-      "summary": "Software production client via Uncorked Studios — contractor/agency path, not direct Google employment.",
+      "summary": "Software production client via Uncorked Studios — contract engagement through agency partnership, not direct Google employment.",
       "tags": ["software", "marketing"],
       "skills": ["interactive development"],
       "industries": ["technology"],
@@ -191,7 +191,7 @@
       "title": "ERGO.games",
       "start": "2024",
       "end": null,
-      "summary": "A comfortable browser-based console for independent web games.",
+      "summary": "An accessible browser-based console for independent web games.",
       "actions": [
         "Designed platform strategy and product architecture for a human-centered game hub.",
         "Built Next.js experiences, entitlement models, and catalog systems."
@@ -242,7 +242,7 @@
     { "from": "org-2bit", "to": "client-wash-u", "kind": "supports", "weight": 0.6, "note": "via Nice Touch" },
     { "from": "proj-ergo", "to": "org-2bit", "kind": "evolved-into", "weight": 0.7 },
     { "from": "org-co2t", "to": "proj-carbon", "kind": "produced-outcome", "weight": 0.9 },
-    { "from": "org-adidas", "to": "org-2bit", "kind": "led-to", "weight": 0.8, "note": "restarted 2bit as external partner" }
+    { "from": "org-adidas", "to": "org-2bit", "kind": "led-to", "weight": 0.8, "note": "continued via contract engagement" }
   ],
   "resumePresets": [
     {

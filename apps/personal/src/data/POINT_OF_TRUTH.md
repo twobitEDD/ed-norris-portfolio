@@ -132,7 +132,7 @@ Answer each **Answer:** in chat when ready. Updates will be applied to `experien
 **Current value:** Founder Jul 2012–May 2014; Senior Interactive Developer Apr 2018–Present. Timeline era ends 2018 but org string says founder through 2018. `career-data.json` wrongly starts 2bit at **2000**.  
 **Question:** How should 2bit be presented — one continuous studio (2012–present) or distinct founder vs consulting phases? Correct public start year?  
 **Why it matters:** Timeline `era-2bit`, `company-2bit`, `proj-2bit-games`, graph `exp-node-2bit`.  
-**Answer:** **Distinct phases** — operational indie studio **2012–2014** building **Planet's Core**; reopened **2018** as **Software Production Business**; contracting through agencies (Nice Touch, Uncorked, others); clients include **Google, Dell, Washington University** and smaller brands; restarted while at **Adidas** as external partner after new management requested it. Public start year **2012** (not 2000).
+**Answer:** **Distinct phases** — operational indie studio **2012–2014** building **Planet's Core**; re-established **2018** as **Software Production Business**; contract engagements through agencies (Nice Touch, Uncorked, others); clients include **Google, Dell, Washington University** and additional brands; continued adidas support via contract engagement when new leadership requested ongoing work. Public start year **2012** (not 2000).
 
 ### Prompt 7: Software + marketing era (adidas, agencies)
 **Current value:** adidas Future Team Mar 2017–Sep 2018; Uncorked, Fresh, Opus, Nice Touch, TrustlessTeam, ERGnomes as contracts via 2bit. Era period `2017–2023`.  
@@ -150,7 +150,7 @@ Answer each **Answer:** in chat when ready. Updates will be applied to `experien
 **Current value:** `Every role taught me how people learn, play, and adopt systems — from classroom support and game loops to marketing funnels and production pipelines. The medium changed; the work didn't: make complex things usable and worth people's time.`  
 **Question:** Keep, edit, or replace this thesis? Any phrases to avoid for hiring contexts?  
 **Why it matters:** Living work map header, guided story mode.  
-**Answer:** **Replace** — derive from confirmed bio summary. New thesis in `through-line.ts`: UX/human-centered design anchor; special education; environmental tech for humanity; marketing/product at major brands (adidas, Google); close with using skills for good to help humans thrive. Map theme labels and story stop headlines updated to match (`relationships.ts`, `through-line.ts`).
+**Answer:** **Replace** — derive from confirmed bio summary. New thesis in `through-line.ts`: UX/human-centered design anchor; public education and inclusive learning; environmental technology; marketing/product at major brands (adidas, Google); close with applying skills thoughtfully to help people thrive. Map theme labels and story stop headlines updated to match (`relationships.ts`, `through-line.ts`).
 
 ### Prompt 10: GitHub personal + org links
 **Current value:** Personal `https://github.com/twobitEDD`; orgs `twobitENT`, `co2trust-org`. ERGO.games has no dedicated repo link in profile.  
@@ -193,11 +193,11 @@ Answer each **Answer:** in chat when ready. Updates will be applied to `experien
 
 **Status:** `confirmed`
 
-> Human-centered software across environment, brands, and education. I build for good.
+> Human-centered software across environment, brands, and education — building technology that puts people first.
 
 **Proof strip (hero):** Adidas · Google · CO2T
 
-**Notes:** Google, Dell, and Washington University appear as public contract clients via 2bit graph nodes (`client-google`, `client-dell`, `client-wash-u`) — no standalone `experiences.ts` employment entries. PPS special education aligns with `exp-pps` (Apr 2014 – Feb 2017). Long-form bio retired from hero; résumé builder may extend `profile.summary` per preset.
+**Notes:** Google, Dell, and Washington University appear as public contract clients via 2bit graph nodes (`client-google`, `client-dell`, `client-wash-u`) — no standalone `experiences.ts` employment entries. PPS public education support aligns with `exp-pps` (Apr 2014 – Feb 2017). Long-form bio retired from hero; résumé builder may extend `profile.summary` per preset.
 
 ---
 
@@ -211,7 +211,7 @@ Answer each **Answer:** in chat when ready. Updates will be applied to `experien
 **Current value:** Themes: Education & Learning, Games & Interactive, Software Engineering, Marketing & Growth, Product Leadership, Production & Operations.  
 **Question:** Are these six theme labels how you want recruiters to scan your arc? Rename or merge any?  
 **Why it matters:** Living work map filters, story path, graph hub nodes.  
-**Answer:** **Keep all six theme hubs** as currently labeled in `relationships.ts` / `through-line.ts`: Education & Special Ed, Games & Human-Centered UX, UX & Human-Centered Design, Marketing & Product at Major Brands, Product Leadership, Production & Environmental Ops. No merges or renames.
+**Answer:** **Keep all six theme hubs** as currently labeled in `relationships.ts` / `through-line.ts`: Education & Inclusive Learning, Games & Human-Centered UX, UX & Human-Centered Design, Marketing & Product at Major Brands, Product Leadership, Production & Environmental Ops. No merges or renames.
 
 ### Prompt 17: Résumé default preset
 **Current value:** `resume-presets.ts` default: **Sustainability Technology** (1 page). `career-data.json` lists **executive** first.  

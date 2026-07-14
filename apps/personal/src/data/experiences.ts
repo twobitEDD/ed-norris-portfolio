@@ -24,9 +24,9 @@ export const experiences: Experience[] = [
     organization: "2bit Entertainment",
     period: { start: "Apr 2018" },
     summary:
-      "Reopened 2bit in 2018 as a software production business — contracting through agencies (Nice Touch, Uncorked, and others) for clients including Google, Dell, and Washington University.",
+      "Re-established 2bit in 2018 as a software production studio, delivering contract work through agency partnerships (Nice Touch, Uncorked, and others) for clients including Google, Dell, and Washington University.",
     details: [
-      "Restarted while at adidas as an external partner after new management requested continued support.",
+      "Continued supporting adidas through a contract engagement when new leadership requested ongoing work after the full-time role concluded.",
       "Unity, AR/VR, rapid prototyping, and interactive design consulting for major brands and smaller clients.",
     ],
     disciplines: ["games", "software"],
@@ -40,8 +40,8 @@ export const experiences: Experience[] = [
     organization: "Oregon Institute for a Better Way",
     period: { start: "Sep 2022", end: "Apr 2024" },
     summary:
-      "Streamlining, automating, and informing decision-making through effective software and internet technology.",
-    details: ["Improved processes and technologies for organizational effectiveness."],
+      "Built software and automation tools to streamline operations and support data-informed decision-making.",
+    details: ["Improved organizational processes through effective software and technology integration."],
     disciplines: ["environment", "software", "data"],
     skills: ["automation", "software production"],
     projects: ["proj-co2t-platform"],
@@ -128,8 +128,8 @@ export const experiences: Experience[] = [
     summary:
       "Basketball Business Unit innovation — consumer experiences, rapid prototyping, hardware research, and product release event support.",
     details: [
-      "Design and develop consumer experiences for Adidas Sports Performance.",
-      "Restarted 2bit as external partner when new management requested continued support after employee tenure.",
+      "Designed and developed consumer experiences for Adidas Sports Performance.",
+      "Transitioned to a contract engagement via 2bit when new leadership requested continued support after the full-time role.",
     ],
     disciplines: ["software", "marketing", "games"],
     skills: ["rapid prototyping", "UX", "hardware research"],
@@ -174,10 +174,10 @@ export const experiences: Experience[] = [
     organization: "Portland Public Schools",
     period: { start: "Apr 2014", end: "Feb 2017" },
     summary:
-      "Special education classroom support — informing later work on accessible technology and inclusive design.",
+      "Supported students with diverse learning needs in public education — experience that shaped later work in accessible technology and inclusive design.",
     details: [
-      "Supported nonverbal students in public education settings.",
-      "Helped run game development after-school club alongside mentoring work.",
+      "Provided classroom support for students with diverse communication and learning needs.",
+      "Co-led a game development after-school club alongside mentoring work.",
     ],
     disciplines: ["operations"],
     skills: ["education", "community"],
@@ -190,10 +190,10 @@ export const experiences: Experience[] = [
     organization: "2bit Entertainment",
     period: { start: "Jul 2012", end: "May 2014" },
     summary:
-      "Operational indie studio 2012–2014 building Planet's Core — technical design, game art integration, team management, and business strategy.",
+      "Founded and operated an indie studio (2012–2014), shipping Planet's Core — technical design, art integration, team leadership, and business strategy.",
     details: [
-      "Shipped indie game development as founder-led studio after Rocket Gaming.",
-      "Officially started studio July 2012.",
+      "Led founder-era indie game development after Rocket Gaming.",
+      "Established the studio in July 2012.",
     ],
     disciplines: ["games", "operations", "marketing"],
     skills: ["Unity", "game design", "business strategy"],

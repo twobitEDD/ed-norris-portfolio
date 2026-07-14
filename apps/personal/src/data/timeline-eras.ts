@@ -28,7 +28,7 @@ export const timelineEras: TimelineEra[] = [
     title: "2Bit Entertainment",
     organization: "Founder · Software production business",
     summary:
-      "Operational studio 2012–2014 building indie game Planet's Core. Reopened 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and smaller brands (restarted while at adidas as external partner).",
+      "Operational studio 2012–2014 building indie game Planet's Core. Re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and additional clients.",
     disciplines: ["games", "marketing", "operations"],
     polaroidGradient: "linear-gradient(160deg, #6b5a8a, #2a2038)",
   },

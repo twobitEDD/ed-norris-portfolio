@@ -8,7 +8,7 @@ export const graphNodes: GraphNode[] = [
     label: "Edd Norris",
     subtitle: "One connected arc",
     disciplines: ["software", "environment", "games"],
-    description: "Cross-disciplinary builder connecting people, technology, and the living world.",
+    description: "Cross-disciplinary builder connecting people, technology, and meaningful outcomes.",
     connectionNarrative:
       "Not six careers — one through-line. Each chapter taught the same lesson: make complex systems learnable, playable, and worth people's time.",
   },
@@ -17,12 +17,12 @@ export const graphNodes: GraphNode[] = [
   {
     id: "theme-education",
     type: "theme",
-    label: "Education & Special Ed",
-    subtitle: "Helping students thrive",
+    label: "Education & Inclusive Learning",
+    subtitle: "Helping students succeed",
     disciplines: ["operations"],
     description: "Full Sail software degree, public education, afterschool mentoring, and summer STEM instruction — human-centered foundations in patience, structure, and accessible design.",
     connectionNarrative:
-      "Full Sail University software degree, special education educator at Portland Public Schools, Innovation Academy afterschool club mentoring, and iD Tech Camps summer instruction — where I learned that adoption is a design problem, not a technology problem.",
+      "Full Sail University software degree, classroom support for students with diverse learning needs at Portland Public Schools, Innovation Academy afterschool mentoring, and iD Tech Camps summer instruction — where I learned that adoption is a design problem, not a technology problem.",
   },
   {
     id: "theme-games",
@@ -50,7 +50,7 @@ export const graphNodes: GraphNode[] = [
     label: "Marketing & Product at Major Brands",
     subtitle: "adidas, Google, and beyond",
     disciplines: ["marketing"],
-    description: "Marketing and product development with major brands — full-time employee and contractor work at adidas, Google, and agency-backed clients.",
+    description: "Marketing and product development with major brands — full-time employment at adidas and contract engagements for Google and other agency-backed clients.",
     connectionNarrative:
       "adidas consumer experiences, agency contracts via 2bit for Google, Dell, and Washington University — marketing isn't separate from product; it's how people find and trust what you built.",
   },
@@ -72,7 +72,7 @@ export const graphNodes: GraphNode[] = [
     disciplines: ["operations"],
     description: "Field ops, studio management, and environmental logistics — systems that keep sustainability work actually happening.",
     connectionNarrative:
-      "Classroom operations, 2bit studio management, CO2T field logistics — the systems behind the systems. Creative work dies without production discipline.",
+      "Classroom operations, 2bit studio management, CO2T field logistics — the operational backbone that keeps creative and environmental work on track.",
   },
 
   // —— Supporting practice nodes (environment & data) ——
@@ -90,12 +90,12 @@ export const graphNodes: GraphNode[] = [
     id: "exp-node-pps",
     type: "experience",
     label: "Portland Public Schools",
-    subtitle: "Special education educator",
+    subtitle: "Public education support",
     disciplines: ["operations"],
     period: "2014 – 2017",
     experienceId: "exp-pps",
     description:
-      "Special education classroom support — informing later work on accessible technology and inclusive design.",
+      "Supported students with diverse learning needs — experience that shaped later work in accessible technology and inclusive design.",
   },
   {
     id: "exp-node-innovation",
@@ -168,9 +168,9 @@ export const graphNodes: GraphNode[] = [
     period: "2012 – 2014 · 2018 – Present",
     experienceId: "exp-2bit-senior",
     description:
-      "Indie studio building Planet's Core (2012–2014). Reopened 2018 as software production business — agency contracting for Google, Dell, Washington University, and more.",
+      "Indie studio building Planet's Core (2012–2014). Re-established in 2018 as a software production business — agency contracting for Google, Dell, Washington University, and more.",
     connectionNarrative:
-      "Two chapters, one studio: Planet's Core as operational indie game work, then a 2018 restart as agency-backed software production — including while at adidas as external partner.",
+      "Two chapters, one studio: Planet's Core as operational indie game work, then a 2018 re-establishment as agency-backed software production — including a continued contract engagement with adidas.",
   },
   {
     id: "exp-node-adidas",
@@ -181,7 +181,7 @@ export const graphNodes: GraphNode[] = [
     period: "2017 – 2018",
     experienceId: "exp-adidas",
     description:
-      "Basketball BU innovation — consumer experiences, rapid prototyping, and product release events. Restarted 2bit as external partner at management request.",
+      "Basketball BU innovation — consumer experiences, rapid prototyping, and product release events. Continued the relationship via contract engagement through 2bit at leadership's request.",
   },
   {
     id: "exp-node-uncorked",
@@ -247,10 +247,10 @@ export const graphNodes: GraphNode[] = [
     id: "client-google",
     type: "company",
     label: "Google",
-    subtitle: "Client via Uncorked — not direct employment",
+    subtitle: "Client via Uncorked — contract engagement",
     disciplines: ["software"],
     description:
-      "Software production and interactive development as a contractor through Uncorked Studios — not direct Google employment.",
+      "Software production and interactive development through Uncorked Studios — contract engagement, not direct Google employment.",
   },
   {
     id: "client-dell",
@@ -304,7 +304,7 @@ export const graphNodes: GraphNode[] = [
     description:
       "Indie game studio (Planet's Core) and software production business — games, interactive experiences, and agency-backed client work.",
     connectionNarrative:
-      "Operational 2012–2014 on Planet's Core; reopened 2018 contracting through Nice Touch, Uncorked, and others for Google, Dell, Washington University, and smaller brands.",
+      "Operational 2012–2014 on Planet's Core; re-established in 2018 with contract engagements through Nice Touch, Uncorked, and others for Google, Dell, Washington University, and additional clients.",
   },
   {
     id: "company-co2t",
@@ -358,7 +358,7 @@ export const graphNodes: GraphNode[] = [
 export const graphEdges: GraphEdge[] = [
   // Person → themes
   { id: "e-pe-edu", source: "person-ed", target: "theme-education", relationship: "shaped", connectionNote: "started in classrooms" },
-  { id: "e-pe-games", source: "person-ed", target: "theme-games", relationship: "created", connectionNote: "first love" },
+  { id: "e-pe-games", source: "person-ed", target: "theme-games", relationship: "created", connectionNote: "game development roots" },
   { id: "e-pe-sw", source: "person-ed", target: "theme-software", relationship: "designed", connectionNote: "how things run" },
   { id: "e-pe-mkt", source: "person-ed", target: "theme-marketing", relationship: "marketed", connectionNote: "how people find it" },
   { id: "e-pe-prod", source: "person-ed", target: "theme-product", relationship: "managed", connectionNote: "what ships" },
@@ -371,7 +371,7 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-tl-4", source: "theme-marketing", target: "theme-product", relationship: "shaped", connectionNote: "owning the whole story", throughLine: true },
   { id: "e-tl-5", source: "theme-product", target: "theme-production", relationship: "led-to", connectionNote: "shipping at scale", throughLine: true },
   { id: "e-tl-6", source: "theme-production", target: "practice-environment", relationship: "supports", connectionNote: "field → platform", throughLine: true },
-  { id: "e-tl-7", source: "practice-environment", target: "theme-games", relationship: "led-to", connectionNote: "play meets purpose", throughLine: true },
+  { id: "e-tl-7", source: "practice-environment", target: "theme-games", relationship: "led-to", connectionNote: "purpose-driven play", throughLine: true },
 
   // Education theme → experiences
   { id: "e-edu-pps", source: "theme-education", target: "exp-node-pps", relationship: "taught", connectionNote: "inclusive design roots" },
@@ -395,7 +395,7 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-sw-2bit", source: "theme-software", target: "exp-node-2bit", relationship: "built-with", connectionNote: "AR/VR & consulting" },
   { id: "e-sw-ergo", source: "theme-software", target: "project-ergo", relationship: "built-with", connectionNote: "platform architecture" },
   { id: "e-sw-web", source: "theme-software", target: "project-web", relationship: "built-with", connectionNote: "dashboards & tools" },
-  { id: "e-adidas-2bit", source: "exp-node-adidas", target: "exp-node-2bit", relationship: "led-to", connectionNote: "restarted 2bit as partner" },
+  { id: "e-adidas-2bit", source: "exp-node-adidas", target: "exp-node-2bit", relationship: "led-to", connectionNote: "continued via contract" },
   { id: "e-2bit-uncorked", source: "exp-node-2bit", target: "exp-node-uncorked", relationship: "built-with", connectionNote: "agency contract" },
   { id: "e-2bit-nice-touch", source: "exp-node-2bit", target: "exp-node-nice-touch", relationship: "built-with", connectionNote: "agency contract" },
   { id: "e-2bit-fresh", source: "exp-node-2bit", target: "exp-node-fresh", relationship: "built-with", connectionNote: "agency contract" },

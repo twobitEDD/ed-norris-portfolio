@@ -14,8 +14,8 @@ export const projects: Project[] = [
     skills: ["platform strategy", "product design", "Next.js"],
     technologies: ["Next.js", "TypeScript", "PostgreSQL"],
     summary:
-      "A comfortable browser-based console for independent web games with entitlements, catalog systems, and human-centered UX.",
-    challenge: "Create a scalable hub that feels cozy while supporting diverse indie game integrations.",
+      "An accessible browser-based console for independent web games with entitlements, catalog systems, and human-centered UX.",
+    challenge: "Create a scalable hub that feels welcoming while supporting diverse indie game integrations.",
     approach:
       "Designed modular game embedding, TSI-style entitlements, and a curated catalog with progressive disclosure.",
     outcomes: [
@@ -107,9 +107,9 @@ export const projects: Project[] = [
     summary:
       "Indie game studio (Planet's Core, 2012–2014) and software production business (2018–present) — games, interactive experiences, and agency-backed client work.",
     challenge:
-      "Ship indie game Planet's Core as an operational studio; later restart as agency-backed software production for Google, Dell, Washington University, and other clients.",
+      "Ship indie game Planet's Core as an operational studio; later re-establish the business as agency-backed software production for Google, Dell, Washington University, and other clients.",
     approach:
-      "Founder-led game development through 2014; reopened 2018 contracting through Nice Touch, Uncorked, and other agencies while continuing adidas external-partner work.",
+      "Founder-led game development through 2014; re-established in 2018 with contract engagements through Nice Touch, Uncorked, and other agencies, including continued work with adidas.",
     links: [{ label: "GitHub", url: "https://github.com/twobitENT" }],
     featured: true,
     resumePriority: 4,
