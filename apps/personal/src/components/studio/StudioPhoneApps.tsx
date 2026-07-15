@@ -4,7 +4,20 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { ChevronLeft, ExternalLink, Fish, Gamepad2, GitBranch, History, X } from "lucide-react";
+import {
+  BatteryMedium,
+  Check,
+  ChevronLeft,
+  ExternalLink,
+  Fish,
+  Gamepad2,
+  GitBranch,
+  History,
+  MapPin,
+  Search,
+  Wifi,
+  X,
+} from "lucide-react";
 import { Phone } from "@/components/physical-ui/Phone";
 import { MicrobeSvgGlyph } from "@/components/games/microbeDraw";
 import { profile } from "@/data/profile";
@@ -43,6 +56,21 @@ type StudioPhoneAppsProps = {
 const IN_DEVICE_APP_IDS = new Set<TabletAppId>(
   tabletApps.filter((a) => a.inDevice).map((a) => a.id),
 );
+
+const DOCK_APP_IDS: TabletAppId[] = ["ergo", "co2t", "work-map", "microbe"];
+
+const PRIORITIES = [
+  { label: "VP Engineering leadership", done: true },
+  { label: "CO2T · ERGO · environmental work", done: true },
+  { label: "Dad first. Then the maze.", done: false },
+] as const;
+
+const CAREER_ERAS = [
+  { label: "Wii era", color: "#8c5cc7" },
+  { label: "Casino", color: "#c68b38" },
+  { label: "CO2T", color: "#3d9b6a" },
+  { label: "VP Eng", color: "#4da4c9" },
+] as const;
 
 function parseAppParam(): TabletAppId | null {
   if (typeof window === "undefined") return null;
@@ -261,29 +289,20 @@ function DeviceAppHeader({
   );
 }
 
-type HomeWidgetProps = {
+type GlassWidgetProps = {
   children: React.ReactNode;
   className?: string;
-  colSpan?: 2 | 4;
-  tint?: "cyan" | "green" | "amber" | "neutral";
+  colSpan?: 1 | 2 | 4;
+  rowSpan?: 1 | 2;
 };
 
-function HomeWidget({ children, className, colSpan = 2, tint = "neutral" }: HomeWidgetProps) {
-  const tintClass =
-    tint === "cyan"
-      ? "border-[#3b9eff]/25 bg-gradient-to-br from-[#3b9eff]/18 via-[#3b9eff]/8 to-white/[0.04]"
-      : tint === "green"
-        ? "border-[#5ecf8a]/20 bg-gradient-to-br from-[#5ecf8a]/14 via-[#5ecf8a]/6 to-white/[0.04]"
-        : tint === "amber"
-          ? "border-[#f5d76e]/20 bg-gradient-to-br from-[#f5d76e]/14 via-[#f5d76e]/6 to-white/[0.04]"
-          : "border-white/10 bg-white/[0.07]";
-
+function GlassWidget({ children, className, colSpan = 2, rowSpan = 1 }: GlassWidgetProps) {
   return (
     <div
       className={cn(
-        "rounded-[22px] border p-3 shadow-[0_4px_20px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-3.5",
-        colSpan === 4 ? "col-span-4" : "col-span-2",
-        tintClass,
+        "overflow-hidden rounded-[22px] bg-white/[0.10] p-3 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-xl sm:p-3.5",
+        colSpan === 4 ? "col-span-4" : colSpan === 2 ? "col-span-2" : "col-span-1",
+        rowSpan === 2 && "row-span-2",
         className,
       )}
     >
@@ -292,46 +311,339 @@ function HomeWidget({ children, className, colSpan = 2, tint = "neutral" }: Home
   );
 }
 
-function PhoneHomeWidgets({ dateStr }: { dateStr: string }) {
+function GlassPill({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className="relative grid grid-cols-4 gap-2 sm:gap-2.5">
-      <HomeWidget colSpan={4} tint="cyan">
-        <p className="font-mono text-[8px] uppercase tracking-[0.22em] text-white/45 sm:text-[9px]">Today</p>
-        <p className="mt-1 font-editorial text-base font-semibold leading-tight text-white/95 sm:text-lg">
-          {profile.name}
-        </p>
-        <p className="mt-0.5 text-[11px] font-medium text-white/70 sm:text-xs">{profile.tagline}</p>
-        <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.14em] text-white/40">{dateStr}</p>
-        <p className="mt-1 text-[10px] text-white/50 sm:text-[11px]">{profile.location}</p>
-        <p className="mt-2.5 border-t border-white/8 pt-2 font-mono text-[8px] uppercase tracking-[0.18em] text-[#7ec8ff]/80">
-          Norris Studio
-        </p>
-      </HomeWidget>
+    <div
+      className={cn(
+        "flex items-center gap-1.5 rounded-full bg-white/[0.12] px-3 py-1.5 shadow-[0_4px_16px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}
 
-      <HomeWidget tint="amber">
-        <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-white/40">Priorities</p>
-        <p className="mt-1.5 text-[11px] font-medium leading-snug text-white/90 sm:text-xs">
-          VP Engineering · game dev leadership
-        </p>
-        <p className="mt-1 text-[10px] leading-snug text-white/55">Build teams. Ship worlds.</p>
-      </HomeWidget>
+function AnalogClockFace({ now }: { now: Date }) {
+  const hours = now.getHours() % 12;
+  const minutes = now.getMinutes();
+  const hourAngle = hours * 30 + minutes * 0.5;
+  const minuteAngle = minutes * 6;
 
-      <HomeWidget tint="green">
-        <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-white/40">Focus</p>
-        <p className="mt-1.5 text-[11px] font-medium leading-snug text-white/90 sm:text-xs">
-          CO2T · ERGO · environmental work
-        </p>
-        <p className="mt-1 text-[10px] leading-snug text-white/55">Impact that outlasts the sprint.</p>
-      </HomeWidget>
+  return (
+    <svg viewBox="0 0 100 100" className="h-full w-full" aria-hidden>
+      <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+      {Array.from({ length: 12 }).map((_, i) => {
+        const angle = (i * 30 * Math.PI) / 180;
+        const x1 = 50 + Math.sin(angle) * 38;
+        const y1 = 50 - Math.cos(angle) * 38;
+        const x2 = 50 + Math.sin(angle) * 42;
+        const y2 = 50 - Math.cos(angle) * 42;
+        return (
+          <line
+            key={i}
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke="rgba(255,255,255,0.35)"
+            strokeWidth={i % 3 === 0 ? 2 : 1}
+            strokeLinecap="round"
+          />
+        );
+      })}
+      <line
+        x1="50"
+        y1="50"
+        x2={50 + Math.sin((hourAngle * Math.PI) / 180) * 22}
+        y2={50 - Math.cos((hourAngle * Math.PI) / 180) * 22}
+        stroke="rgba(255,255,255,0.9)"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+      <line
+        x1="50"
+        y1="50"
+        x2={50 + Math.sin((minuteAngle * Math.PI) / 180) * 30}
+        y2={50 - Math.cos((minuteAngle * Math.PI) / 180) * 30}
+        stroke="rgba(255,255,255,0.75)"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <circle cx="50" cy="50" r="2.5" fill="rgba(255,255,255,0.9)" />
+    </svg>
+  );
+}
 
-      <HomeWidget colSpan={4} tint="neutral" className="py-2.5 sm:py-3">
-        <p className="text-center text-[11px] font-medium italic leading-snug text-white/85 sm:text-xs">
-          Dad first. Then the maze.
+function SpringboardStatusBar({ timeStr, dateShortStr }: { timeStr: string; dateShortStr: string }) {
+  return (
+    <div className="flex shrink-0 items-center justify-between px-4 pb-1 pt-7 sm:px-5 sm:pt-8">
+      <div className="min-w-0">
+        <span className="font-semibold text-[11px] text-white/90 sm:text-xs">{timeStr}</span>
+        <span className="ml-2 hidden text-[10px] text-white/50 sm:inline">{dateShortStr}</span>
+      </div>
+      <div className="flex items-center gap-1.5" aria-hidden>
+        <Wifi className="h-3 w-3 text-white/60" strokeWidth={2.5} />
+        <span className="font-mono text-[9px] font-medium text-white/55">5G</span>
+        <BatteryMedium className="h-3.5 w-4 text-white/60" strokeWidth={2} />
+      </div>
+    </div>
+  );
+}
+
+function TodayWidget({ dateStr }: { dateStr: string }) {
+  return (
+    <GlassWidget colSpan={2} rowSpan={2} className="flex flex-col justify-between">
+      <div>
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] font-medium uppercase tracking-wide text-white/45">Today</p>
+            <p className="mt-1 font-editorial text-lg font-semibold leading-tight text-white sm:text-xl">
+              {profile.name}
+            </p>
+            <p className="mt-0.5 text-[11px] font-medium leading-snug text-white/70 sm:text-xs">
+              {profile.tagline}
+            </p>
+          </div>
+          <div
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#4da4c9] to-[#1a5c3a] text-sm font-bold text-white shadow-lg sm:h-11 sm:w-11"
+            aria-hidden
+          >
+            EN
+          </div>
+        </div>
+      </div>
+      <div className="mt-2 border-t border-white/[0.08] pt-2">
+        <p className="text-[11px] font-medium text-white/85">{dateStr}</p>
+        <p className="mt-0.5 flex items-center gap-1 text-[10px] text-white/50">
+          <MapPin className="h-2.5 w-2.5 shrink-0" />
+          {profile.location}
         </p>
-        <p className="mt-0.5 text-center font-mono text-[8px] uppercase tracking-[0.14em] text-white/40">
-          — Edd Norris
-        </p>
-      </HomeWidget>
+        <p className="mt-1.5 font-mono text-[8px] uppercase tracking-[0.16em] text-white/35">Norris Studio</p>
+      </div>
+    </GlassWidget>
+  );
+}
+
+function EnvironmentalWidget() {
+  return (
+    <GlassWidget
+      colSpan={2}
+      rowSpan={2}
+      className="relative flex flex-col justify-between overflow-hidden"
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        aria-hidden
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(45,143,212,0.35) 0%, rgba(26,92,58,0.25) 55%, rgba(13,40,24,0.4) 100%)",
+        }}
+      />
+      <div className="relative">
+        <p className="text-[10px] font-medium uppercase tracking-wide text-white/50">Environmental</p>
+        <p className="mt-0.5 font-mono text-[9px] text-white/40">CO2T.earth</p>
+      </div>
+      <div className="relative flex items-end justify-between">
+        <div>
+          <p className="font-editorial text-4xl font-light leading-none text-white sm:text-5xl">CO₂</p>
+          <p className="mt-1 text-[11px] font-medium text-white/70">Carbon credit platform</p>
+        </div>
+        <div className="text-right">
+          <p className="font-editorial text-2xl font-semibold text-white/95">412</p>
+          <p className="text-[9px] uppercase tracking-wider text-white/45">ppm tracked</p>
+        </div>
+      </div>
+      <div className="relative mt-1 flex gap-0.5" aria-hidden>
+        {["#2d8fd4", "#3d9b6a", "#5ecf8a", "#7ee8a8", "#a8f0c0"].map((c, i) => (
+          <div key={i} className="h-1 flex-1 rounded-full opacity-70" style={{ background: c }} />
+        ))}
+      </div>
+    </GlassWidget>
+  );
+}
+
+function StatusPillRow() {
+  return (
+    <>
+      <div className="col-span-2 flex items-center">
+        <GlassPill className="w-full justify-center">
+          <MapPin className="h-3 w-3 text-[#7ee8a8]" strokeWidth={2.5} />
+          <span className="text-[10px] font-medium text-white/80">Oregon</span>
+        </GlassPill>
+      </div>
+      <div className="col-span-2 flex items-center">
+        <GlassPill className="w-full justify-center">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#5ecf8a] opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-[#5ecf8a]" />
+          </span>
+          <span className="text-[10px] font-medium text-white/80">Studio active</span>
+        </GlassPill>
+      </div>
+    </>
+  );
+}
+
+function ClockWidget({ now }: { now: Date }) {
+  return (
+    <GlassWidget colSpan={2} rowSpan={2} className="flex flex-col">
+      <p className="mb-1 text-[10px] font-medium uppercase tracking-wide text-white/45">Clock</p>
+      <div className="flex flex-1 items-center justify-center px-2">
+        <AnalogClockFace now={now} />
+      </div>
+    </GlassWidget>
+  );
+}
+
+function PrioritiesWidget() {
+  return (
+    <GlassWidget colSpan={2} rowSpan={2}>
+      <p className="text-[10px] font-medium uppercase tracking-wide text-white/45">Reminders</p>
+      <ul className="mt-2 space-y-2">
+        {PRIORITIES.map((item) => (
+          <li key={item.label} className="flex items-start gap-2">
+            <span
+              className={cn(
+                "mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full",
+                item.done ? "bg-[#5ecf8a]/30" : "border border-white/25 bg-white/5",
+              )}
+            >
+              {item.done && <Check className="h-2.5 w-2.5 text-[#7ee8a8]" strokeWidth={3} />}
+            </span>
+            <span
+              className={cn(
+                "text-[11px] leading-snug sm:text-xs",
+                item.done ? "text-white/75 line-through decoration-white/30" : "font-medium text-white/90",
+              )}
+            >
+              {item.label}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </GlassWidget>
+  );
+}
+
+function CareerStripWidget() {
+  const now = new Date();
+  const month = now.toLocaleDateString([], { month: "long" });
+  const year = now.getFullYear();
+
+  return (
+    <GlassWidget colSpan={4} className="!py-2.5">
+      <div className="flex items-center justify-between gap-3">
+        <div className="shrink-0">
+          <p className="text-[10px] font-medium uppercase tracking-wide text-white/45">Career</p>
+          <p className="font-editorial text-sm font-semibold text-white/90">
+            {month} {year}
+          </p>
+        </div>
+        <div className="flex min-w-0 flex-1 items-center gap-1.5">
+          {CAREER_ERAS.map((era, i) => (
+            <div key={era.label} className="flex min-w-0 flex-1 flex-col items-center gap-1">
+              <div
+                className="h-1.5 w-full rounded-full"
+                style={{ background: `linear-gradient(90deg, ${era.color}88, ${era.color})` }}
+              />
+              <span className="truncate text-[8px] font-medium text-white/50">{era.label}</span>
+              {i < CAREER_ERAS.length - 1 && (
+                <span className="sr-only">then</span>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </GlassWidget>
+  );
+}
+
+function PhoneHomeWidgets({ dateStr, now }: { dateStr: string; now: Date }) {
+  return (
+    <div className="grid grid-cols-4 auto-rows-[minmax(68px,auto)] gap-2 sm:auto-rows-[minmax(76px,auto)] sm:gap-2.5">
+      <TodayWidget dateStr={dateStr} />
+      <EnvironmentalWidget />
+      <StatusPillRow />
+      <ClockWidget now={now} />
+      <PrioritiesWidget />
+      <CareerStripWidget />
+    </div>
+  );
+}
+
+function SpringboardPageDots() {
+  return (
+    <div className="mt-4 flex justify-center gap-1.5" aria-hidden>
+      <span className="h-1.5 w-1.5 rounded-full bg-white/25" />
+      <span className="h-1.5 w-4 rounded-full bg-white/70" />
+      <span className="h-1.5 w-1.5 rounded-full bg-white/25" />
+    </div>
+  );
+}
+
+function SpringboardSearchPill() {
+  return (
+    <div className="mt-3 flex justify-center px-4" aria-hidden>
+      <div className="flex w-full max-w-[200px] items-center justify-center gap-1.5 rounded-full bg-white/[0.12] py-1.5 backdrop-blur-xl">
+        <Search className="h-3 w-3 text-white/45" strokeWidth={2.5} />
+        <span className="text-[11px] text-white/45">Search</span>
+      </div>
+    </div>
+  );
+}
+
+function SpringboardDock({
+  onOpenApp,
+}: {
+  onOpenApp: (id: TabletAppId) => void;
+}) {
+  const dockApps = DOCK_APP_IDS.map((id) => tabletApps.find((a) => a.id === id)!).filter(Boolean);
+
+  return (
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex justify-center px-4 pb-3 sm:px-5 sm:pb-4">
+      <div className="pointer-events-auto flex items-center gap-4 rounded-[28px] bg-white/[0.15] px-4 py-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-2xl sm:gap-5 sm:px-5">
+        {dockApps.map((app) => (
+          <button
+            key={app.id}
+            type="button"
+            onClick={() => onOpenApp(app.id)}
+            className="group transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-[22%]"
+            aria-label={`Open ${app.name}`}
+          >
+            <div className="aspect-square w-[48px] transition group-hover:shadow-[0_4px_16px_rgba(255,255,255,0.15)] sm:w-[52px]">
+              <AppIcon app={app} large />
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AppIconGrid({ onOpenApp }: { onOpenApp: (id: TabletAppId) => void }) {
+  return (
+    <div className="relative mt-4 grid grid-cols-4 gap-x-2 gap-y-5 sm:mt-5 sm:gap-x-3 sm:gap-y-6">
+      {tabletApps.map((app, index) => (
+        <button
+          key={app.id}
+          type="button"
+          onClick={() => onOpenApp(app.id)}
+          className={cn(
+            "group flex flex-col items-center gap-1.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-xl p-0.5",
+            index === 4 && "col-start-2",
+            index === 5 && "col-start-3",
+          )}
+          aria-label={`Open ${app.name}`}
+        >
+          <div className="aspect-square w-[min(100%,60px)] shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.4)] sm:w-[min(100%,68px)]">
+            <AppIcon app={app} large />
+          </div>
+          <span className="max-w-[72px] truncate text-center text-[9px] font-medium leading-tight text-white/85 sm:max-w-[80px] sm:text-[10px]">
+            {app.name}
+          </span>
+        </button>
+      ))}
     </div>
   );
 }
@@ -503,27 +815,19 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     <>
       <div className={cn("w-full", className)}>
         <Phone glow="cyan" mode="launcher" size="large" className="w-full">
-          <div className="flex h-full min-h-0 flex-col bg-gradient-to-b from-[#0c0e14] to-[#12151c] pt-8">
-            <div className="flex shrink-0 items-center justify-between px-4 pb-1.5 sm:px-5">
-              <div className="min-w-0">
-                <span className="font-mono text-[9px] font-medium text-white/70 sm:text-[10px]">{timeStr}</span>
-                <span className="ml-2 hidden font-mono text-[8px] text-white/35 sm:inline sm:text-[9px]">
-                  {dateShortStr}
-                </span>
-              </div>
-              <div className="flex items-center gap-1" aria-hidden>
-                <span className="h-1.5 w-2.5 rounded-sm bg-white/35" />
-                <span className="h-1.5 w-1.5 rounded-full bg-white/25" />
-                <span className="h-2.5 w-3.5 rounded-sm border border-white/30" />
-              </div>
-            </div>
+          <div className="studio-springboard-wallpaper relative flex h-full min-h-0 flex-col">
+            <div className="studio-springboard-glow pointer-events-none absolute inset-0" aria-hidden />
 
             {screen === "work-map" ? (
-              <WorkMapInDevice onBack={goHome} />
+              <div className="relative z-10 flex min-h-0 flex-1 flex-col bg-[#0c0e14]/95">
+                <WorkMapInDevice onBack={goHome} />
+              </div>
             ) : screen === "work-history" ? (
-              <WorkHistoryInDevice onBack={goHome} />
+              <div className="relative z-10 flex min-h-0 flex-1 flex-col bg-[#0c0e14]/95">
+                <WorkHistoryInDevice onBack={goHome} />
+              </div>
             ) : gameOpen && !gameFullscreen ? (
-              <div className="relative flex min-h-0 flex-1 flex-col pb-6">
+              <div className="relative z-10 flex min-h-0 flex-1 flex-col bg-[#040a14]/95 pb-6">
                 <DeviceAppHeader
                   title="Microbe Explorer"
                   onBack={goHome}
@@ -542,41 +846,18 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                 </div>
               </div>
             ) : (
-              <div className="relative flex flex-1 flex-col overflow-y-auto px-4 pb-7 pt-0.5 sm:px-5">
-                <div
-                  className="pointer-events-none absolute inset-0 opacity-40"
-                  aria-hidden
-                  style={{
-                    background:
-                      "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59,158,255,0.12) 0%, transparent 55%), radial-gradient(circle at 20% 80%, rgba(59,158,255,0.06) 0%, transparent 40%)",
-                  }}
-                />
+              <>
+                <SpringboardStatusBar timeStr={timeStr} dateShortStr={dateShortStr} />
 
-                <PhoneHomeWidgets dateStr={dateStr} />
-
-                <div className="relative mt-4 grid grid-cols-4 gap-x-2 gap-y-5 sm:mt-5 sm:gap-x-3 sm:gap-y-6">
-                  {tabletApps.map((app, index) => (
-                    <button
-                      key={app.id}
-                      type="button"
-                      onClick={() => openApp(app.id)}
-                      className={cn(
-                        "group flex flex-col items-center gap-1.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9eff]/50 rounded-xl p-0.5",
-                        index === 4 && "col-start-2",
-                        index === 5 && "col-start-3",
-                      )}
-                      aria-label={`Open ${app.name}`}
-                    >
-                      <div className="aspect-square w-[min(100%,60px)] transition group-hover:shadow-[0_4px_16px_rgba(59,158,255,0.22)] sm:w-[min(100%,68px)]">
-                        <AppIcon app={app} large />
-                      </div>
-                      <span className="max-w-[72px] truncate text-center text-[9px] font-medium leading-tight text-white/80 sm:max-w-[80px] sm:text-[10px]">
-                        {app.name}
-                      </span>
-                    </button>
-                  ))}
+                <div className="relative z-[1] flex flex-1 flex-col overflow-y-auto px-4 pb-[88px] pt-0.5 sm:px-5 sm:pb-[96px]">
+                  <PhoneHomeWidgets dateStr={dateStr} now={now} />
+                  <AppIconGrid onOpenApp={openApp} />
+                  <SpringboardPageDots />
+                  <SpringboardSearchPill />
                 </div>
-              </div>
+
+                <SpringboardDock onOpenApp={openApp} />
+              </>
             )}
           </div>
         </Phone>
