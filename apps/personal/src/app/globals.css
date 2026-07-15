@@ -780,6 +780,14 @@ body {
   stroke-width: 1px;
 }
 
+.work-map-flow .react-flow__edge-path {
+  transition: opacity 0.25s ease, stroke-width 0.25s ease;
+}
+
+.work-map-flow .react-flow__edge.animated path {
+  stroke-dasharray: 6 4;
+}
+
 /* Expertise tablet slideshow — ambient slide decor */
 @keyframes expertise-float {
   0%,

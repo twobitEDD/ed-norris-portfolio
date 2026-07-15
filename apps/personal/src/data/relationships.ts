@@ -32,7 +32,7 @@ export const graphNodes: GraphNode[] = [
     disciplines: ["games"],
     description: "Gameplay, interactive media, and player-centered design — tight feedback loops that feel intuitive.",
     connectionNarrative:
-      "From volunteer QA at EA to founding 2bit Entertainment and shipping Planet's Core — games taught me feedback loops, team shipping cadence, and why people return to a system.",
+      "Iron Chef America: Supreme Cuisine and Family Fun Football (both Nintendo Wii), casino gambling titles at Rocket Gaming, then founding 2bit Entertainment and shipping Planet's Core — games taught feedback loops, team shipping cadence, and why people return to a system.",
   },
   {
     id: "theme-software",
@@ -371,7 +371,7 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-tl-4", source: "theme-marketing", target: "theme-product", relationship: "shaped", connectionNote: "owning the whole story", throughLine: true },
   { id: "e-tl-5", source: "theme-product", target: "theme-production", relationship: "led-to", connectionNote: "shipping at scale", throughLine: true },
   { id: "e-tl-6", source: "theme-production", target: "practice-environment", relationship: "supports", connectionNote: "field → platform", throughLine: true },
-  { id: "e-tl-7", source: "practice-environment", target: "theme-games", relationship: "led-to", connectionNote: "purpose-driven play", throughLine: true },
+  { id: "e-tl-7", source: "practice-environment", target: "person-ed", relationship: "led-to", connectionNote: "one connected arc", throughLine: true },
 
   // Education theme → experiences
   { id: "e-edu-pps", source: "theme-education", target: "exp-node-pps", relationship: "taught", connectionNote: "inclusive design roots" },
