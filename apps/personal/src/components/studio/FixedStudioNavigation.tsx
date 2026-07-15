@@ -19,7 +19,34 @@ const navLinks = [
 
 type SectionId = (typeof navLinks)[number]["id"];
 
-const SCROLL_SPY_MARGIN = "-35% 0px -45% 0px";
+/** Activation line sits just below the fixed header bar. */
+const HEADER_LINE_PX = 80;
+
+function measureSections(
+  setPastHero: (value: boolean) => void,
+  setActiveSection: (value: SectionId) => void,
+) {
+  const heroEl = document.getElementById("hero");
+  if (heroEl) {
+    setPastHero(heroEl.getBoundingClientRect().bottom <= HEADER_LINE_PX);
+  } else {
+    setPastHero(window.scrollY > 60);
+  }
+
+  const scrollMarker = window.scrollY + HEADER_LINE_PX;
+  let next: SectionId = navLinks[0].id;
+
+  for (const { id } of navLinks) {
+    const el = document.getElementById(id);
+    if (!el) continue;
+    const sectionTop = el.getBoundingClientRect().top + window.scrollY;
+    if (sectionTop <= scrollMarker + 4) {
+      next = id;
+    }
+  }
+
+  setActiveSection(next);
+}
 
 export function FixedStudioNavigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -27,65 +54,42 @@ export function FixedStudioNavigation() {
   const [activeSection, setActiveSection] = useState<SectionId>("hero");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    let raf = 0;
+
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => measureSections(setPastHero, setActiveSection));
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const hero = document.getElementById("hero");
-    if (!hero) {
-      setPastHero(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => setPastHero(!entry.isIntersecting),
-      { threshold: 0 },
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const observers: IntersectionObserver[] = [];
-
-    navLinks.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(id);
-        },
-        { rootMargin: SCROLL_SPY_MARGIN, threshold: 0 },
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
-
-    return () => observers.forEach((o) => o.disconnect());
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   const linkClass = (id: SectionId) =>
     cn(
       STUDIO_TYPOGRAPHY.navLink,
       activeSection === id
-        ? "font-semibold text-white"
-        : "text-paper-cream/75 hover:text-paper-cream",
+        ? "font-semibold text-white underline decoration-white/45 underline-offset-[6px]"
+        : "text-paper-cream/70 hover:text-paper-cream",
     );
 
   return (
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
-        scrolled ? "bg-wood-dark/96 shadow-lg" : "bg-studio-black/70",
+        scrolled ? "bg-wood-dark/96 shadow-lg backdrop-blur-sm" : "bg-studio-black/70 backdrop-blur-[2px]",
       )}
     >
-      {/* Desktop */}
-      <div className="mx-auto hidden max-w-[1600px] items-center justify-between gap-6 px-4 py-3 sm:px-8 sm:py-4 lg:flex">
-        <div className="min-w-0 shrink">
+      {/* Desktop — title left, nav + toggle right */}
+      <div className="mx-auto hidden w-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] items-center gap-6 px-4 py-3 sm:px-8 sm:py-4 lg:grid">
+        <div className="min-w-0 justify-self-start">
           {pastHero ? (
             <div>
               <Link href="/#hero" className={cn(STUDIO_TYPOGRAPHY.navBrand)}>
@@ -96,9 +100,14 @@ export function FixedStudioNavigation() {
           ) : null}
         </div>
 
-        <nav className="flex shrink-0 items-center justify-end gap-4" aria-label="Primary">
+        <nav className="flex shrink-0 items-center justify-end gap-4 justify-self-end" aria-label="Primary">
           {navLinks.map((link) => (
-            <Link key={link.id} href={link.href} className={linkClass(link.id)}>
+            <Link
+              key={link.id}
+              href={link.href}
+              className={linkClass(link.id)}
+              aria-current={activeSection === link.id ? "page" : undefined}
+            >
               {link.label}
             </Link>
           ))}
@@ -106,15 +115,20 @@ export function FixedStudioNavigation() {
         </nav>
       </div>
 
-      {/* Mobile & tablet */}
+      {/* Mobile & tablet — horizontal scroll nav, title row below when past hero */}
       <div className="lg:hidden">
         <div className="mx-auto flex max-w-[1600px] items-center gap-2 px-3 py-2.5 sm:px-6 sm:py-3">
           <nav
-            className="flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             aria-label="Primary"
           >
             {navLinks.map((link) => (
-              <Link key={link.id} href={link.href} className={linkClass(link.id)}>
+              <Link
+                key={link.id}
+                href={link.href}
+                className={linkClass(link.id)}
+                aria-current={activeSection === link.id ? "page" : undefined}
+              >
                 {link.label}
               </Link>
             ))}

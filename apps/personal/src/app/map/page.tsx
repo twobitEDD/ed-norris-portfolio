@@ -1,4 +1,4 @@
-import { PortfolioStudio } from "@/components/studio/PortfolioStudio";
+import { PortfolioStudio, StudioContent } from "@/components/studio/PortfolioStudio";
 import { FixedStudioNavigation } from "@/components/studio/FixedStudioNavigation";
 import { WorkMapScene } from "@/components/map/WorkMapScene";
 import { resolveFocusSlug } from "@/data";
@@ -14,7 +14,9 @@ export default async function MapPage({ searchParams }: MapPageProps) {
   return (
     <PortfolioStudio>
       <FixedStudioNavigation />
-      <WorkMapScene initialFocus={initialFocus} />
+      <StudioContent>
+        <WorkMapScene initialFocus={initialFocus} />
+      </StudioContent>
     </PortfolioStudio>
   );
 }

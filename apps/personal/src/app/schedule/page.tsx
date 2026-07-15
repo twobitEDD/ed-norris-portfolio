@@ -1,4 +1,4 @@
-import { PortfolioStudio } from "@/components/studio/PortfolioStudio";
+import { PortfolioStudio, StudioContent } from "@/components/studio/PortfolioStudio";
 import { FixedStudioNavigation } from "@/components/studio/FixedStudioNavigation";
 import { ScheduleScene } from "@/components/schedule/ScheduleScene";
 
@@ -11,7 +11,9 @@ export default function SchedulePage() {
   return (
     <PortfolioStudio>
       <FixedStudioNavigation />
-      <ScheduleScene />
+      <StudioContent>
+        <ScheduleScene />
+      </StudioContent>
     </PortfolioStudio>
   );
 }

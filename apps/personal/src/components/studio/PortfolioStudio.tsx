@@ -2,6 +2,17 @@
 
 import { StudioThemeProvider } from "./StudioThemeProvider";
 
+/** Ambient desk surface — must not wrap fixed header (filter breaks position:fixed). */
+export function StudioContent({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="studio-surface studio-ambient relative">
+      <main id="studio-main" className="relative z-[1]">
+        {children}
+      </main>
+    </div>
+  );
+}
+
 export function PortfolioStudio({ children }: { children: React.ReactNode }) {
   return (
     <StudioThemeProvider>
@@ -12,11 +23,7 @@ export function PortfolioStudio({ children }: { children: React.ReactNode }) {
         >
           Skip to content
         </a>
-        <div className="studio-surface studio-ambient relative">
-          <main id="studio-main" className="relative z-[1]">
-            {children}
-          </main>
-        </div>
+        {children}
       </div>
     </StudioThemeProvider>
   );
