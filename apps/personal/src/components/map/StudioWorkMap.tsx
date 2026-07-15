@@ -193,7 +193,7 @@ function StudioWorkMapInner({
           <div className="flex flex-wrap items-center gap-2">
             {fullPage && (
               <Link
-                href="/#map"
+                href="/#game?app=work-map"
                 className="rounded px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-screen-muted transition hover:text-screen-text sm:text-[11px]"
               >
                 ← Employment overview

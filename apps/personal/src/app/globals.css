@@ -256,7 +256,7 @@ body {
 .bento-cell--game-object {
   transform-origin: center top;
   width: 100%;
-  max-width: 260px;
+  max-width: 920px;
   margin-inline: auto;
   padding-top: 0.75rem;
   padding-bottom: 0.5rem;
@@ -264,7 +264,6 @@ body {
 
 @media (min-width: 640px) {
   .bento-cell--game-object {
-    max-width: 280px;
     padding-top: 1rem;
   }
 }

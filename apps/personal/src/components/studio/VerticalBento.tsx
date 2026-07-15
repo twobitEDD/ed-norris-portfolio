@@ -16,7 +16,6 @@ import { Tablet } from "@/components/physical-ui/Tablet";
 import { contactPolaroidImage } from "@/data/career-images";
 import { ResumePreview } from "@/components/resume/ResumePreview";
 import { BentoCell } from "@/components/studio/BentoCell";
-import { LazyMount } from "@/components/studio/LazyMount";
 import { StudioObject } from "@/components/studio/StudioObject";
 import {
   applyPreset,
@@ -30,20 +29,8 @@ const StudioPhoneApps = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="mx-auto flex min-h-[400px] w-[220px] items-center justify-center rounded-[28px] border border-dashed border-paper-cream/10 bg-wood-dark/20">
-        <p className="font-mono text-[9px] uppercase tracking-wider text-paper-cream/30">Loading apps…</p>
-      </div>
-    ),
-  },
-);
-
-const MapTablet = dynamic(
-  () => import("@/components/map/MapTablet").then((m) => m.MapTablet),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex min-h-[360px] items-center justify-center rounded-2xl border border-screen-border bg-screen-panel">
-        <p className="font-mono text-[10px] uppercase tracking-wider text-screen-muted">Loading map…</p>
+      <div className="mx-auto flex min-h-[520px] w-full max-w-[920px] items-center justify-center rounded-[28px] border border-dashed border-paper-cream/10 bg-wood-dark/20">
+        <p className="font-mono text-[9px] uppercase tracking-wider text-paper-cream/30">Loading studio…</p>
       </div>
     ),
   },
@@ -94,27 +81,6 @@ export function VerticalBento() {
         <BentoCell id="game" deferPaint className="bento-cell--game">
           <StudioObject rotate={-0.8} className="bento-cell--game-object flex flex-col items-center">
             <StudioPhoneApps />
-          </StudioObject>
-        </BentoCell>
-
-        <BentoCell id="map" span="tall" deferPaint className="bento-cell--map">
-          <StudioObject rotate={0.4}>
-            <div className="relative pt-2 sm:pt-3">
-              <StickyNote color="pink" className="pointer-events-none absolute right-2 top-2 z-10 hidden max-w-[150px] sm:block lg:right-4 lg:top-3">
-                <p className="handwritten text-sm leading-snug text-ink">One arc, not six careers.</p>
-              </StickyNote>
-              <LazyMount minHeight="520px">
-                <MapTablet className="w-full" mode="overview" />
-              </LazyMount>
-              <p className="mt-4 text-center">
-                <Link
-                  href="/map"
-                  className="font-mono text-[10px] uppercase tracking-[0.18em] text-paper-cream/60 transition hover:text-paper-cream"
-                >
-                  Unfold detailed work map →
-                </Link>
-              </p>
-            </div>
           </StudioObject>
         </BentoCell>
 

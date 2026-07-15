@@ -4,6 +4,7 @@ import { ObjectShadow } from "./ObjectShadow";
 type PhoneGlow = "none" | "green" | "cyan" | "purple" | "amber";
 type PhoneOrientation = "portrait" | "landscape";
 type PhoneScreenTheme = "device" | "warm";
+type PhoneSize = "default" | "large";
 
 type PhoneProps = {
   children: React.ReactNode;
@@ -15,6 +16,8 @@ type PhoneProps = {
   orientation?: PhoneOrientation;
   /** `warm` — paper-toned screen for studio contact content. */
   screenTheme?: PhoneScreenTheme;
+  /** `large` — full bento-width studio device (~920px). */
+  size?: PhoneSize;
 };
 
 const glowClass: Record<Exclude<PhoneGlow, "none">, string> = {
@@ -31,9 +34,11 @@ export function Phone({
   mode = "card",
   orientation = "portrait",
   screenTheme = "device",
+  size = "default",
 }: PhoneProps) {
   const isLauncher = mode === "launcher";
   const isLandscape = orientation === "landscape";
+  const isLarge = size === "large";
   const showChrome = isLauncher || isLandscape;
 
   return (
@@ -42,9 +47,11 @@ export function Phone({
         "relative",
         isLandscape
           ? "mx-auto w-full max-w-[min(100%,520px)]"
-          : isLauncher
-            ? "mx-auto w-[min(100%,210px)] sm:w-[220px]"
-            : "w-[220px] sm:w-[248px]",
+          : isLarge
+            ? "mx-auto w-full max-w-[min(100%,920px)]"
+            : isLauncher
+              ? "mx-auto w-[min(100%,210px)] sm:w-[220px]"
+              : "w-[220px] sm:w-[248px]",
         className,
       )}
     >
@@ -61,7 +68,8 @@ export function Phone({
             "screen-surface relative flex flex-col overflow-hidden",
             screenTheme === "warm" && "screen-surface--warm",
             isLandscape && "aspect-[19/9] min-h-0",
-            isLauncher && !isLandscape && "aspect-[9/19] min-h-[400px]",
+            isLarge && isLauncher && !isLandscape && "aspect-[3/4] min-h-[520px] sm:min-h-[580px]",
+            !isLarge && isLauncher && !isLandscape && "aspect-[9/19] min-h-[400px]",
             !isLauncher && !isLandscape && "max-h-[440px] overflow-y-auto",
           )}
         >

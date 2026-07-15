@@ -1,7 +1,7 @@
 const links = [
   { href: "#work", label: "Work" },
   { href: "#timeline", label: "Timeline" },
-  { href: "#map", label: "Mind Map" },
+  { href: "#game?app=work-map", label: "Mind Map" },
   { href: "#resume", label: "Résumé" },
   { href: "#contact", label: "Contact" },
 ];

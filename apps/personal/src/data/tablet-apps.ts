@@ -1,6 +1,12 @@
 import { projects } from "./projects";
 
-export type TabletAppId = "ergo" | "co2t" | "fishfight" | "microbe";
+export type TabletAppId =
+  | "ergo"
+  | "co2t"
+  | "fishfight"
+  | "microbe"
+  | "work-map"
+  | "work-history";
 
 export type TabletApp = {
   id: TabletAppId;
@@ -15,6 +21,8 @@ export type TabletApp = {
   iconStyle?: string;
   imageSrc?: string;
   isGame?: boolean;
+  /** Opens inside the studio device instead of a modal or external link */
+  inDevice?: boolean;
 };
 
 const ergo = projects.find((p) => p.slug === "ergo-games");
@@ -67,5 +75,27 @@ export const tabletApps: TabletApp[] = [
     iconBg: "linear-gradient(145deg, #050812 0%, #0d1a3a 50%, #1a3a6c 100%)",
     iconAccent: "#3b9eff",
     isGame: true,
+  },
+  {
+    id: "work-map",
+    name: "Work Map",
+    domain: "Career graph",
+    tagline: "Employment overview",
+    description:
+      "Major employers and roles across one career arc — tap any node to unfold projects, clients, and connections.",
+    iconBg: "linear-gradient(145deg, #1a0f2e 0%, #4a2d6a 50%, #8c5cc7 100%)",
+    iconAccent: "#d4b0ff",
+    inDevice: true,
+  },
+  {
+    id: "work-history",
+    name: "Work History",
+    domain: "Career timeline",
+    tagline: "Eras & decisions",
+    description:
+      "A career told as connected decisions — explore eras, disciplines, and the through-line from early work to present.",
+    iconBg: "linear-gradient(145deg, #3d3428 0%, #6b5a42 45%, #c9b896 100%)",
+    iconAccent: "#f0e4cc",
+    inDevice: true,
   },
 ];

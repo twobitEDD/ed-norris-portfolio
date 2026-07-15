@@ -2,10 +2,12 @@
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { ExternalLink, X } from "lucide-react";
+import { ChevronLeft, ExternalLink, GitBranch, History, X } from "lucide-react";
 import { Phone } from "@/components/physical-ui/Phone";
 import { MicrobeSvgGlyph } from "@/components/games/microbeDraw";
+import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
 import { cn } from "@/lib/cn";
 
@@ -21,11 +23,35 @@ const GameTablet = dynamic(
   },
 );
 
+const StudioWorkMap = dynamic(
+  () => import("@/components/map/StudioWorkMap").then((m) => m.StudioWorkMap),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-full min-h-[280px] items-center justify-center bg-[#0c0e14]">
+        <p className="font-mono text-[10px] uppercase tracking-wider text-white/40">Loading map…</p>
+      </div>
+    ),
+  },
+);
+
 type StudioPhoneAppsProps = {
   className?: string;
 };
 
-function AppIcon({ app }: { app: TabletApp }) {
+const IN_DEVICE_APP_IDS = new Set<TabletAppId>(
+  tabletApps.filter((a) => a.inDevice).map((a) => a.id),
+);
+
+function parseInitialApp(): TabletAppId | null {
+  if (typeof window === "undefined") return null;
+  const params = new URLSearchParams(window.location.search);
+  const app = params.get("app");
+  if (app && tabletApps.some((a) => a.id === app)) return app as TabletAppId;
+  return null;
+}
+
+function AppIcon({ app, large }: { app: TabletApp; large?: boolean }) {
   if (app.id === "microbe") {
     return (
       <div
@@ -37,13 +63,35 @@ function AppIcon({ app }: { app: TabletApp }) {
     );
   }
 
+  if (app.id === "work-map") {
+    return (
+      <div
+        className="flex h-full w-full items-center justify-center rounded-[22%] shadow-inner"
+        style={{ background: app.iconBg }}
+      >
+        <GitBranch className="h-[44%] w-[44%]" style={{ color: app.iconAccent }} strokeWidth={1.75} />
+      </div>
+    );
+  }
+
+  if (app.id === "work-history") {
+    return (
+      <div
+        className="flex h-full w-full items-center justify-center rounded-[22%] shadow-inner"
+        style={{ background: app.iconBg }}
+      >
+        <History className="h-[44%] w-[44%]" style={{ color: app.iconAccent }} strokeWidth={1.75} />
+      </div>
+    );
+  }
+
   if (app.imageSrc) {
     return (
       <div
         className="relative h-full w-full overflow-hidden rounded-[22%] shadow-inner"
         style={{ background: app.iconBg }}
       >
-        <Image src={app.imageSrc} alt="" fill className="object-cover object-center" sizes="56px" />
+        <Image src={app.imageSrc} alt="" fill className="object-cover object-center" sizes={large ? "80px" : "56px"} />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
       </div>
     );
@@ -150,7 +198,77 @@ function AppPromptModal({
   );
 }
 
+function DeviceAppHeader({
+  title,
+  onBack,
+  trailing,
+}: {
+  title: string;
+  onBack: () => void;
+  trailing?: React.ReactNode;
+}) {
+  return (
+    <div className="flex shrink-0 items-center justify-between border-b border-white/8 px-3 py-2">
+      <button
+        type="button"
+        onClick={onBack}
+        className="flex h-8 min-w-[32px] items-center gap-0.5 rounded-full pr-2 text-white/70 transition hover:bg-white/10 hover:text-white"
+        aria-label="Back to home screen"
+      >
+        <ChevronLeft className="h-4 w-4" />
+        <span className="font-mono text-[9px] uppercase tracking-wider">Home</span>
+      </button>
+      <span className="font-editorial text-xs font-medium text-white/90">{title}</span>
+      <div className="flex min-w-[56px] justify-end">{trailing}</div>
+    </div>
+  );
+}
+
+function WorkMapInDevice({ onBack }: { onBack: () => void }) {
+  return (
+    <div className="relative flex min-h-0 flex-1 flex-col pb-6">
+      <DeviceAppHeader title="Work Map" onBack={onBack} />
+      <div className="shrink-0 border-b border-white/6 px-4 py-2.5">
+        <p className="handwritten text-sm leading-snug text-[#d4b0ff]/90">One arc, not six careers.</p>
+        <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.16em] text-white/40">Employment overview</p>
+        <h3 className="mt-0.5 font-editorial text-sm font-medium text-white/90">Where I&apos;ve worked.</h3>
+      </div>
+      <div className="relative min-h-[320px] flex-1 overflow-hidden">
+        <StudioWorkMap mode="overview" />
+      </div>
+      <p className="shrink-0 px-4 pt-2 text-center">
+        <Link
+          href="/map"
+          className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/50 transition hover:text-white/80"
+        >
+          Unfold detailed work map →
+        </Link>
+      </p>
+    </div>
+  );
+}
+
+function WorkHistoryInDevice({ onBack }: { onBack: () => void }) {
+  return (
+    <div className="relative flex min-h-0 flex-1 flex-col pb-6">
+      <DeviceAppHeader title="Work History" onBack={onBack} />
+      <div className="min-h-0 flex-1 overflow-y-auto px-3 py-3">
+        <TimelinePaper compact />
+      </div>
+      <p className="shrink-0 px-4 pt-2 text-center">
+        <Link
+          href="/timeline"
+          className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/50 transition hover:text-white/80"
+        >
+          Full timeline page →
+        </Link>
+      </p>
+    </div>
+  );
+}
+
 export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
+  const [screen, setScreen] = useState<"home" | TabletAppId>("home");
   const [activeApp, setActiveApp] = useState<TabletAppId | null>(null);
   const [gameOpen, setGameOpen] = useState(false);
   const [gameFullscreen, setGameFullscreen] = useState(false);
@@ -160,6 +278,13 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   const selectedApp = activeApp ? tabletApps.find((a) => a.id === activeApp) : null;
 
   useEffect(() => {
+    const initial = parseInitialApp();
+    if (initial && IN_DEVICE_APP_IDS.has(initial)) {
+      setScreen(initial);
+    }
+  }, []);
+
+  useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReducedMotion(mq.matches);
     update();
@@ -167,12 +292,27 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     return () => mq.removeEventListener("change", update);
   }, []);
 
+  const goHome = useCallback(() => {
+    setScreen("home");
+    setGameOpen(false);
+    if (typeof window !== "undefined" && window.location.search.includes("app=")) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("app");
+      window.history.replaceState({}, "", url.pathname + url.hash);
+    }
+  }, []);
+
   const openApp = useCallback((id: TabletAppId) => {
     const app = tabletApps.find((a) => a.id === id);
     if (!app) return;
     if (app.isGame) {
+      setScreen(id);
       setGameOpen(true);
       setGameFullscreen(false);
+      return;
+    }
+    if (app.inDevice) {
+      setScreen(id);
       return;
     }
     setActiveApp(id);
@@ -192,6 +332,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     window.setTimeout(() => {
       setGameOpen(false);
       setGameFullscreen(false);
+      setScreen("home");
       setClosing(false);
     }, 320);
   }, []);
@@ -219,10 +360,10 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   return (
     <>
       <div className={cn(className)}>
-        <Phone glow="cyan" mode="launcher">
+        <Phone glow="cyan" mode="launcher" size="large">
           <div className="flex h-full min-h-0 flex-col bg-gradient-to-b from-[#0c0e14] to-[#12151c] pt-8">
-            <div className="flex shrink-0 items-center justify-between px-4 pb-2">
-              <span className="font-mono text-[9px] font-medium text-white/70">{timeStr}</span>
+            <div className="flex shrink-0 items-center justify-between px-4 pb-2 sm:px-5">
+              <span className="font-mono text-[9px] font-medium text-white/70 sm:text-[10px]">{timeStr}</span>
               <div className="flex items-center gap-1" aria-hidden>
                 <span className="h-1.5 w-2.5 rounded-sm bg-white/35" />
                 <span className="h-1.5 w-1.5 rounded-full bg-white/25" />
@@ -230,48 +371,47 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
               </div>
             </div>
 
-            {gameOpen && !gameFullscreen ? (
+            {screen === "work-map" ? (
+              <WorkMapInDevice onBack={goHome} />
+            ) : screen === "work-history" ? (
+              <WorkHistoryInDevice onBack={goHome} />
+            ) : gameOpen && !gameFullscreen ? (
               <div className="relative flex min-h-0 flex-1 flex-col pb-6">
-                <div className="flex shrink-0 items-center justify-between border-b border-white/8 px-3 py-2">
-                  <button
-                    type="button"
-                    onClick={closeGame}
-                    className="flex h-7 w-7 items-center justify-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white"
-                    aria-label="Back to home screen"
-                  >
-                    <X className="h-3.5 w-3.5" />
-                  </button>
-                  <span className="font-editorial text-xs font-medium text-white/90">Microbe Explorer</span>
-                  <button
-                    type="button"
-                    onClick={openFullscreenGame}
-                    className="rounded-full border border-[#3b9eff]/35 px-2 py-0.5 font-mono text-[8px] uppercase tracking-wider text-[#7ec8ff] transition hover:bg-[#3b9eff]/15"
-                  >
-                    Expand
-                  </button>
-                </div>
-                <div className="relative min-h-[160px] flex-1 overflow-hidden">
+                <DeviceAppHeader
+                  title="Microbe Explorer"
+                  onBack={goHome}
+                  trailing={
+                    <button
+                      type="button"
+                      onClick={openFullscreenGame}
+                      className="rounded-full border border-[#3b9eff]/35 px-2 py-0.5 font-mono text-[8px] uppercase tracking-wider text-[#7ec8ff] transition hover:bg-[#3b9eff]/15"
+                    >
+                      Expand
+                    </button>
+                  }
+                />
+                <div className="relative min-h-[200px] flex-1 overflow-hidden">
                   <GameTablet overlay className="h-full w-full" />
                 </div>
               </div>
             ) : (
-              <div className="flex flex-1 flex-col px-3 pb-8 pt-1">
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">
+              <div className="flex flex-1 flex-col px-4 pb-8 pt-1 sm:px-6">
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45 sm:text-[10px]">
                   Norris Studio
                 </p>
-                <div className="mt-4 grid flex-1 grid-cols-2 gap-x-4 gap-y-5 content-start">
+                <div className="mt-5 grid flex-1 grid-cols-3 gap-x-4 gap-y-6 content-start sm:mt-6 sm:gap-x-6 sm:gap-y-7">
                   {tabletApps.map((app) => (
                     <button
                       key={app.id}
                       type="button"
                       onClick={() => openApp(app.id)}
-                      className="group flex flex-col items-center gap-1 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9eff]/50 rounded-lg p-0.5"
+                      className="group flex flex-col items-center gap-1.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9eff]/50 rounded-lg p-0.5"
                       aria-label={`Open ${app.name}`}
                     >
-                      <div className="aspect-square w-full max-w-[56px] transition group-hover:shadow-[0_4px_16px_rgba(59,158,255,0.22)]">
-                        <AppIcon app={app} />
+                      <div className="aspect-square w-full max-w-[64px] transition group-hover:shadow-[0_4px_16px_rgba(59,158,255,0.22)] sm:max-w-[72px]">
+                        <AppIcon app={app} large />
                       </div>
-                      <span className="max-w-[72px] truncate text-center text-[10px] font-medium leading-tight text-white/80">
+                      <span className="max-w-[88px] truncate text-center text-[10px] font-medium leading-tight text-white/80 sm:text-[11px]">
                         {app.name}
                       </span>
                     </button>
@@ -283,7 +423,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
         </Phone>
       </div>
 
-      {selectedApp && !selectedApp.isGame && (
+      {selectedApp && !selectedApp.isGame && !selectedApp.inDevice && (
         <AppPromptModal app={selectedApp} onClose={closePrompt} onPlayGame={openFullscreenGame} />
       )}
 

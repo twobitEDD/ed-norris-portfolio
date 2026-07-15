@@ -5,8 +5,8 @@ import { cn } from "@/lib/cn";
 
 const sections = [
   { id: "hero", num: "01", label: "Home" },
-  { id: "timeline", num: "02", label: "Timeline" },
-  { id: "map", num: "03", label: "Map" },
+  { id: "game", num: "02", label: "Apps" },
+  { id: "timeline", num: "03", label: "Timeline" },
   { id: "work", num: "04", label: "Work" },
   { id: "resume", num: "05", label: "Résumé" },
   { id: "contact", num: "06", label: "Contact" },

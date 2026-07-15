@@ -23,7 +23,7 @@ export function HeroSection({ person }: { person: Person }) {
             Explore environmental technology
           </a>
           <a
-            href="#map"
+            href="#game?app=work-map"
             className="rounded-full border border-ink px-4 py-2.5 text-sm font-semibold transition hover:bg-ink hover:text-paper"
           >
             Explore games & interactive work
