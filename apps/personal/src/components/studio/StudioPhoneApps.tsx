@@ -67,8 +67,6 @@ const LAUNCHABLE_APP_IDS = new Set<TabletAppId>(
   tabletApps.filter((a) => a.inDevice || a.isGame).map((a) => a.id),
 );
 
-const DOCK_APP_IDS: TabletAppId[] = ["ergo", "co2t", "work-map", "microbe"];
-
 function AppIcon({ app, large }: { app: TabletApp; large?: boolean }) {
   if (app.id === "ergo") {
     return (
@@ -307,30 +305,6 @@ function AppIconGrid({ onOpenApp }: { onOpenApp: (id: TabletAppId) => void }) {
           </div>
         );
       })}
-    </div>
-  );
-}
-
-function SpringboardDock({ onOpenApp }: { onOpenApp: (id: TabletAppId) => void }) {
-  const dockApps = DOCK_APP_IDS.map((id) => tabletApps.find((a) => a.id === id)!).filter(Boolean);
-
-  return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex justify-center px-4 pb-5 sm:px-5 sm:pb-6">
-      <div className="pointer-events-auto flex items-center gap-4 rounded-[28px] border border-white/[0.12] bg-white/[0.08] px-4 py-2.5 sm:gap-5 sm:px-5">
-        {dockApps.map((app) => (
-          <button
-            key={app.id}
-            type="button"
-            onClick={() => onOpenApp(app.id)}
-            className="group rounded-[22%] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
-            aria-label={`Open ${app.name}`}
-          >
-            <div className="aspect-square w-[50px] sm:w-[54px]">
-              <AppIcon app={app} large />
-            </div>
-          </button>
-        ))}
-      </div>
     </div>
   );
 }
@@ -748,12 +722,10 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
               <>
                 <SpringboardStatusBar timeStr={timeStr} dateShortStr={dateShortStr} />
 
-                <div className="relative z-[1] flex min-h-0 flex-1 flex-col justify-start overflow-y-auto px-4 pb-[100px] pt-2 sm:px-6 sm:pb-[108px] sm:pt-3">
+                <div className="relative z-[1] flex min-h-0 flex-1 flex-col justify-start overflow-y-auto px-4 pb-6 pt-2 sm:px-6 sm:pb-7 sm:pt-3">
                   <SpringboardMiniWidgets timeStr={timeStr} dateShortStr={dateShortStr} />
                   <AppIconGrid onOpenApp={openApp} />
                 </div>
-
-                <SpringboardDock onOpenApp={openApp} />
               </>
             )}
           </div>
