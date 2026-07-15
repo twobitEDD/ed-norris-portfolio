@@ -3,7 +3,7 @@
 import { Tablet } from "@/components/physical-ui/Tablet";
 import { mapGraphThesis } from "@/data/through-line";
 import { cn } from "@/lib/cn";
-import { StudioWorkMap } from "./StudioWorkMap";
+import { StudioWorkMap, type MapMode } from "./StudioWorkMap";
 
 type MapTabletProps = {
   className?: string;
@@ -11,16 +11,25 @@ type MapTabletProps = {
   eagerLoad?: boolean;
   /** Taller layout for full-page /map route */
   fullPage?: boolean;
-  /** Relationship-graph subset for homepage bento */
+  /** Tier 1 employment overview for homepage bento */
+  mode?: MapMode;
+  /** @deprecated Use mode="overview" */
   preview?: boolean;
+  /** Detail-tier cluster focus (?focus=co2t) */
+  initialFocus?: string | null;
 };
 
 export function MapTablet({
   className,
   eagerLoad = false,
   fullPage = false,
+  mode,
   preview = false,
+  initialFocus = null,
 }: MapTabletProps) {
+  const tier: MapMode = mode ?? (preview ? "overview" : "detail");
+  const isOverview = tier === "overview";
+
   return (
     <Tablet glow="purple" className={className}>
       <div
@@ -28,7 +37,7 @@ export function MapTablet({
           "flex h-full flex-col",
           fullPage
             ? "min-h-[min(85vh,760px)]"
-            : preview
+            : isOverview
               ? "min-h-[460px] sm:min-h-[500px]"
               : "min-h-[360px] sm:min-h-[380px]",
         )}
@@ -38,15 +47,22 @@ export function MapTablet({
             Work map
           </p>
           <h2 className="mt-1 font-editorial text-base font-medium text-screen-text sm:text-lg">
-            {preview ? "How the work connects." : "The living work map."}
+            {isOverview ? "Where I've worked." : "The detailed work graph."}
           </h2>
           <p className="mt-2 text-[11px] leading-relaxed text-screen-muted sm:text-xs">
-            {preview
-              ? "A sample of companies, clients, and projects — tap nodes to see relationships. Open the full map for every role and connection."
-              : mapGraphThesis}
+            {isOverview
+              ? "Major employers and roles across one career arc — tap any node to unfold projects, clients, and connections."
+              : initialFocus
+                ? `Focused view — use the employment strip above to switch clusters, or reset to see the full graph.`
+                : mapGraphThesis}
           </p>
         </div>
-        <StudioWorkMap eagerLoad={eagerLoad} fullPage={fullPage} preview={preview} />
+        <StudioWorkMap
+          eagerLoad={eagerLoad}
+          fullPage={fullPage}
+          mode={tier}
+          initialFocus={initialFocus}
+        />
       </div>
     </Tablet>
   );

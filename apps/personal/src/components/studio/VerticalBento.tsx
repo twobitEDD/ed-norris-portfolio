@@ -105,14 +105,14 @@ export function VerticalBento() {
                 <p className="handwritten text-sm leading-snug text-ink">One arc, not six careers.</p>
               </StickyNote>
               <LazyMount minHeight="500px">
-                <MapTablet className="w-full" preview />
+                <MapTablet className="w-full" mode="overview" />
               </LazyMount>
               <p className="mt-4 text-center">
                 <Link
                   href="/map"
                   className="font-mono text-[10px] uppercase tracking-[0.18em] text-paper-cream/60 transition hover:text-paper-cream"
                 >
-                  Open full work map →
+                  Unfold detailed work map →
                 </Link>
               </p>
             </div>

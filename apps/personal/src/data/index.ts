@@ -6,6 +6,16 @@ export { timelineEras, type TimelineEra, type EraRelatedLink } from "./timeline-
 export { projects } from "./projects";
 export { skills } from "./skills";
 export { graphNodes, graphEdges } from "./relationships";
+export {
+  employmentOverviewNodeIds,
+  employmentOverviewLabels,
+  employmentFocusSlugs,
+  nodeIdToFocusSlug,
+  resolveFocusSlug,
+  focusSlugToNodeId,
+  getFocusClusterNodeIds,
+  type MapTier,
+} from "./map-tiers";
 export { throughLineThesis, mapGraphThesis, storyStops, themeFilterOptions } from "./through-line";
 export {
   co2tBrand,

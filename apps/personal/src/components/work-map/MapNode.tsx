@@ -16,6 +16,7 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
   const isPerson = data.nodeType === "person";
   const isTheme = data.isThemeHub;
   const isExperience = data.nodeType === "experience";
+  const isOverview = data.tier === "overview" || data.preview;
   const surface = getMapNodeSurface(discipline, data.nodeType, {
     highlighted: data.highlighted,
     selected,
@@ -24,7 +25,7 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
   return (
     <motion.div
       animate={
-        data.dimmed || data.preview
+        data.dimmed || isOverview
           ? undefined
           : {
               x: [0, 1.5, -1, 0],
@@ -38,11 +39,13 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
       }}
       className={cn(
         "rounded-2xl border text-center shadow-md transition-opacity duration-300 motion-reduce:animate-none",
-        isPerson && "min-w-[140px] max-w-[200px] px-4 py-3.5 sm:min-w-[160px] sm:px-5 sm:py-4",
-        isTheme && "min-w-[120px] max-w-[190px] px-3.5 py-3 sm:min-w-[140px] sm:px-4 sm:py-3.5",
-        !isPerson && !isTheme && !isExperience && "min-w-[100px] max-w-[160px] px-3 py-2.5 sm:min-w-[120px] sm:px-4 sm:py-3",
-        isExperience && "min-w-[110px] max-w-[170px] px-3 py-2 sm:min-w-[130px] sm:px-3.5 sm:py-2.5",
-        data.preview && isTheme && "min-w-[130px] sm:min-w-[150px]",
+        isOverview && isExperience && "min-w-[120px] max-w-[200px] px-4 py-3 sm:min-w-[140px] sm:px-4 sm:py-3.5",
+        isOverview && isPerson && "min-w-[130px] max-w-[180px] px-4 py-3 sm:min-w-[150px] sm:px-5 sm:py-4",
+        isOverview && !isPerson && !isExperience && "min-w-[110px] max-w-[180px] px-3.5 py-2.5 sm:min-w-[130px] sm:px-4 sm:py-3",
+        !isOverview && isPerson && "min-w-[140px] max-w-[200px] px-4 py-3.5 sm:min-w-[160px] sm:px-5 sm:py-4",
+        !isOverview && isTheme && "min-w-[120px] max-w-[190px] px-3.5 py-3 sm:min-w-[140px] sm:px-4 sm:py-3.5",
+        !isOverview && !isPerson && !isTheme && !isExperience && "min-w-[100px] max-w-[160px] px-3 py-2.5 sm:min-w-[120px] sm:px-4 sm:py-3",
+        !isOverview && isExperience && "min-w-[110px] max-w-[170px] px-3 py-2 sm:min-w-[130px] sm:px-3.5 sm:py-2.5",
         data.dimmed && "pointer-events-none opacity-[0.12]",
         data.highlighted && "opacity-100",
       )}
@@ -65,24 +68,28 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
       <Handle id="target-left" type="target" position={Position.Left} className={handleClass} />
       <p
         className={cn(
-          "font-display font-bold leading-tight",
-          data.preview && "text-[13px] sm:text-sm",
-          !data.preview && isPerson && "text-base sm:text-lg",
-          !data.preview && isTheme && "text-xs sm:text-sm",
-          !data.preview && !isPerson && !isTheme && "text-[11px] sm:text-sm",
-          data.preview && isPerson && "text-sm sm:text-base",
-          data.preview && isTheme && "text-[13px] sm:text-sm",
+          "line-clamp-2 font-display font-bold leading-snug",
+          isOverview && "text-sm sm:text-[15px]",
+          isOverview && isPerson && "text-[15px] sm:text-base",
+          !isOverview && isPerson && "text-sm sm:text-base",
+          !isOverview && isTheme && "text-xs sm:text-sm",
+          !isOverview && !isPerson && !isTheme && "text-xs sm:text-sm",
         )}
         style={{ color: surface.labelColor }}
       >
         {data.label}
       </p>
-      {data.subtitle && (
+      {data.subtitle && !isOverview && (
         <p
-          className={cn(
-            "mt-0.5 font-mono uppercase tracking-wider sm:mt-1",
-            data.preview ? "text-[10px] sm:text-[11px]" : "text-[9px] sm:text-[10px]",
-          )}
+          className="mt-0.5 line-clamp-1 font-mono text-[10px] uppercase tracking-wider sm:mt-1 sm:text-[11px]"
+          style={{ color: surface.subtitleColor }}
+        >
+          {data.subtitle}
+        </p>
+      )}
+      {data.subtitle && isOverview && isExperience && (
+        <p
+          className="mt-1 line-clamp-1 font-mono text-[10px] uppercase tracking-wider sm:text-[11px]"
           style={{ color: surface.subtitleColor }}
         >
           {data.subtitle}

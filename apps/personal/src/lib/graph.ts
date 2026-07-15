@@ -1,46 +1,29 @@
 import type { Node, Edge } from "@xyflow/react";
 import { graphEdges, graphNodes } from "@/data";
+import {
+  employmentOverviewEdges,
+  employmentOverviewNodeIdSet,
+  getFocusClusterNodeIds,
+} from "@/data/map-tiers";
 import type { Discipline, GraphNode } from "@/data/types";
 import { disciplineColors } from "@/data/types";
 import { getEdgeHandles, getNodePosition, type MapLayoutOptions } from "@/components/work-map/map-layout";
 
-/**
- * Homepage bento preview — relationship graph subset (companies, roles, clients, projects).
- * Uses real edges from relationships.ts, not the career through-line story path.
- */
+/** @deprecated Use employmentOverviewNodeIds from map-tiers */
 export const previewGraphNodeIds = [
   "person-ed",
-  "exp-node-adidas",
+  "exp-node-ea",
   "exp-node-2bit",
-  "company-2bit",
+  "exp-node-pps",
+  "exp-node-adidas",
   "client-google",
-  "client-dell",
-  "project-ergo",
   "exp-node-oibw",
   "exp-node-co2t",
-  "company-co2t",
-  "project-carbon",
+  "project-ergo",
 ] as const;
 
-/** Bridge edges so person-ed connects to the preview subgraph (full graph routes via theme hubs). */
-const previewPersonBridgeEdges = [
-  {
-    id: "preview-pe-2bit",
-    source: "person-ed",
-    target: "exp-node-2bit",
-    relationship: "created" as const,
-    connectionNote: "studio founder",
-  },
-  {
-    id: "preview-pe-co2t",
-    source: "person-ed",
-    target: "exp-node-co2t",
-    relationship: "managed" as const,
-    connectionNote: "VP Operations",
-  },
-];
-
-export const previewNodeIds = new Set<string>(previewGraphNodeIds);
+/** @deprecated Use employmentOverviewNodeIdSet */
+export const previewNodeIds = employmentOverviewNodeIdSet;
 
 const themeHubIds = new Set(
   graphNodes.filter((n) => n.type === "theme").map((n) => n.id),
@@ -57,13 +40,23 @@ export type MapNodeData = {
   highlighted?: boolean;
   isThemeHub?: boolean;
   index: number;
+  tier?: "overview" | "detail";
+  /** @deprecated Use tier === "overview" */
   preview?: boolean;
+  focusSlug?: string | null;
 };
 
 export type MapEdgeData = {
   highlighted?: boolean;
   dimmed?: boolean;
+  showLabel?: boolean;
 };
+
+function resolveTier(layoutOptions?: MapLayoutOptions): "overview" | "detail" {
+  if (layoutOptions?.tier) return layoutOptions.tier;
+  if (layoutOptions?.preview) return "overview";
+  return "detail";
+}
 
 function getConnectedNodes(nodeId: string, depth = 1): Set<string> {
   const connected = new Set<string>([nodeId, "person-ed"]);
@@ -78,13 +71,11 @@ function getConnectedNodes(nodeId: string, depth = 1): Set<string> {
   return connected;
 }
 
-function getPreviewEdges() {
-  const ids = previewNodeIds;
-  const fromGraph = graphEdges.filter((e) => ids.has(e.source) && ids.has(e.target));
-  const bridge = previewPersonBridgeEdges.filter(
-    (e) => ids.has(e.source) && ids.has(e.target),
-  );
-  return [...fromGraph, ...bridge];
+function getOverviewEdges() {
+  return employmentOverviewEdges.map((e) => ({
+    ...e,
+    relationship: "led-to" as const,
+  }));
 }
 
 export function getRelatedThemes(nodeId: string): GraphNode[] {
@@ -115,16 +106,22 @@ export function buildFlowGraph(
   selectedId?: string,
   activeThemeId?: string | null,
   layoutOptions?: MapLayoutOptions,
+  focusSlug?: string | null,
 ) {
-  const preview = layoutOptions?.preview ?? false;
-  const themeVisible = !preview && activeThemeId ? getConnectedNodes(activeThemeId, 2) : null;
+  const tier = resolveTier(layoutOptions);
+  const isOverview = tier === "overview";
+  const themeVisible = !isOverview && activeThemeId ? getConnectedNodes(activeThemeId, 2) : null;
+  const focusVisible =
+    !isOverview && focusSlug ? getFocusClusterNodeIds(focusSlug, 2) : null;
 
-  let visibleNodes = preview
-    ? graphNodes.filter((n) => previewNodeIds.has(n.id))
+  let visibleNodes = isOverview
+    ? graphNodes.filter((n) => employmentOverviewNodeIdSet.has(n.id))
     : graphNodes;
 
   if (themeVisible) {
     visibleNodes = visibleNodes.filter((n) => themeVisible.has(n.id));
+  } else if (focusVisible) {
+    visibleNodes = visibleNodes.filter((n) => focusVisible.has(n.id));
   }
 
   const visibleIds = new Set(visibleNodes.map((n) => n.id));
@@ -135,7 +132,7 @@ export function buildFlowGraph(
       !node.disciplines.some((d) => activeFilters.includes(d));
     const connected = selectedId ? isConnected(selectedId, node.id, visibleIds) : false;
 
-    const dimmed = preview
+    const dimmed = isOverview
       ? false
       : selectedId
         ? !connected && selectedId !== node.id
@@ -156,13 +153,15 @@ export function buildFlowGraph(
         highlighted: selectedId === node.id || connected,
         isThemeHub: node.type === "theme",
         index,
-        preview,
+        tier,
+        preview: isOverview,
+        focusSlug,
       },
     };
   });
 
-  const edgeSource = preview
-    ? getPreviewEdges()
+  const edgeSource = isOverview
+    ? getOverviewEdges()
     : graphEdges.filter(
         (edge) => visibleIds.has(edge.source) && visibleIds.has(edge.target),
       );
@@ -170,7 +169,7 @@ export function buildFlowGraph(
   const edges: Edge[] = edgeSource.map((edge) => {
       const sourceNode = graphNodes.find((n) => n.id === edge.source);
       const edgeDimmed =
-        !preview &&
+        !isOverview &&
         activeFilters.length > 0 &&
         sourceNode &&
         !sourceNode.disciplines.some((d) => activeFilters.includes(d));
@@ -182,9 +181,9 @@ export function buildFlowGraph(
         ? disciplineColors[sourceNode.disciplines[0]]
         : "#46c7d7";
 
-      const showLabel = !preview && highlighted && edge.connectionNote;
+      const showLabel = !isOverview && highlighted && !!edge.connectionNote;
       const handles = getEdgeHandles(edge.source, edge.target, layoutOptions);
-      const opacity = edgeDimmed && !highlighted ? 0.08 : highlighted ? 0.95 : preview ? 0.75 : 0.28;
+      const opacity = edgeDimmed && !highlighted ? 0.08 : highlighted ? 0.95 : isOverview ? 0.8 : 0.28;
 
       return {
         id: edge.id,
@@ -196,16 +195,17 @@ export function buildFlowGraph(
         label: showLabel ? edge.connectionNote : undefined,
         labelStyle: {
           fill: "#e2e8f0",
-          fontSize: 10,
+          fontSize: 11,
           fontFamily: "var(--font-ibm-plex-mono), monospace",
         },
         data: {
           highlighted,
           dimmed: edgeDimmed && !highlighted,
+          showLabel,
         },
         style: {
           stroke: color,
-          strokeWidth: preview ? 2 : highlighted ? 2.5 : 1.5,
+          strokeWidth: isOverview ? 2.5 : highlighted ? 2.5 : 1.5,
           opacity,
         },
         animated: highlighted,

@@ -1,9 +1,15 @@
+"use client";
+
 import { StickyNote } from "@/components/physical-ui/StickyNote";
 import { StudioScene } from "@/components/studio/StudioScene";
 import { StudioObject } from "@/components/studio/StudioObject";
 import { MapTablet } from "./MapTablet";
 
-export function WorkMapScene() {
+type WorkMapSceneProps = {
+  initialFocus?: string | null;
+};
+
+export function WorkMapScene({ initialFocus = null }: WorkMapSceneProps) {
   return (
     <StudioScene id="map" minHeight="min-h-[95vh]">
       <div className="mx-auto max-w-5xl">
@@ -15,7 +21,7 @@ export function WorkMapScene() {
             >
               <p className="handwritten text-sm leading-snug text-ink">One arc, not six careers.</p>
             </StickyNote>
-            <MapTablet className="w-full" eagerLoad fullPage />
+            <MapTablet className="w-full" eagerLoad fullPage mode="detail" initialFocus={initialFocus} />
           </div>
         </StudioObject>
       </div>

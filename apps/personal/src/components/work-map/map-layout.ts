@@ -1,23 +1,20 @@
 /**
- * Manual sector layout — themes in an outer ring, experiences in regional clusters.
+ * Manual sector layout — overview tier (employment arc) vs detail tier (full relationship graph).
  * Coordinates are tuned for full-page /map; `scale` multiplies spread further.
  */
 
-/** Relationship graph preview — companies, roles, clients, projects (not through-line spine). */
-const previewPositions: Record<string, { x: number; y: number }> = {
-  "person-ed": { x: 0, y: 120 },
+/** Tier 1 — employment overview: major employers/roles in chronological arc. */
+const employmentOverviewPositions: Record<string, { x: number; y: number }> = {
+  "person-ed": { x: 0, y: 150 },
 
-  "exp-node-adidas": { x: -320, y: -60 },
-  "exp-node-2bit": { x: -120, y: -100 },
-  "company-2bit": { x: 80, y: -60 },
-  "client-google": { x: 280, y: -100 },
-  "client-dell": { x: 380, y: 20 },
-  "project-ergo": { x: 200, y: 40 },
-
-  "exp-node-oibw": { x: -360, y: 140 },
-  "exp-node-co2t": { x: -160, y: 180 },
-  "company-co2t": { x: 40, y: 220 },
-  "project-carbon": { x: 260, y: 200 },
+  "exp-node-ea": { x: -520, y: -20 },
+  "exp-node-2bit": { x: -300, y: -70 },
+  "exp-node-pps": { x: -80, y: -50 },
+  "exp-node-adidas": { x: 120, y: -90 },
+  "client-google": { x: 320, y: -50 },
+  "exp-node-oibw": { x: 480, y: 10 },
+  "exp-node-co2t": { x: 620, y: 50 },
+  "project-ergo": { x: 760, y: 10 },
 };
 
 const positions: Record<string, { x: number; y: number }> = {
@@ -72,16 +69,27 @@ const positions: Record<string, { x: number; y: number }> = {
   "project-web": { x: 560, y: 300 },
 };
 
+export type MapTier = "overview" | "detail";
+
 export type MapLayoutOptions = {
+  /** @deprecated Use `tier` — kept for compatibility */
   preview?: boolean;
+  tier?: MapTier;
   /** Spread multiplier for full-page /map layout */
   scale?: number;
 };
 
+function resolveTier(options?: MapLayoutOptions): MapTier {
+  if (options?.tier) return options.tier;
+  if (options?.preview) return "overview";
+  return "detail";
+}
+
 /** All layout positions (scaled) — used for smart edge handle routing. */
 export function getLayoutPositions(options?: MapLayoutOptions): Record<string, { x: number; y: number }> {
-  const table = options?.preview ? previewPositions : positions;
-  const scale = options?.preview ? 1 : (options?.scale ?? 1);
+  const tier = resolveTier(options);
+  const table = tier === "overview" ? employmentOverviewPositions : positions;
+  const scale = tier === "overview" ? 1 : (options?.scale ?? 1);
   const out: Record<string, { x: number; y: number }> = {};
   for (const [id, pos] of Object.entries(table)) {
     out[id] = { x: pos.x * scale, y: pos.y * scale };
