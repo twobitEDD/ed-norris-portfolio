@@ -83,7 +83,15 @@ export function VerticalBento() {
     <section className="vertical-bento relative px-4 pb-28 pt-2 sm:px-8 sm:pb-32 sm:pt-4">
       <div className="vertical-bento__grid mx-auto max-w-[920px]">
         <BentoCell id="game" deferPaint className="bento-cell--game">
-          <StudioObject rotate={-0.8} className="bento-cell--game-object flex flex-col items-center">
+          <StudioObject rotate={-0.8} className="bento-cell--game-object relative flex flex-col items-center">
+            <StickyNote color="green" className="absolute -left-2 top-8 z-10 hidden max-w-[170px] lg:block xl:-left-6">
+              <p className="handwritten text-sm leading-snug text-ink">Ship accessible games.</p>
+              <p className="handwritten mt-1 text-xs text-ink-soft">ERGO first.</p>
+            </StickyNote>
+            <StickyNote color="yellow" className="absolute -right-2 top-24 z-10 hidden max-w-[170px] lg:block xl:-right-6">
+              <p className="handwritten text-sm leading-snug text-ink">Lead with clarity.</p>
+              <p className="handwritten mt-1 text-xs text-ink-soft">Teams &gt; heroics.</p>
+            </StickyNote>
             <StudioPhoneApps />
           </StudioObject>
         </BentoCell>

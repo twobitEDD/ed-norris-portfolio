@@ -37,8 +37,12 @@ const NAV_KEYS = new Set([
 
 const COLORS = {
   background: "#040a14",
-  wall: "#0d2847",
-  wallEdge: "#1e5a9e",
+  floor: "#061828",
+  floorShimmer: "rgba(59, 158, 255, 0.06)",
+  wall: "#0a2040",
+  wallFace: "#123a6b",
+  wallEdge: "#2d8fd4",
+  wallGlow: "rgba(59, 158, 255, 0.22)",
   hud: "rgba(180, 230, 255, 0.85)",
   lock: "rgba(59, 158, 255, 0.9)",
 };
@@ -83,14 +87,32 @@ function drawMaze(
 
       for (let ly = 0; ly < CHUNK_SIZE; ly += 1) {
         for (let lx = 0; lx < CHUNK_SIZE; lx += 1) {
+          const x = baseX + lx;
+          const y = baseY + ly;
+          if (chunk.walls[ly][lx]) continue;
+          ctx.fillStyle = COLORS.floor;
+          ctx.fillRect(x, y, 1, 1);
+          if ((lx + ly) % 2 === 0) {
+            ctx.fillStyle = COLORS.floorShimmer;
+            ctx.fillRect(x + 0.15, y + 0.15, 0.7, 0.7);
+          }
+        }
+      }
+
+      for (let ly = 0; ly < CHUNK_SIZE; ly += 1) {
+        for (let lx = 0; lx < CHUNK_SIZE; lx += 1) {
           if (!chunk.walls[ly][lx]) continue;
           const x = baseX + lx;
           const y = baseY + ly;
+          ctx.fillStyle = COLORS.wallGlow;
+          ctx.fillRect(x - 0.02, y - 0.02, 1.04, 1.04);
           ctx.fillStyle = COLORS.wall;
-          ctx.fillRect(x, y, 1.02, 1.02);
+          ctx.fillRect(x, y, 1, 1);
+          ctx.fillStyle = COLORS.wallFace;
+          ctx.fillRect(x + 0.08, y + 0.08, 0.84, 0.84);
           ctx.strokeStyle = COLORS.wallEdge;
-          ctx.lineWidth = 0.04;
-          ctx.strokeRect(x + 0.02, y + 0.02, 0.96, 0.96);
+          ctx.lineWidth = 0.06;
+          ctx.strokeRect(x + 0.04, y + 0.04, 0.92, 0.92);
         }
       }
     }

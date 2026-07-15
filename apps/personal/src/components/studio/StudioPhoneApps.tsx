@@ -4,8 +4,9 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { ChevronLeft, ExternalLink, GitBranch, History, X } from "lucide-react";
+import { ChevronLeft, ExternalLink, Fish, Gamepad2, GitBranch, History, X } from "lucide-react";
 import { Phone } from "@/components/physical-ui/Phone";
+import { StickyNote } from "@/components/physical-ui/StickyNote";
 import { MicrobeSvgGlyph } from "@/components/games/microbeDraw";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
@@ -43,15 +44,51 @@ const IN_DEVICE_APP_IDS = new Set<TabletAppId>(
   tabletApps.filter((a) => a.inDevice).map((a) => a.id),
 );
 
-function parseInitialApp(): TabletAppId | null {
+function parseAppParam(): TabletAppId | null {
   if (typeof window === "undefined") return null;
-  const params = new URLSearchParams(window.location.search);
-  const app = params.get("app");
-  if (app && tabletApps.some((a) => a.id === app)) return app as TabletAppId;
-  return null;
+
+  const fromParams = (params: URLSearchParams) => {
+    const app = params.get("app");
+    if (app && tabletApps.some((a) => a.id === app)) return app as TabletAppId;
+    return null;
+  };
+
+  const fromSearch = fromParams(new URLSearchParams(window.location.search));
+  if (fromSearch) return fromSearch;
+
+  const hash = window.location.hash;
+  const queryStart = hash.indexOf("?");
+  if (queryStart === -1) return null;
+  return fromParams(new URLSearchParams(hash.slice(queryStart)));
+}
+
+function parseInitialApp(): TabletAppId | null {
+  return parseAppParam();
 }
 
 function AppIcon({ app, large }: { app: TabletApp; large?: boolean }) {
+  if (app.id === "ergo") {
+    return (
+      <div
+        className="flex h-full w-full items-center justify-center rounded-[22%] shadow-inner"
+        style={{ background: app.iconBg }}
+      >
+        <Gamepad2 className="h-[44%] w-[44%]" style={{ color: app.iconAccent }} strokeWidth={1.75} />
+      </div>
+    );
+  }
+
+  if (app.id === "fishfight") {
+    return (
+      <div
+        className="flex h-full w-full items-center justify-center rounded-[22%] shadow-inner"
+        style={{ background: app.iconBg }}
+      >
+        <Fish className="h-[44%] w-[44%]" style={{ color: app.iconAccent }} strokeWidth={1.75} />
+      </div>
+    );
+  }
+
   if (app.id === "microbe") {
     return (
       <div
@@ -224,6 +261,25 @@ function DeviceAppHeader({
   );
 }
 
+function PhoneHomeWidgets() {
+  return (
+    <div className="mt-auto grid gap-3 pt-5 sm:grid-cols-2 sm:gap-4">
+      <StickyNote color="yellow" className="max-w-none scale-[0.92] origin-top-left sm:scale-100">
+        <p className="handwritten text-sm leading-snug text-ink">VP Engineering · game dev leadership</p>
+        <p className="handwritten mt-1 text-xs text-ink-soft">Build teams. Ship worlds.</p>
+      </StickyNote>
+      <StickyNote color="green" className="max-w-none scale-[0.92] origin-top-right sm:scale-100">
+        <p className="handwritten text-sm leading-snug text-ink">CO2T · ERGO · environmental work</p>
+        <p className="handwritten mt-1 text-xs text-ink-soft">Impact that outlasts the sprint.</p>
+      </StickyNote>
+      <StickyNote color="pink" className="max-w-none scale-[0.92] origin-top-left sm:col-span-2 sm:mx-auto sm:max-w-[280px] sm:scale-100">
+        <p className="handwritten text-sm leading-snug text-ink">Dad first. Then the maze.</p>
+        <p className="handwritten mt-1 text-xs text-ink-soft">— Edd Norris</p>
+      </StickyNote>
+    </div>
+  );
+}
+
 function WorkMapInDevice({ onBack }: { onBack: () => void }) {
   return (
     <div className="relative flex min-h-0 flex-1 flex-col pb-6">
@@ -285,6 +341,19 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   }, []);
 
   useEffect(() => {
+    const onHashChange = () => {
+      const app = parseAppParam();
+      if (app && IN_DEVICE_APP_IDS.has(app)) {
+        setScreen(app);
+        setGameOpen(false);
+        setActiveApp(null);
+      }
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReducedMotion(mq.matches);
     update();
@@ -295,10 +364,25 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   const goHome = useCallback(() => {
     setScreen("home");
     setGameOpen(false);
-    if (typeof window !== "undefined" && window.location.search.includes("app=")) {
-      const url = new URL(window.location.href);
+    if (typeof window === "undefined") return;
+    const url = new URL(window.location.href);
+    let changed = false;
+    if (url.searchParams.has("app")) {
       url.searchParams.delete("app");
-      window.history.replaceState({}, "", url.pathname + url.hash);
+      changed = true;
+    }
+    if (url.hash.includes("?")) {
+      const [hashPath, hashQuery] = url.hash.split("?");
+      const hashParams = new URLSearchParams(hashQuery ?? "");
+      if (hashParams.has("app")) {
+        hashParams.delete("app");
+        const nextQuery = hashParams.toString();
+        url.hash = nextQuery ? `${hashPath}?${nextQuery}` : hashPath;
+        changed = true;
+      }
+    }
+    if (changed) {
+      window.history.replaceState({}, "", url.pathname + url.search + url.hash);
     }
   }, []);
 
@@ -395,11 +479,25 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-1 flex-col px-5 pb-8 pt-1 sm:px-8">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45 sm:text-[10px]">
-                  Norris Studio
-                </p>
-                <div className="mt-5 grid flex-1 grid-cols-3 gap-x-5 gap-y-6 content-start sm:mt-6 sm:gap-x-8 sm:gap-y-8">
+              <div className="relative flex flex-1 flex-col overflow-y-auto px-5 pb-8 pt-1 sm:px-8">
+                <div
+                  className="pointer-events-none absolute inset-0 opacity-40"
+                  aria-hidden
+                  style={{
+                    background:
+                      "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59,158,255,0.12) 0%, transparent 55%), radial-gradient(circle at 20% 80%, rgba(59,158,255,0.06) 0%, transparent 40%)",
+                  }}
+                />
+                <div className="relative">
+                  <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45 sm:text-[10px]">
+                    Norris Studio
+                  </p>
+                  <p className="mt-1 font-editorial text-lg font-medium text-white/90 sm:text-xl">Edd&apos;s desk</p>
+                  <p className="mt-0.5 text-[10px] text-white/45 sm:text-[11px]">
+                    Games · environment · career tools
+                  </p>
+                </div>
+                <div className="relative mt-5 grid grid-cols-3 gap-x-5 gap-y-6 content-start sm:mt-6 sm:gap-x-8 sm:gap-y-8">
                   {tabletApps.map((app) => (
                     <button
                       key={app.id}
@@ -417,6 +515,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                     </button>
                   ))}
                 </div>
+                <PhoneHomeWidgets />
               </div>
             )}
           </div>

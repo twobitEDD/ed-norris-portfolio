@@ -189,25 +189,6 @@ export function generateChunk(cx: number, cy: number): ChunkData {
     }
   }
 
-  for (let ly = 0; ly < CHUNK_SIZE; ly += 1) {
-    for (let lx = 0; lx < CHUNK_SIZE; lx += 1) {
-      if (!walls[ly][lx]) continue;
-      const neighbors = [
-        [lx - 1, ly],
-        [lx + 1, ly],
-        [lx, ly - 1],
-        [lx, ly + 1],
-      ];
-      for (const [nx, ny] of neighbors) {
-        if (nx < 0 || nx >= CHUNK_SIZE || ny < 0 || ny >= CHUNK_SIZE) continue;
-        if (!walls[ny][nx]) {
-          walls[ly][lx] = false;
-          break;
-        }
-      }
-    }
-  }
-
   const collectibles: Collectible[] = [];
   for (let ly = 0; ly < CHUNK_SIZE; ly += 1) {
     for (let lx = 0; lx < CHUNK_SIZE; lx += 1) {
