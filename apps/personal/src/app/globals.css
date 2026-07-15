@@ -885,26 +885,22 @@ body {
 
 .contact-phone-device {
   width: 100%;
-  max-width: min(100%, 440px);
+  max-width: min(100%, 560px);
 }
 
 .contact-phone-device .screen-surface {
-  min-height: 500px;
+  min-height: 0;
   max-height: none;
   overflow: hidden;
 }
 
 .contact-phone-device .screen-surface > div {
-  padding: 1rem 1.125rem;
+  padding: 0.75rem 0.875rem;
 }
 
 @media (min-width: 640px) {
-  .contact-phone-device .screen-surface {
-    min-height: 540px;
-  }
-
   .contact-phone-device .screen-surface > div {
-    padding: 1.125rem 1.25rem;
+    padding: 0.875rem 1rem;
   }
 }
 
