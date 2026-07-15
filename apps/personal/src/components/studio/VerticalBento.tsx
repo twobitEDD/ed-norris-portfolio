@@ -9,6 +9,7 @@ import { getProjectImage } from "@/data/career-images";
 import type { Project } from "@/data/types";
 import { disciplineColors } from "@/data/types";
 import { ContactCTAs } from "@/components/contact/ContactCTAs";
+import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { IdentityBadgeRow } from "@/components/hero/IdentityBadgeRow";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { Notebook } from "@/components/physical-ui/Notebook";
@@ -27,12 +28,12 @@ import {
   type ResumeConfig,
 } from "@/lib/resume";
 
-const StudioTabletApps = dynamic(
-  () => import("@/components/studio/StudioTabletApps").then((m) => m.StudioTabletApps),
+const StudioPhoneApps = dynamic(
+  () => import("@/components/studio/StudioPhoneApps").then((m) => m.StudioPhoneApps),
   {
     ssr: false,
     loading: () => (
-      <div className="flex min-h-[240px] items-center justify-center rounded-2xl border border-dashed border-paper-cream/10 bg-wood-dark/20">
+      <div className="mx-auto flex min-h-[400px] w-[220px] items-center justify-center rounded-[28px] border border-dashed border-paper-cream/10 bg-wood-dark/20">
         <p className="font-mono text-[9px] uppercase tracking-wider text-paper-cream/30">Loading apps…</p>
       </div>
     ),
@@ -138,8 +139,9 @@ export function VerticalBento() {
         </BentoCell>
 
         <BentoCell id="game" deferPaint className="bento-cell--game">
-          <StudioObject rotate={-1.2} className="bento-cell--game-object">
-            <StudioTabletApps className="w-full" />
+          <StudioObject rotate={-1.2} className="bento-cell--game-object flex flex-col items-center">
+            <ClientLogoStrip size="sm" showLabel className="mb-5 max-w-lg px-2" />
+            <StudioPhoneApps />
           </StudioObject>
         </BentoCell>
 
@@ -192,8 +194,9 @@ export function VerticalBento() {
 
         <BentoCell id="resume" span="wide" deferPaint className="bento-cell--resume">
           <div className="grid gap-6 lg:grid-cols-[220px_1fr] lg:items-start">
-            <StudioObject rotate={-2.5} className="flex justify-center lg:justify-start">
-              <Phone>
+            <div className="flex flex-col items-center gap-4 lg:items-start">
+              <StudioObject rotate={-2.5} className="flex justify-center lg:justify-start">
+                <Phone>
                 <p className="font-mono text-[8px] uppercase tracking-wider text-screen-muted">
                   Résumé generator
                 </p>
@@ -211,6 +214,8 @@ export function VerticalBento() {
                 </button>
               </Phone>
             </StudioObject>
+              <ClientLogoStrip size="sm" className="max-w-[220px]" />
+            </div>
 
             <div className="space-y-4">
               <Notebook title="Build your résumé">

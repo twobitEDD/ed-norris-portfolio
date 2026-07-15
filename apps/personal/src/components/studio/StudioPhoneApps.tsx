@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { ExternalLink, X } from "lucide-react";
-import { Tablet } from "@/components/physical-ui/Tablet";
+import { Phone } from "@/components/physical-ui/Phone";
 import { MicrobeSvgGlyph } from "@/components/games/microbeDraw";
 import { tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
 import { cn } from "@/lib/cn";
@@ -14,14 +14,14 @@ const GameTablet = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex h-full min-h-[280px] items-center justify-center bg-[#040a14]">
+      <div className="flex h-full min-h-[200px] items-center justify-center bg-[#040a14]">
         <p className="font-mono text-[10px] uppercase tracking-wider text-white/40">Loading game…</p>
       </div>
     ),
   },
 );
 
-type StudioTabletAppsProps = {
+type StudioPhoneAppsProps = {
   className?: string;
 };
 
@@ -29,7 +29,7 @@ function AppIcon({ app }: { app: TabletApp }) {
   if (app.id === "microbe") {
     return (
       <div
-        className="flex h-full w-full items-center justify-center rounded-[18%] shadow-inner"
+        className="flex h-full w-full items-center justify-center rounded-[22%] shadow-inner"
         style={{ background: app.iconBg }}
       >
         <MicrobeSvgGlyph className="h-[52%] w-[52%]" />
@@ -39,8 +39,11 @@ function AppIcon({ app }: { app: TabletApp }) {
 
   if (app.imageSrc) {
     return (
-      <div className="relative h-full w-full overflow-hidden rounded-[18%] shadow-inner" style={{ background: app.iconBg }}>
-        <Image src={app.imageSrc} alt="" fill className="object-cover object-center" sizes="80px" />
+      <div
+        className="relative h-full w-full overflow-hidden rounded-[22%] shadow-inner"
+        style={{ background: app.iconBg }}
+      >
+        <Image src={app.imageSrc} alt="" fill className="object-cover object-center" sizes="56px" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
       </div>
     );
@@ -48,13 +51,13 @@ function AppIcon({ app }: { app: TabletApp }) {
 
   return (
     <div
-      className="flex h-full w-full flex-col items-center justify-center rounded-[18%] p-2 shadow-inner"
+      className="flex h-full w-full flex-col items-center justify-center rounded-[22%] p-1.5 shadow-inner"
       style={{ background: app.iconBg }}
     >
-      <span className="font-display text-[11px] font-bold uppercase tracking-wide text-white sm:text-xs">
+      <span className="font-display text-[9px] font-bold uppercase tracking-wide text-white">
         {app.name.slice(0, 4)}
       </span>
-      <span className="mt-0.5 font-mono text-[7px] uppercase tracking-wider" style={{ color: app.iconAccent }}>
+      <span className="mt-0.5 font-mono text-[6px] uppercase tracking-wider" style={{ color: app.iconAccent }}>
         {app.domain.split(".")[0]}
       </span>
     </div>
@@ -102,7 +105,7 @@ function AppPromptModal({
         </button>
 
         <div className="flex items-start gap-4">
-          <div className="h-16 w-16 shrink-0 sm:h-[72px] sm:w-[72px]">
+          <div className="h-14 w-14 shrink-0">
             <AppIcon app={app} />
           </div>
           <div className="min-w-0 pr-6">
@@ -147,7 +150,7 @@ function AppPromptModal({
   );
 }
 
-export function StudioTabletApps({ className }: StudioTabletAppsProps) {
+export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   const [activeApp, setActiveApp] = useState<TabletAppId | null>(null);
   const [gameOpen, setGameOpen] = useState(false);
   const [gameFullscreen, setGameFullscreen] = useState(false);
@@ -215,61 +218,60 @@ export function StudioTabletApps({ className }: StudioTabletAppsProps) {
 
   return (
     <>
-      <div className={cn("w-full", className)}>
-        <Tablet glow="cyan" orientation="landscape" className="w-full">
-          <div className="flex h-full min-h-0 flex-col bg-gradient-to-b from-[#0c0e14] to-[#12151c]">
-            <div className="flex shrink-0 items-center justify-between border-b border-white/8 px-4 py-2 sm:px-5">
-              <span className="font-mono text-[10px] font-medium text-white/70">{timeStr}</span>
-              <span className="font-display text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50">
-                Norris Studio
-              </span>
-              <div className="flex items-center gap-1.5" aria-hidden>
-                <span className="h-2 w-2 rounded-full bg-white/25" />
-                <span className="h-2 w-2 rounded-full bg-white/25" />
-                <span className="h-2.5 w-4 rounded-sm bg-white/35" />
+      <div className={cn(className)}>
+        <Phone glow="cyan" mode="launcher">
+          <div className="flex h-full min-h-0 flex-col bg-gradient-to-b from-[#0c0e14] to-[#12151c] pt-8">
+            <div className="flex shrink-0 items-center justify-between px-4 pb-2">
+              <span className="font-mono text-[9px] font-medium text-white/70">{timeStr}</span>
+              <div className="flex items-center gap-1" aria-hidden>
+                <span className="h-1.5 w-2.5 rounded-sm bg-white/35" />
+                <span className="h-1.5 w-1.5 rounded-full bg-white/25" />
+                <span className="h-2.5 w-3.5 rounded-sm border border-white/30" />
               </div>
             </div>
 
             {gameOpen && !gameFullscreen ? (
-              <div className="relative flex min-h-0 flex-1 flex-col">
-                <div className="flex shrink-0 items-center justify-between border-b border-white/8 px-3 py-2 sm:px-4">
+              <div className="relative flex min-h-0 flex-1 flex-col pb-6">
+                <div className="flex shrink-0 items-center justify-between border-b border-white/8 px-3 py-2">
                   <button
                     type="button"
                     onClick={closeGame}
-                    className="flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white"
+                    className="flex h-7 w-7 items-center justify-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white"
                     aria-label="Back to home screen"
                   >
-                    <X className="h-4 w-4" />
+                    <X className="h-3.5 w-3.5" />
                   </button>
-                  <span className="font-editorial text-sm font-medium text-white/90">Microbe Explorer</span>
+                  <span className="font-editorial text-xs font-medium text-white/90">Microbe Explorer</span>
                   <button
                     type="button"
                     onClick={openFullscreenGame}
-                    className="rounded-full border border-[#3b9eff]/35 px-3 py-1 font-mono text-[9px] uppercase tracking-wider text-[#7ec8ff] transition hover:bg-[#3b9eff]/15"
+                    className="rounded-full border border-[#3b9eff]/35 px-2 py-0.5 font-mono text-[8px] uppercase tracking-wider text-[#7ec8ff] transition hover:bg-[#3b9eff]/15"
                   >
                     Expand
                   </button>
                 </div>
-                <div className="relative min-h-[200px] flex-1 overflow-hidden">
+                <div className="relative min-h-[160px] flex-1 overflow-hidden">
                   <GameTablet overlay className="h-full w-full" />
                 </div>
               </div>
             ) : (
-              <div className="flex flex-1 flex-col p-4 sm:p-5">
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/40">Projects &amp; play</p>
-                <div className="mt-4 grid flex-1 grid-cols-4 gap-3 content-start sm:gap-4">
+              <div className="flex flex-1 flex-col px-3 pb-8 pt-1">
+                <p className="text-center font-mono text-[8px] uppercase tracking-[0.2em] text-white/35">
+                  Norris Studio
+                </p>
+                <div className="mt-4 grid flex-1 grid-cols-2 gap-x-3 gap-y-4 content-start">
                   {tabletApps.map((app) => (
                     <button
                       key={app.id}
                       type="button"
                       onClick={() => openApp(app.id)}
-                      className="group flex flex-col items-center gap-1.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9eff]/50 rounded-lg p-1"
+                      className="group flex flex-col items-center gap-1 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9eff]/50 rounded-lg p-0.5"
                       aria-label={`Open ${app.name}`}
                     >
-                      <div className="aspect-square w-full max-w-[72px] transition group-hover:shadow-[0_4px_20px_rgba(59,158,255,0.2)] sm:max-w-[80px]">
+                      <div className="aspect-square w-full max-w-[56px] transition group-hover:shadow-[0_4px_16px_rgba(59,158,255,0.22)]">
                         <AppIcon app={app} />
                       </div>
-                      <span className="max-w-[72px] truncate text-center text-[9px] font-medium text-white/75 sm:max-w-[80px] sm:text-[10px]">
+                      <span className="max-w-[64px] truncate text-center text-[8px] font-medium text-white/75">
                         {app.name}
                       </span>
                     </button>
@@ -278,15 +280,11 @@ export function StudioTabletApps({ className }: StudioTabletAppsProps) {
               </div>
             )}
           </div>
-        </Tablet>
+        </Phone>
       </div>
 
       {selectedApp && !selectedApp.isGame && (
-        <AppPromptModal
-          app={selectedApp}
-          onClose={closePrompt}
-          onPlayGame={openFullscreenGame}
-        />
+        <AppPromptModal app={selectedApp} onClose={closePrompt} onPlayGame={openFullscreenGame} />
       )}
 
       {gameOpen && gameFullscreen && (
@@ -315,3 +313,6 @@ export function StudioTabletApps({ className }: StudioTabletAppsProps) {
     </>
   );
 }
+
+/** @deprecated Use StudioPhoneApps */
+export const StudioTabletApps = StudioPhoneApps;

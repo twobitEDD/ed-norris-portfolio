@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" fill="currentColor" role="img" aria-label="Washington University in St. Louis">
+  <path d="M6 26 L12 8 L16 8 L10 26 Z M14 26 L20 8 L24 8 L18 26 Z M22 26 L28 8 L32 8 L26 26 Z" opacity="0.85"/>
+  <text x="36" y="17" font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="700">WashU</text>
+  <text x="36" y="27" font-family="system-ui, -apple-system, sans-serif" font-size="7" font-weight="500" letter-spacing="0.06em" opacity="0.7">WASHINGTON UNIVERSITY</text>
+</svg>

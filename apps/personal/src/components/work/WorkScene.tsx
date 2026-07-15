@@ -9,6 +9,7 @@ import type { Practice, Project } from "@/data/types";
 import { disciplineColors } from "@/data/types";
 import { Paper } from "@/components/physical-ui/Paper";
 import { Tablet } from "@/components/physical-ui/Tablet";
+import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { PracticeGateway } from "@/components/practices/PracticeGateway";
 import { StudioObject } from "@/components/studio/StudioObject";
 import { StudioReveal } from "@/components/studio/StudioReveal";
@@ -244,6 +245,7 @@ export function WorkScene() {
               <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft">Selected work</p>
               <h1 className="mt-2 font-editorial text-3xl font-semibold text-ink sm:text-4xl">{pageTitle}</h1>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft">{pageDescription}</p>
+              <ClientLogoStrip size="sm" className="mt-5 max-w-xl" />
               <DisciplineNav activeHash={activeHash} />
             </Paper>
           </StudioObject>

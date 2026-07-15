@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { profile, practices } from "@/data";
+import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { Paper } from "@/components/physical-ui/Paper";
 
 const roles = [
@@ -34,12 +35,9 @@ export function IntroPaper() {
             {profile.tagline}
           </p>
 
-          <p
-            className="mt-2 font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-ink-soft/90"
-            aria-label="Selected employers and projects"
-          >
-            {profile.proofStrip.join(" · ")}
-          </p>
+          <div className="mt-3 max-w-md">
+            <ClientLogoStrip size="sm" ids={["adidas", "google", "co2t"]} />
+          </div>
 
           <div className="mt-4 flex flex-wrap gap-2" aria-label="Where I work">
             {disciplines.map((d) => (

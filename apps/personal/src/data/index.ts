@@ -19,3 +19,4 @@ export {
   getProjectImage,
 } from "./career-images";
 export { practices, resumePresets } from "./resume-presets";
+export { clientLogos } from "./client-logos";
