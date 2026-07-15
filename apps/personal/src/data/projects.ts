@@ -136,6 +136,27 @@ export const projects: Project[] = [
     resumePriority: 7,
   },
   {
+    id: "proj-fish-fight",
+    slug: "fish-fight",
+    title: "Fish Fight",
+    organization: "Fish Fight",
+    startDate: "2023",
+    status: "active",
+    disciplines: ["games", "environment"],
+    industries: ["entertainment", "climate"],
+    roles: ["Creative Director", "Developer"],
+    skills: ["game design", "web games", "conservation storytelling"],
+    technologies: ["TypeScript", "HTML5", "WebGL"],
+    summary:
+      "An ocean conservation web game — players navigate currents, protect habitats, and rally around marine stewardship through accessible, playful mechanics.",
+    challenge: "Make ocean conservation feel urgent and fun without preaching.",
+    approach:
+      "Lightweight web-first gameplay with real-world conservation hooks and shareable moments.",
+    links: [{ label: "fishFight.app", url: "https://fishfight.app" }],
+    featured: false,
+    resumePriority: 8,
+  },
+  {
     id: "proj-web-platforms",
     slug: "web-platforms",
     title: "Web Platform Systems",

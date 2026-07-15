@@ -62,7 +62,7 @@ export function CinematicNorthStarHero() {
             href="/#game"
             className="rounded-full border border-paper-cream/35 bg-wood-dark/70 px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-paper-cream transition hover:border-games/60 hover:bg-games/20 sm:text-[11px]"
           >
-            Play Dot Explorer ↓
+            Open studio apps ↓
           </Link>
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-paper-cream/70 motion-safe:animate-pulse sm:text-[11px]">
             Scroll the studio

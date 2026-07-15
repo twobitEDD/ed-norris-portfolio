@@ -3,7 +3,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { useInViewport, useViewportCentered } from "@/lib/useInViewport";
-import { drawPacMan, pacManMouthFromPhase } from "@/components/games/pacManDraw";
+import {
+  drawMicrobeCollectible,
+  drawMicrobeHero,
+  drawWaterDot,
+  type MicrobeKind,
+} from "@/components/games/microbeDraw";
 import {
   CHUNK_SIZE,
   TILE_SIZE,
@@ -31,28 +36,21 @@ const NAV_KEYS = new Set([
 ]);
 
 const COLORS = {
-  background: "#050812",
-  wall: "#1a2a6c",
-  wallEdge: "#2d4db8",
-  dot: "#f8f4d8",
-  player: "#ffde00",
-  cherry: "#ff3b5c",
-  orange: "#ff8c1a",
-  grape: "#b44dff",
-  hud: "rgba(255,255,255,0.75)",
+  background: "#040a14",
+  wall: "#0d2847",
+  wallEdge: "#1e5a9e",
+  hud: "rgba(180, 230, 255, 0.85)",
+  lock: "rgba(59, 158, 255, 0.9)",
 };
 
-/** Logical game resolution — display scales via CSS, buffer capped separately. */
 const GAME_WIDTH = 320;
 const GAME_HEIGHT = 240;
 const MAX_BUFFER_WIDTH = 640;
 const MAX_BUFFER_HEIGHT = 480;
 const MAX_DPR = 2;
 
-function fruitColor(kind: FruitKind) {
-  if (kind === "cherry") return COLORS.cherry;
-  if (kind === "orange") return COLORS.orange;
-  return COLORS.grape;
+function fruitToMicrobe(kind: FruitKind): MicrobeKind {
+  return kind;
 }
 
 function drawMaze(
@@ -60,7 +58,7 @@ function drawMaze(
   snap: GameSnapshot,
   width: number,
   height: number,
-  animateMouth: boolean,
+  animatePulse: boolean,
 ) {
   const { player, chunks } = snap;
   ctx.fillStyle = COLORS.background;
@@ -108,15 +106,15 @@ function drawMaze(
     }
   }
 
-  drawPlayer(
-    ctx,
-    player.x,
-    player.y,
-    player.dirX,
-    player.dirY,
-    animateMouth ? player.mouth : 0,
-    animateMouth && player.eating,
-  );
+  const pulse = animatePulse && player.eating ? Math.sin(player.mouth * 2) * 0.5 + 0.5 : 0;
+  drawMicrobeHero(ctx, {
+    x: player.x,
+    y: player.y,
+    radius: 0.42,
+    dirX: player.dirX,
+    dirY: player.dirY,
+    pulse,
+  });
   ctx.restore();
 }
 
@@ -125,59 +123,27 @@ function drawCollectible(ctx: CanvasRenderingContext2D, item: Collectible) {
   const cy = item.wy + 0.5;
 
   if (item.kind === "dot") {
-    ctx.fillStyle = COLORS.dot;
-    ctx.beginPath();
-    ctx.arc(cx, cy, 0.1, 0, Math.PI * 2);
-    ctx.fill();
+    drawWaterDot(ctx, cx, cy, 0.1);
     return;
   }
 
-  ctx.fillStyle = fruitColor(item.kind);
-  ctx.beginPath();
-  ctx.arc(cx, cy, 0.22, 0, Math.PI * 2);
-  ctx.fill();
-
-  if (item.kind === "cherry") {
-    ctx.fillStyle = "#2d8a42";
-    ctx.fillRect(cx - 0.03, cy - 0.32, 0.06, 0.12);
-  }
+  drawMicrobeCollectible(ctx, cx, cy, fruitToMicrobe(item.kind), 0.22);
 }
 
-function drawPlayer(
-  ctx: CanvasRenderingContext2D,
-  x: number,
-  y: number,
-  dirX: number,
-  dirY: number,
-  mouthPhase: number,
-  eating: boolean,
-) {
-  const angle = Math.atan2(dirY, dirX);
-  drawPacMan(ctx, {
-    x,
-    y,
-    radius: 0.42,
-    angle,
-    mouthOpen: pacManMouthFromPhase(mouthPhase, eating),
-  });
-}
-
-type InfinitePacExplorerProps = {
+type MicrobeExplorerProps = {
   className?: string;
-  /** Fixed arcade viewport — uses explicit 4:3 buffer sizing. */
   arcadeMode?: boolean;
-  /** Auto-focus and lock keyboard (arcade overlay). */
   autoLock?: boolean;
 };
 
 const ARCADE_VIEW_WIDTH = 640;
 const ARCADE_VIEW_HEIGHT = 480;
 
-export function InfinitePacExplorer({
+export function MicrobeExplorer({
   className,
   arcadeMode = false,
   autoLock = false,
-}: InfinitePacExplorerProps) {
+}: MicrobeExplorerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const displaySizeRef = useRef({ width: GAME_WIDTH, height: GAME_HEIGHT });
@@ -245,12 +211,8 @@ export function InfinitePacExplorer({
 
     if (rawWidth < 1 || rawHeight < 1) return;
 
-    const width = arcadeMode
-      ? ARCADE_VIEW_WIDTH
-      : Math.min(rawWidth, MAX_BUFFER_WIDTH);
-    const height = arcadeMode
-      ? ARCADE_VIEW_HEIGHT
-      : Math.min(rawHeight, MAX_BUFFER_HEIGHT);
+    const width = arcadeMode ? ARCADE_VIEW_WIDTH : Math.min(rawWidth, MAX_BUFFER_WIDTH);
+    const height = arcadeMode ? ARCADE_VIEW_HEIGHT : Math.min(rawHeight, MAX_BUFFER_HEIGHT);
     const prev = displaySizeRef.current;
     if (prev.width === width && prev.height === height && canvas.width > 0) return;
 
@@ -407,12 +369,12 @@ export function InfinitePacExplorer({
       className={cn(
         "relative overflow-hidden outline-none transition-shadow duration-300",
         arcadeMode && "mx-auto aspect-[4/3] w-full max-w-[640px]",
-        locked && "ring-2 ring-[#ffde00]/45 ring-inset",
+        locked && "ring-2 ring-[#3b9eff]/45 ring-inset",
         className,
       )}
       tabIndex={0}
       role="application"
-      aria-label="Dot Explorer mini game. Use arrow keys or WASD to wander the maze."
+      aria-label="Microbe Explorer mini game. Use arrow keys or WASD to swim the maze."
       onPointerDown={handlePointerDown}
       onFocus={() => {
         setLockSuppressed(false);
@@ -438,8 +400,11 @@ export function InfinitePacExplorer({
           Score {score}
         </div>
         {locked && (
-          <span className="rounded bg-[#ffde00]/15 px-2 py-1 font-mono text-[9px] uppercase tracking-wider text-[#ffde00]/90">
-            Locked — arrows to move
+          <span
+            className="rounded px-2 py-1 font-mono text-[9px] uppercase tracking-wider"
+            style={{ background: "rgba(59,158,255,0.15)", color: COLORS.lock }}
+          >
+            Locked — arrows to swim
           </span>
         )}
         {reducedMotion && (

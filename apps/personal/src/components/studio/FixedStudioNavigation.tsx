@@ -9,7 +9,7 @@ import { cn } from "@/lib/cn";
 import { StudioThemeToggle } from "./StudioThemeToggle";
 
 const links = [
-  { href: "/#game", label: "Play" },
+  { href: "/#game", label: "Apps" },
   { href: "/work", label: "Work" },
   { href: "/map", label: "Map" },
   { href: "/timeline", label: "Timeline" },

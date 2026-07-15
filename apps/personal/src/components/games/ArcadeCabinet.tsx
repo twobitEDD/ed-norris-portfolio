@@ -40,12 +40,12 @@ export function ArcadeCabinet({
             Norris Studio
           </span>
           <h2 className="arcade-cabinet__title font-editorial text-lg font-semibold tracking-wide text-[#f5e6c8] sm:text-xl">
-            DOT EXPLORER
+            MICROBE EXPLORER
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#f5e6c8]/20 bg-black/50 font-mono text-base text-[#f5e6c8]/85 transition hover:border-[#ffde00]/50 hover:bg-black/70 hover:text-[#ffde00]"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#f5e6c8]/20 bg-black/50 font-mono text-base text-[#f5e6c8]/85 transition hover:border-[#3b9eff]/50 hover:bg-black/70 hover:text-[#7ec8ff]"
             aria-label="Close game"
           >
             ×
