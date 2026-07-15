@@ -460,6 +460,11 @@ body {
 
 /* Business card — printed stock on desk */
 .business-card {
+  --business-card-ink: #1b211e;
+  --business-card-ink-muted: #4a4d44;
+  --business-card-ink-soft: #5c5f56;
+  --business-card-ink-faint: #6a6d64;
+  color: var(--business-card-ink);
   background-color: #faf8f3;
   background-image:
     var(--paper-texture),
@@ -492,8 +497,38 @@ body {
   z-index: 1;
 }
 
-[data-studio-mode="night"] .business-card {
-  filter: brightness(0.94) sepia(0.04);
+.business-card__eyebrow {
+  color: var(--business-card-ink-faint);
+}
+
+.business-card__name {
+  color: var(--business-card-ink);
+}
+
+.business-card__role {
+  color: var(--business-card-ink-muted);
+}
+
+.business-card__summary {
+  color: var(--business-card-ink-soft);
+}
+
+.business-card__email {
+  color: var(--business-card-ink-muted);
+}
+
+.business-card__action {
+  color: var(--business-card-ink);
+  opacity: 0.85;
+  transition: opacity 150ms var(--ease-studio);
+}
+
+.business-card__action:hover {
+  opacity: 1;
+}
+
+.business-card__preset {
+  color: var(--business-card-ink-faint);
 }
 
 .handwritten {

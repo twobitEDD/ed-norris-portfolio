@@ -48,28 +48,28 @@ export function ResumeBusinessCard({
         <div className="business-card__accent" aria-hidden="true" />
         <div className="business-card__body flex min-h-0 flex-1 flex-col justify-between px-5 py-4 sm:px-6 sm:py-[18px]">
           <div>
-            <p className="font-mono text-[7px] uppercase tracking-[0.22em] text-ink-soft/70">
+            <p className="business-card__eyebrow font-mono text-[7px] uppercase tracking-[0.22em]">
               Résumé generator
             </p>
-            <h3 className="mt-1.5 font-editorial text-[1.35rem] font-semibold leading-tight tracking-tight text-ink">
+            <h3 className="business-card__name mt-1.5 font-editorial text-[1.35rem] font-semibold leading-tight tracking-tight">
               {name}
             </h3>
-            <p className="mt-0.5 text-[11px] font-medium leading-snug text-ink-soft">{targetRole}</p>
-            <p className="mt-2 line-clamp-3 text-[9px] leading-relaxed text-ink-soft/90">{summary}</p>
+            <p className="business-card__role mt-0.5 text-[11px] font-medium leading-snug">{targetRole}</p>
+            <p className="business-card__summary mt-2 line-clamp-3 text-[9px] leading-relaxed">{summary}</p>
           </div>
 
           <div className="mt-2 flex items-end justify-between gap-3">
-            <p className="font-mono text-[8px] tracking-wide text-ink-soft">{email}</p>
+            <p className="business-card__email font-mono text-[8px] tracking-wide">{email}</p>
             {onDownload ? (
               <button
                 type="button"
                 onClick={onDownload}
-                className="shrink-0 text-[8px] font-semibold text-ink/80 transition hover:text-ink"
+                className="business-card__action shrink-0 text-[8px] font-semibold"
               >
                 Download →
               </button>
             ) : (
-              <span className="shrink-0 font-mono text-[7px] uppercase tracking-wider text-ink-soft/60">
+              <span className="business-card__preset shrink-0 font-mono text-[7px] uppercase tracking-wider">
                 {preset.label}
               </span>
             )}
