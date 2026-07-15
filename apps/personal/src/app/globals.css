@@ -211,21 +211,21 @@ body {
 .bento-cell--game {
   grid-column: 1 / -1;
   margin-top: 0;
-  padding-top: 1.5rem;
-  padding-bottom: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.5rem;
 }
 
 @media (min-width: 640px) {
   .bento-cell--game {
-    padding-top: 2rem;
-    padding-bottom: 1.25rem;
+    padding-top: 1rem;
+    padding-bottom: 0.75rem;
   }
 }
 
 @media (min-width: 1024px) {
   .bento-cell--game {
-    padding-top: 2.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1rem;
   }
 }
 
@@ -258,13 +258,14 @@ body {
   width: 100%;
   max-width: 920px;
   margin-inline: auto;
-  padding-top: 0.75rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 @media (min-width: 640px) {
   .bento-cell--game-object {
-    padding-top: 1rem;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
   }
 }
 
@@ -565,6 +566,16 @@ body {
 .device-frame--phone {
   border-radius: 28px;
   padding: 12px 10px;
+}
+
+.device-frame--phone-large {
+  width: 100%;
+  max-width: 920px;
+}
+
+.device-frame--phone-large .screen-surface {
+  width: 100%;
+  aspect-ratio: 3 / 4;
 }
 
 .screen-surface {

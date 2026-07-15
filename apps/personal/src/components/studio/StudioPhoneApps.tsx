@@ -228,12 +228,12 @@ function WorkMapInDevice({ onBack }: { onBack: () => void }) {
   return (
     <div className="relative flex min-h-0 flex-1 flex-col pb-6">
       <DeviceAppHeader title="Work Map" onBack={onBack} />
-      <div className="shrink-0 border-b border-white/6 px-4 py-2.5">
+      <div className="shrink-0 border-b border-white/6 px-4 py-2 sm:px-5 sm:py-2.5">
         <p className="handwritten text-sm leading-snug text-[#d4b0ff]/90">One arc, not six careers.</p>
         <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.16em] text-white/40">Employment overview</p>
         <h3 className="mt-0.5 font-editorial text-sm font-medium text-white/90">Where I&apos;ve worked.</h3>
       </div>
-      <div className="relative min-h-[320px] flex-1 overflow-hidden">
+      <div className="relative min-h-0 flex-1 overflow-hidden">
         <StudioWorkMap mode="overview" />
       </div>
       <p className="shrink-0 px-4 pt-2 text-center">
@@ -359,8 +359,8 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
 
   return (
     <>
-      <div className={cn(className)}>
-        <Phone glow="cyan" mode="launcher" size="large">
+      <div className={cn("w-full", className)}>
+        <Phone glow="cyan" mode="launcher" size="large" className="w-full">
           <div className="flex h-full min-h-0 flex-col bg-gradient-to-b from-[#0c0e14] to-[#12151c] pt-8">
             <div className="flex shrink-0 items-center justify-between px-4 pb-2 sm:px-5">
               <span className="font-mono text-[9px] font-medium text-white/70 sm:text-[10px]">{timeStr}</span>
@@ -395,23 +395,23 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-1 flex-col px-4 pb-8 pt-1 sm:px-6">
+              <div className="flex flex-1 flex-col px-5 pb-8 pt-1 sm:px-8">
                 <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45 sm:text-[10px]">
                   Norris Studio
                 </p>
-                <div className="mt-5 grid flex-1 grid-cols-3 gap-x-4 gap-y-6 content-start sm:mt-6 sm:gap-x-6 sm:gap-y-7">
+                <div className="mt-5 grid flex-1 grid-cols-3 gap-x-5 gap-y-6 content-start sm:mt-6 sm:gap-x-8 sm:gap-y-8">
                   {tabletApps.map((app) => (
                     <button
                       key={app.id}
                       type="button"
                       onClick={() => openApp(app.id)}
-                      className="group flex flex-col items-center gap-1.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9eff]/50 rounded-lg p-0.5"
+                      className="group flex flex-col items-center gap-2 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9eff]/50 rounded-lg p-0.5"
                       aria-label={`Open ${app.name}`}
                     >
-                      <div className="aspect-square w-full max-w-[64px] transition group-hover:shadow-[0_4px_16px_rgba(59,158,255,0.22)] sm:max-w-[72px]">
+                      <div className="aspect-square w-[min(100%,72px)] transition group-hover:shadow-[0_4px_16px_rgba(59,158,255,0.22)] sm:w-[min(100%,80px)]">
                         <AppIcon app={app} large />
                       </div>
-                      <span className="max-w-[88px] truncate text-center text-[10px] font-medium leading-tight text-white/80 sm:text-[11px]">
+                      <span className="max-w-[96px] truncate text-center text-[10px] font-medium leading-tight text-white/80 sm:text-[11px]">
                         {app.name}
                       </span>
                     </button>

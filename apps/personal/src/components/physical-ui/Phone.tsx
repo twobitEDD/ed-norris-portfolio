@@ -60,6 +60,7 @@ export function Phone({
         className={cn(
           "device-frame device-bezel device-frame--phone",
           isLandscape && "device-frame--phone-landscape",
+          isLarge && "device-frame--phone-large w-full",
           glow !== "none" && glowClass[glow],
         )}
       >
@@ -68,7 +69,7 @@ export function Phone({
             "screen-surface relative flex flex-col overflow-hidden",
             screenTheme === "warm" && "screen-surface--warm",
             isLandscape && "aspect-[19/9] min-h-0",
-            isLarge && isLauncher && !isLandscape && "aspect-[3/4] min-h-[520px] sm:min-h-[580px]",
+            isLarge && isLauncher && !isLandscape && "aspect-[3/4] w-full min-h-0",
             !isLarge && isLauncher && !isLandscape && "aspect-[9/19] min-h-[400px]",
             !isLauncher && !isLandscape && "max-h-[440px] overflow-y-auto",
           )}
