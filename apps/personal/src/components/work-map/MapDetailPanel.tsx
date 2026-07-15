@@ -7,18 +7,22 @@ import { getNodeImage } from "@/data/career-images";
 import type { GraphNode } from "@/data/types";
 import { disciplineColors, disciplineLabels } from "@/data/types";
 import type { StoryStop } from "@/data/through-line";
+import { getConnectionNotes, getRelatedThemes } from "@/lib/graph";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 
 export function MapDetailPanel({
   node,
   storyStop,
+  storyIndex = -1,
+  storyPathLength = 0,
   onClose,
   compact = false,
 }: {
   node: GraphNode | null;
   storyStop?: StoryStop | null;
+  storyIndex?: number;
+  storyPathLength?: number;
   onClose: () => void;
-  /** Bottom docked panel for homepage map preview */
   compact?: boolean;
 }) {
   if (!node) return null;
@@ -34,25 +38,28 @@ export function MapDetailPanel({
     ? experiences.find((e) => e.id === node.experienceId)
     : null;
 
+  const relatedThemes = getRelatedThemes(node.id);
+  const connections = getConnectionNotes(node.id);
+
   return (
     <GlassPanel
       strong
       className={
         compact
-          ? "absolute bottom-2 left-2 right-2 z-10 max-h-[38%] overflow-y-auto p-3 sm:bottom-3 sm:left-3 sm:right-3 sm:max-h-[42%] sm:p-4"
-          : "absolute bottom-2 left-2 right-2 z-10 max-h-[45%] overflow-y-auto p-4 sm:bottom-4 sm:left-auto sm:right-4 sm:max-h-none sm:w-80 sm:p-5"
+          ? "absolute bottom-2 left-2 right-2 z-10 max-h-[42%] overflow-y-auto p-3 sm:bottom-3 sm:left-3 sm:right-3 sm:max-h-[46%] sm:p-4"
+          : "absolute bottom-2 left-2 right-2 z-10 max-h-[48%] overflow-y-auto p-4 sm:bottom-4 sm:left-auto sm:right-4 sm:max-h-none sm:w-[22rem] sm:p-5"
       }
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          {storyStop && (
+          {storyStop && storyPathLength > 0 && (
             <p className="font-mono text-[9px] uppercase tracking-wider text-technology sm:text-[10px]">
-              Story · {storyStop.headline}
+              Story {storyIndex + 1}/{storyPathLength} · {storyStop.headline}
             </p>
           )}
           {!storyStop && (
             <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted sm:text-[10px]">
-              {isTheme ? "Through-line" : node.type}
+              {isTheme ? "Focus area" : node.type}
             </p>
           )}
           <h3 className="mt-1 font-display text-base font-bold text-screen-text sm:text-lg">{headline}</h3>
@@ -93,6 +100,39 @@ export function MapDetailPanel({
             </li>
           ))}
         </ul>
+      )}
+      {relatedThemes.length > 0 && (
+        <div className="mt-3 sm:mt-4">
+          <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted sm:text-[10px]">
+            Related focus areas
+          </p>
+          <div className="mt-1.5 flex flex-wrap gap-1.5">
+            {relatedThemes.map((theme) => (
+              <span
+                key={theme.id}
+                className="rounded-full border border-border px-2 py-0.5 text-[10px] text-screen-text sm:text-[11px]"
+                style={{ borderColor: `${disciplineColors[theme.disciplines[0]]}44` }}
+              >
+                {theme.label}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+      {connections.length > 0 && !compact && (
+        <div className="mt-3 sm:mt-4">
+          <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted sm:text-[10px]">
+            How it connects
+          </p>
+          <ul className="mt-1.5 space-y-1.5 text-[11px] leading-relaxed text-screen-muted sm:text-xs">
+            {connections.map((c) => (
+              <li key={`${c.peerLabel}-${c.note}`}>
+                <span className="text-screen-text">{c.peerLabel}</span>
+                <span className="text-screen-muted"> — {c.note}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
       <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-4">
         {node.disciplines.map((d) => (

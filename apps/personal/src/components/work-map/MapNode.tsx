@@ -9,6 +9,8 @@ import { cn } from "@/lib/cn";
 
 type MapNodeType = Node<MapNodeData, "mapNode">;
 
+const handleClass = "!h-2 !w-2 !border-0 !bg-transparent !opacity-0";
+
 function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
   const discipline = data.disciplines[0] ?? "software";
   const isPerson = data.nodeType === "person";
@@ -41,15 +43,17 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
         !isPerson && !isTheme && !isExperience && "min-w-[100px] max-w-[160px] px-3 py-2.5 sm:min-w-[120px] sm:px-4 sm:py-3",
         isExperience && "min-w-[110px] max-w-[170px] px-3 py-2 sm:min-w-[130px] sm:px-3.5 sm:py-2.5",
         data.preview && isTheme && "min-w-[130px] sm:min-w-[150px]",
-        data.dimmed && "pointer-events-none opacity-20",
+        data.dimmed && "pointer-events-none opacity-[0.12]",
+        data.onStoryPath && !data.dimmed && "opacity-100",
         data.highlighted && "opacity-100",
+        data.isStoryFocus && "ring-2 ring-technology/60",
       )}
       style={{
         borderColor: surface.borderColor,
         borderWidth: isTheme || isPerson ? 2 : 1,
         background: surface.background,
         boxShadow:
-          data.highlighted || selected
+          data.highlighted || selected || data.isStoryFocus
             ? `0 0 28px ${surface.borderColor}55, 0 8px 24px rgba(0,0,0,0.35)`
             : "0 4px 16px rgba(0,0,0,0.28)",
       }}
@@ -57,7 +61,10 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
       role="button"
       aria-label={`${data.label}${data.subtitle ? `, ${data.subtitle}` : ""}`}
     >
-      <Handle type="target" position={Position.Top} className="!opacity-0" />
+      <Handle id="target-top" type="target" position={Position.Top} className={handleClass} />
+      <Handle id="target-right" type="target" position={Position.Right} className={handleClass} />
+      <Handle id="target-bottom" type="target" position={Position.Bottom} className={handleClass} />
+      <Handle id="target-left" type="target" position={Position.Left} className={handleClass} />
       <p
         className={cn(
           "font-display font-bold leading-tight",
@@ -83,7 +90,10 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
           {data.subtitle}
         </p>
       )}
-      <Handle type="source" position={Position.Bottom} className="!opacity-0" />
+      <Handle id="source-top" type="source" position={Position.Top} className={handleClass} />
+      <Handle id="source-right" type="source" position={Position.Right} className={handleClass} />
+      <Handle id="source-bottom" type="source" position={Position.Bottom} className={handleClass} />
+      <Handle id="source-left" type="source" position={Position.Left} className={handleClass} />
     </motion.div>
   );
 }
