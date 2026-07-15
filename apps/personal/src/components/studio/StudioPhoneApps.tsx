@@ -748,10 +748,12 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
               <>
                 <SpringboardStatusBar timeStr={timeStr} dateShortStr={dateShortStr} />
 
-                <div className="relative z-[1] flex min-h-0 flex-1 flex-col justify-start overflow-y-auto px-4 pb-6 pt-2 sm:px-6 sm:pb-7 sm:pt-3">
+                <div className="relative z-[1] flex min-h-0 flex-1 flex-col justify-start overflow-y-auto px-4 pb-[100px] pt-2 sm:px-6 sm:pb-[108px] sm:pt-3">
                   <SpringboardMiniWidgets timeStr={timeStr} dateShortStr={dateShortStr} />
                   <AppIconGrid onOpenApp={openApp} />
                 </div>
+
+                <SpringboardDock onOpenApp={openApp} />
               </>
             )}
           </div>
