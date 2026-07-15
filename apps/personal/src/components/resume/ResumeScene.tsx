@@ -92,7 +92,7 @@ export function ResumeScene() {
             <StickyNote color="yellow">
               <p className="font-mono text-[9px] uppercase tracking-wider text-ink-soft">Presets</p>
               <ul className="mt-2 space-y-1 text-xs text-ink">
-                {resumePresets.slice(0, 4).map((p) => (
+                {resumePresets.map((p) => (
                   <li key={p.id}>{p.label}</li>
                 ))}
               </ul>

@@ -129,6 +129,8 @@ export type ResumePreset = {
   disciplines: Discipline[];
   emphasizeLeadership: boolean;
   emphasizeTechnical: boolean;
+  /** Cap experience rows; `"all"` includes every matching entry (Full Experience). */
+  maxExperiences?: number | "all";
 };
 
 export type Practice = {

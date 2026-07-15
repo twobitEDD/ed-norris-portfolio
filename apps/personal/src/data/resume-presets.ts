@@ -1,7 +1,7 @@
 import type { Practice, ResumePreset } from "./types";
 
-/** Default résumé builder preset (Prompt 17). */
-export const DEFAULT_RESUME_PRESET_ID = "softwareProductLeadership";
+/** Default résumé builder preset. */
+export const DEFAULT_RESUME_PRESET_ID = "softwareLeadership";
 
 export const practices: Practice[] = [
   {
@@ -32,58 +32,51 @@ export const practices: Practice[] = [
 
 export const resumePresets: ResumePreset[] = [
   {
-    id: "softwareProductLeadership",
-    label: "Software Product Leadership",
-    description: "Technical depth with product and team leadership emphasis.",
+    id: "educationCentric",
+    label: "Education Centric",
+    description: "Teaching, mentoring, and inclusive learning — formal degree plus public education and STEM instruction.",
+    targetRole: "Education & Technology Specialist",
+    tone: "executive",
+    pages: 2,
+    disciplines: ["operations", "games"],
+    emphasizeLeadership: true,
+    emphasizeTechnical: false,
+    maxExperiences: 6,
+  },
+  {
+    id: "softwareLeadership",
+    label: "Software Leadership",
+    description: "Technical depth with product and team leadership — consumer experience software, platforms, and delivery.",
     targetRole: "VP Engineering / Head of Product",
     tone: "executive",
     pages: 2,
-    disciplines: ["software", "operations"],
+    disciplines: ["software", "operations", "marketing", "games"],
     emphasizeLeadership: true,
     emphasizeTechnical: true,
+    maxExperiences: 12,
   },
   {
     id: "sustainabilityTechnology",
     label: "Sustainability Technology",
-    description: "Environmental systems, carbon infrastructure, and product leadership.",
+    description: "Environmental systems, CO2True carbon credit platform, and product leadership.",
     targetRole: "Sustainability Technology Lead",
     tone: "executive",
-    pages: 1,
+    pages: 2,
     disciplines: ["environment", "software", "operations", "data"],
     emphasizeLeadership: true,
     emphasizeTechnical: true,
+    maxExperiences: 8,
   },
   {
-    id: "creativeTechnology",
-    label: "Creative Technology",
-    description: "Games, interactive media, and creative product systems.",
-    targetRole: "Creative Technologist",
-    tone: "creative",
-    pages: 2,
-    disciplines: ["games", "marketing", "software"],
-    emphasizeLeadership: false,
-    emphasizeTechnical: true,
-  },
-  {
-    id: "fractionalCTO",
-    label: "Fractional CTO",
-    description: "Architecture, delivery, and cross-functional systems leadership.",
-    targetRole: "Fractional CTO",
-    tone: "technical",
-    pages: 1,
-    disciplines: ["software", "operations"],
-    emphasizeLeadership: true,
-    emphasizeTechnical: true,
-  },
-  {
-    id: "fullCareer",
-    label: "Full Career",
-    description: "Complete cross-disciplinary history and selected projects.",
+    id: "fullExperience",
+    label: "Full Experience",
+    description: "Complete career history — game development, casino titles, military simulation, consumer software, and sustainability.",
     targetRole: "Software & Product Innovator",
     tone: "executive",
     pages: 3,
     disciplines: ["environment", "software", "games", "marketing", "operations", "data"],
     emphasizeLeadership: true,
     emphasizeTechnical: true,
+    maxExperiences: "all",
   },
 ];
