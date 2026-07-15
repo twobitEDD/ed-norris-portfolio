@@ -22,7 +22,9 @@ export function IntroPaper() {
           {profile.name}
         </p>
         <h1 className="mt-2 max-w-[22ch] font-editorial text-[1.75rem] font-semibold leading-[1.1] tracking-[-0.025em] text-ink sm:text-[2.5rem]">
-          {profile.headline}
+          I love building solutions,
+          <br />
+          for fun and function.
         </h1>
 
         <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft">
