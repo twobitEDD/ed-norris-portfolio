@@ -3,7 +3,7 @@
 import { STUDIO_DEVICE, STUDIO_SPACING, STUDIO_TYPOGRAPHY } from "@/design/studio-language";
 import dynamic from "next/dynamic";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { profile, resumePresets } from "@/data";
+import { resumePresets } from "@/data";
 import { ContactPhoneApp } from "@/components/contact/ContactPhoneApp";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
@@ -15,6 +15,7 @@ import { Tablet } from "@/components/physical-ui/Tablet";
 import { contactPolaroidImage, contactPolaroidImageSecondary } from "@/data/career-images";
 import { ResumePreview } from "@/components/resume/ResumePreview";
 import { BentoCell } from "@/components/studio/BentoCell";
+import { StudioFooter } from "@/components/studio/StudioFooter";
 import { StudioObject } from "@/components/studio/StudioObject";
 import { cn } from "@/lib/cn";
 import {
@@ -197,9 +198,7 @@ export function VerticalBento() {
             </div>
           </div>
 
-          <footer className={cn("mt-16 border-t border-paper-cream/10 pt-8 text-center sm:mt-20", STUDIO_TYPOGRAPHY.ambientLabelMuted)}>
-            {profile.name} · {new Date().getFullYear()}
-          </footer>
+          <StudioFooter />
         </BentoCell>
       </div>
     </section>

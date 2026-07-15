@@ -16,6 +16,8 @@ export const profile: Profile = {
     { label: "GitHub", url: "https://github.com/twobitEDD" },
     { label: "2Bit Entertainment", url: "https://github.com/twobitENT" },
     { label: "CO2T.earth", url: "https://co2t.earth" },
+    { label: "CO2True", url: "https://co2true.com" },
+    { label: "ERGO.games", url: "https://ergo.games" },
     { label: "CO2Trust", url: "https://github.com/co2trust-org" },
   ],
   badges: [

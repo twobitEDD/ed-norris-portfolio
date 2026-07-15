@@ -6,6 +6,7 @@ import { StickyNote } from "@/components/physical-ui/StickyNote";
 import { Notebook } from "@/components/physical-ui/Notebook";
 import { StudioScene } from "@/components/studio/StudioScene";
 import { StudioObject } from "@/components/studio/StudioObject";
+import { StudioFooter } from "@/components/studio/StudioFooter";
 import { StudioReveal } from "@/components/studio/StudioReveal";
 
 export function ContactScene() {
@@ -55,9 +56,7 @@ export function ContactScene() {
             </StickyNote>
           </StudioObject>
         </div>
-        <footer className="mt-16 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-paper-cream/50">
-          {profile.name} · {new Date().getFullYear()}
-        </footer>
+        <StudioFooter showBorder={false} />
       </StudioReveal>
     </StudioScene>
   );
