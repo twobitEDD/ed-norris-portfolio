@@ -1,3 +1,4 @@
+import { STUDIO_SURFACES } from "@/design/studio-language";
 import { cn } from "@/lib/cn";
 import { ObjectShadow } from "./ObjectShadow";
 
@@ -24,7 +25,7 @@ export function Paper({
   const isDesk = variant === "desk";
 
   return (
-    <div className={cn("relative text-ink", className)}>
+    <div className={cn("relative", STUDIO_SURFACES.paperContent, className)}>
       {elevated && <ObjectShadow depth={isDesk ? 3 : 2} />}
       {pinned && (
         <>
@@ -40,7 +41,8 @@ export function Paper({
       )}
       <div
         className={cn(
-          "paper-surface relative px-7 py-8 sm:px-9 sm:py-10",
+          STUDIO_SURFACES.paper,
+          "relative px-7 py-8 sm:px-9 sm:py-10",
           isDesk && "paper-surface--desk",
           torn ? "paper-torn" : !isDesk && "rounded-[2px]",
         )}

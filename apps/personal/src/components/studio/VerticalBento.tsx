@@ -1,5 +1,6 @@
 "use client";
 
+import { STUDIO_DEVICE, STUDIO_SPACING, STUDIO_TYPOGRAPHY } from "@/design/studio-language";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -17,6 +18,7 @@ import { contactPolaroidImage } from "@/data/career-images";
 import { ResumePreview } from "@/components/resume/ResumePreview";
 import { BentoCell } from "@/components/studio/BentoCell";
 import { StudioObject } from "@/components/studio/StudioObject";
+import { cn } from "@/lib/cn";
 import {
   applyPreset,
   buildResumeContent,
@@ -79,8 +81,8 @@ export function VerticalBento() {
   };
 
   return (
-    <section className="vertical-bento relative px-4 pb-28 pt-2 sm:px-8 sm:pb-32 sm:pt-4">
-      <div className="vertical-bento__grid mx-auto max-w-[920px]">
+    <section className={cn("vertical-bento", STUDIO_SPACING.bentoSection)}>
+      <div className={STUDIO_SPACING.bentoGrid}>
         <BentoCell id="game" deferPaint className="bento-cell--game">
           <StudioObject rotate={-0.8} className="bento-cell--game-object relative flex flex-col items-center">
             <StudioPhoneApps />
@@ -121,7 +123,7 @@ export function VerticalBento() {
           </div>
         </BentoCell>
 
-        <BentoCell id="resume" span="wide" deferPaint className="bento-cell--resume">
+        <BentoCell id="resume" span="wide" deferPaint className={STUDIO_SPACING.bentoCellResume}>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,320px)_1fr] lg:items-start lg:gap-10">
             <div className="flex flex-col items-center gap-5 lg:items-start">
               <StudioObject rotate={-2.2} className="flex w-full justify-center lg:justify-start">
@@ -171,7 +173,7 @@ export function VerticalBento() {
               </Notebook>
 
               <Tablet glow="amber" className="w-full">
-                <div className="max-h-[50vh] overflow-y-auto p-2">
+                <div className={cn(STUDIO_DEVICE.classes.screenContent, "max-h-[50vh] overflow-y-auto p-2")}>
                   <ResumePreview content={resumeContent} className="!min-h-0 !border-0 !shadow-none" />
                 </div>
               </Tablet>
@@ -179,7 +181,7 @@ export function VerticalBento() {
           </div>
         </BentoCell>
 
-        <BentoCell id="work" deferPaint className="bento-cell--work">
+        <BentoCell id="work" deferPaint className={STUDIO_SPACING.bentoCellWork}>
           <StudioObject rotate={0.5}>
             <Paper variant="desk" className="mb-8">
               <h2 className="font-editorial text-2xl font-semibold text-ink sm:text-3xl">
@@ -198,14 +200,14 @@ export function VerticalBento() {
           <p className="mt-6 text-center">
             <Link
               href="/work"
-              className="font-mono text-[10px] uppercase tracking-[0.18em] text-paper-cream/60 transition hover:text-paper-cream"
+              className={cn(STUDIO_TYPOGRAPHY.ambientLabel, "transition hover:text-paper-cream")}
             >
               View all work →
             </Link>
           </p>
         </BentoCell>
 
-        <BentoCell id="contact" span="wide" deferPaint className="bento-cell--contact">
+        <BentoCell id="contact" span="wide" deferPaint className={STUDIO_SPACING.bentoCellContact}>
           <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-12">
             <StudioObject rotate={-1.2} className="w-full">
               <ContactPhoneApp className="mx-auto w-full" />
@@ -223,7 +225,7 @@ export function VerticalBento() {
             </StudioObject>
           </div>
 
-          <footer className="mt-16 border-t border-paper-cream/10 pt-8 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-paper-cream/50 sm:mt-20">
+          <footer className={cn("mt-16 border-t border-paper-cream/10 pt-8 text-center sm:mt-20", STUDIO_TYPOGRAPHY.ambientLabelMuted)}>
             {profile.name} · {new Date().getFullYear()}
           </footer>
         </BentoCell>

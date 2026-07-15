@@ -1,5 +1,12 @@
+import { STUDIO_SURFACES } from "@/design/studio-language";
 import { cn } from "@/lib/cn";
 import { ObjectShadow } from "./ObjectShadow";
+
+const stickyColorClass = {
+  yellow: "sticky-note--yellow",
+  pink: "sticky-note--pink",
+  green: "sticky-note--green",
+} as const;
 
 export function StickyNote({
   children,
@@ -10,12 +17,10 @@ export function StickyNote({
   className?: string;
   color?: "yellow" | "pink" | "green";
 }) {
-  const bg =
-    color === "pink" ? "bg-[#f3d4d8]" : color === "green" ? "bg-[#dfe8c8]" : "bg-[#f5e6a8]";
   return (
     <div className={cn("relative", className)} style={{ transform: "rotate(-2deg)" }}>
       <ObjectShadow depth={1} />
-      <div className={cn("p-4 text-sm text-ink shadow-paper", bg)}>{children}</div>
+      <div className={cn(STUDIO_SURFACES.stickyNote, stickyColorClass[color])}>{children}</div>
     </div>
   );
 }

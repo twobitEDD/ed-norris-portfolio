@@ -1,3 +1,4 @@
+import { STUDIO_DEVICE } from "@/design/studio-language";
 import { cn } from "@/lib/cn";
 import { ObjectShadow } from "./ObjectShadow";
 
@@ -64,16 +65,16 @@ export function Phone({
       <ObjectShadow depth={isLandscape ? 3 : 4} />
       <div
         className={cn(
-          "device-frame device-bezel device-frame--phone",
-          isLandscape && "device-frame--phone-landscape",
-          isLarge && "device-frame--phone-large w-full",
+          STUDIO_DEVICE.classes.framePhone,
+          isLandscape && STUDIO_DEVICE.classes.phoneLandscape,
+          isLarge && STUDIO_DEVICE.classes.phoneLarge,
           glow !== "none" && glowClass[glow],
         )}
       >
         <div
           className={cn(
-            "screen-surface relative flex flex-col overflow-hidden",
-            screenTheme === "warm" && "screen-surface--warm",
+            STUDIO_DEVICE.classes.screen,
+            screenTheme === "warm" && STUDIO_DEVICE.classes.screenWarm,
             isLandscape && "aspect-[19/9] min-h-0",
             isLarge && isLauncher && !isLandscape && "aspect-[3/4] w-full min-h-0",
             !isLarge && isLauncher && !isLandscape && "aspect-[9/19] min-h-[400px]",
@@ -94,7 +95,8 @@ export function Phone({
           ) : (
             <div
               className={cn(
-                "phone-screen-content flex min-h-0 flex-1 flex-col",
+                STUDIO_DEVICE.classes.phoneScreenContent,
+                "flex min-h-0 flex-1 flex-col",
                 isAppLayout
                   ? cn(
                       "overflow-hidden py-3.5 sm:py-4",

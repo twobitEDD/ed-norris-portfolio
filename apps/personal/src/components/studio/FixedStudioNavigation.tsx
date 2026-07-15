@@ -1,5 +1,6 @@
 "use client";
 
+import { STUDIO_TYPOGRAPHY } from "@/design/studio-language";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { profile } from "@/data";
@@ -15,9 +16,6 @@ const links = [
   { href: "/resume", label: "Résumé" },
   { href: "/#contact", label: "Contact" },
 ];
-
-const navLinkClass =
-  "shrink-0 whitespace-nowrap min-h-[44px] content-center text-[11px] uppercase tracking-wider text-paper-cream transition hover:text-white";
 
 const scheduleClass =
   "shrink-0 whitespace-nowrap min-h-[44px] content-center rounded-full border border-environment/45 bg-environment/15 px-3 text-[11px] font-semibold uppercase tracking-wider text-environment transition hover:bg-environment/25";
@@ -63,7 +61,7 @@ export function FixedStudioNavigation() {
           {pastHero ? (
             <Link
               href="/"
-              className="font-display text-xs font-bold tracking-[0.12em] text-paper-cream sm:text-sm"
+              className={cn(STUDIO_TYPOGRAPHY.navBrand)}
             >
               {profile.name.toUpperCase()}
             </Link>
@@ -72,7 +70,7 @@ export function FixedStudioNavigation() {
 
         <div className="min-w-0 px-4">
           {pastHero ? (
-            <p className="text-center font-mono text-[9px] uppercase tracking-[0.18em] text-paper-cream/90">
+            <p className={cn("text-center", STUDIO_TYPOGRAPHY.navTagline)}>
               {profile.tagline}
             </p>
           ) : null}
@@ -84,7 +82,7 @@ export function FixedStudioNavigation() {
               key={link.href}
               href={link.href}
               className={cn(
-                navLinkClass,
+                STUDIO_TYPOGRAPHY.navLink,
                 "text-center",
                 link.href === "/#game" && "font-semibold text-games hover:text-games",
               )}
@@ -115,7 +113,7 @@ export function FixedStudioNavigation() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  navLinkClass,
+                  STUDIO_TYPOGRAPHY.navLink,
                   link.href === "/#game" && "font-semibold text-games hover:text-games",
                 )}
               >
@@ -138,13 +136,10 @@ export function FixedStudioNavigation() {
             className="border-t border-paper-cream/15 bg-wood-dark/40 px-3 py-2 sm:px-6"
             aria-label="Site identity"
           >
-            <Link
-              href="/"
-              className="font-display text-xs font-bold tracking-[0.12em] text-paper-cream"
-            >
+            <Link href="/" className={cn(STUDIO_TYPOGRAPHY.navBrand)}>
               {profile.name}
             </Link>
-            <p className="mt-0.5 font-mono text-[9px] uppercase leading-tight tracking-[0.14em] text-paper-cream/75">
+            <p className={cn("mt-0.5 leading-tight tracking-[0.14em] text-paper-cream/75", STUDIO_TYPOGRAPHY.labelSmall)}>
               {profile.tagline}
             </p>
           </div>

@@ -1,3 +1,4 @@
+import { STUDIO_DEVICE } from "@/design/studio-language";
 import { cn } from "@/lib/cn";
 import { ObjectShadow } from "./ObjectShadow";
 
@@ -46,16 +47,18 @@ export function Tablet({
       <ObjectShadow depth={4} />
       <div
         className={cn(
-          "device-frame device-bezel",
-          isFork && "device-frame--tablet-fork",
-          isLauncher && "device-frame--tablet-launcher",
-          isLarge && isLauncher && "device-frame--tablet-large w-full",
+          isFork
+            ? STUDIO_DEVICE.classes.frameTabletFork
+            : isLauncher
+              ? STUDIO_DEVICE.classes.frameTabletLauncher
+              : STUDIO_DEVICE.classes.frame,
+          isLarge && isLauncher && STUDIO_DEVICE.classes.tabletLarge,
           glow !== "none" && glowClass[glow],
         )}
       >
         <div
           className={cn(
-            "screen-surface relative flex flex-col overflow-hidden",
+            STUDIO_DEVICE.classes.screen,
             resolvedOrientation === "landscape"
               ? isFork
                 ? "aspect-[4/3] min-h-[200px]"
