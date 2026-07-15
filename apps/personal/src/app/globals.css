@@ -774,3 +774,157 @@ body {
   outline: 2px solid var(--technology);
   outline-offset: 2px;
 }
+
+/* Expertise tablet slideshow — ambient slide decor */
+@keyframes expertise-float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-10px) translateX(4px);
+    opacity: 0.85;
+  }
+}
+
+@keyframes expertise-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes expertise-mascot-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(2deg);
+  }
+}
+
+@keyframes expertise-pixel-bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-8px) scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+@keyframes expertise-node-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes expertise-data-flow {
+  0% {
+    stroke-dashoffset: 24;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.2;
+  }
+}
+
+@keyframes expertise-logo-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.92);
+  }
+  to {
+    opacity: 0.45;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.expertise-float {
+  animation: expertise-float 4.5s ease-in-out infinite;
+}
+
+.expertise-ring-spin {
+  animation: expertise-ring-spin 18s linear infinite;
+}
+
+.expertise-ring-spin-reverse {
+  animation: expertise-ring-spin 24s linear infinite reverse;
+}
+
+.expertise-mascot-bob {
+  animation: expertise-mascot-bob 5s ease-in-out infinite;
+}
+
+.expertise-pixel-bounce {
+  animation: expertise-pixel-bounce 2.2s ease-in-out infinite;
+}
+
+.expertise-crosshair::before,
+.expertise-crosshair::after {
+  content: "";
+  position: absolute;
+  background: rgba(140, 92, 199, 0.35);
+}
+
+.expertise-crosshair::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+
+.expertise-crosshair::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  transform: translateY(-50%);
+}
+
+.expertise-node-pulse {
+  animation: expertise-node-pulse 3s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.expertise-data-flow {
+  stroke-dasharray: 8 16;
+  animation: expertise-data-flow 3.5s ease-in-out infinite;
+}
+
+.expertise-logo-reveal {
+  animation: expertise-logo-reveal 0.8s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .expertise-float,
+  .expertise-ring-spin,
+  .expertise-ring-spin-reverse,
+  .expertise-mascot-bob,
+  .expertise-pixel-bounce,
+  .expertise-node-pulse,
+  .expertise-data-flow,
+  .expertise-logo-reveal {
+    animation: none;
+    opacity: 0.35;
+    transform: none;
+  }
+}

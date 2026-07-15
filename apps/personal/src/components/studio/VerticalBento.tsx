@@ -1,13 +1,9 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useMemo, useState } from "react";
-import { profile, projects, resumePresets } from "@/data";
-import { getProjectImage } from "@/data/career-images";
-import type { Project } from "@/data/types";
-import { disciplineColors } from "@/data/types";
+import { profile, resumePresets } from "@/data";
 import { ContactCTAs } from "@/components/contact/ContactCTAs";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { IdentityBadgeRow } from "@/components/hero/IdentityBadgeRow";
@@ -54,6 +50,18 @@ const MapTablet = dynamic(
   },
 );
 
+const ExpertiseTabletSlideshow = dynamic(
+  () => import("@/components/work/ExpertiseTabletSlideshow").then((m) => m.ExpertiseTabletSlideshow),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-screen-border bg-screen-panel">
+        <p className="font-mono text-[10px] uppercase tracking-wider text-screen-muted">Loading work…</p>
+      </div>
+    ),
+  },
+);
+
 const focusItems = [
   "ERGO.games platform",
   "Carbon tracking infrastructure",
@@ -61,59 +69,7 @@ const focusItems = [
   "Games that bring people together",
 ];
 
-const fallbackPhotos: Record<string, string> = {
-  "proj-ergo": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80",
-  "proj-2bit-games":
-    "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80",
-};
-
-function ProjectCard({ project }: { project: Project }) {
-  const accent = disciplineColors[project.disciplines[0]];
-  const brandImage = getProjectImage(project.id);
-  const photo = brandImage?.src ?? fallbackPhotos[project.id];
-
-  return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className="group block h-full transition duration-300 ease-studio hover:-translate-y-1"
-    >
-      <Tablet glow="none" orientation="portrait" className="h-full w-full">
-        <div className="relative flex min-h-[220px] flex-col justify-end overflow-hidden p-3 sm:min-h-[260px]">
-          {photo && (
-            <Image
-              src={photo}
-              alt={brandImage?.alt ?? ""}
-              fill
-              loading="lazy"
-              className="object-cover transition duration-500 group-hover:scale-[1.04]"
-              style={{ objectPosition: brandImage?.objectPosition ?? "center" }}
-              sizes="(max-width: 768px) 100vw, 280px"
-            />
-          )}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `linear-gradient(180deg, transparent 15%, ${accent}dd 100%)`,
-            }}
-          />
-          <div className="relative">
-            <p className="font-mono text-[8px] uppercase tracking-wider text-white/70">
-              {project.disciplines[0]}
-            </p>
-            <h3 className="mt-1 font-display text-sm font-bold leading-tight text-white">{project.title}</h3>
-            <p className="mt-1 line-clamp-2 text-[10px] text-white/85">{project.summary}</p>
-            <span className="mt-2 inline-block text-[10px] font-semibold text-white/90 opacity-80 transition group-hover:opacity-100">
-              Open case study →
-            </span>
-          </div>
-        </div>
-      </Tablet>
-    </Link>
-  );
-}
-
 export function VerticalBento() {
-  const featured = projects.filter((p) => p.featured).slice(0, 4);
   const [config, setConfig] = useState<ResumeConfig>(getDefaultResumeConfig());
   const resumeContent = useMemo(() => buildResumeContent(config), [config]);
   const resumeSnippet = useMemo(() => buildResumeContent(getDefaultResumeConfig()), []);
@@ -273,13 +229,18 @@ export function VerticalBento() {
             </Paper>
           </StudioObject>
 
-          <div className="grid gap-6 sm:grid-cols-2 sm:gap-8">
-            {featured.map((project) => (
-              <StudioObject key={project.id} rotate={project.id.endsWith("ergo") ? -2 : 2}>
-                <ProjectCard project={project} />
-              </StudioObject>
-            ))}
-          </div>
+          <StudioObject rotate={0.8}>
+            <ExpertiseTabletSlideshow />
+          </StudioObject>
+
+          <p className="mt-6 text-center">
+            <Link
+              href="/work"
+              className="font-mono text-[10px] uppercase tracking-[0.18em] text-paper-cream/60 transition hover:text-paper-cream"
+            >
+              View all work →
+            </Link>
+          </p>
         </BentoCell>
 
         <BentoCell id="contact" span="wide" deferPaint className="bento-cell--contact">
