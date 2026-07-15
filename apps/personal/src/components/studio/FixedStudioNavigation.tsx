@@ -48,6 +48,17 @@ function measureSections(
   setActiveSection(next);
 }
 
+function SiteIdentity({ className }: { className?: string }) {
+  return (
+    <div className={className} aria-label="Site identity">
+      <Link href="/#hero" className={cn(STUDIO_TYPOGRAPHY.navBrand)}>
+        {profile.name}
+      </Link>
+      <p className={cn("mt-0.5", STUDIO_TYPOGRAPHY.navTagline)}>{NAV_SUBTITLE}</p>
+    </div>
+  );
+}
+
 export function FixedStudioNavigation() {
   const [scrolled, setScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
@@ -81,79 +92,41 @@ export function FixedStudioNavigation() {
     );
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
-        scrolled ? "bg-wood-dark/96 shadow-lg backdrop-blur-sm" : "bg-studio-black/70 backdrop-blur-[2px]",
-      )}
-    >
-      {/* Desktop — title left, nav + toggle right */}
-      <div className="mx-auto hidden w-full max-w-[1600px] grid-cols-[minmax(0,1fr)_auto] items-center gap-6 px-4 py-3 sm:px-8 sm:py-4 lg:grid">
-        <div className="min-w-0 justify-self-start">
-          {pastHero ? (
-            <div>
-              <Link href="/#hero" className={cn(STUDIO_TYPOGRAPHY.navBrand)}>
-                {profile.name}
-              </Link>
-              <p className={cn("mt-0.5", STUDIO_TYPOGRAPHY.navTagline)}>{NAV_SUBTITLE}</p>
-            </div>
-          ) : null}
-        </div>
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-2 sm:px-6 sm:pt-3">
+      <div
+        className={cn(
+          "mx-auto w-full max-w-[1600px] overflow-hidden rounded-2xl border border-paper-cream/10 px-3 py-2.5 transition-colors duration-300 sm:px-6 sm:py-3 lg:px-8 lg:py-4",
+          scrolled
+            ? "bg-wood-dark/96 shadow-lg backdrop-blur-sm"
+            : "bg-studio-black/70 backdrop-blur-sm",
+        )}
+      >
+        <div className="flex items-start justify-between gap-4 lg:gap-6">
+          {pastHero ? <SiteIdentity className="hidden min-w-0 lg:block" /> : null}
 
-        <nav className="flex shrink-0 items-center justify-end gap-4 justify-self-end" aria-label="Primary">
-          {navLinks.map((link) => (
-            <Link
-              key={link.id}
-              href={link.href}
-              className={linkClass(link.id)}
-              aria-current={activeSection === link.id ? "page" : undefined}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <StudioThemeToggle />
-        </nav>
-      </div>
-
-      {/* Mobile & tablet — horizontal scroll nav, title row below when past hero */}
-      <div className="lg:hidden">
-        <div className="mx-auto flex max-w-[1600px] items-center gap-2 px-3 py-2.5 sm:px-6 sm:py-3">
-          <nav
-            className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            aria-label="Primary"
-          >
-            {navLinks.map((link) => (
-              <Link
-                key={link.id}
-                href={link.href}
-                className={linkClass(link.id)}
-                aria-current={activeSection === link.id ? "page" : undefined}
+          <div className="ml-auto flex min-w-0 flex-col items-end gap-1 lg:shrink-0">
+            <div className="flex w-full items-center justify-end gap-2 sm:gap-3 lg:gap-4">
+              <nav
+                className="flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] lg:flex-none lg:overflow-visible [&::-webkit-scrollbar]:hidden"
+                aria-label="Primary"
               >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-          <StudioThemeToggle />
-        </div>
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.id}
+                    href={link.href}
+                    className={linkClass(link.id)}
+                    aria-current={activeSection === link.id ? "page" : undefined}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+              <StudioThemeToggle />
+            </div>
 
-        {pastHero ? (
-          <div
-            className="border-t border-paper-cream/15 bg-wood-dark/40 px-3 py-2 sm:px-6"
-            aria-label="Site identity"
-          >
-            <Link href="/#hero" className={cn(STUDIO_TYPOGRAPHY.navBrand)}>
-              {profile.name}
-            </Link>
-            <p
-              className={cn(
-                "mt-0.5 leading-tight tracking-[0.14em] text-paper-cream/75",
-                STUDIO_TYPOGRAPHY.labelSmall,
-              )}
-            >
-              {NAV_SUBTITLE}
-            </p>
+            {pastHero ? <SiteIdentity className="text-right lg:hidden" /> : null}
           </div>
-        ) : null}
+        </div>
       </div>
     </header>
   );
