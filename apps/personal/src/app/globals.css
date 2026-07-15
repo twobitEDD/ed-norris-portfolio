@@ -1,3 +1,13 @@
+/*
+ * Norris Studio design language (see src/design/studio-language.ts)
+ *
+ * 1. The Desk       — dark wood ambient; screen-text on desk, paper-cream nav labels
+ * 2. Paper & Ink    — warm cream stock; fixed ink never inverts in night mode
+ * 3. Devices as Portals — bezel + screen-surface; warm screens for human content
+ * 4. Handwritten Margins — Caveat for personal voice, not UI chrome
+ * 5. Studio Light   — day/night shifts ambient glow and screen panels, not paper ink
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -458,6 +468,105 @@ body {
   filter: brightness(0.92) sepia(0.06);
 }
 
+/* Paper content — fixed ink on cream (day + night studio) */
+.paper-content {
+  --paper-ink: #1b211e;
+  --paper-ink-soft: #4e5148;
+  --paper-ink-muted: #5c5f56;
+  --paper-ink-faint: #6a6d64;
+  color: var(--paper-ink);
+}
+
+.paper-content .text-ink {
+  color: var(--paper-ink);
+}
+
+.paper-content .text-ink-soft {
+  color: var(--paper-ink-soft);
+}
+
+[data-studio-mode="night"] .paper-content {
+  color: var(--paper-ink);
+}
+
+/* Notebook — ruled pad on desk, shares paper tokens */
+.notebook-surface {
+  border-radius: 2px;
+  border: 1px solid rgba(60, 48, 32, 0.12);
+  background-color: var(--paper-fold);
+  padding: 4px;
+  box-shadow: var(--shadow-paper);
+}
+
+.notebook-surface__page {
+  position: relative;
+  border-left: 4px solid rgba(251, 113, 133, 0.55);
+  background-color: var(--paper-cream);
+  background-image:
+    var(--paper-texture),
+    linear-gradient(180deg, var(--paper-cream) 0%, #efe6d2 100%);
+  padding: 1rem 1.25rem 1rem 1.5rem;
+  color: var(--ink);
+}
+
+[data-studio-mode="night"] .notebook-surface__page {
+  filter: brightness(0.92) sepia(0.06);
+}
+
+/* Sticky notes — saturated stock, fixed ink */
+.sticky-note {
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--ink);
+  box-shadow: var(--shadow-paper);
+}
+
+.sticky-note--yellow {
+  background-color: #f5e6a8;
+}
+
+.sticky-note--green {
+  background-color: #dfe8c8;
+}
+
+.sticky-note--pink {
+  background-color: #f3d4d8;
+}
+
+[data-studio-mode="night"] .sticky-note {
+  filter: brightness(0.94) sepia(0.04);
+}
+
+/* Device screen content — inherits mode-aware screen tokens */
+.screen-content {
+  color: var(--screen-text);
+}
+
+.screen-content .text-screen-muted,
+.screen-content .text-ink-soft {
+  color: var(--screen-muted);
+}
+
+/* Shared mono label on paper or screens */
+.studio-label {
+  font-family: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--paper-ink-faint, var(--ink-soft));
+}
+
+.paper-content .studio-label {
+  color: var(--paper-ink-faint);
+}
+
+.screen-content .studio-label {
+  color: var(--screen-muted);
+}
+
 /* Business card — printed stock on desk */
 .business-card {
   --business-card-ink: #1b211e;
@@ -697,6 +806,7 @@ body {
 }
 
 .device-frame--phone-landscape .screen-surface {
+  --phone-landscape-notch-safe: 36px;
   border-radius: 16px;
 }
 
@@ -894,13 +1004,24 @@ body {
   overflow: hidden;
 }
 
-.contact-phone-device .screen-surface > div {
-  padding: 0.75rem 0.875rem;
+.contact-phone-device .screen-surface > .phone-screen-content {
+  padding: 0.875rem 1rem;
 }
 
 @media (min-width: 640px) {
-  .contact-phone-device .screen-surface > div {
-    padding: 0.875rem 1rem;
+  .contact-phone-device .screen-surface > .phone-screen-content {
+    padding: 1rem 1.125rem;
+  }
+}
+
+/* Clear left-center Dynamic Island in landscape contact phone */
+.contact-phone-device .device-frame--phone-landscape .screen-surface > .phone-screen-content {
+  padding-left: calc(0.875rem + var(--phone-landscape-notch-safe, 36px));
+}
+
+@media (min-width: 640px) {
+  .contact-phone-device .device-frame--phone-landscape .screen-surface > .phone-screen-content {
+    padding-left: calc(1rem + var(--phone-landscape-notch-safe, 36px));
   }
 }
 

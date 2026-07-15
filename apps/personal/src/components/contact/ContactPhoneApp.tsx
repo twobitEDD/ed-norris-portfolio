@@ -153,16 +153,16 @@ function HomeScreen({
   ];
 
   return (
-    <div className="grid h-full min-h-0 grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-4">
-      <div className="flex min-h-0 flex-col justify-center">
+    <div className="grid h-full min-h-0 grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-5">
+      <div className="flex min-h-0 flex-col justify-center gap-0.5">
         <p className="contact-phone-app__label font-mono text-[9px] uppercase tracking-[0.2em]">Reach</p>
-        <h2 className="contact-phone-app__headline mt-1.5 font-editorial text-lg font-semibold leading-tight sm:text-xl">
+        <h2 className="contact-phone-app__headline mt-2 font-editorial text-lg font-semibold leading-snug sm:mt-2.5 sm:text-xl">
           Let&apos;s build something useful.
         </h2>
-        <p className="contact-phone-app__body mt-2 text-[11px] leading-snug sm:text-xs">
+        <p className="contact-phone-app__body mt-2.5 text-[11px] leading-relaxed sm:mt-3 sm:text-xs">
           {profile.availability}
         </p>
-        <p className="contact-phone-app__label mt-auto flex items-center gap-1.5 pt-3 font-mono text-[8px] uppercase tracking-wider sm:pt-4">
+        <p className="contact-phone-app__label mt-auto flex items-center gap-1.5 pt-4 font-mono text-[8px] uppercase tracking-wider sm:pt-5">
           <MapPin className="h-3 w-3" strokeWidth={1.75} />
           {profile.location}
         </p>
@@ -391,7 +391,7 @@ function ContactAppContent() {
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      <header className="contact-phone-app__header-divider mb-2 flex shrink-0 items-center gap-2 border-b pb-2">
+      <header className="contact-phone-app__header-divider mb-2.5 flex shrink-0 items-center gap-2 border-b pb-2.5">
         {screen !== "home" ? (
           <button
             type="button"

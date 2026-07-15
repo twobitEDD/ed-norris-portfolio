@@ -1,3 +1,4 @@
+import { STUDIO_DEVICE } from "@/design/studio-language";
 import { cn } from "@/lib/cn";
 import { ObjectShadow } from "./ObjectShadow";
 
@@ -52,11 +53,11 @@ export function Phone({
       className={cn(
         "relative",
         isLandscape
-          ? "mx-auto w-full max-w-[min(100%,520px)]"
+          ? "mx-auto w-full max-w-[min(100%,560px)]"
           : isLarge
             ? "mx-auto w-full max-w-[min(100%,920px)]"
             : isLauncher
-              ? "mx-auto w-[min(100%,210px)] sm:w-[220px]"
+              ? "mx-auto w-[min(100%,220px)] sm:w-[220px]"
               : "w-[220px] sm:w-[248px]",
         className,
       )}
@@ -64,16 +65,16 @@ export function Phone({
       <ObjectShadow depth={isLandscape ? 3 : 4} />
       <div
         className={cn(
-          "device-frame device-bezel device-frame--phone",
-          isLandscape && "device-frame--phone-landscape",
-          isLarge && "device-frame--phone-large w-full",
+          STUDIO_DEVICE.classes.framePhone,
+          isLandscape && STUDIO_DEVICE.classes.phoneLandscape,
+          isLarge && STUDIO_DEVICE.classes.phoneLarge,
           glow !== "none" && glowClass[glow],
         )}
       >
         <div
           className={cn(
-            "screen-surface relative flex flex-col overflow-hidden",
-            screenTheme === "warm" && "screen-surface--warm",
+            STUDIO_DEVICE.classes.screen,
+            screenTheme === "warm" && STUDIO_DEVICE.classes.screenWarm,
             isLandscape && "aspect-[19/9] min-h-0",
             isLarge && isLauncher && !isLandscape && "aspect-[3/4] w-full min-h-0",
             !isLarge && isLauncher && !isLandscape && "aspect-[9/19] min-h-[400px]",
@@ -94,6 +95,7 @@ export function Phone({
           ) : (
             <div
               className={cn(
+                STUDIO_DEVICE.classes.screenContent,
                 "flex min-h-0 flex-1 flex-col",
                 isAppLayout ? "overflow-hidden px-3 py-3 sm:px-4 sm:py-3.5" : "justify-center",
                 !isAppLayout && (isLandscape ? "px-5 py-4 sm:px-7 sm:py-5" : "p-5"),
