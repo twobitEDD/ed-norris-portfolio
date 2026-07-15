@@ -23,6 +23,8 @@ export type TabletApp = {
   isGame?: boolean;
   /** Opens inside the studio device instead of a modal or external link */
   inDevice?: boolean;
+  /** Portfolio project slug for richer in-device showcase content */
+  projectSlug?: string;
 };
 
 const ergo = projects.find((p) => p.slug === "ergo-games");
@@ -40,6 +42,8 @@ export const tabletApps: TabletApp[] = [
     href: "https://ergo.games",
     iconBg: "linear-gradient(145deg, #1a1035 0%, #4a2d8a 55%, #8c5cc7 100%)",
     iconAccent: "#c9a0ff",
+    inDevice: true,
+    projectSlug: "ergo-games",
   },
   {
     id: "co2t",
@@ -53,6 +57,8 @@ export const tabletApps: TabletApp[] = [
     iconBg: "linear-gradient(145deg, #0d2818 0%, #1a5c3a 50%, #3d9b6a 100%)",
     iconAccent: "#7ee8a8",
     imageSrc: "/brands/co2t/co2t-mascot-welcome.png",
+    inDevice: true,
+    projectSlug: "co2t-platform",
   },
   {
     id: "fishfight",
@@ -64,6 +70,8 @@ export const tabletApps: TabletApp[] = [
     href: "https://fishfight.app",
     iconBg: "linear-gradient(145deg, #0a1a2e 0%, #1a4a7a 45%, #2d8fd4 100%)",
     iconAccent: "#7ec8ff",
+    inDevice: true,
+    projectSlug: "fish-fight",
   },
   {
     id: "microbe",
