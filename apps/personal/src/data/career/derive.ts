@@ -1,6 +1,7 @@
 import {
   careerGraphEdges,
   careerGraphNodes,
+  overviewBranchEdges,
   overviewEdgeNotes,
   PERSON_NODE_ID,
 } from "./career-graph";
@@ -26,11 +27,16 @@ function spineAdjacency(): Map<string, CareerGraphEdge[]> {
   return adj;
 }
 
-/** Nodes flagged for the homepage overview tier, in chronological order. */
-export function getOverviewNodes(): CareerGraphNode[] {
+/** Nodes flagged for the homepage overview tier, in chronological order (spine only). */
+export function getOverviewSpineNodes(): CareerGraphNode[] {
   return careerGraphNodes
-    .filter((n) => n.showInOverview)
+    .filter((n) => n.showInOverview && !n.overviewBranchOnly)
     .sort((a, b) => (a.overviewOrder ?? 0) - (b.overviewOrder ?? 0));
+}
+
+/** All overview-visible nodes — spine milestones + branch nodes. */
+export function getOverviewNodes(): CareerGraphNode[] {
+  return careerGraphNodes.filter((n) => n.showInOverview);
 }
 
 export function getOverviewNodeIds(): string[] {
@@ -83,7 +89,7 @@ function connectionNoteForOverviewEdge(source: string, target: string): string |
  * `skippableInOverview` nodes may lie between them.
  */
 export function deriveOverviewEdges(): OverviewEdge[] {
-  const overviewNodes = getOverviewNodes();
+  const overviewNodes = getOverviewSpineNodes();
   const edges: OverviewEdge[] = [];
 
   for (let i = 0; i < overviewNodes.length - 1; i++) {
@@ -106,7 +112,7 @@ export function deriveOverviewEdges(): OverviewEdge[] {
     });
   }
 
-  return edges;
+  return [...edges, ...overviewBranchEdges];
 }
 
 export function getEmploymentFocusSlugs(): Record<string, string> {

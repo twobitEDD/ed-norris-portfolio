@@ -31,6 +31,8 @@ export type CareerGraphNode = {
    * overview milestones on the employment_sequence spine.
    */
   skippableInOverview?: boolean;
+  /** Shown on overview map as a branch node (not on the linear spine). */
+  overviewBranchOnly?: boolean;
   /** Organization strings referenced by timeline-eras.ts `employers` arrays. */
   timelineEmployerAliases?: string[];
 };

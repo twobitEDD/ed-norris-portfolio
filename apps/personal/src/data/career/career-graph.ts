@@ -1,4 +1,4 @@
-import type { CareerGraphEdge, CareerGraphNode } from "./types";
+import type { CareerGraphEdge, CareerGraphNode, OverviewEdge } from "./types";
 
 export const PERSON_NODE_ID = "person-ed";
 
@@ -84,7 +84,10 @@ export const careerGraphNodes: CareerGraphNode[] = [
     kind: "experience",
     label: "2bit Entertainment",
     experienceId: "exp-2bit-founder",
-    skippableInOverview: true,
+    showInOverview: true,
+    overviewOrder: 45,
+    overviewLabel: "2bit '12",
+    focusSlug: "2bit-founder",
     timelineEmployerAliases: ["2bit Entertainment"],
   },
   {
@@ -148,7 +151,7 @@ export const careerGraphNodes: CareerGraphNode[] = [
     experienceId: "exp-2bit-senior",
     showInOverview: true,
     overviewOrder: 70,
-    overviewLabel: "2bit",
+    overviewLabel: "2bit '18+",
     focusSlug: "2bit",
     timelineEmployerAliases: ["2bit Entertainment"],
   },
@@ -157,7 +160,10 @@ export const careerGraphNodes: CareerGraphNode[] = [
     kind: "experience",
     label: "Uncorked Studios",
     experienceId: "exp-uncorked",
-    skippableInOverview: true,
+    showInOverview: true,
+    overviewOrder: 75,
+    overviewLabel: "Uncorked",
+    focusSlug: "uncorked",
     timelineEmployerAliases: ["Uncorked Studios"],
   },
   {
@@ -181,7 +187,10 @@ export const careerGraphNodes: CareerGraphNode[] = [
     kind: "experience",
     label: "Nice Touch",
     experienceId: "exp-nice-touch",
-    skippableInOverview: true,
+    showInOverview: true,
+    overviewBranchOnly: true,
+    overviewLabel: "Nice Touch",
+    focusSlug: "nice-touch",
     timelineEmployerAliases: ["Nice Touch"],
   },
   {
@@ -214,12 +223,20 @@ export const careerGraphNodes: CareerGraphNode[] = [
     id: "client-dell",
     kind: "company",
     label: "Dell",
+    showInOverview: true,
+    overviewBranchOnly: true,
+    overviewLabel: "Dell",
+    focusSlug: "dell",
     timelineEmployerAliases: ["Dell"],
   },
   {
     id: "client-wash-u",
     kind: "company",
     label: "Washington University",
+    showInOverview: true,
+    overviewBranchOnly: true,
+    overviewLabel: "WashU",
+    focusSlug: "wash-u",
     timelineEmployerAliases: ["Washington University"],
   },
   {
@@ -262,6 +279,28 @@ export const careerGraphNodes: CareerGraphNode[] = [
     overviewOrder: 110,
     overviewLabel: "ERGO",
     focusSlug: "ergo",
+    timelineEmployerAliases: [],
+  },
+  {
+    id: "project-fish-fight",
+    kind: "project",
+    label: "Fish Fight",
+    projectId: "proj-fish-fight",
+    showInOverview: true,
+    overviewBranchOnly: true,
+    overviewLabel: "Fish Fight",
+    focusSlug: "fish-fight",
+    timelineEmployerAliases: [],
+  },
+  {
+    id: "project-ergnomes",
+    kind: "project",
+    label: "ERGnomes.io",
+    projectId: "proj-ergnomes",
+    showInOverview: true,
+    overviewBranchOnly: true,
+    overviewLabel: "ERGnomes",
+    focusSlug: "ergnomes",
     timelineEmployerAliases: [],
   },
 
@@ -312,16 +351,29 @@ export const careerGraphEdges: CareerGraphEdge[] = [
   // Environmental arc
   { id: "cg-oibw-co2t", source: "exp-node-oibw", target: "exp-node-co2t", type: "employment_sequence", connectionNote: "same mission, bigger scope" },
   { id: "cg-co2t-ergo", source: "exp-node-co2t", target: "project-ergo", type: "project_at", connectionNote: "advisory & platforms" },
+  { id: "cg-2bit-fish-fight", source: "exp-node-2bit", target: "project-fish-fight", type: "project_at", connectionNote: "2bit game" },
+  { id: "cg-2bit-ergnomes-proj", source: "exp-node-2bit", target: "project-ergnomes", type: "project_at", connectionNote: "technical design" },
+];
+
+/** Overview branch edges — agency clients and 2bit projects (not on the linear spine). */
+export const overviewBranchEdges: OverviewEdge[] = [
+  { id: "ov-2bit-nice-touch", source: "exp-node-2bit", target: "exp-node-nice-touch", connectionNote: "agency contract" },
+  { id: "ov-nice-touch-dell", source: "exp-node-nice-touch", target: "client-dell", connectionNote: "via Nice Touch" },
+  { id: "ov-nice-touch-washu", source: "exp-node-nice-touch", target: "client-wash-u", connectionNote: "via Nice Touch" },
+  { id: "ov-2bit-fish-fight", source: "exp-node-2bit", target: "project-fish-fight", connectionNote: "2bit game" },
+  { id: "ov-2bit-ergnomes", source: "exp-node-2bit", target: "project-ergnomes", connectionNote: "2bit NFT design" },
 ];
 
 /** Overview edge notes when the derived path skips skippable nodes. */
 export const overviewEdgeNotes: Record<string, string> = {
   "exp-node-ea|exp-node-black-lantern": "first credited ship",
   "exp-node-seamless|exp-node-rocket": "licensed → casino",
-  "exp-node-rocket|exp-node-pps": "founder era → education",
+  "exp-node-rocket|exp-node-2bit-founder": "studio founder",
+  "exp-node-2bit-founder|exp-node-pps": "education chapter",
   "exp-node-pps|exp-node-adidas": "brand innovation",
   "exp-node-adidas|exp-node-2bit": "continued via contract",
-  "exp-node-2bit|client-google": "agency contracts",
+  "exp-node-2bit|exp-node-uncorked": "agency contract",
+  "exp-node-uncorked|client-google": "via Uncorked",
   "client-google|exp-node-oibw": "environment pivot",
   "exp-node-oibw|exp-node-co2t": "scaled operations",
   "exp-node-co2t|project-ergo": "advisory & platforms",

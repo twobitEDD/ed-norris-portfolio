@@ -11,6 +11,7 @@ import {
   deriveOverviewEdges,
   findSpinePath,
   getOverviewNodeIds,
+  getOverviewSpineNodes,
   getTimelineEmployerIndex,
 } from "./derive";
 import type { CareerGraphEdge, CareerValidationIssue } from "./types";
@@ -107,7 +108,7 @@ export function validateRelationshipsSync(): CareerValidationIssue[] {
 /** Overview spine must not skip non-skippable employers or use forbidden shortcuts. */
 export function validateOverviewSpine(): CareerValidationIssue[] {
   const issues: CareerValidationIssue[] = [];
-  const overviewIds = getOverviewNodeIds();
+  const overviewIds = getOverviewSpineNodes().map((n) => n.id);
   const derived = deriveOverviewEdges();
 
   for (let i = 0; i < overviewIds.length - 1; i++) {
@@ -148,6 +149,19 @@ export function validateOverviewSpine(): CareerValidationIssue[] {
       code: "forbidden-adidas-google-direct",
       message:
         "Forbidden overview edge adidas → Google — must route through exp-node-2bit and exp-node-uncorked (agency_to_client)",
+    });
+  }
+
+  // Forbidden: direct 2bit → Google skipping Uncorked
+  const twoBitToGoogle = derived.find(
+    (e) => e.source === "exp-node-2bit" && e.target === "client-google",
+  );
+  if (twoBitToGoogle) {
+    issues.push({
+      level: "error",
+      code: "forbidden-2bit-google-direct",
+      message:
+        "Forbidden overview edge 2bit → Google — must route through exp-node-uncorked (agency_to_client)",
     });
   }
 
