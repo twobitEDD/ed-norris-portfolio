@@ -89,21 +89,21 @@ export function VerticalBento() {
   };
 
   return (
-    <section className="vertical-bento relative px-4 pb-24 pt-10 sm:px-8 sm:pt-12 lg:pt-14">
+    <section className="vertical-bento relative px-4 pb-28 pt-2 sm:px-8 sm:pb-32 sm:pt-4">
       <div className="vertical-bento__grid mx-auto max-w-[920px]">
         <BentoCell id="game" deferPaint className="bento-cell--game">
-          <StudioObject rotate={-1.2} className="bento-cell--game-object flex flex-col items-center">
+          <StudioObject rotate={-0.8} className="bento-cell--game-object flex flex-col items-center">
             <StudioPhoneApps />
           </StudioObject>
         </BentoCell>
 
         <BentoCell id="map" span="tall" deferPaint className="bento-cell--map">
-          <StudioObject rotate={0.6}>
-            <div className="relative pt-1 sm:pt-2">
-              <StickyNote color="pink" className="pointer-events-none absolute -right-2 -top-3 z-10 hidden max-w-[160px] sm:block">
+          <StudioObject rotate={0.4}>
+            <div className="relative pt-2 sm:pt-3">
+              <StickyNote color="pink" className="pointer-events-none absolute right-2 top-2 z-10 hidden max-w-[150px] sm:block lg:right-4 lg:top-3">
                 <p className="handwritten text-sm leading-snug text-ink">One arc, not six careers.</p>
               </StickyNote>
-              <LazyMount minHeight="500px">
+              <LazyMount minHeight="520px">
                 <MapTablet className="w-full" mode="overview" />
               </LazyMount>
               <p className="mt-4 text-center">
@@ -139,7 +139,7 @@ export function VerticalBento() {
               </Notebook>
             </StudioObject>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-5 pt-1">
               <StickyNote color="green" className="max-w-[210px]">
                 <p className="handwritten text-base leading-snug text-ink">Seeking opportunities.</p>
                 <p className="handwritten text-sm text-ink-soft">Building what&apos;s next.</p>
@@ -153,9 +153,9 @@ export function VerticalBento() {
         </BentoCell>
 
         <BentoCell id="resume" span="wide" deferPaint className="bento-cell--resume">
-          <div className="grid gap-6 lg:grid-cols-[220px_1fr] lg:items-start">
-            <div className="flex flex-col items-center gap-4 lg:items-start">
-              <StudioObject rotate={-2.5} className="flex justify-center lg:justify-start">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,240px)_1fr] lg:items-start lg:gap-10">
+            <div className="flex flex-col items-center gap-5 lg:items-start">
+              <StudioObject rotate={-1.5} className="flex w-full justify-center lg:justify-start">
                 <Phone>
                 <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted">
                   Résumé generator
@@ -177,7 +177,7 @@ export function VerticalBento() {
               <ClientLogoStrip size="sm" variant="on-dark" className="max-w-[220px]" />
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-5">
               <Notebook title="Build your résumé">
                 <label className="mt-3 block text-xs text-ink-soft">
                   Preset
@@ -221,7 +221,7 @@ export function VerticalBento() {
 
         <BentoCell id="work" deferPaint className="bento-cell--work">
           <StudioObject rotate={0.5}>
-            <Paper variant="desk" className="mb-6">
+            <Paper variant="desk" className="mb-8">
               <h2 className="font-editorial text-2xl font-semibold text-ink sm:text-3xl">
                 Work that solves real problems.
               </h2>
@@ -246,8 +246,8 @@ export function VerticalBento() {
         </BentoCell>
 
         <BentoCell id="contact" span="wide" deferPaint className="bento-cell--contact">
-          <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-            <StudioObject rotate={-2}>
+          <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-12">
+            <StudioObject rotate={-1.2}>
               <Phone orientation="landscape" screenTheme="warm">
                 <h2 className="font-editorial text-xl font-semibold text-ink sm:text-2xl">
                   Let&apos;s build something useful.
@@ -272,7 +272,7 @@ export function VerticalBento() {
               </Notebook>
             </StudioObject>
 
-            <StudioObject rotate={1.2}>
+            <StudioObject rotate={0.8}>
               <Polaroid
                 size="lg"
                 rotation={0}
@@ -284,7 +284,7 @@ export function VerticalBento() {
             </StudioObject>
           </div>
 
-          <footer className="mt-12 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-paper-cream/50">
+          <footer className="mt-16 border-t border-paper-cream/10 pt-8 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-paper-cream/50 sm:mt-20">
             {profile.name} · {new Date().getFullYear()}
           </footer>
         </BentoCell>

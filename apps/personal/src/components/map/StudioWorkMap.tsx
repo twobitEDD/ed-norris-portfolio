@@ -157,12 +157,12 @@ function StudioWorkMapInner({
   const rootMinH = fullPage
     ? "min-h-[min(80vh,720px)]"
     : isOverview
-      ? "min-h-[420px] sm:min-h-[460px]"
+      ? "min-h-[460px] sm:min-h-[500px]"
       : "min-h-[300px] sm:min-h-[320px]";
   const canvasMinH = fullPage
     ? "min-h-[min(60vh,560px)]"
     : isOverview
-      ? "min-h-[320px] sm:min-h-[360px]"
+      ? "min-h-[360px] sm:min-h-[400px]"
       : "min-h-[220px] sm:min-h-[260px]";
 
   const focusLabel = focusSlug
@@ -254,7 +254,7 @@ function StudioWorkMapInner({
             edgeTypes={edgeTypes}
             onlyRenderVisibleElements
             fitView
-            fitViewOptions={{ padding: isOverview ? 0.28 : fullPage ? 0.28 : 0.24 }}
+            fitViewOptions={{ padding: isOverview ? 0.22 : fullPage ? 0.28 : 0.24 }}
             minZoom={isOverview ? 0.32 : 0.18}
             maxZoom={isOverview ? 1 : 1.1}
             proOptions={{ hideAttribution: true }}

@@ -38,7 +38,7 @@ export function MapTablet({
           fullPage
             ? "min-h-[min(85vh,760px)]"
             : isOverview
-              ? "min-h-[460px] sm:min-h-[500px]"
+              ? "min-h-[480px] sm:min-h-[540px]"
               : "min-h-[360px] sm:min-h-[380px]",
         )}
       >

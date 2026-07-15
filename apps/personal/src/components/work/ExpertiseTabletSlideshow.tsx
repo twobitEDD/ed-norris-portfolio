@@ -129,7 +129,7 @@ function PartnerStrip({ slide }: { slide: ExpertiseSlide }) {
         {slide.partnerNotes?.map((note) => (
           <span
             key={note}
-            className="rounded-full border border-screen-border/80 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-screen-muted"
+            className="rounded-full border border-screen-border/80 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-screen-muted"
           >
             {note}
           </span>
@@ -145,7 +145,7 @@ function TechTags({ technologies }: { technologies: string[] }) {
       {technologies.map((tech) => (
         <span
           key={tech}
-          className="rounded border border-screen-border/70 bg-screen-panel/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-screen-muted"
+          className="rounded border border-screen-border/70 bg-screen-panel/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-screen-muted"
         >
           {tech}
         </span>
@@ -159,7 +159,7 @@ function SlideContent({ slide }: { slide: ExpertiseSlide }) {
     <div className="relative flex h-full min-h-[280px] flex-col p-4 sm:min-h-[300px] sm:p-5">
       <SlideDecor slide={slide} />
       <div className="relative z-[1] flex flex-1 flex-col">
-        <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-screen-muted">{slide.eyebrow}</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-screen-muted">{slide.eyebrow}</p>
         <h3 className="mt-1 font-editorial text-lg font-semibold text-screen-text sm:text-xl">{slide.title}</h3>
         <p className="mt-2 max-w-prose text-[11px] leading-relaxed text-screen-muted sm:text-xs">{slide.body}</p>
         <TechTags technologies={slide.technologies} />

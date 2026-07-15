@@ -411,6 +411,24 @@ export const graphNodes: GraphNode[] = [
     projectId: "proj-ergo",
   },
   {
+    id: "project-fish-fight",
+    type: "project",
+    label: "Fish Fight",
+    disciplines: ["games", "environment"],
+    period: "2023 – Present",
+    description: "Ocean conservation web game from 2bit — playful marine stewardship mechanics.",
+    projectId: "proj-fish-fight",
+  },
+  {
+    id: "project-ergnomes",
+    type: "project",
+    label: "ERGnomes.io",
+    disciplines: ["games", "software"],
+    period: "2021 – 2022",
+    description: "NFT ecosystem technical design on the Ergo Platform — delivered via 2bit contracting.",
+    projectId: "proj-ergnomes",
+  },
+  {
     id: "project-carbon",
     type: "project",
     label: "Carbon Tracking",
@@ -544,7 +562,15 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-2bit-pause-planets-core", source: "exp-node-2bit-pause", target: "project-planets-core", relationship: "managed", connectionNote: "catalog legacy" },
   { id: "e-company-planets-core", source: "company-2bit", target: "project-planets-core", relationship: "created", connectionNote: "2012–2014 studio" },
 
-  // Games present — ERGO
+  // Games present — ERGO, Fish Fight, ERGnomes (2bit studio projects)
   { id: "e-games-ergo", source: "theme-games", target: "project-ergo", relationship: "led-to", connectionNote: "indie game platform" },
   { id: "e-2bit-ergo", source: "company-2bit", target: "project-ergo", relationship: "led-to", connectionNote: "studio → platform" },
+  { id: "e-exp-2bit-ergo", source: "exp-node-2bit", target: "project-ergo", relationship: "created", connectionNote: "platform build" },
+  { id: "e-games-fish-fight", source: "theme-games", target: "project-fish-fight", relationship: "created", connectionNote: "conservation game" },
+  { id: "e-2bit-fish-fight", source: "exp-node-2bit", target: "project-fish-fight", relationship: "created", connectionNote: "2bit game" },
+  { id: "e-company-fish-fight", source: "company-2bit", target: "project-fish-fight", relationship: "created", connectionNote: "studio catalog" },
+  { id: "e-games-ergnomes-proj", source: "theme-games", target: "project-ergnomes", relationship: "created", connectionNote: "NFT ecosystem" },
+  { id: "e-2bit-ergnomes-proj", source: "exp-node-2bit", target: "project-ergnomes", relationship: "created", connectionNote: "technical design" },
+  { id: "e-ergnomes-exp-proj", source: "exp-node-ergnomes", target: "project-ergnomes", relationship: "built-with", connectionNote: "same engagement" },
+  { id: "e-company-ergnomes", source: "company-2bit", target: "project-ergnomes", relationship: "created", connectionNote: "studio catalog" },
 ];

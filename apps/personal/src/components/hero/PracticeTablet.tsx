@@ -41,7 +41,7 @@ export function PracticeTablet() {
                 />
                 <div className="practice-panel-scrim absolute inset-0" />
                 <div className="relative p-3.5">
-                  <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/75">
                     {practice.number}
                   </p>
                   <h3 className="mt-1 text-[12px] font-semibold leading-snug text-white sm:text-[13px]">

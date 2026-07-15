@@ -3,21 +3,35 @@
  * Coordinates are tuned for full-page /map; `scale` multiplies spread further.
  */
 
-/** Tier 1 — employment overview: major employers/roles in chronological arc. */
+/** Tier 1 — employment overview: chronological arc + agency/client branches (two-row post-adidas cluster). */
 const employmentOverviewPositions: Record<string, { x: number; y: number }> = {
-  "person-ed": { x: 0, y: 150 },
+  "person-ed": { x: 0, y: 200 },
 
-  "exp-node-ea": { x: -700, y: -5 },
-  "exp-node-black-lantern": { x: -590, y: -22 },
-  "exp-node-seamless": { x: -480, y: -38 },
-  "exp-node-rocket": { x: -370, y: -54 },
-  "exp-node-2bit": { x: -260, y: -70 },
-  "exp-node-pps": { x: -80, y: -50 },
-  "exp-node-adidas": { x: 120, y: -90 },
-  "client-google": { x: 320, y: -50 },
-  "exp-node-oibw": { x: 480, y: 10 },
-  "exp-node-co2t": { x: 620, y: 50 },
-  "project-ergo": { x: 760, y: 10 },
+  // Games foundation arc (upper row, left → center)
+  "exp-node-ea": { x: -920, y: -20 },
+  "exp-node-black-lantern": { x: -800, y: -35 },
+  "exp-node-seamless": { x: -680, y: -50 },
+  "exp-node-rocket": { x: -560, y: -65 },
+  "exp-node-2bit-founder": { x: -440, y: -80 },
+  "exp-node-pps": { x: -300, y: -60 },
+  "exp-node-adidas": { x: -140, y: -90 },
+
+  // Post-adidas spine (upper row, center → right)
+  "exp-node-2bit": { x: 20, y: -100 },
+  "exp-node-uncorked": { x: 160, y: -80 },
+  "client-google": { x: 300, y: -60 },
+  "exp-node-oibw": { x: 460, y: -20 },
+  "exp-node-co2t": { x: 600, y: 20 },
+  "project-ergo": { x: 740, y: 0 },
+
+  // Agency branch — lower row (Nice Touch → Dell, WashU)
+  "exp-node-nice-touch": { x: 160, y: 70 },
+  "client-dell": { x: 300, y: 90 },
+  "client-wash-u": { x: 300, y: 150 },
+
+  // 2bit studio projects — lower row (right)
+  "project-fish-fight": { x: 600, y: 110 },
+  "project-ergnomes": { x: 740, y: 90 },
 };
 
 const positions: Record<string, { x: number; y: number }> = {
@@ -74,6 +88,8 @@ const positions: Record<string, { x: number; y: number }> = {
 
   // Projects (southeast)
   "project-ergo": { x: 420, y: 420 },
+  "project-fish-fight": { x: 560, y: 500 },
+  "project-ergnomes": { x: 680, y: 440 },
   "project-carbon": { x: 160, y: 580 },
   "project-web": { x: 560, y: 300 },
 };

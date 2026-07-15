@@ -39,7 +39,7 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
       }}
       className={cn(
         "rounded-2xl border text-center shadow-md transition-opacity duration-300 motion-reduce:animate-none",
-        isOverview && isExperience && "min-w-[120px] max-w-[200px] px-4 py-3 sm:min-w-[140px] sm:px-4 sm:py-3.5",
+        isOverview && isExperience && "min-h-[72px] min-w-[120px] max-w-[200px] px-4 py-3 sm:min-h-[76px] sm:min-w-[140px] sm:px-4 sm:py-3.5",
         isOverview && isPerson && "min-w-[130px] max-w-[180px] px-4 py-3 sm:min-w-[150px] sm:px-5 sm:py-4",
         isOverview && !isPerson && !isExperience && "min-w-[110px] max-w-[180px] px-3.5 py-2.5 sm:min-w-[130px] sm:px-4 sm:py-3",
         !isOverview && isPerson && "min-w-[140px] max-w-[200px] px-4 py-3.5 sm:min-w-[160px] sm:px-5 sm:py-4",
@@ -81,7 +81,7 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
       </p>
       {data.subtitle && !isOverview && (
         <p
-          className="mt-0.5 line-clamp-1 font-mono text-[10px] uppercase tracking-wider sm:mt-1 sm:text-[11px]"
+          className="mt-0.5 min-h-[1.1rem] line-clamp-1 font-mono text-[10px] uppercase leading-snug tracking-wider sm:mt-1 sm:min-h-[1.25rem] sm:text-[11px]"
           style={{ color: surface.subtitleColor }}
         >
           {data.subtitle}
@@ -89,7 +89,15 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
       )}
       {data.subtitle && isOverview && isExperience && (
         <p
-          className="mt-1 line-clamp-1 font-mono text-[10px] uppercase tracking-wider sm:text-[11px]"
+          className="mt-1 min-h-[1.1rem] line-clamp-1 font-mono text-[10px] uppercase leading-snug tracking-wider sm:min-h-[1.25rem] sm:text-[11px]"
+          style={{ color: surface.subtitleColor }}
+        >
+          {data.subtitle}
+        </p>
+      )}
+      {data.subtitle && isOverview && !isExperience && !isPerson && (
+        <p
+          className="mt-0.5 min-h-[1.1rem] line-clamp-1 font-mono text-[9px] uppercase leading-snug tracking-wider sm:min-h-[1.2rem] sm:text-[10px]"
           style={{ color: surface.subtitleColor }}
         >
           {data.subtitle}

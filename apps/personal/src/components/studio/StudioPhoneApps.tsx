@@ -256,10 +256,10 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
               </div>
             ) : (
               <div className="flex flex-1 flex-col px-3 pb-8 pt-1">
-                <p className="text-center font-mono text-[8px] uppercase tracking-[0.2em] text-white/35">
+                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">
                   Norris Studio
                 </p>
-                <div className="mt-4 grid flex-1 grid-cols-2 gap-x-3 gap-y-4 content-start">
+                <div className="mt-4 grid flex-1 grid-cols-2 gap-x-4 gap-y-5 content-start">
                   {tabletApps.map((app) => (
                     <button
                       key={app.id}
@@ -271,7 +271,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                       <div className="aspect-square w-full max-w-[56px] transition group-hover:shadow-[0_4px_16px_rgba(59,158,255,0.22)]">
                         <AppIcon app={app} />
                       </div>
-                      <span className="max-w-[64px] truncate text-center text-[8px] font-medium text-white/75">
+                      <span className="max-w-[72px] truncate text-center text-[10px] font-medium leading-tight text-white/80">
                         {app.name}
                       </span>
                     </button>

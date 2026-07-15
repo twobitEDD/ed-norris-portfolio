@@ -51,7 +51,7 @@ export function BentoCell({
       ref={ref}
       id={id}
       className={cn(
-        "bento-cell scroll-mt-28",
+        "bento-cell",
         visible ? "bento-cell--visible" : "bento-cell--hidden",
         deferPaint && "bento-cell--deferred",
         span === "wide" && "bento-cell--wide",

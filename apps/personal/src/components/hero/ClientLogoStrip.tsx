@@ -15,8 +15,8 @@ type ClientLogoStripProps = {
 };
 
 const sizeMap = {
-  sm: { height: 18, gap: "gap-4", maxW: "max-w-[52px]" },
-  md: { height: 22, gap: "gap-5 sm:gap-6", maxW: "max-w-[68px]" },
+  sm: { height: 20, gap: "gap-4", maxW: "max-w-[58px]" },
+  md: { height: 24, gap: "gap-5 sm:gap-6", maxW: "max-w-[72px]" },
 };
 
 function LogoItem({

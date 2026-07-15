@@ -17,7 +17,7 @@ export function CinematicNorthStarHero() {
   }, [mode]);
 
   return (
-    <section id="hero" className="relative min-h-[82svh] scroll-mt-20 pb-10 sm:min-h-[88svh] sm:pb-14">
+    <section id="hero" className="relative mb-6 min-h-[78svh] scroll-mt-20 pb-14 sm:mb-8 sm:min-h-[84svh] sm:pb-20 lg:mb-10 lg:pb-24">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
         <Image
           src="/northstar-day.webp"
@@ -43,8 +43,8 @@ export function CinematicNorthStarHero() {
         <div className="absolute inset-x-0 bottom-0 h-[38vh] bg-gradient-to-b from-transparent via-wood-dark/25 to-wood-dark/90" />
       </div>
 
-      <div className="relative mx-auto flex min-h-[82svh] max-w-[920px] flex-col px-4 pb-12 pt-[4.75rem] sm:min-h-[88svh] sm:px-8 sm:pb-14 sm:pt-28">
-        <div className="grid flex-1 items-start gap-5 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-7 lg:items-end lg:gap-8">
+      <div className="relative mx-auto flex min-h-[78svh] max-w-[920px] flex-col px-4 pb-8 pt-[4.75rem] sm:min-h-[84svh] sm:px-8 sm:pb-10 sm:pt-28">
+        <div className="grid flex-1 items-start gap-6 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-8 lg:items-end lg:gap-10">
           <div id="intro" className="min-w-0" style={{ transform: "rotate(-1.2deg)" }}>
             <IntroPaper />
           </div>
@@ -56,7 +56,7 @@ export function CinematicNorthStarHero() {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-col items-center gap-4 sm:mt-8">
+        <div className="mt-8 flex flex-col items-center gap-5 sm:mt-10">
           <ContactCTAs variant="hero" />
           <Link
             href="/#game"
