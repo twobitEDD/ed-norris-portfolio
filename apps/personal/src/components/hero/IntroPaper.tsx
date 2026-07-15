@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { profile, practices } from "@/data";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
+import { IdentityBadgeRow } from "@/components/hero/IdentityBadgeRow";
 import { Paper } from "@/components/physical-ui/Paper";
 
 const roles = [
@@ -51,7 +52,10 @@ export function IntroPaper() {
           </div>
 
           <p className="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">{profile.summary}</p>
-          <div className="mt-6 flex flex-wrap gap-2">
+
+          <IdentityBadgeRow variant="paper" className="mt-3.5 sm:mt-4" />
+
+          <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
             {practices.map((practice) => (
               <Link
                 key={practice.id}

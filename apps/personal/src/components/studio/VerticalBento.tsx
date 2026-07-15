@@ -6,7 +6,6 @@ import { useMemo, useState } from "react";
 import { profile, resumePresets } from "@/data";
 import { ContactCTAs } from "@/components/contact/ContactCTAs";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
-import { IdentityBadgeRow } from "@/components/hero/IdentityBadgeRow";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { Notebook } from "@/components/physical-ui/Notebook";
 import { Phone } from "@/components/physical-ui/Phone";
@@ -92,10 +91,6 @@ export function VerticalBento() {
   return (
     <section className="vertical-bento relative z-[2] px-4 pb-24 pt-10 sm:px-8 sm:pt-12 lg:pt-14">
       <div className="vertical-bento__grid mx-auto max-w-[920px]">
-        <BentoCell span="full" deferPaint className="bento-cell--badges">
-          <IdentityBadgeRow className="pb-2 sm:pb-4" />
-        </BentoCell>
-
         <BentoCell id="game" deferPaint className="bento-cell--game">
           <StudioObject rotate={-1.2} className="bento-cell--game-object flex flex-col items-center">
             <ClientLogoStrip size="sm" showLabel className="mb-5 max-w-lg px-2" />

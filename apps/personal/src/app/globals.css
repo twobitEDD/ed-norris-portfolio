@@ -182,10 +182,6 @@ body {
   padding-block: 1.25rem;
 }
 
-.bento-cell--badges {
-  padding-bottom: 0.5rem;
-}
-
 .bento-cell--game {
   grid-column: 1 / -1;
   padding-top: 1.25rem;
