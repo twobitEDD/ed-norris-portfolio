@@ -1,16 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { practices, projects } from "@/data";
-import { getProjectImage } from "@/data/career-images";
-import type { Practice, Project } from "@/data/types";
+import { practices } from "@/data";
+import { creativeSlides, environmentalSlides } from "@/data/discipline-slides";
 import { disciplineColors } from "@/data/types";
 import { Paper } from "@/components/physical-ui/Paper";
-import { Tablet } from "@/components/physical-ui/Tablet";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { PracticeGateway } from "@/components/practices/PracticeGateway";
+import { DisciplineWorkSlideshow } from "@/components/work/DisciplineWorkSlideshow";
 import { StudioObject } from "@/components/studio/StudioObject";
 import { StudioReveal } from "@/components/studio/StudioReveal";
 import { StudioScene } from "@/components/studio/StudioScene";
@@ -18,77 +16,38 @@ import { cn } from "@/lib/cn";
 import {
   parseWorkHash,
   practiceForHash,
-  projectsForDiscipline,
-  projectsForPractice,
   scrollToWorkSection,
+  slideshowForHash,
   WORK_HASH_LABELS,
   WORK_HASHES,
   type WorkHash,
+  type WorkSlideshowId,
 } from "@/lib/work-discipline";
 
-const fallbackPhotos: Record<string, string> = {
-  "proj-ergo": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80",
-  "proj-2bit-games":
-    "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80",
-};
-
-const accentMap = {
+const accentMap: Record<WorkSlideshowId, { primary: string; secondary: string }> = {
   environmental: { primary: disciplineColors.environment, secondary: disciplineColors.data },
   creative: { primary: disciplineColors.games, secondary: disciplineColors.marketing },
-  games: { primary: disciplineColors.games, secondary: disciplineColors.software },
 };
 
-function ProjectCard({ project }: { project: Project }) {
-  const accent = disciplineColors[project.disciplines[0]];
-  const brandImage = getProjectImage(project.id);
-  const photo = brandImage?.src ?? fallbackPhotos[project.id];
-
-  return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className="group block h-full transition duration-300 ease-studio hover:-translate-y-1"
-    >
-      <Tablet glow="none" orientation="portrait" className="h-full w-full">
-        <div className="relative flex min-h-[240px] flex-col justify-end overflow-hidden p-3 sm:min-h-[280px]">
-          {photo && (
-            <Image
-              src={photo}
-              alt={brandImage?.alt ?? ""}
-              fill
-              loading="lazy"
-              className="object-cover transition duration-500 group-hover:scale-[1.04]"
-              style={{ objectPosition: brandImage?.objectPosition ?? "center" }}
-              sizes="(max-width: 768px) 100vw, 320px"
-            />
-          )}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `linear-gradient(180deg, transparent 15%, ${accent}dd 100%)`,
-            }}
-          />
-          <div className="relative">
-            <p className="font-mono text-[8px] uppercase tracking-wider text-white/70">
-              {project.disciplines.join(" · ")}
-            </p>
-            <h3 className="mt-1 font-display text-sm font-bold leading-tight text-white">{project.title}</h3>
-            <p className="mt-1 line-clamp-3 text-[10px] text-white/85">{project.summary}</p>
-            <span className="mt-2 inline-block text-[10px] font-semibold text-white/90 opacity-80 transition group-hover:opacity-100">
-              Open case study →
-            </span>
-          </div>
-        </div>
-      </Tablet>
-    </Link>
-  );
-}
+const slideshowMeta: Record<
+  WorkSlideshowId,
+  { slides: typeof environmentalSlides; label: string; hash: WorkHash }
+> = {
+  environmental: {
+    slides: environmentalSlides,
+    label: "Environmental",
+    hash: "environmental",
+  },
+  creative: {
+    slides: creativeSlides,
+    label: "Creative & Games",
+    hash: "creative",
+  },
+};
 
 function DisciplineNav({ activeHash }: { activeHash: WorkHash | null }) {
   return (
-    <nav
-      className="mt-6 flex flex-wrap gap-2"
-      aria-label="Filter work by discipline"
-    >
+    <nav className="mt-6 flex flex-wrap gap-2" aria-label="Filter work by discipline">
       <Link
         href="/work"
         className={cn(
@@ -118,32 +77,35 @@ function DisciplineNav({ activeHash }: { activeHash: WorkHash | null }) {
   );
 }
 
-function PracticeSection({
+function DisciplineSlideshowSection({
   id,
-  practice,
-  sectionProjects,
+  slideshowId,
   highlighted,
+  compact,
 }: {
   id: WorkHash;
-  practice?: Practice;
-  sectionProjects: Project[];
+  slideshowId: WorkSlideshowId;
   highlighted: boolean;
+  compact?: boolean;
 }) {
-  const accent = accentMap[id];
-  const title = practice?.title ?? "Games & Interactive Media";
+  const meta = slideshowMeta[slideshowId];
+  const practice = practiceForHash(meta.hash, practices);
+  const accent = accentMap[slideshowId];
+  const title =
+    id === "games"
+      ? "Games & Interactive Media"
+      : (practice?.title ?? meta.label);
   const summary =
-    practice?.summary ??
-    "Game platforms, indie studio work, and interactive experiences across web and console.";
+    id === "games"
+      ? "Game platforms, indie studio work, and interactive experiences across web and console."
+      : (practice?.summary ?? "");
   const tagline = practice?.tagline;
-  const tags = practice?.tags ?? ["Game Platforms", "Indie Studio", "Interactive UX"];
+  const tags = practice?.tags ?? [];
 
   return (
     <StudioScene
       id={id}
-      className={cn(
-        "!py-10 sm:!py-14",
-        highlighted && "scroll-mt-24",
-      )}
+      className={cn("!py-10 sm:!py-14", highlighted && "scroll-mt-24")}
     >
       <StudioReveal>
         <StudioObject rotate={0.5}>
@@ -159,43 +121,51 @@ function PracticeSection({
             }
           >
             <Paper torn>
-            <p
-              className="font-mono text-[10px] uppercase tracking-[0.18em]"
-              style={{ color: accent.primary }}
-            >
-              {practice?.label ?? "Games focus"}
-            </p>
-            {tagline && (
-              <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-soft">
-                {tagline}
+              <p
+                className="font-mono text-[10px] uppercase tracking-[0.18em]"
+                style={{ color: accent.primary }}
+              >
+                {practice?.label ?? meta.label}
               </p>
-            )}
-            <h2 className="mt-3 font-editorial text-2xl font-semibold text-ink sm:text-3xl">{title}</h2>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft">{summary}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border px-3 py-1 font-mono text-[9px] uppercase tracking-wider"
-                  style={{ borderColor: `${accent.primary}44`, color: accent.primary }}
+              {tagline && (
+                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-soft">
+                  {tagline}
+                </p>
+              )}
+              <h2 className="mt-3 font-editorial text-2xl font-semibold text-ink sm:text-3xl">{title}</h2>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-soft">{summary}</p>
+              {tags.length > 0 && (
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border px-3 py-1 font-mono text-[9px] uppercase tracking-wider"
+                      style={{ borderColor: `${accent.primary}44`, color: accent.primary }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {!highlighted && (
+                <Link
+                  href={`/work#${id === "games" ? "games" : meta.hash}`}
+                  className="mt-4 inline-block text-xs font-semibold text-ink hover:text-ink-soft"
                 >
-                  {tag}
-                </span>
-              ))}
-            </div>
+                  View full {meta.label.toLowerCase()} slideshow →
+                </Link>
+              )}
             </Paper>
           </div>
         </StudioObject>
 
-        {sectionProjects.length > 0 ? (
-          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {sectionProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
-        ) : (
-          <p className="mt-8 text-sm text-ink-soft">No projects in this discipline yet.</p>
-        )}
+        <div className={cn("mt-8", compact && "mt-6")}>
+          <DisciplineWorkSlideshow
+            slides={meta.slides}
+            autoAdvance={highlighted}
+            ariaLabel={`${title} slideshow`}
+          />
+        </div>
       </StudioReveal>
     </StudioScene>
   );
@@ -216,25 +186,22 @@ export function WorkScene() {
     return () => window.removeEventListener("hashchange", syncHash);
   }, []);
 
-  const environmentalProjects = useMemo(
-    () => projectsForPractice(practices[0], projects),
-    [],
-  );
-  const creativeProjects = useMemo(
-    () => projectsForPractice(practices[1], projects),
-    [],
-  );
-  const gamesProjects = useMemo(() => projectsForDiscipline("games", projects), []);
-
+  const activeSlideshow = useMemo(() => slideshowForHash(activeHash), [activeHash]);
   const focusedPractice = activeHash ? practiceForHash(activeHash, practices) : undefined;
-  const pageTitle = focusedPractice?.title ?? (activeHash === "games" ? "Games & Interactive Media" : "Work that solves real problems.");
+
+  const pageTitle =
+    focusedPractice?.title ??
+    (activeHash === "games" ? "Games & Interactive Media" : "Work that solves real problems.");
   const pageDescription =
     focusedPractice?.summary ??
     (activeHash === "games"
       ? "Game platforms, indie studio work, and interactive experiences."
       : "Environmental systems and creative technology — each with proof, case studies, and a clear hiring path.");
 
-  const visibleSections = activeHash ? [activeHash] : WORK_HASHES;
+  const overviewSections: { id: WorkHash; slideshowId: WorkSlideshowId }[] = [
+    { id: "environmental", slideshowId: "environmental" },
+    { id: "creative", slideshowId: "creative" },
+  ];
 
   return (
     <>
@@ -260,30 +227,22 @@ export function WorkScene() {
         </StudioScene>
       )}
 
-      {visibleSections.includes("environmental") && (
-        <PracticeSection
-          id="environmental"
-          practice={practices[0]}
-          sectionProjects={environmentalProjects}
-          highlighted={activeHash === "environmental"}
+      {activeSlideshow && activeHash ? (
+        <DisciplineSlideshowSection
+          id={activeHash}
+          slideshowId={activeSlideshow}
+          highlighted
         />
-      )}
-
-      {visibleSections.includes("creative") && (
-        <PracticeSection
-          id="creative"
-          practice={practices[1]}
-          sectionProjects={creativeProjects}
-          highlighted={activeHash === "creative"}
-        />
-      )}
-
-      {visibleSections.includes("games") && (
-        <PracticeSection
-          id="games"
-          sectionProjects={gamesProjects}
-          highlighted={activeHash === "games"}
-        />
+      ) : (
+        overviewSections.map(({ id, slideshowId }) => (
+          <DisciplineSlideshowSection
+            key={id}
+            id={id}
+            slideshowId={slideshowId}
+            highlighted={false}
+            compact
+          />
+        ))
       )}
     </>
   );

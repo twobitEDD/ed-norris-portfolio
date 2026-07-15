@@ -32,3 +32,10 @@ export {
 export { practices, resumePresets } from "./resume-presets";
 export { clientLogos } from "./client-logos";
 export { expertiseSlides, EXPERTISE_AUTO_ADVANCE_MS } from "./expertise-slides";
+export {
+  environmentalSlides,
+  creativeSlides,
+  DISCIPLINE_AUTO_ADVANCE_MS,
+  type DisciplineSlide,
+  type DisciplineSlideLink,
+} from "./discipline-slides";

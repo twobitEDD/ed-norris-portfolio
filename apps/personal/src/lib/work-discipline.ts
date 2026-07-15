@@ -30,8 +30,17 @@ export function projectsForDiscipline(
     .sort((a, b) => (a.resumePriority ?? 99) - (b.resumePriority ?? 99));
 }
 
+export type WorkSlideshowId = "environmental" | "creative";
+
+/** Maps hash routes to discipline slideshow content. #games shares the creative slideshow. */
+export function slideshowForHash(hash: WorkHash | null): WorkSlideshowId | null {
+  if (!hash) return null;
+  if (hash === "environmental") return "environmental";
+  return "creative";
+}
+
 export function practiceForHash(hash: WorkHash, practices: Practice[]): Practice | undefined {
-  if (hash === "games") return undefined;
+  if (hash === "games") return practices.find((practice) => practice.id === "creative");
   return practices.find((practice) => practice.id === hash);
 }
 
