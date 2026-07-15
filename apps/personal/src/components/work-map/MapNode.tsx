@@ -38,14 +38,12 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
         ease: "easeInOut",
       }}
       className={cn(
-        "rounded-2xl border text-center shadow-md transition-opacity duration-300 motion-reduce:animate-none",
-        isOverview && isExperience && "min-h-[72px] min-w-[120px] max-w-[200px] px-4 py-3 sm:min-h-[76px] sm:min-w-[140px] sm:px-4 sm:py-3.5",
-        isOverview && isPerson && "min-w-[130px] max-w-[180px] px-4 py-3 sm:min-w-[150px] sm:px-5 sm:py-4",
-        isOverview && !isPerson && !isExperience && "min-w-[110px] max-w-[180px] px-3.5 py-2.5 sm:min-w-[130px] sm:px-4 sm:py-3",
-        !isOverview && isPerson && "min-w-[140px] max-w-[200px] px-4 py-3.5 sm:min-w-[160px] sm:px-5 sm:py-4",
-        !isOverview && isTheme && "min-w-[120px] max-w-[190px] px-3.5 py-3 sm:min-w-[140px] sm:px-4 sm:py-3.5",
-        !isOverview && !isPerson && !isTheme && !isExperience && "min-w-[100px] max-w-[160px] px-3 py-2.5 sm:min-w-[120px] sm:px-4 sm:py-3",
-        !isOverview && isExperience && "min-w-[110px] max-w-[170px] px-3 py-2 sm:min-w-[130px] sm:px-3.5 sm:py-2.5",
+        "flex flex-col items-center justify-center rounded-2xl border text-center shadow-md transition-opacity duration-300 motion-reduce:animate-none",
+        isOverview && "min-h-[80px] min-w-[148px] max-w-[220px] px-4 py-3 sm:min-h-[84px] sm:min-w-[168px] sm:px-4 sm:py-3.5",
+        isOverview && isPerson && "min-w-[150px] max-w-[200px] px-4 py-3 sm:min-w-[170px] sm:px-5 sm:py-4",
+        !isOverview && isPerson && "min-h-[88px] min-w-[150px] max-w-[210px] px-4 py-3.5 sm:min-h-[92px] sm:min-w-[170px] sm:px-5 sm:py-4",
+        !isOverview && isTheme && "min-h-[76px] min-w-[130px] max-w-[200px] px-3.5 py-3 sm:min-h-[80px] sm:min-w-[150px] sm:px-4 sm:py-3.5",
+        !isOverview && !isPerson && !isTheme && "min-h-[72px] min-w-[120px] max-w-[175px] px-3 py-2.5 sm:min-h-[76px] sm:min-w-[140px] sm:px-4 sm:py-3",
         data.dimmed && "pointer-events-none opacity-[0.12]",
         data.highlighted && "opacity-100",
       )}
@@ -68,7 +66,7 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
       <Handle id="target-left" type="target" position={Position.Left} className={handleClass} />
       <p
         className={cn(
-          "line-clamp-2 font-display font-bold leading-snug",
+          "w-full line-clamp-2 font-display font-bold leading-snug",
           isOverview && "text-sm sm:text-[15px]",
           isOverview && isPerson && "text-[15px] sm:text-base",
           !isOverview && isPerson && "text-sm sm:text-base",
@@ -79,25 +77,12 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
       >
         {data.label}
       </p>
-      {data.subtitle && !isOverview && (
+      {data.subtitle && (
         <p
-          className="mt-0.5 min-h-[1.1rem] line-clamp-1 font-mono text-[10px] uppercase leading-snug tracking-wider sm:mt-1 sm:min-h-[1.25rem] sm:text-[11px]"
-          style={{ color: surface.subtitleColor }}
-        >
-          {data.subtitle}
-        </p>
-      )}
-      {data.subtitle && isOverview && isExperience && (
-        <p
-          className="mt-1 min-h-[1.1rem] line-clamp-1 font-mono text-[10px] uppercase leading-snug tracking-wider sm:min-h-[1.25rem] sm:text-[11px]"
-          style={{ color: surface.subtitleColor }}
-        >
-          {data.subtitle}
-        </p>
-      )}
-      {data.subtitle && isOverview && !isExperience && !isPerson && (
-        <p
-          className="mt-0.5 min-h-[1.1rem] line-clamp-1 font-mono text-[9px] uppercase leading-snug tracking-wider sm:min-h-[1.2rem] sm:text-[10px]"
+          className={cn(
+            "mt-0.5 w-full min-h-[1.1rem] line-clamp-1 font-mono uppercase leading-snug tracking-wider sm:mt-1 sm:min-h-[1.25rem]",
+            isOverview ? "text-[10px] sm:text-[11px]" : "text-[10px] sm:text-[11px]",
+          )}
           style={{ color: surface.subtitleColor }}
         >
           {data.subtitle}

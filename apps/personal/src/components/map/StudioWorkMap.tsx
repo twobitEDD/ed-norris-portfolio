@@ -7,6 +7,7 @@ import {
   ReactFlow,
   Background,
   Controls,
+  MiniMap,
   ReactFlowProvider,
   useReactFlow,
   useNodesState,
@@ -24,9 +25,8 @@ import {
   themeFilterOptions,
 } from "@/data";
 import { mapGraphThesis } from "@/data/through-line";
-import type { GraphNode } from "@/data/types";
+import type { Discipline, GraphNode } from "@/data/types";
 import { disciplineColors, disciplineLabels } from "@/data/types";
-import type { Discipline } from "@/data/types";
 import { buildFlowGraph, type MapNodeData } from "@/lib/graph";
 import { useInViewport } from "@/lib/useInViewport";
 import { cn } from "@/lib/cn";
@@ -77,6 +77,7 @@ function StudioWorkMapInner({
   const [activeFilter, setActiveFilter] = useState("all");
   const [focusSlug, setFocusSlug] = useState<string | null>(initialFocus);
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
 
   useEffect(() => {
     setFocusSlug(initialFocus);
@@ -98,8 +99,16 @@ function StudioWorkMapInner({
   );
 
   const graph = useMemo(
-    () => buildFlowGraph([], selectedNode?.id, activeThemeId, layoutOptions, focusSlug),
-    [activeThemeId, selectedNode?.id, layoutOptions, focusSlug],
+    () =>
+      buildFlowGraph(
+        [],
+        selectedNode?.id,
+        activeThemeId,
+        layoutOptions,
+        focusSlug,
+        hoveredNodeId,
+      ),
+    [activeThemeId, selectedNode?.id, layoutOptions, focusSlug, hoveredNodeId],
   );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(graph.nodes);
@@ -130,6 +139,14 @@ function StudioWorkMapInner({
     },
     [router],
   );
+
+  const onNodeMouseEnter: NodeMouseHandler<Node<MapNodeData>> = useCallback((_, node) => {
+    setHoveredNodeId(node.id);
+  }, []);
+
+  const onNodeMouseLeave: NodeMouseHandler<Node<MapNodeData>> = useCallback(() => {
+    setHoveredNodeId(null);
+  }, []);
 
   const onNodeClick: NodeMouseHandler<Node<MapNodeData>> = useCallback(
     (_, node) => {
@@ -250,18 +267,37 @@ function StudioWorkMapInner({
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onNodeClick={onNodeClick}
+            onNodeMouseEnter={onNodeMouseEnter}
+            onNodeMouseLeave={onNodeMouseLeave}
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
+            nodesDraggable={!isOverview}
+            nodesConnectable={false}
+            elementsSelectable
+            snapToGrid={!isOverview}
+            snapGrid={[20, 20]}
             onlyRenderVisibleElements
             fitView
-            fitViewOptions={{ padding: isOverview ? 0.22 : fullPage ? 0.28 : 0.24 }}
-            minZoom={isOverview ? 0.32 : 0.18}
-            maxZoom={isOverview ? 1 : 1.1}
+            fitViewOptions={{ padding: isOverview ? 0.28 : fullPage ? 0.32 : 0.26 }}
+            minZoom={isOverview ? 0.25 : 0.15}
+            maxZoom={isOverview ? 1 : 1.15}
             proOptions={{ hideAttribution: true }}
             className="work-map-flow bg-transparent"
           >
             <Background color="rgba(143,163,155,0.06)" gap={24} />
             <Controls className="!scale-[0.65] !border-white/10 !bg-screen-panel sm:!scale-75 [&>button]:!bg-screen-panel [&>button]:!text-screen-text" />
+            {fullPage && !isOverview && (
+              <MiniMap
+                className="!rounded-lg !border !border-white/10 !bg-screen-panel/90"
+                maskColor="rgba(8, 14, 24, 0.75)"
+                nodeColor={(node) => {
+                  const d = (node.data as MapNodeData)?.disciplines?.[0];
+                  return d ? disciplineColors[d] : "#46c7d7";
+                }}
+                pannable
+                zoomable
+              />
+            )}
           </ReactFlow>
         ) : (
           <div className={cn("flex h-full items-center justify-center", canvasMinH)}>

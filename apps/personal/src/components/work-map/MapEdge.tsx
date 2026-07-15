@@ -20,8 +20,13 @@ function MapEdgeComponent({
   style,
   markerEnd,
   data,
+  animated,
 }: EdgeProps) {
   const edgeData = data as MapEdgeData | undefined;
+  const isBranch = edgeData?.isBranch;
+  const isSpine = edgeData?.isSpine;
+  const highlighted = edgeData?.highlighted;
+
   const [path, labelX, labelY] = getSmoothStepPath({
     sourceX,
     sourceY,
@@ -29,8 +34,8 @@ function MapEdgeComponent({
     targetY,
     sourcePosition,
     targetPosition,
-    borderRadius: edgeData?.highlighted ? 28 : 20,
-    offset: edgeData?.highlighted ? 24 : 16,
+    borderRadius: highlighted ? 28 : isBranch ? 16 : 20,
+    offset: highlighted ? 24 : isBranch ? 12 : 16,
   });
 
   const strokeWidth = (style?.strokeWidth as number) ?? 1.5;
@@ -49,9 +54,10 @@ function MapEdgeComponent({
           strokeLinecap: "round",
           strokeLinejoin: "round",
         }}
-        interactionWidth={edgeData?.highlighted ? 20 : 12}
+        interactionWidth={highlighted ? 20 : 12}
+        className={animated && isSpine ? "work-map-spine-edge" : undefined}
       />
-      {label && (
+      {label && edgeData?.showLabel && (
         <EdgeLabelRenderer>
           <div
             className="nodrag nopan pointer-events-none"

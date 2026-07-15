@@ -7,7 +7,12 @@ import {
 } from "@/data/map-tiers";
 import type { Discipline, GraphNode } from "@/data/types";
 import { disciplineColors } from "@/data/types";
-import { getEdgeHandles, getNodePosition, type MapLayoutOptions } from "@/components/work-map/map-layout";
+import {
+  getEdgeHandles,
+  getNodePosition,
+  isOverviewBranchEdge,
+  type MapLayoutOptions,
+} from "@/components/work-map/map-layout";
 
 /** @deprecated Use employmentOverviewNodeIds from map-tiers */
 export const previewGraphNodeIds = [
@@ -50,6 +55,10 @@ export type MapEdgeData = {
   highlighted?: boolean;
   dimmed?: boolean;
   showLabel?: boolean;
+  /** Overview branch edge (agency→client, 2bit→project) — rendered dashed */
+  isBranch?: boolean;
+  /** Overview spine edge — thicker, optionally animated */
+  isSpine?: boolean;
 };
 
 function resolveTier(layoutOptions?: MapLayoutOptions): "overview" | "detail" {
@@ -107,6 +116,7 @@ export function buildFlowGraph(
   activeThemeId?: string | null,
   layoutOptions?: MapLayoutOptions,
   focusSlug?: string | null,
+  hoveredId?: string | null,
 ) {
   const tier = resolveTier(layoutOptions);
   const isOverview = tier === "overview";
@@ -126,16 +136,20 @@ export function buildFlowGraph(
 
   const visibleIds = new Set(visibleNodes.map((n) => n.id));
 
+  const highlightId = selectedId ?? hoveredId ?? undefined;
+
   const nodes: Node<MapNodeData>[] = visibleNodes.map((node, index) => {
     const disciplineDimmed =
       activeFilters.length > 0 &&
       !node.disciplines.some((d) => activeFilters.includes(d));
-    const connected = selectedId ? isConnected(selectedId, node.id, visibleIds) : false;
+    const connected = highlightId ? isConnected(highlightId, node.id, visibleIds, isOverview) : false;
 
     const dimmed = isOverview
-      ? false
-      : selectedId
-        ? !connected && selectedId !== node.id
+      ? highlightId
+        ? !connected && highlightId !== node.id
+        : false
+      : highlightId
+        ? !connected && highlightId !== node.id
         : disciplineDimmed;
 
     return {
@@ -150,7 +164,7 @@ export function buildFlowGraph(
         description: node.description,
         projectId: node.projectId,
         dimmed,
-        highlighted: selectedId === node.id || connected,
+        highlighted: highlightId === node.id || connected,
         isThemeHub: node.type === "theme",
         index,
         tier,
@@ -173,8 +187,10 @@ export function buildFlowGraph(
         activeFilters.length > 0 &&
         sourceNode &&
         !sourceNode.disciplines.some((d) => activeFilters.includes(d));
-      const highlighted = selectedId
-        ? edge.source === selectedId || edge.target === selectedId
+      const isBranch = isOverview && isOverviewBranchEdge(edge.id);
+      const isSpine = isOverview && !isBranch;
+      const highlighted = highlightId
+        ? edge.source === highlightId || edge.target === highlightId
         : false;
 
       const color = sourceNode?.disciplines[0]
@@ -183,7 +199,17 @@ export function buildFlowGraph(
 
       const showLabel = !isOverview && highlighted && !!edge.connectionNote;
       const handles = getEdgeHandles(edge.source, edge.target, layoutOptions);
-      const opacity = edgeDimmed && !highlighted ? 0.08 : highlighted ? 0.95 : isOverview ? 0.8 : 0.28;
+
+      const baseOpacity = isOverview ? (isBranch ? 0.55 : 0.85) : 0.28;
+      const dimmedOpacity = isOverview ? 0.12 : 0.08;
+      const opacity =
+        highlightId && !highlighted
+          ? dimmedOpacity
+          : highlighted
+            ? 0.95
+            : edgeDimmed
+              ? dimmedOpacity
+              : baseOpacity;
 
       return {
         id: edge.id,
@@ -200,31 +226,48 @@ export function buildFlowGraph(
         },
         data: {
           highlighted,
-          dimmed: edgeDimmed && !highlighted,
+          dimmed: (edgeDimmed || (highlightId && !highlighted)) && !highlighted,
           showLabel,
+          isBranch,
+          isSpine,
+        },
+        markerEnd: {
+          type: "arrowclosed" as const,
+          width: isOverview ? 18 : 14,
+          height: isOverview ? 18 : 14,
+          color,
         },
         style: {
           stroke: color,
-          strokeWidth: isOverview ? 2.5 : highlighted ? 2.5 : 1.5,
+          strokeWidth: isSpine ? 2.75 : isBranch ? 1.75 : highlighted ? 2.5 : 1.5,
           opacity,
+          strokeDasharray: isBranch ? "6 4" : undefined,
         },
-        animated: highlighted,
-        zIndex: highlighted ? 5 : 0,
+        animated: isSpine || (highlighted && !isOverview),
+        zIndex: highlighted ? 5 : isSpine ? 2 : 0,
       };
     });
 
   return { nodes, edges };
 }
 
-function isConnected(selectedId: string, nodeId: string, visibleIds?: Set<string>): boolean {
+function isConnected(
+  selectedId: string,
+  nodeId: string,
+  visibleIds?: Set<string>,
+  isOverview?: boolean,
+): boolean {
   if (selectedId === nodeId) return true;
-  return graphEdges.some(
-    (e) => {
-      if (visibleIds && (!visibleIds.has(e.source) || !visibleIds.has(e.target))) return false;
-      return (
-        (e.source === selectedId && e.target === nodeId) ||
-        (e.target === selectedId && e.source === nodeId)
-      );
-    },
-  );
+
+  const edgeList = isOverview
+    ? employmentOverviewEdges.map((e) => ({ source: e.source, target: e.target }))
+    : graphEdges;
+
+  return edgeList.some((e) => {
+    if (visibleIds && (!visibleIds.has(e.source) || !visibleIds.has(e.target))) return false;
+    return (
+      (e.source === selectedId && e.target === nodeId) ||
+      (e.target === selectedId && e.source === nodeId)
+    );
+  });
 }

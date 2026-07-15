@@ -842,7 +842,14 @@ body {
 }
 
 .work-map-flow .react-flow__edge.animated path {
-  stroke-dasharray: 6 4;
+  stroke-dasharray: 8 6;
+  animation: work-map-spine-flow 1.2s linear infinite;
+}
+
+@keyframes work-map-spine-flow {
+  to {
+    stroke-dashoffset: -14;
+  }
 }
 
 /* Expertise tablet slideshow — ambient slide decor */
