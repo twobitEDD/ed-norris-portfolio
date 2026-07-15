@@ -2,7 +2,6 @@
 
 import { STUDIO_DEVICE, STUDIO_SPACING, STUDIO_TYPOGRAPHY } from "@/design/studio-language";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import { profile, resumePresets } from "@/data";
 import { ContactPhoneApp } from "@/components/contact/ContactPhoneApp";
@@ -10,7 +9,6 @@ import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { Notebook } from "@/components/physical-ui/Notebook";
 import { ResumeBusinessCard } from "@/components/resume/ResumeBusinessCard";
-import { Paper } from "@/components/physical-ui/Paper";
 import { StickyNote } from "@/components/physical-ui/StickyNote";
 import { Polaroid } from "@/components/physical-ui/Polaroid";
 import { Tablet } from "@/components/physical-ui/Tablet";
@@ -33,18 +31,6 @@ const StudioPhoneApps = dynamic(
     loading: () => (
       <div className="mx-auto flex min-h-[520px] w-full max-w-[920px] items-center justify-center rounded-[28px] border border-dashed border-paper-cream/10 bg-wood-dark/20">
         <p className="font-mono text-[9px] uppercase tracking-wider text-paper-cream/30">Loading studio…</p>
-      </div>
-    ),
-  },
-);
-
-const ExpertiseTabletSlideshow = dynamic(
-  () => import("@/components/work/ExpertiseTabletSlideshow").then((m) => m.ExpertiseTabletSlideshow),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="flex min-h-[320px] items-center justify-center rounded-2xl border border-screen-border bg-screen-panel">
-        <p className="font-mono text-[10px] uppercase tracking-wider text-screen-muted">Loading work…</p>
       </div>
     ),
   },
@@ -179,32 +165,6 @@ export function VerticalBento() {
               </Tablet>
             </div>
           </div>
-        </BentoCell>
-
-        <BentoCell id="work" deferPaint className={STUDIO_SPACING.bentoCellWork}>
-          <StudioObject rotate={0.5}>
-            <Paper variant="desk" className="mb-8">
-              <h2 className="font-editorial text-2xl font-semibold text-ink sm:text-3xl">
-                Work that solves real problems.
-              </h2>
-              <p className="mt-2 text-sm text-ink-soft">
-                Highlights from environmental systems, game platforms, and infrastructure.
-              </p>
-            </Paper>
-          </StudioObject>
-
-          <StudioObject rotate={0.8}>
-            <ExpertiseTabletSlideshow />
-          </StudioObject>
-
-          <p className="mt-6 text-center">
-            <Link
-              href="/work"
-              className={cn(STUDIO_TYPOGRAPHY.ambientLabel, "transition hover:text-paper-cream")}
-            >
-              View all work →
-            </Link>
-          </p>
         </BentoCell>
 
         <BentoCell id="contact" span="wide" deferPaint className={STUDIO_SPACING.bentoCellContact}>

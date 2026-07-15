@@ -51,8 +51,8 @@ export function PortfolioHero({ profile }: { profile: Profile }) {
       </div>
 
       <motion.a
-        href="#work"
-        aria-label="Scroll to work section"
+        href="#game?app=work"
+        aria-label="Scroll to work app"
         className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 text-text-muted motion-reduce:hidden"
         animate={{ y: [0, 6, 0] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}

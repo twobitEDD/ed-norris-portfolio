@@ -11,7 +11,7 @@ import { StudioThemeToggle } from "./StudioThemeToggle";
 const links = [
   { href: "/#game", label: "Apps" },
   { href: "/#game?app=work-map", label: "Map" },
-  { href: "/work", label: "Work" },
+  { href: "/#game?app=work", label: "Work" },
   { href: "/timeline", label: "Timeline" },
   { href: "/resume", label: "Résumé" },
   { href: "/#contact", label: "Contact" },

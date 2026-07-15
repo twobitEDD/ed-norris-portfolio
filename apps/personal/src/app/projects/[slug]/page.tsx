@@ -81,7 +81,7 @@ export default async function ProjectPage({ params }: Props) {
         )}
 
         <div className="mt-12">
-          <GlowButton href="/#work" variant="ghost">
+          <GlowButton href="/#game?app=work" variant="ghost">
             ← Back to selected work
           </GlowButton>
         </div>

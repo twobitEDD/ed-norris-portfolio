@@ -12,7 +12,7 @@ const sections = [
   { name: "04-map-desktop", viewport: { width: 1440, height: 900 }, hash: "#map" },
   { name: "05-timeline-desktop", viewport: { width: 1440, height: 900 }, hash: "#timeline" },
   { name: "06-resume-desktop", viewport: { width: 1440, height: 900 }, hash: "#resume" },
-  { name: "07-work-desktop", viewport: { width: 1440, height: 900 }, hash: "#work" },
+  { name: "07-work-desktop", viewport: { width: 1440, height: 900 }, hash: "#game?app=work" },
   { name: "08-contact-desktop", viewport: { width: 1440, height: 900 }, hash: "#contact" },
   { name: "09-hero-mobile", viewport: { width: 390, height: 844 }, scroll: 0 },
   { name: "10-hero-to-game-mobile", viewport: { width: 390, height: 844 }, scroll: 600 },

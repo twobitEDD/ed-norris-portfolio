@@ -17,7 +17,7 @@ export function HeroSection({ person }: { person: Person }) {
         </p>
         <div className="mt-7 flex flex-wrap gap-2.5">
           <a
-            href="#work"
+            href="#game?app=work"
             className="rounded-full border border-ink px-4 py-2.5 text-sm font-semibold transition hover:bg-ink hover:text-paper"
           >
             Explore environmental technology

@@ -956,6 +956,11 @@ body {
   max-height: 4.5rem;
 }
 
+.contact-phone-app__input--message-tablet {
+  max-height: none;
+  min-height: 6.5rem;
+}
+
 .contact-phone-app__btn-secondary {
   background: var(--contact-app-surface);
   color: var(--contact-app-ink);
@@ -1011,6 +1016,32 @@ body {
   color: var(--contact-app-ink-faint);
 }
 
+.contact-tablet-device {
+  width: 100%;
+  max-width: min(100%, 480px);
+}
+
+.contact-tablet-device .screen-surface {
+  min-height: 0;
+  max-height: none;
+  overflow: hidden;
+}
+
+.contact-tablet-screen {
+  padding: 1.625rem 1.125rem 1.875rem;
+}
+
+@media (min-width: 640px) {
+  .contact-tablet-screen {
+    padding: 1.75rem 1.25rem 2rem;
+  }
+}
+
+.screen-surface--warm .tablet-home-indicator {
+  background: rgba(0, 0, 0, 0.16);
+}
+
+/* Legacy phone contact device — kept for any embedded phone usages */
 .contact-phone-device {
   width: 100%;
   max-width: min(100%, 560px);

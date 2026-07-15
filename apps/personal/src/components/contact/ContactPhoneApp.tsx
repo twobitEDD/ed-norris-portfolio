@@ -18,7 +18,8 @@ import {
   UserRound,
 } from "lucide-react";
 import { profile } from "@/data";
-import { Phone } from "@/components/physical-ui/Phone";
+import { Tablet } from "@/components/physical-ui/Tablet";
+import { STUDIO_DEVICE } from "@/design/studio-language";
 import {
   categorizeContactLinks,
   linkIconKind,
@@ -54,6 +55,7 @@ const slideVariants = {
 };
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
+type ContactLayout = "phone" | "tablet";
 
 function LinkIcon({ link, className }: { link: ProfileLink; className?: string }) {
   const kind = linkIconKind(link);
@@ -79,6 +81,7 @@ function AppListRow({
   href,
   external,
   compact,
+  layout,
 }: {
   icon: React.ReactNode;
   label: string;
@@ -87,21 +90,37 @@ function AppListRow({
   href?: string;
   external?: boolean;
   compact?: boolean;
+  layout?: ContactLayout;
 }) {
+  const isTablet = layout === "tablet";
   const content = (
     <>
       <span
         className={cn(
           "contact-phone-app__row-icon flex shrink-0 items-center justify-center rounded-lg",
-          compact ? "h-7 w-7" : "h-8 w-8",
+          isTablet ? "h-9 w-9" : compact ? "h-7 w-7" : "h-8 w-8",
         )}
       >
         {icon}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="contact-phone-app__title block truncate text-[13px] font-medium">{label}</span>
+        <span
+          className={cn(
+            "contact-phone-app__title block truncate font-medium",
+            isTablet ? "text-sm" : "text-[13px]",
+          )}
+        >
+          {label}
+        </span>
         {detail && (
-          <span className="contact-phone-app__chip-detail block truncate text-[10px]">{detail}</span>
+          <span
+            className={cn(
+              "contact-phone-app__chip-detail block truncate",
+              isTablet ? "text-[11px]" : "text-[10px]",
+            )}
+          >
+            {detail}
+          </span>
         )}
       </span>
       {external ? (
@@ -114,7 +133,7 @@ function AppListRow({
 
   const className = cn(
     "contact-phone-app__row flex w-full items-center gap-2.5 rounded-xl px-2.5 text-left",
-    compact ? "min-h-[40px] py-1.5" : "min-h-[44px] py-2",
+    isTablet ? "min-h-[48px] gap-3 px-3 py-2.5" : compact ? "min-h-[40px] py-1.5" : "min-h-[44px] py-2",
   );
 
   if (href) {
@@ -141,46 +160,85 @@ function HomeScreen({
   categorized,
   scheduleHref,
   scheduleExternal,
+  layout,
 }: {
   onNavigate: (screen: ContactScreen) => void;
   categorized: ReturnType<typeof categorizeContactLinks>;
   scheduleHref: string;
   scheduleExternal: boolean;
+  layout: ContactLayout;
 }) {
+  const isTablet = layout === "tablet";
   const extraLinks = [
     ...categorized.github,
     ...categorized.social.filter((link) => !link.url.includes("linkedin.com")),
     ...categorized.projects,
   ];
+  const extraLinkLimit = isTablet ? 5 : 3;
 
   return (
-    <div className="grid h-full min-h-0 grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-5">
+    <div
+      className={cn(
+        "grid h-full min-h-0 gap-4",
+        isTablet
+          ? "grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-5 sm:gap-6"
+          : "grid-cols-1 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-5",
+      )}
+    >
       <div className="flex min-h-0 flex-col justify-center gap-0.5">
-        <p className="contact-phone-app__label font-mono text-[9px] uppercase tracking-[0.2em]">Reach</p>
-        <h2 className="contact-phone-app__headline mt-2 font-editorial text-lg font-semibold leading-snug sm:mt-2.5 sm:text-xl">
+        <p
+          className={cn(
+            "contact-phone-app__label font-mono uppercase tracking-[0.2em]",
+            isTablet ? "text-[10px]" : "text-[9px]",
+          )}
+        >
+          Reach
+        </p>
+        <h2
+          className={cn(
+            "contact-phone-app__headline mt-2 font-editorial font-semibold leading-snug",
+            isTablet ? "mt-3 text-2xl sm:text-[1.65rem]" : "mt-2 text-lg sm:mt-2.5 sm:text-xl",
+          )}
+        >
           Let&apos;s build something useful.
         </h2>
-        <p className="contact-phone-app__body mt-2.5 text-[11px] leading-relaxed sm:mt-3 sm:text-xs">
+        <p
+          className={cn(
+            "contact-phone-app__body mt-2.5 leading-relaxed",
+            isTablet ? "mt-3 text-sm" : "text-[11px] sm:mt-3 sm:text-xs",
+          )}
+        >
           {profile.availability}
         </p>
-        <p className="contact-phone-app__label mt-auto flex items-center gap-1.5 pt-4 font-mono text-[8px] uppercase tracking-wider sm:pt-5">
-          <MapPin className="h-3 w-3" strokeWidth={1.75} />
+        <p
+          className={cn(
+            "contact-phone-app__label mt-auto flex items-center gap-1.5 font-mono uppercase tracking-wider",
+            isTablet ? "gap-2 pt-5 text-[9px]" : "pt-4 text-[8px] sm:pt-5",
+          )}
+        >
+          <MapPin className={cn(isTablet ? "h-3.5 w-3.5" : "h-3 w-3")} strokeWidth={1.75} />
           {profile.location}
         </p>
       </div>
 
       <div className="flex min-h-0 flex-col">
-        <p className="contact-phone-app__label mb-1.5 font-mono text-[8px] uppercase tracking-[0.16em]">
+        <p
+          className={cn(
+            "contact-phone-app__label mb-1.5 font-mono uppercase tracking-[0.16em]",
+            isTablet ? "mb-2 text-[9px]" : "text-[8px]",
+          )}
+        >
           Get in touch
         </p>
-        <div className="flex min-h-0 flex-1 flex-col gap-1.5 overflow-y-auto pr-0.5">
+        <div className={cn("flex min-h-0 flex-1 flex-col overflow-y-auto pr-0.5", isTablet ? "gap-2" : "gap-1.5")}>
           {categorized.email && (
             <AppListRow
               icon={<Mail className="h-3.5 w-3.5" strokeWidth={1.75} />}
               label="Email Edd"
               detail={categorized.email.url.replace("mailto:", "")}
               href={CONTACT_MAILTO}
-              compact
+              compact={!isTablet}
+              layout={layout}
             />
           )}
           <AppListRow
@@ -189,7 +247,8 @@ function HomeScreen({
             detail={scheduleExternal ? "Book a time" : "On-site booking"}
             href={scheduleHref}
             external={scheduleExternal}
-            compact
+            compact={!isTablet}
+            layout={layout}
           />
           {categorized.social
             .filter((link) => link.url.includes("linkedin.com"))
@@ -201,17 +260,19 @@ function HomeScreen({
                 detail="Professional profile"
                 href={link.url}
                 external
-                compact
+                compact={!isTablet}
+                layout={layout}
               />
             ))}
-          {extraLinks.slice(0, 3).map((link) => (
+          {extraLinks.slice(0, extraLinkLimit).map((link) => (
             <AppListRow
               key={link.url}
               icon={<LinkIcon link={link} />}
               label={link.label}
               href={link.url}
               external
-              compact
+              compact={!isTablet}
+              layout={layout}
             />
           ))}
           <AppListRow
@@ -219,7 +280,8 @@ function HomeScreen({
             label="Leave a message"
             detail="Send a note from this site"
             onClick={() => onNavigate("message")}
-            compact
+            compact={!isTablet}
+            layout={layout}
           />
         </div>
       </div>
@@ -227,7 +289,8 @@ function HomeScreen({
   );
 }
 
-function MessageScreen({ onBack }: { onBack: () => void }) {
+function MessageScreen({ onBack, layout }: { onBack: () => void; layout: ContactLayout }) {
+  const isTablet = layout === "tablet";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -263,17 +326,32 @@ function MessageScreen({ onBack }: { onBack: () => void }) {
   if (submitState === "success") {
     return (
       <div className="flex h-full flex-col items-center justify-center px-2 text-center">
-        <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-environment/20 text-environment">
-          <Send className="h-4 w-4" strokeWidth={1.75} />
+        <div
+          className={cn(
+            "mb-3 flex items-center justify-center rounded-full bg-environment/20 text-environment",
+            isTablet ? "h-12 w-12" : "h-10 w-10",
+          )}
+        >
+          <Send className={cn(isTablet ? "h-5 w-5" : "h-4 w-4")} strokeWidth={1.75} />
         </div>
-        <p className="contact-phone-app__headline font-editorial text-lg font-semibold">Message sent</p>
-        <p className="contact-phone-app__body mt-2 text-xs leading-relaxed">
+        <p
+          className={cn(
+            "contact-phone-app__headline font-editorial font-semibold",
+            isTablet ? "text-xl" : "text-lg",
+          )}
+        >
+          Message sent
+        </p>
+        <p className={cn("contact-phone-app__body mt-2 leading-relaxed", isTablet ? "text-sm" : "text-xs")}>
           Thanks — Edd will reply to <span className="contact-phone-app__title font-medium">{email}</span> soon.
         </p>
         <button
           type="button"
           onClick={onBack}
-          className="contact-phone-app__btn-secondary mt-4 min-h-[40px] rounded-xl px-4 py-2 text-sm font-semibold"
+          className={cn(
+            "contact-phone-app__btn-secondary mt-4 rounded-xl px-4 py-2 font-semibold",
+            isTablet ? "min-h-[44px] text-sm" : "min-h-[40px] text-sm",
+          )}
         >
           Back to contact
         </button>
@@ -283,53 +361,83 @@ function MessageScreen({ onBack }: { onBack: () => void }) {
 
   return (
     <form onSubmit={handleSubmit} className="flex h-full min-h-0 flex-col overflow-hidden">
-      <p className="contact-phone-app__label mb-1 shrink-0 font-mono text-[8px] uppercase tracking-[0.18em]">
+      <p
+        className={cn(
+          "contact-phone-app__label mb-1 shrink-0 font-mono uppercase tracking-[0.18em]",
+          isTablet ? "mb-2 text-[9px]" : "text-[8px]",
+        )}
+      >
         Leave a message
       </p>
-      <div className="grid min-h-0 flex-1 grid-cols-2 grid-rows-[auto_auto_minmax(0,1fr)] gap-x-2 gap-y-1 overflow-hidden">
-        <label className="contact-phone-app__label block text-[10px]">
+      <div
+        className={cn(
+          "grid min-h-0 flex-1 overflow-hidden",
+          isTablet
+            ? "grid-cols-2 grid-rows-[auto_auto_minmax(0,1fr)] gap-x-3 gap-y-2"
+            : "grid-cols-2 grid-rows-[auto_auto_minmax(0,1fr)] gap-x-2 gap-y-1",
+        )}
+      >
+        <label className={cn("contact-phone-app__label block", isTablet ? "text-[11px]" : "text-[10px]")}>
           Your name
           <input
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="contact-phone-app__input mt-0.5 w-full min-h-[32px] rounded-lg px-2 py-1 text-[13px]"
+            className={cn(
+              "contact-phone-app__input mt-0.5 w-full rounded-lg px-2 py-1",
+              isTablet ? "min-h-[36px] text-sm" : "min-h-[32px] text-[13px]",
+            )}
             autoComplete="name"
           />
         </label>
-        <label className="contact-phone-app__label block text-[10px]">
+        <label className={cn("contact-phone-app__label block", isTablet ? "text-[11px]" : "text-[10px]")}>
           Email
           <input
             required
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="contact-phone-app__input mt-0.5 w-full min-h-[32px] rounded-lg px-2 py-1 text-[13px]"
+            className={cn(
+              "contact-phone-app__input mt-0.5 w-full rounded-lg px-2 py-1",
+              isTablet ? "min-h-[36px] text-sm" : "min-h-[32px] text-[13px]",
+            )}
             autoComplete="email"
           />
         </label>
-        <label className="contact-phone-app__label col-span-2 flex min-h-0 flex-col text-[10px]">
+        <label
+          className={cn(
+            "contact-phone-app__label col-span-2 flex min-h-0 flex-col",
+            isTablet ? "text-[11px]" : "text-[10px]",
+          )}
+        >
           Message
           <textarea
             required
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            rows={2}
+            rows={isTablet ? 4 : 2}
             minLength={10}
-            className="contact-phone-app__input contact-phone-app__input--message mt-0.5 min-h-0 flex-1 resize-none rounded-lg px-2 py-1 text-[13px]"
+            className={cn(
+              "contact-phone-app__input contact-phone-app__input--message mt-0.5 min-h-0 flex-1 resize-none rounded-lg px-2 py-1",
+              isTablet ? "text-sm" : "text-[13px]",
+              isTablet && "contact-phone-app__input--message-tablet",
+            )}
             placeholder="Project, role, collaboration…"
           />
         </label>
         {errorMessage && (
           <p
-            className="col-span-2 rounded-lg border border-red-300/50 bg-red-50 px-2 py-1 text-[10px] leading-snug text-red-900"
+            className={cn(
+              "col-span-2 rounded-lg border border-red-300/50 bg-red-50 px-2 py-1 leading-snug text-red-900",
+              isTablet ? "text-xs" : "text-[10px]",
+            )}
             role="alert"
           >
             {errorMessage}
           </p>
         )}
       </div>
-      <div className="mt-1 flex shrink-0 justify-end">
+      <div className="mt-2 flex shrink-0 justify-end">
         <button
           type="submit"
           disabled={submitState === "submitting"}
@@ -343,12 +451,19 @@ function MessageScreen({ onBack }: { onBack: () => void }) {
   );
 }
 
-function ContactAppContent() {
+export type ContactAppContentProps = {
+  layout?: ContactLayout;
+  /** When set, home screen shows back control to exit embedded device view. */
+  onExit?: () => void;
+};
+
+export function ContactAppContent({ layout = "tablet", onExit }: ContactAppContentProps) {
   const [[screen, direction], setScreen] = useState<[ContactScreen, number]>(["home", 0]);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const categorized = useMemo(() => categorizeContactLinks(profile.links), []);
   const scheduleHref = getSchedulingHref();
   const scheduleExternal = isExternalScheduling();
+  const isTablet = layout === "tablet";
 
   const screenIndex = SCREENS.indexOf(screen);
 
@@ -389,42 +504,71 @@ function ContactAppContent() {
     else goPrev();
   };
 
+  const handleHomeBack = () => {
+    if (onExit) onExit();
+    else goTo("home");
+  };
+
   return (
     <div
-      className="contact-phone-app flex h-full min-h-0 flex-col"
+      className={cn(
+        "contact-phone-app flex h-full min-h-0 flex-col",
+        isTablet && "contact-phone-app--tablet",
+      )}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      <header className="contact-phone-app__header-divider mb-2.5 flex shrink-0 items-center gap-2 border-b pb-2.5">
-        {screen !== "home" ? (
+      <header
+        className={cn(
+          "contact-phone-app__header-divider flex shrink-0 items-center gap-2 border-b",
+          isTablet ? "mb-3 gap-2.5 pb-3" : "mb-2.5 pb-2.5",
+        )}
+      >
+        {screen !== "home" || onExit ? (
           <button
             type="button"
-            onClick={() => goTo("home")}
-            className="contact-phone-app__header-btn flex h-8 w-8 items-center justify-center rounded-lg"
-            aria-label="Back to contact home"
+            onClick={screen === "home" ? handleHomeBack : () => goTo("home")}
+            className={cn(
+              "contact-phone-app__header-btn flex items-center justify-center rounded-lg",
+              isTablet ? "h-9 w-9" : "h-8 w-8",
+            )}
+            aria-label={screen === "home" ? "Back to home screen" : "Back to contact home"}
           >
             <ArrowLeft className="h-3.5 w-3.5" strokeWidth={1.75} />
           </button>
         ) : (
-          <span className="h-8 w-8" aria-hidden />
+          <span className={cn(isTablet ? "h-9 w-9" : "h-8 w-8")} aria-hidden />
         )}
         <div className="min-w-0 flex-1">
-          <p className="contact-phone-app__header-name truncate font-mono text-[8px] uppercase tracking-[0.2em]">
+          <p
+            className={cn(
+              "contact-phone-app__header-name truncate font-mono uppercase tracking-[0.2em]",
+              isTablet ? "text-[9px]" : "text-[8px]",
+            )}
+          >
             {profile.name}
           </p>
-          <p className="contact-phone-app__header-screen truncate text-xs font-semibold">
+          <p
+            className={cn(
+              "contact-phone-app__header-screen truncate font-semibold",
+              isTablet ? "text-sm" : "text-xs",
+            )}
+          >
             {screen === "home" ? "Contact" : "Message"}
           </p>
         </div>
         {!scheduleExternal && screen === "home" ? (
           <Link
             href={scheduleHref}
-            className="contact-phone-app__header-btn shrink-0 rounded-lg px-2 py-1 font-mono text-[8px] uppercase tracking-wider"
+            className={cn(
+              "contact-phone-app__header-btn shrink-0 rounded-lg px-2 py-1 font-mono uppercase tracking-wider",
+              isTablet ? "text-[9px]" : "text-[8px]",
+            )}
           >
             Book
           </Link>
         ) : (
-          <span className="w-8 shrink-0" aria-hidden />
+          <span className={cn("shrink-0", isTablet ? "w-9" : "w-8")} aria-hidden />
         )}
       </header>
 
@@ -445,22 +589,27 @@ function ContactAppContent() {
                 categorized={categorized}
                 scheduleHref={scheduleHref}
                 scheduleExternal={scheduleExternal}
+                layout={layout}
               />
             )}
-            {screen === "message" && <MessageScreen onBack={() => goTo("home")} />}
+            {screen === "message" && <MessageScreen onBack={() => goTo("home")} layout={layout} />}
           </motion.div>
         </AnimatePresence>
       </div>
 
-      <nav className="mt-2 flex shrink-0 items-center justify-center gap-2" aria-label="Contact screens">
+      <nav
+        className={cn("flex shrink-0 items-center justify-center gap-2", isTablet ? "mt-3" : "mt-2")}
+        aria-label="Contact screens"
+      >
         {SCREENS.map((id) => (
           <button
             key={id}
             type="button"
             onClick={() => goTo(id)}
             className={cn(
-              "contact-phone-app__dot h-1.5 rounded-full transition-all",
-              id === screen ? "contact-phone-app__dot--active w-5" : "w-1.5",
+              "contact-phone-app__dot rounded-full transition-all",
+              isTablet ? "h-2" : "h-1.5",
+              id === screen ? "contact-phone-app__dot--active w-5" : isTablet ? "w-2" : "w-1.5",
             )}
             aria-label={id === "home" ? "Contact home" : "Message form"}
             aria-current={id === screen ? "step" : undefined}
@@ -477,13 +626,20 @@ type ContactPhoneAppProps = {
 
 export function ContactPhoneApp({ className }: ContactPhoneAppProps) {
   return (
-    <Phone
-      orientation="landscape"
+    <Tablet
+      glow="amber"
+      mode="launcher"
       screenTheme="warm"
-      screenLayout="app"
-      className={cn("contact-phone-device", className)}
+      className={cn("contact-tablet-device mx-auto w-full", className)}
     >
-      <ContactAppContent />
-    </Phone>
+      <div
+        className={cn(
+          STUDIO_DEVICE.classes.screenContent,
+          "contact-tablet-screen flex h-full min-h-0 flex-col",
+        )}
+      >
+        <ContactAppContent layout="tablet" />
+      </div>
+    </Tablet>
   );
 }

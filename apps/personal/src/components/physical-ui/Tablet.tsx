@@ -11,6 +11,8 @@ type TabletProps = {
   mode?: "default" | "fork" | "launcher";
   /** `large` — full bento-width studio device (~920px). */
   size?: "default" | "large";
+  /** `warm` — paper-toned screen for studio contact content. */
+  screenTheme?: "device" | "warm";
   glow?: "none" | "green" | "cyan" | "purple" | "amber";
 };
 
@@ -28,6 +30,7 @@ export function Tablet({
   orientation = "landscape",
   mode = "default",
   size = "default",
+  screenTheme = "device",
   glow = "none",
 }: TabletProps) {
   const isFork = mode === "fork";
@@ -59,6 +62,7 @@ export function Tablet({
         <div
           className={cn(
             STUDIO_DEVICE.classes.screen,
+            screenTheme === "warm" && STUDIO_DEVICE.classes.screenWarm,
             resolvedOrientation === "landscape"
               ? isFork
                 ? "aspect-[4/3] min-h-[200px]"

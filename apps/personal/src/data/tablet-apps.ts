@@ -5,8 +5,10 @@ export type TabletAppId =
   | "co2t"
   | "fishfight"
   | "microbe"
+  | "work"
   | "work-map"
-  | "work-history";
+  | "work-history"
+  | "reach";
 
 export type TabletApp = {
   id: TabletAppId;
@@ -61,6 +63,17 @@ export const tabletApps: TabletApp[] = [
     projectSlug: "co2t-platform",
   },
   {
+    id: "work",
+    name: "Work",
+    domain: "Portfolio",
+    tagline: "Real problems solved",
+    description:
+      "Highlights from environmental systems, game platforms, and infrastructure — swipe through selected work or open the full portfolio.",
+    iconBg: "linear-gradient(145deg, #1a1f2e 0%, #2d4a6a 50%, #4a90c2 100%)",
+    iconAccent: "#9ecfff",
+    inDevice: true,
+  },
+  {
     id: "fishfight",
     name: "Fish Fight",
     domain: "fishFight.app",
@@ -103,6 +116,17 @@ export const tabletApps: TabletApp[] = [
     description:
       "A career told as connected decisions — explore eras, disciplines, and the through-line from early work to present.",
     iconBg: "linear-gradient(145deg, #3d3428 0%, #6b5a42 45%, #c9b896 100%)",
+    iconAccent: "#f0e4cc",
+    inDevice: true,
+  },
+  {
+    id: "reach",
+    name: "Reach",
+    domain: "Contact",
+    tagline: "Get in touch",
+    description:
+      "Email, schedule a chat, connect on LinkedIn, or leave a message — the same contact portal from the studio desk.",
+    iconBg: "linear-gradient(145deg, #2a2820 0%, #5c5648 50%, #c9b896 100%)",
     iconAccent: "#f0e4cc",
     inDevice: true,
   },

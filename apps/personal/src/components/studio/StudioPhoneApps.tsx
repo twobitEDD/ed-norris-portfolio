@@ -6,15 +6,19 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import {
   BatteryMedium,
+  Briefcase,
   ChevronLeft,
   ExternalLink,
   Fish,
   Gamepad2,
   GitBranch,
   History,
+  Mail,
   Wifi,
 } from "lucide-react";
 import { Tablet } from "@/components/physical-ui/Tablet";
+import { ContactAppContent } from "@/components/contact/ContactPhoneApp";
+import { WorkAppSlideshow } from "@/components/work/WorkAppSlideshow";
 import { MicrobeSvgGlyph } from "@/components/games/microbeDraw";
 import { projects } from "@/data/projects";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
@@ -125,6 +129,28 @@ function AppIcon({ app, large }: { app: TabletApp; large?: boolean }) {
         style={{ background: app.iconBg }}
       >
         <History className="h-[44%] w-[44%]" style={{ color: app.iconAccent }} strokeWidth={1.75} />
+      </div>
+    );
+  }
+
+  if (app.id === "work") {
+    return (
+      <div
+        className="flex h-full w-full items-center justify-center rounded-[22%] shadow-inner"
+        style={{ background: app.iconBg }}
+      >
+        <Briefcase className="h-[44%] w-[44%]" style={{ color: app.iconAccent }} strokeWidth={1.75} />
+      </div>
+    );
+  }
+
+  if (app.id === "reach") {
+    return (
+      <div
+        className="flex h-full w-full items-center justify-center rounded-[22%] shadow-inner"
+        style={{ background: app.iconBg }}
+      >
+        <Mail className="h-[44%] w-[44%]" style={{ color: app.iconAccent }} strokeWidth={1.75} />
       </div>
     );
   }
@@ -403,6 +429,42 @@ function WorkHistoryInDevice({ onBack }: { onBack: () => void }) {
   );
 }
 
+function WorkInDevice({ onBack }: { onBack: () => void }) {
+  return (
+    <div className="relative flex min-h-0 flex-1 flex-col pb-6">
+      <DeviceAppHeader title="Work" onBack={onBack} />
+      <div className="shrink-0 border-b border-white/6 px-4 py-2 sm:px-5 sm:py-2.5">
+        <p className="handwritten text-sm leading-snug text-[#9ecfff]/90">Work that solves real problems.</p>
+        <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.16em] text-white/40">Portfolio highlights</p>
+        <h3 className="mt-0.5 font-editorial text-sm font-medium text-white/90">
+          Environmental, games &amp; infrastructure.
+        </h3>
+      </div>
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-5">
+        <WorkAppSlideshow />
+      </div>
+      <p className="shrink-0 px-4 pt-2 text-center">
+        <Link
+          href="/work"
+          className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/50 transition hover:text-white/80"
+        >
+          View all work →
+        </Link>
+      </p>
+    </div>
+  );
+}
+
+function ReachInDevice({ onBack }: { onBack: () => void }) {
+  return (
+    <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden bg-[#f5f0e4]">
+      <div className="min-h-0 flex-1 overflow-hidden px-3 pb-4 pt-2 sm:px-4 sm:pb-5 sm:pt-3">
+        <ContactAppContent layout="tablet" onExit={onBack} />
+      </div>
+    </div>
+  );
+}
+
 function renderInDeviceScreen(
   screen: TabletAppId,
   handlers: { onBack: () => void; onExpandGame: () => void },
@@ -413,6 +475,14 @@ function renderInDeviceScreen(
 
   if (screen === "work-history") {
     return <WorkHistoryInDevice onBack={handlers.onBack} />;
+  }
+
+  if (screen === "work") {
+    return <WorkInDevice onBack={handlers.onBack} />;
+  }
+
+  if (screen === "reach") {
+    return <ReachInDevice onBack={handlers.onBack} />;
   }
 
   if (screen === "microbe") {
@@ -566,7 +636,11 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
               <div
                 className={cn(
                   "relative z-10 flex min-h-0 flex-1 flex-col pb-5",
-                  screen === "microbe" ? "bg-[#040a14]/95" : "bg-[#0c0e14]/95",
+                  screen === "microbe"
+                    ? "bg-[#040a14]/95"
+                    : screen === "reach"
+                      ? "bg-[#f5f0e4]"
+                      : "bg-[#0c0e14]/95",
                 )}
               >
                 {inDeviceContent}
