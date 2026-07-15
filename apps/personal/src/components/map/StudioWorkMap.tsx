@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
 import {
   ReactFlow,
   Background,
@@ -13,6 +14,8 @@ import {
 import "@xyflow/react/dist/style.css";
 import { graphNodes, themeFilterOptions } from "@/data";
 import type { GraphNode } from "@/data/types";
+import { disciplineColors, disciplineLabels } from "@/data/types";
+import type { Discipline } from "@/data/types";
 import { buildFlowGraph, getStoryPath, getStoryStop, type MapNodeData } from "@/lib/graph";
 import { useInViewport } from "@/lib/useInViewport";
 import { cn } from "@/lib/cn";
@@ -21,6 +24,14 @@ import { MapDetailPanel } from "@/components/work-map/MapDetailPanel";
 import { FilterPill } from "@/components/ui/FilterPill";
 
 const nodeTypes = { mapNode: MapNode };
+
+const legendDisciplines: Discipline[] = [
+  "operations",
+  "games",
+  "software",
+  "marketing",
+  "environment",
+];
 
 type StudioWorkMapProps = {
   /** Skip viewport gate — use on dedicated /map page */
@@ -72,7 +83,7 @@ export function StudioWorkMap({
 
   useEffect(() => {
     if (!preview || storyIndex < 0) return;
-    const path = getStoryPath();
+    const path = getStoryPath(preview);
     setSelectedNode(graphNodes.find((n) => n.id === path[storyIndex]) ?? null);
   }, [preview, storyIndex]);
 
@@ -82,13 +93,14 @@ export function StudioWorkMap({
   }, []);
 
   const tellStory = () => {
-    const path = getStoryPath();
+    const path = getStoryPath(preview);
     const next = (storyIndex + 1) % path.length;
     setStoryIndex(next);
     setSelectedNode(graphNodes.find((n) => n.id === path[next]) ?? null);
   };
 
-  const storyStop = storyIndex >= 0 ? getStoryStop(storyIndex) : null;
+  const storyStop = storyIndex >= 0 ? getStoryStop(storyIndex, preview) : null;
+  const storyPathLength = getStoryPath(preview).length;
 
   const rootMinH = fullPage
     ? "min-h-[min(80vh,720px)]"
@@ -101,29 +113,35 @@ export function StudioWorkMap({
       ? "min-h-[320px] sm:min-h-[360px]"
       : "min-h-[220px] sm:min-h-[260px]";
 
-  const filterOptions = preview
-    ? themeFilterOptions.filter((f) => f.id === "all")
-    : themeFilterOptions;
-
   return (
     <div className={cn("relative flex h-full flex-col", rootMinH)}>
-      <div className="flex flex-wrap items-center gap-1 p-2 sm:gap-1.5 sm:p-3">
-        {filterOptions.map((f) => (
-          <FilterPill
-            key={f.id}
-            active={activeFilter === f.id}
-            onClick={() => !preview && setActiveFilter(f.id)}
-            className="!min-h-[28px] !px-1.5 !py-0.5 !text-[10px] sm:!min-h-[32px] sm:!px-2 sm:!py-1 sm:!text-[11px]"
+      {!preview && (
+        <div className="flex flex-wrap items-center gap-1 p-2 sm:gap-1.5 sm:p-3">
+          {themeFilterOptions.map((f) => (
+            <FilterPill
+              key={f.id}
+              active={activeFilter === f.id}
+              onClick={() => setActiveFilter(f.id)}
+              className="!min-h-[28px] !px-1.5 !py-0.5 !text-[10px] sm:!min-h-[32px] sm:!px-2 sm:!py-1 sm:!text-[11px]"
+            >
+              {f.label}
+            </FilterPill>
+          ))}
+        </div>
+      )}
+      {preview && (
+        <div className="flex items-center justify-between gap-2 px-3 py-2 sm:px-4">
+          <p className="font-mono text-[10px] uppercase tracking-wider text-screen-muted sm:text-[11px]">
+            Story path · 8 key stops
+          </p>
+          <Link
+            href="/map"
+            className="font-mono text-[10px] uppercase tracking-wider text-technology hover:text-screen-text sm:text-[11px]"
           >
-            {preview ? "Story path" : f.label}
-          </FilterPill>
-        ))}
-        {preview && (
-          <span className="ml-auto font-mono text-[10px] uppercase tracking-wider text-screen-muted">
-            Key stops · open /map for full graph
-          </span>
-        )}
-      </div>
+            Full map →
+          </Link>
+        </div>
+      )}
       <div ref={mapAreaRef} className={cn("relative flex-1", canvasMinH)}>
         {mapVisible ? (
           <ReactFlow
@@ -135,11 +153,11 @@ export function StudioWorkMap({
             nodeTypes={nodeTypes}
             onlyRenderVisibleElements
             fitView
-            fitViewOptions={{ padding: preview ? 0.28 : fullPage ? 0.22 : 0.2 }}
-            minZoom={preview ? 0.35 : 0.25}
+            fitViewOptions={{ padding: preview ? 0.32 : fullPage ? 0.22 : 0.2 }}
+            minZoom={preview ? 0.4 : 0.25}
             maxZoom={preview ? 1 : 1.2}
             proOptions={{ hideAttribution: true }}
-            className="bg-transparent"
+            className="work-map-flow bg-transparent"
           >
             <Background color="rgba(143,163,155,0.06)" gap={20} />
             <Controls className="!scale-[0.65] !border-white/10 !bg-screen-panel sm:!scale-75 [&>button]:!bg-screen-panel [&>button]:!text-screen-text" />
@@ -149,6 +167,27 @@ export function StudioWorkMap({
             <p className="font-mono text-[10px] uppercase tracking-wider text-screen-muted">
               Map loads on scroll
             </p>
+          </div>
+        )}
+        {fullPage && !preview && activeFilter !== "all" && (
+          <p className="pointer-events-none absolute left-3 top-2 z-10 max-w-[220px] font-mono text-[9px] uppercase leading-relaxed tracking-wider text-screen-muted sm:text-[10px]">
+            Showing {themeFilterOptions.find((f) => f.id === activeFilter)?.label} and connected roles
+          </p>
+        )}
+        {fullPage && !preview && (
+          <div className="pointer-events-none absolute right-3 top-2 z-10 hidden rounded-lg border border-screen-border bg-screen-panel/90 px-2.5 py-2 sm:block">
+            <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted">Disciplines</p>
+            <ul className="mt-1.5 space-y-1">
+              {legendDisciplines.map((d) => (
+                <li key={d} className="flex items-center gap-2 font-mono text-[9px] uppercase text-screen-text">
+                  <span
+                    className="inline-block h-2 w-2 rounded-full"
+                    style={{ background: disciplineColors[d] }}
+                  />
+                  {disciplineLabels[d]}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
         <MapDetailPanel
@@ -178,7 +217,7 @@ export function StudioWorkMap({
           onClick={tellStory}
           className="rounded px-2 py-1 font-mono text-[10px] uppercase text-technology hover:text-screen-text"
         >
-          {storyIndex < 0 ? "Tell me a story" : `Story ${storyIndex + 1}/${getStoryPath().length} →`}
+          {storyIndex < 0 ? "Tell me a story" : `Story ${storyIndex + 1}/${storyPathLength} →`}
         </button>
       </div>
     </div>

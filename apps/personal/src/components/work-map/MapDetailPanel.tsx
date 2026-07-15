@@ -51,11 +51,11 @@ export function MapDetailPanel({
             </p>
           )}
           {!storyStop && (
-            <p className="font-mono text-[9px] uppercase tracking-wider text-text-muted sm:text-[10px]">
+            <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted sm:text-[10px]">
               {isTheme ? "Through-line" : node.type}
             </p>
           )}
-          <h3 className="mt-1 font-display text-base font-bold text-text-primary sm:text-lg">{headline}</h3>
+          <h3 className="mt-1 font-display text-base font-bold text-screen-text sm:text-lg">{headline}</h3>
         </div>
         <button
           type="button"
@@ -80,7 +80,7 @@ export function MapDetailPanel({
       )}
       {node.period && <p className="mt-2 font-mono text-xs text-text-muted">{node.period}</p>}
       {narrative && (
-        <p className="mt-2 text-xs leading-relaxed text-text-secondary sm:mt-3 sm:text-sm">
+        <p className="mt-2 text-xs leading-relaxed text-screen-muted sm:mt-3 sm:text-sm">
           {narrative}
         </p>
       )}

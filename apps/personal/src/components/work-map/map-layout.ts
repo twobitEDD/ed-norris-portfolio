@@ -1,20 +1,14 @@
-/** Story-path nodes only — readable arc for homepage bento preview. */
+/** Story spine — clean left-to-right arc above Edd Norris anchor (homepage bento). */
 const previewPositions: Record<string, { x: number; y: number }> = {
-  "person-ed": { x: 0, y: 0 },
+  "person-ed": { x: 0, y: 200 },
 
-  "theme-education": { x: -320, y: -100 },
-  "exp-node-ea": { x: -420, y: 20 },
-  "theme-games": { x: -200, y: -220 },
-  "project-planets-core": { x: 40, y: -280 },
-  "theme-software": { x: 240, y: -200 },
-  "exp-node-adidas": { x: 380, y: -80 },
-  "theme-marketing": { x: 420, y: 60 },
-  "company-2bit": { x: 300, y: 180 },
-  "theme-product": { x: 120, y: 240 },
-  "theme-production": { x: -120, y: 240 },
-  "practice-environment": { x: -300, y: 160 },
-  "company-co2t": { x: -380, y: 40 },
-  "project-ergo": { x: -240, y: -120 },
+  "theme-education": { x: -440, y: 40 },
+  "theme-games": { x: -280, y: -80 },
+  "theme-software": { x: -80, y: -140 },
+  "theme-marketing": { x: 140, y: -140 },
+  "practice-environment": { x: 340, y: -80 },
+  "company-co2t": { x: 460, y: 40 },
+  "project-ergo": { x: 220, y: 80 },
 };
 
 const positions: Record<string, { x: number; y: number }> = {

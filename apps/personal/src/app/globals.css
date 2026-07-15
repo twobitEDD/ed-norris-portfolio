@@ -771,6 +771,15 @@ body {
   outline-offset: 2px;
 }
 
+.work-map-flow .react-flow__edge-text {
+  font-weight: 500;
+}
+
+.work-map-flow .react-flow__edge-textbg {
+  stroke: rgba(12, 20, 36, 0.95);
+  stroke-width: 1px;
+}
+
 /* Expertise tablet slideshow — ambient slide decor */
 @keyframes expertise-float {
   0%,
