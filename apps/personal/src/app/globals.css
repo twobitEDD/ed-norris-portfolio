@@ -737,6 +737,177 @@ body {
   filter: brightness(0.92) sepia(0.06);
 }
 
+/* Contact phone app — fixed ink on warm screen (day + night studio) */
+.contact-phone-app {
+  --contact-app-ink: #1b211e;
+  --contact-app-ink-muted: #3a3d36;
+  --contact-app-ink-soft: #4e5148;
+  --contact-app-ink-faint: #6a6d64;
+  --contact-app-ink-subtle: rgba(27, 33, 30, 0.35);
+  --contact-app-fill: rgba(27, 33, 30, 0.08);
+  --contact-app-fill-hover: rgba(27, 33, 30, 0.12);
+  --contact-app-surface: rgba(255, 252, 245, 0.62);
+  --contact-app-surface-hover: rgba(255, 252, 245, 0.88);
+  --contact-app-border: rgba(27, 33, 30, 0.12);
+  --contact-app-border-hover: rgba(27, 33, 30, 0.24);
+  color: var(--contact-app-ink);
+}
+
+.screen-surface--warm .contact-phone-app,
+[data-studio-mode="night"] .screen-surface--warm .contact-phone-app {
+  color: var(--contact-app-ink);
+}
+
+.contact-phone-app__label {
+  color: var(--contact-app-ink-faint);
+}
+
+.contact-phone-app__title,
+.contact-phone-app__headline,
+.contact-phone-app__header-screen {
+  color: var(--contact-app-ink);
+}
+
+.contact-phone-app__subtitle,
+.contact-phone-app__body {
+  color: var(--contact-app-ink-soft);
+}
+
+.contact-phone-app__header-name {
+  color: var(--contact-app-ink-faint);
+}
+
+.contact-phone-app__header-btn {
+  color: var(--contact-app-ink);
+  transition: background 150ms var(--ease-studio);
+}
+
+.contact-phone-app__header-btn:hover {
+  background: var(--contact-app-fill);
+}
+
+.contact-phone-app__header-divider {
+  border-color: var(--contact-app-border);
+}
+
+.contact-phone-app__icon-badge {
+  background: var(--contact-app-ink);
+  color: #f5f0e4;
+}
+
+.contact-phone-app__row {
+  border: 1px solid var(--contact-app-border);
+  background: var(--contact-app-surface);
+  transition:
+    border-color 150ms var(--ease-studio),
+    background 150ms var(--ease-studio);
+}
+
+.contact-phone-app__row:hover {
+  border-color: var(--contact-app-border-hover);
+  background: var(--contact-app-surface-hover);
+}
+
+.contact-phone-app__row-icon {
+  background: var(--contact-app-fill);
+  color: var(--contact-app-ink);
+}
+
+.contact-phone-app__row-chevron {
+  color: var(--contact-app-ink-subtle);
+}
+
+.contact-phone-app__btn-primary {
+  background: var(--contact-app-ink);
+  color: #f5f0e4;
+  border: 1px solid rgba(27, 33, 30, 0.28);
+  transition: background 150ms var(--ease-studio);
+}
+
+.contact-phone-app__btn-primary:hover {
+  background: #2a312c;
+}
+
+.contact-phone-app__btn-secondary {
+  background: var(--contact-app-surface);
+  color: var(--contact-app-ink);
+  border: 1px solid var(--contact-app-border);
+  transition:
+    border-color 150ms var(--ease-studio),
+    background 150ms var(--ease-studio);
+}
+
+.contact-phone-app__btn-secondary:hover {
+  border-color: var(--contact-app-border-hover);
+  background: var(--contact-app-surface-hover);
+}
+
+.contact-phone-app__chip {
+  border: 1px solid var(--contact-app-border);
+  background: var(--contact-app-surface);
+  color: var(--contact-app-ink);
+  transition:
+    border-color 150ms var(--ease-studio),
+    background 150ms var(--ease-studio);
+}
+
+.contact-phone-app__chip:hover {
+  border-color: var(--contact-app-border-hover);
+  background: var(--contact-app-surface-hover);
+}
+
+.contact-phone-app__chip-detail {
+  color: var(--contact-app-ink-faint);
+}
+
+.contact-phone-app__input {
+  border: 1px solid var(--contact-app-border);
+  background: var(--contact-app-surface);
+  color: var(--contact-app-ink);
+}
+
+.contact-phone-app__dot {
+  background: rgba(27, 33, 30, 0.22);
+  transition: background 150ms var(--ease-studio);
+}
+
+.contact-phone-app__dot:hover {
+  background: rgba(27, 33, 30, 0.38);
+}
+
+.contact-phone-app__dot--active {
+  background: var(--contact-app-ink);
+}
+
+.contact-phone-app__nav-hint {
+  color: var(--contact-app-ink-faint);
+}
+
+.contact-phone-device {
+  width: 100%;
+  max-width: min(100%, 440px);
+}
+
+.contact-phone-device .screen-surface {
+  min-height: 500px;
+  max-height: none;
+  overflow: hidden;
+}
+
+.contact-phone-device .screen-surface > div {
+  padding: 1rem 1.125rem;
+}
+
+@media (min-width: 640px) {
+  .contact-phone-device .screen-surface {
+    min-height: 540px;
+  }
+
+  .contact-phone-device .screen-surface > div {
+    padding: 1.125rem 1.25rem;
+  }
+}
+
 [data-studio-mode="night"] .screen-surface {
   box-shadow: var(--screen-glow), inset 0 0 40px rgba(77, 164, 201, 0.04);
 }
