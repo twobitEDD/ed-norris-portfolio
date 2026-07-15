@@ -92,16 +92,15 @@ export function FixedStudioNavigation() {
     );
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-2 sm:px-6 sm:pt-3">
-      <div
-        className={cn(
-          "mx-auto w-full max-w-[1600px] overflow-hidden rounded-2xl border border-paper-cream/10 px-3 py-2.5 transition-colors duration-300 sm:px-6 sm:py-3 lg:px-8 lg:py-4",
-          scrolled
-            ? "bg-wood-dark/96 shadow-lg backdrop-blur-sm"
-            : "bg-studio-black/70 backdrop-blur-sm",
-        )}
-      >
-        <div className="flex items-start justify-between gap-4 lg:gap-6">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 border-b border-paper-cream/10 transition-colors duration-300",
+        scrolled
+          ? "bg-wood-dark/96 shadow-lg backdrop-blur-sm"
+          : "bg-studio-black/70 backdrop-blur-sm",
+      )}
+    >
+      <div className="mx-auto flex w-full max-w-[1600px] items-start justify-between gap-4 px-3 py-2.5 sm:px-6 sm:py-3 lg:gap-6 lg:px-8 lg:py-4">
           {pastHero ? <SiteIdentity className="hidden min-w-0 lg:block" /> : null}
 
           <div className="ml-auto flex min-w-0 flex-col items-end gap-1 lg:shrink-0">
@@ -127,7 +126,6 @@ export function FixedStudioNavigation() {
             {pastHero ? <SiteIdentity className="text-right lg:hidden" /> : null}
           </div>
         </div>
-      </div>
     </header>
   );
 }
