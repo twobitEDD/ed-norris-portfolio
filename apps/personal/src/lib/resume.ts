@@ -119,10 +119,18 @@ export function applyPreset(presetId: string): ResumeConfig {
   };
 }
 
+function getExperienceLimit(config: ResumeConfig): number | null {
+  const preset = resumePresets.find((p) => p.id === config.presetId);
+  if (preset?.maxExperiences === "all") return null;
+  if (typeof preset?.maxExperiences === "number") return preset.maxExperiences;
+  return config.pages === 1 ? 4 : config.pages === 2 ? 8 : 12;
+}
+
 export function buildResumeContent(config: ResumeConfig): ResumeContent {
   const filteredExperiences = sortExperiencesChronologically(
     experiences.filter((exp) => exp.disciplines.some((d) => config.disciplines.includes(d))),
   );
+  const experienceLimit = getExperienceLimit(config);
   const selectedProjects = projects.filter((p) => config.selectedProjectIds.includes(p.id));
   const filteredSkills = config.includeSkills
     ? skills.filter((s) => s.disciplines.some((d) => config.disciplines.includes(d)))
@@ -141,7 +149,10 @@ export function buildResumeContent(config: ResumeConfig): ResumeContent {
     location: profile.location,
     summary,
     links: config.includeLinks ? profile.links : [],
-    experiences: filteredExperiences.slice(0, config.pages === 1 ? 2 : config.pages === 2 ? 3 : 4),
+    experiences:
+      experienceLimit === null
+        ? filteredExperiences
+        : filteredExperiences.slice(0, experienceLimit),
     education: buildEducationRows(config.includeEducation),
     projects: selectedProjects,
     skills: filteredSkills,

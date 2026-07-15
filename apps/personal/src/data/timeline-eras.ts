@@ -36,20 +36,20 @@ export const timelineEras: TimelineEra[] = [
     title: "Game industry foundation",
     organization: "EA · Black Lantern · Seamless · Rocket Gaming",
     summary:
-      "Gameplay programming and production across licensed titles, slot systems, and team leadership — from volunteer QA at EA Tiburon through independent transition work (2006–2007) to lead programmer roles.",
+      "Gameplay programming and production across licensed Wii titles, casino gambling games, and team leadership — from volunteer QA at EA Tiburon through Black Lantern Studios, Seamless Entertainment, and Rocket Gaming Systems.",
     disciplines: ["games", "software"],
     caption: "EA & indie days",
     polaroidGradient: "linear-gradient(160deg, #4a3f6e, #1a1528)",
     detailBody: [
       "This era started with volunteer QA at EA Tiburon while finishing a software degree at Full Sail — a deliberate choice to learn how professional game studios actually ship product, not just how to write code.",
-      "From Black Lantern's licensed-title crunch to Seamless Entertainment's Family Fun Football (Wii) reboot and Rocket Gaming's slot-machine math pipelines, the work spanned gameplay programming, team leadership, SCRUM product management, and production under hard deadlines.",
+      "From Black Lantern's Iron Chef America: Supreme Cuisine (Nintendo Wii) to Seamless Entertainment's Family Fun Football (Wii) and Rocket Gaming's casino slot-machine titles, the work spanned gameplay programming, team leadership, SCRUM product management, and production under hard deadlines.",
       "Brief independent stretches (2006–2007 and late 2009) bridged employer transitions and kept portfolio work moving. The through-line: ship playable systems, document clearly, and earn trust on small teams before taking lead roles.",
     ],
     highlights: [
       "Volunteer QA at EA Tiburon — first exposure to professional game development",
-      "Gameplay lead at Black Lantern Studios on licensed titles with strict publisher deadlines",
-      "Family Fun Football (Wii) gameplay programming and art integration at Seamless",
-      "Intermediate engineer at Rocket Gaming — slot titles, SCRUM, and game-math database work",
+      "Iron Chef America: Supreme Cuisine (Nintendo Wii) — gameplay lead at Black Lantern Studios",
+      "Family Fun Football (Nintendo Wii) — credited release at Seamless Entertainment",
+      "Several casino gambling games — slot titles at Rocket Gaming Systems",
       "Independent transition projects while completing Full Sail coursework",
     ],
     employers: [
@@ -108,19 +108,21 @@ export const timelineEras: TimelineEra[] = [
   {
     id: "era-education",
     period: "2014–2018",
-    title: "Education & public service",
-    organization: "Portland Public Schools · Innovation Academy · iD Tech",
+    title: "Education, simulation & public service",
+    organization: "Hatalom Systems · Portland Public Schools · Innovation Academy · iD Tech",
     summary:
-      "Special education support, afterschool mentoring, and summer STEM instruction while 2bit studio operations were on hold — deliberate community and inclusive-learning work before the 2018 studio re-launch and adidas Future Team role.",
+      "Military simulation software at Hatalom Systems, then special education support, afterschool mentoring, and summer STEM instruction while 2bit studio operations were on hold — deliberate community and inclusive-learning work before the 2018 studio re-launch.",
     disciplines: ["operations"],
     caption: "Teaching years",
     polaroidGradient: "linear-gradient(160deg, #6a5a4a, #2a2218)",
     detailBody: [
+      "After the 2012–2014 indie studio era, a six-month engineering role at Hatalom Systems built proprietary military simulation and game-based training software — applying game-industry craft to defense simulation deliverables.",
       "While 2bit studio operations were on hold, this period was deliberate community work — not a career gap. Special education support at Portland Public Schools shaped a lasting interest in accessible technology and inclusive design.",
       "Volunteer mentoring at Innovation Academy PDX ran an afterschool game-development club, teaching software development and design principles to high school students alongside classroom support.",
       "Summer instruction at iD Tech Camps (Lewis & Clark College) combined paid STEM education with the same ethos: meet learners where they are, build confidence through making, and show that creative technology is for everyone.",
     ],
     highlights: [
+      "Software engineer at Hatalom Systems — proprietary military simulation software (2014)",
       "Special education educator at Portland Public Schools (2014–2017)",
       "Afterschool game-development club mentor at Innovation Academy PDX",
       "Summer game-development instructor at iD Tech Camps",
@@ -128,6 +130,7 @@ export const timelineEras: TimelineEra[] = [
       "Parallel to adidas Future Team role (2017–2018)",
     ],
     employers: [
+      "Hatalom Systems",
       "Portland Public Schools",
       "Innovation Academy PDX",
       "iD Tech Camps",
@@ -208,7 +211,7 @@ export const timelineEras: TimelineEra[] = [
     highlights: [
       "Software engineer at Oregon Institute for a Better Way (2022–2024)",
       "VP Operations at CO2T.earth — carbon and biochar platforms (2024–Present)",
-      "CO2True accreditation and greenhouse-gas reduction action planning",
+      "CO2True accreditation and greenhouse-gas reduction action planning — carbon credit platform",
       "Field operations, traceability, and sustainability communication",
       "Built from Nature. Backed by Science. — product storytelling",
     ],

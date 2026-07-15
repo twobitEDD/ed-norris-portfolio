@@ -322,11 +322,19 @@
   ],
   "resumePresets": [
     {
-      "id": "softwareProductLeadership",
-      "label": "Software Product Leadership",
+      "id": "educationCentric",
+      "label": "Education Centric",
+      "description": "Teaching, mentoring, and inclusive learning.",
+      "emphasis": ["teaching", "mentoring", "inclusive design"],
+      "includeTags": ["operations", "games"],
+      "pages": 2
+    },
+    {
+      "id": "softwareLeadership",
+      "label": "Software Leadership",
       "description": "Technical depth with product and team leadership emphasis.",
       "emphasis": ["product strategy", "software architecture", "operations"],
-      "includeTags": ["software", "operations", "marketing"],
+      "includeTags": ["software", "operations", "marketing", "games"],
       "pages": 2
     },
     {
@@ -335,12 +343,12 @@
       "description": "Environmental systems, carbon infrastructure, and product leadership.",
       "emphasis": ["product strategy", "traceability", "operations"],
       "includeTags": ["environmental", "software", "operations"],
-      "pages": 1
+      "pages": 2
     },
     {
-      "id": "fullCareer",
-      "label": "Full Career",
-      "description": "Complete cross-disciplinary history.",
+      "id": "fullExperience",
+      "label": "Full Experience",
+      "description": "Complete cross-disciplinary career history.",
       "emphasis": [],
       "includeTags": ["games", "creative-technology", "marketing", "environmental", "software", "operations", "platform"],
       "pages": 3

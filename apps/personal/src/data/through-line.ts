@@ -27,7 +27,7 @@ export const storyStops: StoryStop[] = [
     nodeId: "theme-games",
     headline: "Human-centered game design",
     copy:
-      "Gameplay programming at Seamless, Black Lantern, and Rocket Gaming — then founding 2bit Entertainment and shipping Planet's Core (2012–2014), Fish Fight, ERGnomes, and PokePocket. Re-established the studio in 2018 as a software production business with the same focus on tight feedback loops, intuitive UX, and shipping under pressure.",
+      "Credited Wii releases — Iron Chef America: Supreme Cuisine at Black Lantern Studios and Family Fun Football at Seamless Entertainment — plus several casino gambling titles at Rocket Gaming Systems. Founded 2bit Entertainment and shipped Planet's Core (2012–2014), Fish Fight, ERGnomes, and PokePocket. Re-established the studio in 2018 as a software production business with the same focus on tight feedback loops, intuitive UX, and shipping under pressure.",
   },
   {
     nodeId: "theme-software",

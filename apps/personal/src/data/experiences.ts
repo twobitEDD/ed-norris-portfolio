@@ -8,10 +8,10 @@ export const experiences: Experience[] = [
     organization: "CO2T.earth & CO2True",
     period: { start: "Mar 2024" },
     summary:
-      "Strategic operations and development for carbon, biochar, and marketplace platforms — connecting software, blockchain, field operations, and business management.",
+      "Strategic operations and development for CO2T.earth and the CO2True carbon credit platform — connecting software, blockchain, field operations, and business management.",
     details: [
-      "Lead strategic operations across CO2T.earth and CO2True marketplace initiatives.",
-      "Bridge software, interactive media, and sustainability program delivery.",
+      "Lead strategic operations across CO2T.earth and CO2True marketplace and accreditation initiatives.",
+      "Bridge software, interactive media, and sustainability program delivery for agriculture and biochar clients.",
     ],
     disciplines: ["environment", "operations", "software"],
     skills: ["operations", "product strategy", "blockchain"],
@@ -102,7 +102,9 @@ export const experiences: Experience[] = [
     organization: "Opus Creative Group",
     period: { start: "Apr 2020", end: "Nov 2020" },
     summary: "Contracting via 2bit on integrated agency product marketing programs.",
-    details: ["Consumer experience development for brand campaigns."],
+    details: [
+      "Consumer experience software for brand campaigns — interactive product storytelling and launch programs.",
+    ],
     disciplines: ["marketing", "software"],
     skills: ["interactive experiences"],
     projects: ["proj-brand-systems"],
@@ -126,9 +128,9 @@ export const experiences: Experience[] = [
     organization: "adidas — Future Team",
     period: { start: "Mar 2017", end: "Sep 2018" },
     summary:
-      "Basketball Business Unit innovation — consumer experiences, rapid prototyping, hardware research, and product release event support.",
+      "Basketball Business Unit innovation — consumer experience software, rapid prototyping, hardware research, and product release event support.",
     details: [
-      "Designed and developed consumer experiences for Adidas Sports Performance.",
+      "Designed and developed consumer experience software for Adidas Sports Performance — interactive retail, event, and product-launch programs.",
       "Transitioned to a contract engagement via 2bit when new leadership requested continued support after the full-time role.",
     ],
     disciplines: ["software", "marketing", "games"],
@@ -205,8 +207,12 @@ export const experiences: Experience[] = [
     title: "Intermediate Software Engineer",
     organization: "Rocket Gaming Systems",
     period: { start: "Jan 2010", end: "Jul 2012" },
-    summary: "Slot machine titles — gameplay implementation, SCRUM product management, math database engineering.",
-    details: ["Video and physical reel games on short timelines with video game industry veterans."],
+    summary:
+      "Casino gambling games — multiple slot machine titles for licensed casino deployment; gameplay implementation, SCRUM product management, and math database engineering.",
+    details: [
+      "Shipped several video and physical-reel slot titles on short timelines with video game industry veterans.",
+      "Product manager using SCRUM/Agile; engineered game-math database templates and publisher adjustment workflows.",
+    ],
     disciplines: ["games", "software"],
     skills: ["C#", "SCRUM", "game math"],
     projects: [],
@@ -217,10 +223,30 @@ export const experiences: Experience[] = [
     title: "Gameplay Programmer",
     organization: "Seamless Entertainment",
     period: { start: "Jul 2008", end: "Oct 2009" },
-    summary: "Family Fun Football (Wii) — gameplay documentation, art integration, and design.",
-    details: ["Reboot of Tecmo Bowl mechanics for an all-ages football experience."],
+    summary:
+      "Family Fun Football (Nintendo Wii) — credited release; gameplay documentation, art integration, and design.",
+    details: [
+      "Shipped Family Fun Football for Nintendo Wii — reboot of Tecmo Bowl mechanics for an all-ages football experience.",
+      "Transferred from Black Lantern Studios when Seamless was spun up to focus on a single Wii title.",
+    ],
     disciplines: ["games"],
     skills: ["gameplay programming", "Wii development"],
+    projects: [],
+    featured: true,
+  },
+  {
+    id: "exp-hatalom",
+    title: "Software Engineer",
+    organization: "Hatalom Systems",
+    period: { start: "Mar 2014", end: "Sep 2014" },
+    summary:
+      "Proprietary military simulation software — game-based training systems and defense simulation courseware for classified training environments.",
+    details: [
+      "Built interactive simulation and training software for defense and military applications.",
+      "Applied game-industry UX discipline to serious-game and simulation deliverables on strict security requirements.",
+    ],
+    disciplines: ["games", "software"],
+    skills: ["simulation", "game-based training", "C#", "technical documentation"],
     projects: [],
     featured: true,
   },
@@ -274,12 +300,16 @@ export const experiences: Experience[] = [
     title: "Gameplay Lead Programmer",
     organization: "Black Lantern Studios",
     period: { start: "Nov 2007", end: "Jul 2008" },
-    summary: "Licensed titles on strict deadlines — team management and publisher adjustments.",
-    details: ["Led gameplay programming shortly after being hired."],
+    summary:
+      "Iron Chef America: Supreme Cuisine (Nintendo Wii) — credited release; gameplay lead on licensed titles with strict publisher deadlines.",
+    details: [
+      "Led gameplay programming on Iron Chef America: Supreme Cuisine for Nintendo Wii shortly after being hired.",
+      "Managed team delivery, hardware memory constraints, art integration, and publisher adjustment requests.",
+    ],
     disciplines: ["games"],
-    skills: ["leadership", "gameplay programming"],
+    skills: ["leadership", "gameplay programming", "Wii development"],
     projects: [],
-    featured: false,
+    featured: true,
   },
   {
     id: "exp-ea",
