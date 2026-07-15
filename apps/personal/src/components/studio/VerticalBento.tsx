@@ -9,6 +9,7 @@ import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { Notebook } from "@/components/physical-ui/Notebook";
 import { Phone } from "@/components/physical-ui/Phone";
+import { ResumeBusinessCard } from "@/components/resume/ResumeBusinessCard";
 import { Paper } from "@/components/physical-ui/Paper";
 import { StickyNote } from "@/components/physical-ui/StickyNote";
 import { Polaroid } from "@/components/physical-ui/Polaroid";
@@ -58,7 +59,10 @@ const focusItems = [
 export function VerticalBento() {
   const [config, setConfig] = useState<ResumeConfig>(getDefaultResumeConfig());
   const resumeContent = useMemo(() => buildResumeContent(config), [config]);
-  const resumeSnippet = useMemo(() => buildResumeContent(getDefaultResumeConfig()), []);
+  const activePreset = useMemo(
+    () => resumePresets.find((p) => p.id === config.presetId) ?? resumePresets[0],
+    [config.presetId],
+  );
 
   const exportPdf = async () => {
     const res = await fetch("/api/resume/pdf", {
@@ -119,28 +123,18 @@ export function VerticalBento() {
         </BentoCell>
 
         <BentoCell id="resume" span="wide" deferPaint className="bento-cell--resume">
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,240px)_1fr] lg:items-start lg:gap-10">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,320px)_1fr] lg:items-start lg:gap-10">
             <div className="flex flex-col items-center gap-5 lg:items-start">
-              <StudioObject rotate={-1.5} className="flex w-full justify-center lg:justify-start">
-                <Phone>
-                <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted">
-                  Résumé generator
-                </p>
-                <h3 className="mt-2 font-display text-sm font-bold text-screen-text">{resumeSnippet.name}</h3>
-                <p className="text-[10px] text-screen-muted">{resumeSnippet.targetRole}</p>
-                <p className="mt-2 line-clamp-4 text-[10px] leading-relaxed text-screen-muted">
-                  {resumeSnippet.summary}
-                </p>
-                <button
-                  type="button"
-                  onClick={exportPdf}
-                  className="mt-3 text-[10px] font-semibold text-technology hover:text-screen-text"
-                >
-                  Customize & download →
-                </button>
-              </Phone>
-            </StudioObject>
-              <ClientLogoStrip size="sm" variant="on-dark" className="max-w-[220px]" />
+              <StudioObject rotate={-2.2} className="flex w-full justify-center lg:justify-start">
+                <ResumeBusinessCard
+                  name={resumeContent.name}
+                  preset={activePreset}
+                  targetRole={resumeContent.targetRole}
+                  summary={resumeContent.summary}
+                  onDownload={exportPdf}
+                />
+              </StudioObject>
+              <ClientLogoStrip size="sm" variant="on-dark" className="max-w-[320px]" />
             </div>
 
             <div className="space-y-5">

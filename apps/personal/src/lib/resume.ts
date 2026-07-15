@@ -8,7 +8,7 @@ import {
   skills,
 } from "@/data";
 import { DEFAULT_RESUME_PRESET_ID } from "@/data/resume-presets";
-import type { Discipline, Education, ResumePreset } from "@/data/types";
+import { disciplineColors, type Discipline, type Education, type ResumePreset } from "@/data/types";
 import { parsePeriodDate, sortExperiencesChronologically } from "@/lib/career-dates";
 
 export type ResumeConfig = {
@@ -38,12 +38,18 @@ export type ResumeContent = {
   targetRole: string;
   location: string;
   summary: string;
+  accentColor: string;
   links: { label: string; url: string }[];
   experiences: typeof experiences;
   education: ResumeEducationRow[];
   projects: typeof projects;
   skills: typeof skills;
 };
+
+export function getResumeAccentColor(disciplines: Discipline[]): string {
+  const primary = disciplines[0];
+  return disciplineColors[primary] ?? disciplineColors.software;
+}
 
 function getDefaultPreset() {
   return resumePresets.find((p) => p.id === DEFAULT_RESUME_PRESET_ID) ?? resumePresets[0];
@@ -148,6 +154,7 @@ export function buildResumeContent(config: ResumeConfig): ResumeContent {
     targetRole: config.targetRole,
     location: profile.location,
     summary,
+    accentColor: getResumeAccentColor(config.disciplines),
     links: config.includeLinks ? profile.links : [],
     experiences:
       experienceLimit === null

@@ -458,6 +458,44 @@ body {
   filter: brightness(0.92) sepia(0.06);
 }
 
+/* Business card — printed stock on desk */
+.business-card {
+  background-color: #faf8f3;
+  background-image:
+    var(--paper-texture),
+    radial-gradient(ellipse 90% 70% at 12% 10%, rgba(255, 255, 252, 0.95), transparent 50%),
+    linear-gradient(168deg, #fdfbf6 0%, #f8f4ea 45%, #f0ebe0 100%);
+  border: 1px solid rgba(60, 48, 32, 0.09);
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.08),
+    0 4px 10px rgba(0, 0, 0, 0.12),
+    0 14px 28px -8px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 252, 245, 0.85),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+}
+
+.business-card__accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--card-accent, var(--technology)) 0%,
+    color-mix(in srgb, var(--card-accent, var(--technology)) 65%, white) 100%
+  );
+}
+
+.business-card__body {
+  position: relative;
+  z-index: 1;
+}
+
+[data-studio-mode="night"] .business-card {
+  filter: brightness(0.94) sepia(0.04);
+}
+
 .handwritten {
   font-family: var(--font-caveat), cursive;
 }
