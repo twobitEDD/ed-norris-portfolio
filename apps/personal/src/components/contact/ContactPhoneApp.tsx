@@ -54,7 +54,7 @@ const slideVariants = {
 };
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
-type ContactLayout = "phone" | "tablet";
+type ContactLayout = "phone" | "tablet" | "phone-landscape";
 
 function LinkIcon({ link, className }: { link: ProfileLink; className?: string }) {
   const kind = linkIconKind(link);
@@ -92,12 +92,13 @@ function AppListRow({
   layout?: ContactLayout;
 }) {
   const isTablet = layout === "tablet";
+  const isLandscape = layout === "phone-landscape";
   const content = (
     <>
       <span
         className={cn(
           "contact-phone-app__row-icon flex shrink-0 items-center justify-center rounded-lg",
-          isTablet ? "h-9 w-9" : compact ? "h-7 w-7" : "h-8 w-8",
+          isLandscape ? "h-6 w-6" : isTablet ? "h-9 w-9" : compact ? "h-7 w-7" : "h-8 w-8",
         )}
       >
         {icon}
@@ -106,7 +107,7 @@ function AppListRow({
         <span
           className={cn(
             "contact-phone-app__title block truncate font-medium",
-            isTablet ? "text-sm" : "text-[13px]",
+            isLandscape ? "text-[11px]" : isTablet ? "text-sm" : "text-[13px]",
           )}
         >
           {label}
@@ -115,7 +116,7 @@ function AppListRow({
           <span
             className={cn(
               "contact-phone-app__chip-detail block truncate",
-              isTablet ? "text-[11px]" : "text-[10px]",
+              isLandscape ? "text-[9px]" : isTablet ? "text-[11px]" : "text-[10px]",
             )}
           >
             {detail}
@@ -132,7 +133,13 @@ function AppListRow({
 
   const className = cn(
     "contact-phone-app__row flex w-full items-center gap-2.5 rounded-xl px-2.5 text-left",
-    isTablet ? "min-h-[48px] gap-3 px-3 py-2.5" : compact ? "min-h-[40px] py-1.5" : "min-h-[44px] py-2",
+    isLandscape
+      ? "min-h-[34px] gap-2 py-1"
+      : isTablet
+        ? "min-h-[48px] gap-3 px-3 py-2.5"
+        : compact
+          ? "min-h-[40px] py-1.5"
+          : "min-h-[44px] py-2",
   );
 
   if (href) {
@@ -168,54 +175,77 @@ function HomeScreen({
   layout: ContactLayout;
 }) {
   const isTablet = layout === "tablet";
+  const isLandscape = layout === "phone-landscape";
   const extraLinks = [
     ...categorized.github,
     ...categorized.social.filter((link) => !link.url.includes("linkedin.com")),
     ...categorized.projects,
   ];
-  const extraLinkLimit = isTablet ? 5 : 3;
+  const extraLinkLimit = isLandscape ? 2 : isTablet ? 5 : 3;
 
   return (
     <div
       className={cn(
-        "grid h-full min-h-0 gap-4",
-        isTablet
-          ? "grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-5 sm:gap-6"
-          : "grid-cols-1 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-5",
+        "grid h-full min-h-0",
+        isLandscape
+          ? "grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-2.5"
+          : isTablet
+            ? "grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-5 sm:gap-6"
+            : "grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-5",
       )}
     >
-      <div className="flex min-h-0 flex-col justify-center gap-0.5">
+      <div
+        className={cn(
+          "flex min-h-0 flex-col",
+          isLandscape ? "justify-start gap-0" : "justify-center gap-0.5",
+        )}
+      >
         <p
           className={cn(
             "contact-phone-app__label font-mono uppercase tracking-[0.2em]",
-            isTablet ? "text-[10px]" : "text-[9px]",
+            isLandscape ? "text-[8px] tracking-[0.16em]" : isTablet ? "text-[10px]" : "text-[9px]",
           )}
         >
           Reach
         </p>
         <h2
           className={cn(
-            "contact-phone-app__headline mt-2 font-editorial font-semibold leading-snug",
-            isTablet ? "mt-3 text-2xl sm:text-[1.65rem]" : "mt-2 text-lg sm:mt-2.5 sm:text-xl",
+            "contact-phone-app__headline font-editorial font-semibold leading-snug",
+            isLandscape
+              ? "mt-0.5 text-[15px] leading-tight"
+              : isTablet
+                ? "mt-3 text-2xl sm:text-[1.65rem]"
+                : "mt-2 text-lg sm:mt-2.5 sm:text-xl",
           )}
         >
           Let&apos;s build something useful.
         </h2>
         <p
           className={cn(
-            "contact-phone-app__body mt-2.5 leading-relaxed",
-            isTablet ? "mt-3 text-sm" : "text-[11px] sm:mt-3 sm:text-xs",
+            "contact-phone-app__body leading-relaxed",
+            isLandscape
+              ? "mt-1 text-[10px] leading-snug"
+              : isTablet
+                ? "mt-3 text-sm"
+                : "mt-2.5 text-[11px] sm:mt-3 sm:text-xs",
           )}
         >
           {profile.availability}
         </p>
         <p
           className={cn(
-            "contact-phone-app__label mt-auto flex items-center gap-1.5 font-mono uppercase tracking-wider",
-            isTablet ? "gap-2 pt-5 text-[9px]" : "pt-4 text-[8px] sm:pt-5",
+            "contact-phone-app__label flex items-center gap-1.5 font-mono uppercase tracking-wider",
+            isLandscape
+              ? "mt-1.5 gap-1 text-[7px]"
+              : isTablet
+                ? "mt-auto gap-2 pt-5 text-[9px]"
+                : "mt-auto pt-4 text-[8px] sm:pt-5",
           )}
         >
-          <MapPin className={cn(isTablet ? "h-3.5 w-3.5" : "h-3 w-3")} strokeWidth={1.75} />
+          <MapPin
+            className={cn(isLandscape ? "h-2.5 w-2.5" : isTablet ? "h-3.5 w-3.5" : "h-3 w-3")}
+            strokeWidth={1.75}
+          />
           {profile.location}
         </p>
       </div>
@@ -223,20 +253,25 @@ function HomeScreen({
       <div className="flex min-h-0 flex-col">
         <p
           className={cn(
-            "contact-phone-app__label mb-1.5 font-mono uppercase tracking-[0.16em]",
-            isTablet ? "mb-2 text-[9px]" : "text-[8px]",
+            "contact-phone-app__label font-mono uppercase tracking-[0.16em]",
+            isLandscape ? "mb-1 text-[7px]" : isTablet ? "mb-2 text-[9px]" : "mb-1.5 text-[8px]",
           )}
         >
           Get in touch
         </p>
-        <div className={cn("flex min-h-0 flex-1 flex-col overflow-y-auto pr-0.5", isTablet ? "gap-2" : "gap-1.5")}>
+        <div
+          className={cn(
+            "flex min-h-0 flex-1 flex-col overflow-y-auto pr-0.5",
+            isLandscape ? "gap-1" : isTablet ? "gap-2" : "gap-1.5",
+          )}
+        >
           {categorized.email && (
             <AppListRow
               icon={<Mail className="h-3.5 w-3.5" strokeWidth={1.75} />}
               label="Email Edd"
               detail={categorized.email.url.replace("mailto:", "")}
               href={CONTACT_MAILTO}
-              compact={!isTablet}
+              compact={!isTablet && !isLandscape}
               layout={layout}
             />
           )}
@@ -246,7 +281,7 @@ function HomeScreen({
             detail={scheduleExternal ? "Book a time" : "On-site booking"}
             href={scheduleHref}
             external={scheduleExternal}
-            compact={!isTablet}
+            compact={!isTablet && !isLandscape}
             layout={layout}
           />
           {categorized.social
@@ -259,7 +294,7 @@ function HomeScreen({
                 detail="Professional profile"
                 href={link.url}
                 external
-                compact={!isTablet}
+                compact={!isTablet && !isLandscape}
                 layout={layout}
               />
             ))}
@@ -270,7 +305,7 @@ function HomeScreen({
               label={link.label}
               href={link.url}
               external
-              compact={!isTablet}
+              compact={!isTablet && !isLandscape}
               layout={layout}
             />
           ))}
@@ -279,7 +314,7 @@ function HomeScreen({
             label="Leave a message"
             detail="Send a note from this site"
             onClick={() => onNavigate("message")}
-            compact={!isTablet}
+            compact={!isTablet && !isLandscape}
             layout={layout}
           />
         </div>
@@ -290,6 +325,7 @@ function HomeScreen({
 
 function MessageScreen({ onBack, layout }: { onBack: () => void; layout: ContactLayout }) {
   const isTablet = layout === "tablet";
+  const isLandscape = layout === "phone-landscape";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -463,6 +499,7 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
   const scheduleHref = getSchedulingHref();
   const scheduleExternal = isExternalScheduling();
   const isTablet = layout === "tablet";
+  const isLandscape = layout === "phone-landscape";
 
   const screenIndex = SCREENS.indexOf(screen);
 
@@ -513,6 +550,7 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
       className={cn(
         "contact-phone-app flex h-full min-h-0 flex-col",
         isTablet && "contact-phone-app--tablet",
+        isLandscape && "contact-phone-app--landscape",
       )}
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
@@ -520,7 +558,7 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
       <header
         className={cn(
           "contact-phone-app__header-divider flex shrink-0 items-center gap-2 border-b",
-          isTablet ? "mb-3 gap-2.5 pb-3" : "mb-2.5 pb-2.5",
+          isLandscape ? "mb-1.5 gap-2 pb-1.5" : isTablet ? "mb-3 gap-2.5 pb-3" : "mb-2.5 pb-2.5",
         )}
       >
         {screen !== "home" || onExit ? (
@@ -529,20 +567,20 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
             onClick={screen === "home" ? handleHomeBack : () => goTo("home")}
             className={cn(
               "contact-phone-app__header-btn flex items-center justify-center rounded-lg",
-              isTablet ? "h-9 w-9" : "h-8 w-8",
+              isLandscape ? "h-7 w-7" : isTablet ? "h-9 w-9" : "h-8 w-8",
             )}
             aria-label={screen === "home" ? "Back to home screen" : "Back to contact home"}
           >
             <ArrowLeft className="h-3.5 w-3.5" strokeWidth={1.75} />
           </button>
         ) : (
-          <span className={cn(isTablet ? "h-9 w-9" : "h-8 w-8")} aria-hidden />
+          <span className={cn(isLandscape ? "h-7 w-7" : isTablet ? "h-9 w-9" : "h-8 w-8")} aria-hidden />
         )}
         <div className="min-w-0 flex-1">
           <p
             className={cn(
               "contact-phone-app__header-name truncate font-mono uppercase tracking-[0.2em]",
-              isTablet ? "text-[9px]" : "text-[8px]",
+              isLandscape ? "text-[7px]" : isTablet ? "text-[9px]" : "text-[8px]",
             )}
           >
             {profile.name}
@@ -550,7 +588,7 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
           <p
             className={cn(
               "contact-phone-app__header-screen truncate font-semibold",
-              isTablet ? "text-sm" : "text-xs",
+              isLandscape ? "text-[11px]" : isTablet ? "text-sm" : "text-xs",
             )}
           >
             {screen === "home" ? "Contact" : "Message"}
@@ -561,13 +599,13 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
             href={scheduleHref}
             className={cn(
               "contact-phone-app__header-btn shrink-0 rounded-lg px-2 py-1 font-mono uppercase tracking-wider",
-              isTablet ? "text-[9px]" : "text-[8px]",
+              isLandscape ? "text-[7px]" : isTablet ? "text-[9px]" : "text-[8px]",
             )}
           >
             Book
           </Link>
         ) : (
-          <span className={cn("shrink-0", isTablet ? "w-9" : "w-8")} aria-hidden />
+          <span className={cn("shrink-0", isLandscape ? "w-7" : isTablet ? "w-9" : "w-8")} aria-hidden />
         )}
       </header>
 
@@ -580,7 +618,7 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
             initial="enter"
             animate="center"
             exit="exit"
-            className="absolute inset-0"
+            className={cn("absolute inset-0 min-h-0", isLandscape && "overflow-y-auto")}
           >
             {screen === "home" && (
               <HomeScreen
@@ -597,7 +635,10 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
       </div>
 
       <nav
-        className={cn("flex shrink-0 items-center justify-center gap-2", isTablet ? "mt-3" : "mt-2")}
+        className={cn(
+          "flex shrink-0 items-center justify-center gap-2",
+          isLandscape ? "mt-1" : isTablet ? "mt-3" : "mt-2",
+        )}
         aria-label="Contact screens"
       >
         {SCREENS.map((id) => (
@@ -607,8 +648,16 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
             onClick={() => goTo(id)}
             className={cn(
               "contact-phone-app__dot rounded-full transition-all",
-              isTablet ? "h-2" : "h-1.5",
-              id === screen ? "contact-phone-app__dot--active w-5" : isTablet ? "w-2" : "w-1.5",
+              isLandscape ? "h-1" : isTablet ? "h-2" : "h-1.5",
+              id === screen
+                ? isLandscape
+                  ? "contact-phone-app__dot--active w-3.5"
+                  : "contact-phone-app__dot--active w-5"
+                : isLandscape
+                  ? "w-1"
+                  : isTablet
+                    ? "w-2"
+                    : "w-1.5",
             )}
             aria-label={id === "home" ? "Contact home" : "Message form"}
             aria-current={id === screen ? "step" : undefined}
@@ -635,7 +684,7 @@ export function ContactPhoneApp({ className }: ContactPhoneAppProps) {
       screenLayout="app"
       className={cn("contact-phone-device mx-auto w-full", className)}
     >
-      <ContactAppContent layout="tablet" />
+      <ContactAppContent layout="phone-landscape" />
     </DeviceViewer>
   );
 }

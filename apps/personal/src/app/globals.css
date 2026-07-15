@@ -1094,6 +1094,10 @@ body {
   overflow: hidden;
 }
 
+.contact-phone-device .device-frame--phone-landscape .screen-surface {
+  overflow: hidden;
+}
+
 .contact-phone-device .screen-surface > .phone-screen-content {
   padding: 0.875rem 1rem;
 }
@@ -1104,15 +1108,35 @@ body {
   }
 }
 
-/* Clear left-center Dynamic Island in landscape contact phone */
+/* Landscape contact phone — tight vertical padding, notch-safe left inset */
 .contact-phone-device .device-frame--phone-landscape .screen-surface > .phone-screen-content {
-  padding-left: calc(0.875rem + var(--phone-landscape-notch-safe, 36px));
+  padding: 0.375rem 0.625rem 0.25rem calc(0.5rem + var(--phone-landscape-notch-safe, 36px));
 }
 
 @media (min-width: 640px) {
   .contact-phone-device .device-frame--phone-landscape .screen-surface > .phone-screen-content {
-    padding-left: calc(1rem + var(--phone-landscape-notch-safe, 36px));
+    padding: 0.4375rem 0.75rem 0.3125rem calc(0.5625rem + var(--phone-landscape-notch-safe, 36px));
   }
+}
+
+/* Landscape phone contact app — compact ink hierarchy */
+.contact-phone-app--landscape {
+  overflow: hidden;
+}
+
+.contact-phone-app--landscape .contact-phone-app__headline {
+  letter-spacing: -0.01em;
+}
+
+.contact-phone-app--landscape .contact-phone-app__row {
+  border-radius: 0.625rem;
+}
+
+.contact-phone-device .phone-home-indicator--landscape {
+  bottom: 3px;
+  width: 56px;
+  height: 2px;
+  opacity: 0.7;
 }
 
 [data-studio-mode="night"] .screen-surface {
