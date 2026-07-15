@@ -5,26 +5,25 @@ type WorkVennDiagramProps = {
 };
 
 const circles = [
-  { id: "people", cx: 92, cy: 66, label: "People", x: 54, y: 72, stroke: "var(--marketing)", fill: "var(--marketing)" },
   {
-    id: "technology",
-    cx: 178,
-    cy: 66,
-    label: "Technology",
-    x: 138,
-    y: 72,
-    stroke: "var(--technology)",
-    fill: "var(--technology)",
+    id: "humanity",
+    cx: 98,
+    cy: 58,
+    label: "Humanity",
+    x: 68,
+    y: 62,
+    stroke: "var(--marketing)",
+    fill: "var(--marketing)",
   },
   {
-    id: "planet",
-    cx: 135,
-    cy: 40,
-    label: "Planet",
-    x: 112,
-    y: 28,
-    stroke: "var(--environment)",
-    fill: "var(--environment)",
+    id: "technology",
+    cx: 172,
+    cy: 58,
+    label: "Technology",
+    x: 188,
+    y: 62,
+    stroke: "var(--technology)",
+    fill: "var(--technology)",
   },
 ] as const;
 
@@ -32,7 +31,7 @@ export function WorkVennDiagram({ className }: WorkVennDiagramProps) {
   return (
     <figure
       className={cn("relative mt-4 motion-reduce:transition-none", className)}
-      aria-label="Where I work"
+      aria-label="Where I work — Humanity and Technology"
     >
       <svg
         viewBox="0 0 270 108"
@@ -45,7 +44,7 @@ export function WorkVennDiagram({ className }: WorkVennDiagramProps) {
             key={circle.id}
             cx={circle.cx}
             cy={circle.cy}
-            r={40}
+            r={44}
             fill={circle.fill}
             fillOpacity={0.07}
             stroke={circle.stroke}
@@ -58,6 +57,7 @@ export function WorkVennDiagram({ className }: WorkVennDiagramProps) {
             key={`${circle.id}-label`}
             x={circle.x}
             y={circle.y}
+            textAnchor="middle"
             className="fill-ink-soft font-mono text-[7.5px] font-semibold uppercase tracking-[0.14em] sm:text-[8px]"
           >
             {circle.label}
@@ -65,14 +65,16 @@ export function WorkVennDiagram({ className }: WorkVennDiagramProps) {
         ))}
         <text
           x={135}
-          y={58}
+          y={54}
           textAnchor="middle"
-          className="fill-ink font-mono text-[6.5px] font-medium uppercase tracking-[0.12em] opacity-70 sm:text-[7px]"
+          className="handwritten fill-ink text-[11px] font-medium sm:text-[12px]"
         >
-          {"Edd's work"}
+          {"Edd Lives Here ⬇️"}
         </text>
       </svg>
-      <figcaption className="sr-only">People, Technology, and Planet — the three areas where Edd works</figcaption>
+      <figcaption className="sr-only">
+        Humanity and Technology — where Edd lives at the intersection
+      </figcaption>
     </figure>
   );
 }
