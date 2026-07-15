@@ -29,6 +29,11 @@ import { creativeSlides, environmentalSlides } from "@/data/discipline-slides";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { tabletAppCategories, tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
 import { cn } from "@/lib/cn";
+import {
+  parseStudioAppFromLocation,
+  scrollToStudioApps,
+  STUDIO_APP_NAV_EVENT,
+} from "@/lib/studio-app-nav";
 
 const GameTablet = dynamic(
   () => import("@/components/games/GameTablet").then((m) => m.GameTablet),
@@ -63,24 +68,6 @@ const LAUNCHABLE_APP_IDS = new Set<TabletAppId>(
 );
 
 const DOCK_APP_IDS: TabletAppId[] = ["ergo", "co2t", "work-map", "microbe"];
-
-function parseAppParam(): TabletAppId | null {
-  if (typeof window === "undefined") return null;
-
-  const fromParams = (params: URLSearchParams) => {
-    const app = params.get("app");
-    if (app && tabletApps.some((a) => a.id === app)) return app as TabletAppId;
-    return null;
-  };
-
-  const fromSearch = fromParams(new URLSearchParams(window.location.search));
-  if (fromSearch) return fromSearch;
-
-  const hash = window.location.hash;
-  const queryStart = hash.indexOf("?");
-  if (queryStart === -1) return null;
-  return fromParams(new URLSearchParams(hash.slice(queryStart)));
-}
 
 function AppIcon({ app, large }: { app: TabletApp; large?: boolean }) {
   if (app.id === "ergo") {
@@ -625,24 +612,26 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    const initial = parseAppParam();
-    if (initial && LAUNCHABLE_APP_IDS.has(initial)) {
-      setScreen(initial);
-      if (initial === "microbe") setGameOpen(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    const onHashChange = () => {
-      const app = parseAppParam();
+    const syncFromLocation = (scrollToSection = false) => {
+      const app = parseStudioAppFromLocation();
       if (app && LAUNCHABLE_APP_IDS.has(app)) {
         setScreen(app);
         setGameOpen(app === "microbe");
         setGameFullscreen(false);
+        if (scrollToSection) scrollToStudioApps();
       }
     };
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
+
+    const hasGameHash = window.location.hash.startsWith("#game");
+    syncFromLocation(hasGameHash);
+
+    const onNavigate = () => syncFromLocation(false);
+    window.addEventListener("hashchange", onNavigate);
+    window.addEventListener(STUDIO_APP_NAV_EVENT, onNavigate);
+    return () => {
+      window.removeEventListener("hashchange", onNavigate);
+      window.removeEventListener(STUDIO_APP_NAV_EVENT, onNavigate);
+    };
   }, []);
 
   useEffect(() => {

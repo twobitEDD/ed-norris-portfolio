@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { profile, practices } from "@/data";
+import type { TabletAppId } from "@/data/tablet-apps";
+import { StudioAppLink } from "@/components/studio/StudioAppLink";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { WorkVennDiagram } from "@/components/hero/WorkVennDiagram";
 import { Paper } from "@/components/physical-ui/Paper";
@@ -49,13 +50,13 @@ export function IntroPaper() {
 
         <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
           {practices.map((practice) => (
-            <Link
+            <StudioAppLink
               key={practice.id}
-              href={`/#game?app=${practice.id}`}
+              appId={practice.id as TabletAppId}
               className="rounded-full border border-ink/20 px-4 py-2 text-[11px] font-semibold uppercase tracking-wider text-ink transition hover:bg-ink hover:text-paper-cream"
             >
               Open {practice.id === "environmental" ? "Environmental" : "Creative"} App →
-            </Link>
+            </StudioAppLink>
           ))}
         </div>
       </div>
