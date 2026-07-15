@@ -37,16 +37,16 @@ export function IntroPaper() {
 
         <p className="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">{profile.summary}</p>
 
-        <section className="mt-3.5 sm:mt-4" aria-label="Roles">
-          <div className="flex flex-col items-center">
+        <section className="relative mt-3.5 sm:mt-4" aria-label="Roles">
+          <ul className="flex flex-col gap-1.5">
+            {roles.map((role) => (
+              <li key={role} className="handwritten text-sm text-ink-soft">
+                · {role}
+              </li>
+            ))}
+          </ul>
+          <div className="pointer-events-none absolute bottom-full left-0 mb-1.5 sm:left-auto sm:right-0 sm:mb-2">
             <WorkVennDiagram className="mt-0" />
-            <ul className="mt-3 flex flex-col gap-1.5">
-              {roles.map((role) => (
-                <li key={role} className="handwritten text-sm text-ink-soft">
-                  · {role}
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
 
