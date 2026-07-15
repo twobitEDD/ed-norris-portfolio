@@ -23,6 +23,7 @@ import { ContactAppContent } from "@/components/contact/ContactPhoneApp";
 import { WorkAppSlideshow } from "@/components/work/WorkAppSlideshow";
 import { DisciplineAppSlideshow } from "@/components/work/DisciplineAppSlideshow";
 import { MicrobeSvgGlyph } from "@/components/games/microbeDraw";
+import { contactPolaroidImage } from "@/data/career-images";
 import { projects } from "@/data/projects";
 import { creativeSlides, environmentalSlides } from "@/data/discipline-slides";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
@@ -262,8 +263,8 @@ function SpringboardMiniWidgets({ timeStr, dateShortStr }: { timeStr: string; da
       </div>
       <div className="relative col-span-2 min-h-[68px] overflow-hidden rounded-[18px] border border-white/[0.07] sm:min-h-[76px]">
         <Image
-          src="/career/contact-oregon.jpg"
-          alt=""
+          src={contactPolaroidImage.src}
+          alt={contactPolaroidImage.alt}
           fill
           className="object-cover object-center"
           sizes="160px"

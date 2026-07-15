@@ -171,10 +171,18 @@ export function getProjectImage(projectId: string): CareerImageEntry | undefined
   return projectImages[projectId];
 }
 
-/** Contact section polaroid — Oregon Willamette Valley landscape. */
+/** Contact section polaroid — foggy road through Oregon evergreens. */
 export const contactPolaroidImage: CareerImageEntry = {
-  src: "/career/contact-oregon.jpg",
-  alt: "Pacific Northwest forest trail in Oregon",
+  src: "/career/contact-oregon-fog-road.jpg",
+  alt: "Foggy road through snowy evergreen forest near Cottage Grove, Oregon",
   status: "confirmed",
-  objectPosition: "center 40%",
+  objectPosition: "center center",
+};
+
+/** Secondary contact polaroid — forest floor accent for desk scatter. */
+export const contactPolaroidImageSecondary: CareerImageEntry = {
+  src: "/career/contact-oregon-forest-floor.jpg",
+  alt: "Lush forest floor with ferns and moss in Oregon",
+  status: "confirmed",
+  objectPosition: "center center",
 };

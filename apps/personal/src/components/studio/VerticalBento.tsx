@@ -12,7 +12,7 @@ import { ResumeBusinessCard } from "@/components/resume/ResumeBusinessCard";
 import { StickyNote } from "@/components/physical-ui/StickyNote";
 import { Polaroid } from "@/components/physical-ui/Polaroid";
 import { Tablet } from "@/components/physical-ui/Tablet";
-import { contactPolaroidImage } from "@/data/career-images";
+import { contactPolaroidImage, contactPolaroidImageSecondary } from "@/data/career-images";
 import { ResumePreview } from "@/components/resume/ResumePreview";
 import { BentoCell } from "@/components/studio/BentoCell";
 import { StudioObject } from "@/components/studio/StudioObject";
@@ -181,16 +181,20 @@ export function VerticalBento() {
               <ContactPhoneApp className="mx-auto w-full" />
             </StudioObject>
 
-            <StudioObject rotate={0.8}>
-              <Polaroid
-                size="lg"
-                rotation={0}
-                image={contactPolaroidImage}
-                caption="Human-centered systems for consequential work."
-                subtitle="Oregon, USA · Edd Norris"
-                className="mx-auto lg:ml-auto"
-              />
-            </StudioObject>
+            <div className="relative mx-auto w-full max-w-md lg:ml-auto">
+              <StudioObject rotate={0.8} className="relative z-10">
+                <Polaroid
+                  size="lg"
+                  rotation={-1.5}
+                  image={contactPolaroidImage}
+                  caption="Human-centered systems for consequential work."
+                  subtitle="Oregon, USA · Edd Norris"
+                />
+              </StudioObject>
+              <StudioObject rotate={-2.5} className="absolute -bottom-5 -left-5 z-0 hidden sm:block">
+                <Polaroid size="sm" rotation={5} image={contactPolaroidImageSecondary} />
+              </StudioObject>
+            </div>
           </div>
 
           <footer className={cn("mt-16 border-t border-paper-cream/10 pt-8 text-center sm:mt-20", STUDIO_TYPOGRAPHY.ambientLabelMuted)}>
