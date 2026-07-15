@@ -47,7 +47,7 @@ export function ResumeScene() {
                 Résumé generator, not résumé maintenance.
               </h2>
             </Paper>
-            <Notebook title="Build your résumé" className="mt-4">
+            <Notebook title="Download My Resume" className="mt-4">
               <label className="mt-3 block text-xs text-ink-soft">
                 Preset
                 <select

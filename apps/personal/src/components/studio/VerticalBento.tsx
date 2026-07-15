@@ -134,7 +134,7 @@ export function VerticalBento() {
             </div>
 
             <div className="space-y-5">
-              <Notebook title="Build your résumé">
+              <Notebook title="Download My Resume">
                 <label className="mt-3 block text-xs text-ink-soft">
                   Preset
                   <select
