@@ -27,7 +27,7 @@ export const storyStops: StoryStop[] = [
     nodeId: "theme-games",
     headline: "Human-centered game design",
     copy:
-      "Gameplay programming at Seamless, Black Lantern, and Rocket Gaming — then founding 2bit Entertainment and shipping indie game Planet's Core (2012–2014). Re-established the studio in 2018 as a software production business with the same focus on tight feedback loops, intuitive UX, and shipping under pressure.",
+      "Gameplay programming at Seamless, Black Lantern, and Rocket Gaming — then founding 2bit Entertainment and shipping Planet's Core (2012–2014), Fish Fight, ERGnomes, and PokePocket. Re-established the studio in 2018 as a software production business with the same focus on tight feedback loops, intuitive UX, and shipping under pressure.",
   },
   {
     nodeId: "theme-software",
@@ -51,7 +51,7 @@ export const storyStops: StoryStop[] = [
     nodeId: "company-2bit",
     headline: "Two phases, one studio",
     copy:
-      "2bit Entertainment: operational indie studio building Planet's Core (2012–2014), then re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and smaller brands.",
+      "2bit Entertainment: operational indie studio shipping Planet's Core, Fish Fight, ERGnomes, and PokePocket (2012–2014 founder era and 2018–present catalog), then re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and smaller brands.",
   },
   {
     nodeId: "theme-marketing",

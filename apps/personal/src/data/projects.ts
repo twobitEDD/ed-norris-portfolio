@@ -105,11 +105,11 @@ export const projects: Project[] = [
     skills: ["game design", "creative direction"],
     technologies: ["Flash", "HTML5", "Unity"],
     summary:
-      "Indie game studio (Planet's Core, 2012–2014) and software production business (2018–present) — games, interactive experiences, and agency-backed client work.",
+      "Indie game studio (Planet's Core, Fish Fight, ERGnomes, PokePocket) and software production business (2018–present) — games, interactive experiences, and agency-backed client work.",
     challenge:
-      "Ship indie game Planet's Core as an operational studio; later re-establish the business as agency-backed software production for Google, Dell, Washington University, and other clients.",
+      "Ship indie games across founder and re-established eras; deliver agency-backed software production for Google, Dell, Washington University, and other clients.",
     approach:
-      "Founder-led game development through 2014; re-established in 2018 with contract engagements through Nice Touch, Uncorked, and other agencies, including continued work with adidas.",
+      "Founder-led game development through 2014; catalog expanded with Fish Fight, ERGnomes, and PokePocket. Re-established in 2018 with contract engagements through Nice Touch, Uncorked, and other agencies, including continued work with adidas.",
     links: [{ label: "GitHub", url: "https://github.com/twobitENT" }],
     featured: true,
     resumePriority: 4,
@@ -139,7 +139,7 @@ export const projects: Project[] = [
     id: "proj-fish-fight",
     slug: "fish-fight",
     title: "Fish Fight",
-    organization: "Fish Fight",
+    organization: "2Bit Entertainment",
     startDate: "2023",
     status: "active",
     disciplines: ["games", "environment"],
@@ -148,13 +148,56 @@ export const projects: Project[] = [
     skills: ["game design", "web games", "conservation storytelling"],
     technologies: ["TypeScript", "HTML5", "WebGL"],
     summary:
-      "An ocean conservation web game — players navigate currents, protect habitats, and rally around marine stewardship through accessible, playful mechanics.",
+      "An ocean conservation web game from 2bit — players navigate currents, protect habitats, and rally around marine stewardship through accessible, playful mechanics.",
     challenge: "Make ocean conservation feel urgent and fun without preaching.",
     approach:
       "Lightweight web-first gameplay with real-world conservation hooks and shareable moments.",
     links: [{ label: "fishFight.app", url: "https://fishfight.app" }],
     featured: false,
     resumePriority: 8,
+  },
+  {
+    id: "proj-ergnomes",
+    slug: "ergnomes",
+    title: "ERGnomes",
+    organization: "2Bit Entertainment",
+    startDate: "2021",
+    endDate: "2022",
+    status: "completed",
+    disciplines: ["games", "software"],
+    industries: ["entertainment", "technology"],
+    roles: ["Technical Designer"],
+    skills: ["blockchain", "interactive design", "NFT ecosystems"],
+    technologies: ["Ergo Platform", "TypeScript", "Smart contracts"],
+    summary:
+      "NFT ecosystem technical design for ERGnomes.io — art production, front-end, back-end, and trustworthy community interactions on the Ergo Platform, delivered via 2bit contracting.",
+    challenge:
+      "Build a decentralized entertainment experience where art, gameplay, and community trust had to ship together.",
+    approach:
+      "Technical design across the full stack — from collectible art pipelines to on-chain interactions and player-facing UX.",
+    links: [{ label: "ERGnomes.io", url: "https://ergnomes.io" }],
+    featured: false,
+    resumePriority: 9,
+  },
+  {
+    id: "proj-pokepocket",
+    slug: "pokepocket",
+    title: "PokePocket",
+    organization: "2Bit Entertainment",
+    startDate: "2022",
+    status: "active",
+    disciplines: ["games"],
+    industries: ["entertainment"],
+    roles: ["Creative Director", "Developer"],
+    skills: ["game design", "mobile games", "rapid prototyping"],
+    technologies: ["Unity", "C#", "Mobile"],
+    summary:
+      "Pocket-format casual game experiments from 2bit — accessible sessions, tight feedback loops, and playful mechanics designed for short bursts of play.",
+    challenge: "Design games that reward quick sessions without sacrificing depth or replay value.",
+    approach:
+      "Lean prototyping with human-centered UX — easy to pick up, satisfying to master, built for pocket-sized play sessions.",
+    featured: false,
+    resumePriority: 10,
   },
   {
     id: "proj-web-platforms",

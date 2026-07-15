@@ -251,7 +251,7 @@ Answer each **Answer:** in chat when ready. Updates will be applied to `experien
 | `era-2bit` | `/career/era-2bit.jpg` | placeholder (generated mood) |
 | `era-software` | `/career/era-software.jpg` | placeholder (generated mood) |
 | `era-environment` | `/brands/co2t/co2t-mascot-welcome.png` | **confirmed** (CO2T mascot) |
-| `era-ergo` | `/career/era-ergo.jpg` | placeholder (Unsplash night city) |
+| `era-advisory` | `/career/era-ergo.jpg` | placeholder (Unsplash night city) — advisory era; ERGO.games lives in projects/expertise slideshow, not timeline row |
 
 Mapping code: `career-images.ts`
 

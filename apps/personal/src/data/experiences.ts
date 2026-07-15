@@ -31,7 +31,7 @@ export const experiences: Experience[] = [
     ],
     disciplines: ["games", "software"],
     skills: ["Unity", "AR/VR", "rapid prototyping"],
-    projects: ["proj-2bit-games"],
+    projects: ["proj-2bit-games", "proj-fish-fight", "proj-pokepocket"],
     featured: true,
   },
   {
@@ -81,7 +81,7 @@ export const experiences: Experience[] = [
     details: ["Interactive experiences on the Ergo Platform with trustworthy community interactions."],
     disciplines: ["games", "software"],
     skills: ["blockchain", "interactive design"],
-    projects: [],
+    projects: ["proj-ergnomes"],
     featured: false,
   },
   {
@@ -197,7 +197,7 @@ export const experiences: Experience[] = [
     ],
     disciplines: ["games", "operations", "marketing"],
     skills: ["Unity", "game design", "business strategy"],
-    projects: ["proj-2bit-games", "proj-planets-core"],
+    projects: ["proj-2bit-games", "proj-planets-core", "proj-fish-fight", "proj-ergnomes", "proj-pokepocket"],
     featured: true,
   },
   {

@@ -302,9 +302,9 @@ export const graphNodes: GraphNode[] = [
     disciplines: ["games", "marketing"],
     period: "2012 – 2014 · 2018 – Present",
     description:
-      "Indie game studio (Planet's Core) and software production business — games, interactive experiences, and agency-backed client work.",
+      "Indie game studio (Planet's Core, Fish Fight, ERGnomes, PokePocket) and software production business — games, interactive experiences, and agency-backed client work.",
     connectionNarrative:
-      "Operational 2012–2014 on Planet's Core; re-established in 2018 with contract engagements through Nice Touch, Uncorked, and others for Google, Dell, Washington University, and additional clients.",
+      "Operational 2012–2014 on Planet's Core; catalog grew with Fish Fight, ERGnomes, and PokePocket. Re-established in 2018 with contract engagements through Nice Touch, Uncorked, and others for Google, Dell, Washington University, and additional clients.",
   },
   {
     id: "company-co2t",

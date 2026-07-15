@@ -52,9 +52,9 @@ export const eraImages: Record<string, CareerImageEntry> = {
     status: "confirmed",
     objectPosition: "center 20%",
   },
-  "era-ergo": {
+  "era-advisory": {
     src: "/career/era-ergo.jpg",
-    alt: "ERGO.games — platform and indie catalog work",
+    alt: "Technology advisory — cross-disciplinary consulting on modern and legacy systems",
     status: "placeholder",
   },
 };

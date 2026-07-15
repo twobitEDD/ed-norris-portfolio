@@ -48,8 +48,8 @@
     {
       "id": "tl-2bit",
       "era": "2bit Entertainment",
-      "title": "Planet's Core & agency production",
-      "summary": "Operational indie studio 2012–2014 building Planet's Core. Studio on hold 2014–2018 during education and public-service work. Re-established in 2018 as agency-backed software production for Google (via Uncorked), Dell, Washington University, and other clients.",
+      "title": "Planet's Core, Fish Fight, ERGnomes & PokePocket",
+      "summary": "Operational indie studio 2012–2014 shipping Planet's Core, then Fish Fight, ERGnomes, and PokePocket alongside agency contracts. Studio on hold 2014–2018 during education and public-service work. Re-established in 2018 as agency-backed software production for Google (via Uncorked), Dell, Washington University, and other clients.",
       "start": "2012",
       "tags": ["games", "creative-technology", "software"]
     },
@@ -81,11 +81,11 @@
     },
     {
       "id": "tl-current",
-      "era": "Current",
-      "title": "ERGO.games and advisory work",
-      "summary": "Browser-based indie game hub and platform — human-centered UX with cross-disciplinary consulting proof.",
+      "era": "Technology advisory",
+      "title": "Cross-disciplinary consulting",
+      "summary": "Advisory work on modern and ancient technologies — connecting environmental systems, creative software, legacy infrastructure, and human-centered product practice.",
       "start": "2024",
-      "tags": ["games", "software", "platform"]
+      "tags": ["software", "operations", "consulting"]
     }
   ],
   "entries": [
@@ -95,9 +95,10 @@
       "title": "2Bit Entertainment",
       "start": "2012",
       "end": null,
-      "summary": "Indie game studio (Planet's Core, 2012–2014) and software production business (2018–present).",
+      "summary": "Indie game studio (Planet's Core, Fish Fight, ERGnomes, PokePocket) and software production business (2018–present).",
       "actions": [
         "Founded operational indie studio and shipped Planet's Core (2012–2014).",
+        "Built Fish Fight (fishFight.app), ERGnomes.io, and PokePocket alongside agency contracts.",
         "Re-established in 2018 as agency-backed software production for Google (via Uncorked), Dell, Washington University, and other clients."
       ],
       "outcomes": [
@@ -130,6 +131,69 @@
       "visibility": "public",
       "featured": false,
       "map": { "x": 55, "y": 12, "tone": "game" }
+    },
+    {
+      "id": "proj-fish-fight",
+      "type": "project",
+      "title": "Fish Fight",
+      "start": "2023",
+      "end": null,
+      "summary": "Ocean conservation web game from 2bit at fishFight.app.",
+      "actions": [
+        "Creative direction and development for accessible ocean-conservation gameplay.",
+        "Web-first delivery with real-world marine stewardship hooks."
+      ],
+      "outcomes": [
+        "Live conservation game experience at fishFight.app."
+      ],
+      "tags": ["games", "environmental"],
+      "skills": ["game design", "web games", "conservation storytelling"],
+      "industries": ["entertainment", "climate"],
+      "visibility": "public",
+      "featured": false,
+      "map": { "x": 58, "y": 18, "tone": "game" }
+    },
+    {
+      "id": "proj-ergnomes",
+      "type": "project",
+      "title": "ERGnomes",
+      "start": "2021",
+      "end": "2022",
+      "summary": "NFT ecosystem technical design for ERGnomes.io via 2bit contracting.",
+      "actions": [
+        "Technical design across art production, front-end, back-end, and Ergo Platform interactions.",
+        "Built trustworthy community interactions for decentralized entertainment."
+      ],
+      "outcomes": [
+        "Delivered NFT ecosystem technical design on the Ergo Platform."
+      ],
+      "tags": ["games", "software"],
+      "skills": ["blockchain", "interactive design", "NFT ecosystems"],
+      "industries": ["entertainment", "technology"],
+      "visibility": "public",
+      "featured": false,
+      "map": { "x": 52, "y": 22, "tone": "game" }
+    },
+    {
+      "id": "proj-pokepocket",
+      "type": "project",
+      "title": "PokePocket",
+      "start": "2022",
+      "end": null,
+      "summary": "Pocket-format casual game experiments from 2bit Entertainment.",
+      "actions": [
+        "Creative direction and rapid prototyping for accessible pocket-sized play sessions.",
+        "Human-centered UX — easy to pick up, satisfying to master."
+      ],
+      "outcomes": [
+        "Ongoing pocket-format game experiments in the 2bit studio catalog."
+      ],
+      "tags": ["games"],
+      "skills": ["game design", "mobile games", "rapid prototyping"],
+      "industries": ["entertainment"],
+      "visibility": "public",
+      "featured": false,
+      "map": { "x": 60, "y": 16, "tone": "game" }
     },
     {
       "id": "client-google",
@@ -246,6 +310,9 @@
   ],
   "relationships": [
     { "from": "org-2bit", "to": "proj-planets-core", "kind": "produced-outcome", "weight": 0.9 },
+    { "from": "org-2bit", "to": "proj-fish-fight", "kind": "produced-outcome", "weight": 0.8 },
+    { "from": "org-2bit", "to": "proj-ergnomes", "kind": "produced-outcome", "weight": 0.7 },
+    { "from": "org-2bit", "to": "proj-pokepocket", "kind": "produced-outcome", "weight": 0.7 },
     { "from": "org-2bit", "to": "client-google", "kind": "supports", "weight": 0.7, "note": "via Uncorked" },
     { "from": "org-2bit", "to": "client-dell", "kind": "supports", "weight": 0.6, "note": "via Nice Touch" },
     { "from": "org-2bit", "to": "client-wash-u", "kind": "supports", "weight": 0.6, "note": "via Nice Touch" },
