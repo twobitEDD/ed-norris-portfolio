@@ -6,8 +6,9 @@
     "packages/*"
   ],
   "scripts": {
+    "validate": "node scripts/validate-career-data.mjs",
     "dev": "npm run dev --workspace=@ed-norris/personal",
-    "build": "npm run build --workspace=@ed-norris/personal",
+    "build": "npm run validate && npm run build --workspace=@ed-norris/personal",
     "start": "npm run start --workspace=@ed-norris/personal",
     "lint": "npm run lint --workspace=@ed-norris/personal",
     "dev:clean": "npm run dev:clean --workspace=@ed-norris/personal",
@@ -15,6 +16,7 @@
   },
   "packageManager": "npm@10.8.2",
   "devDependencies": {
-    "playwright": "^1.51.1"
+    "playwright": "^1.51.1",
+    "tsx": "^4.19.4"
   }
 }

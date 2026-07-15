@@ -1,6 +1,7 @@
 export * from "./types";
 export { profile } from "./profile";
 export { experiences } from "./experiences";
+export * from "./career";
 export { education, resumeEducationExperienceIds } from "./education";
 export { timelineEras, type TimelineEra, type EraRelatedLink } from "./timeline-eras";
 export { projects } from "./projects";

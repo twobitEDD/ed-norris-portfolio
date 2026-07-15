@@ -459,6 +459,9 @@ export const graphNodes: GraphNode[] = [
 ];
 
 export const graphEdges: GraphEdge[] = [
+  // Person → first role (overview spine anchor)
+  { id: "e-pe-ea", source: "person-ed", target: "exp-node-ea", relationship: "led-to", connectionNote: "first industry exposure" },
+
   // Person → themes
   { id: "e-pe-edu", source: "person-ed", target: "theme-education", relationship: "shaped", connectionNote: "started in classrooms" },
   { id: "e-pe-games", source: "person-ed", target: "theme-games", relationship: "created", connectionNote: "game development roots" },
@@ -497,6 +500,7 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-2bit-founder-pause", source: "exp-node-2bit-founder", target: "exp-node-2bit-pause", relationship: "led-to", connectionNote: "studio wound down" },
   { id: "e-hatalom-pause", source: "exp-node-hatalom", target: "exp-node-2bit-pause", relationship: "led-to", connectionNote: "transition period" },
   { id: "e-pause-pps", source: "exp-node-2bit-pause", target: "exp-node-pps", relationship: "led-to", connectionNote: "public education chapter" },
+  { id: "e-pps-adidas", source: "exp-node-pps", target: "exp-node-adidas", relationship: "led-to", connectionNote: "education chapter → brand innovation" },
   { id: "e-pause-innov", source: "exp-node-2bit-pause", target: "exp-node-innovation", relationship: "taught", connectionNote: "afterschool mentoring" },
   { id: "e-pause-idtech", source: "exp-node-2bit-pause", target: "exp-node-id-tech", relationship: "taught", connectionNote: "summer STEM camps" },
   { id: "e-pause-adidas", source: "exp-node-2bit-pause", target: "exp-node-adidas", relationship: "led-to", connectionNote: "brand innovation pivot" },
@@ -521,6 +525,7 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-2bit-trustless", source: "exp-node-2bit", target: "exp-node-trustless", relationship: "created", connectionNote: "co-founded" },
   { id: "e-2bit-ergnomes", source: "exp-node-2bit", target: "exp-node-ergnomes", relationship: "built-with", connectionNote: "technical design" },
   { id: "e-uncorked-google", source: "exp-node-uncorked", target: "client-google", relationship: "built-with", connectionNote: "via Uncorked" },
+  { id: "e-google-oibw", source: "client-google", target: "exp-node-oibw", relationship: "led-to", connectionNote: "environment pivot" },
   { id: "e-nice-touch-dell", source: "exp-node-nice-touch", target: "client-dell", relationship: "built-with", connectionNote: "via Nice Touch" },
   { id: "e-nice-touch-washu", source: "exp-node-nice-touch", target: "client-wash-u", relationship: "built-with", connectionNote: "via Nice Touch" },
   { id: "e-mkt-uncorked", source: "theme-marketing", target: "exp-node-uncorked", relationship: "marketed", connectionNote: "agency work" },

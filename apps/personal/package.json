@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "validate": "node scripts/run-career-validate.mjs",
+    "build": "npm run validate && next build",
     "start": "next start",
     "lint": "next lint",
     "dev:clean": "rm -rf .next && next dev",
