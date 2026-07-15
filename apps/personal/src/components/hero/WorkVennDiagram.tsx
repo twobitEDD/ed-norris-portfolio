@@ -73,16 +73,15 @@ export function WorkVennDiagram({ className }: WorkVennDiagramProps) {
         ))}
         <text
           x={INTERSECTION_CENTER_X}
-          y={58}
+          y={64}
           textAnchor="middle"
-          dominantBaseline="middle"
           className="handwritten fill-ink text-[11px] font-medium sm:text-[12px]"
         >
-          <tspan x={INTERSECTION_CENTER_X} dy="-0.55em">
-            Edd Lives Here
+          <tspan x={INTERSECTION_CENTER_X} dy="0">
+            👆
           </tspan>
           <tspan x={INTERSECTION_CENTER_X} dy="1.1em">
-            ⬇️
+            Edd Lives Here{" "}
           </tspan>
         </text>
       </svg>
