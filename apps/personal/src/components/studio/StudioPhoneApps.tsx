@@ -6,8 +6,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ExternalLink, Fish, Gamepad2, GitBranch, History, X } from "lucide-react";
 import { Phone } from "@/components/physical-ui/Phone";
-import { StickyNote } from "@/components/physical-ui/StickyNote";
 import { MicrobeSvgGlyph } from "@/components/games/microbeDraw";
+import { profile } from "@/data/profile";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
 import { cn } from "@/lib/cn";
@@ -261,21 +261,77 @@ function DeviceAppHeader({
   );
 }
 
-function PhoneHomeWidgets() {
+type HomeWidgetProps = {
+  children: React.ReactNode;
+  className?: string;
+  colSpan?: 2 | 4;
+  tint?: "cyan" | "green" | "amber" | "neutral";
+};
+
+function HomeWidget({ children, className, colSpan = 2, tint = "neutral" }: HomeWidgetProps) {
+  const tintClass =
+    tint === "cyan"
+      ? "border-[#3b9eff]/25 bg-gradient-to-br from-[#3b9eff]/18 via-[#3b9eff]/8 to-white/[0.04]"
+      : tint === "green"
+        ? "border-[#5ecf8a]/20 bg-gradient-to-br from-[#5ecf8a]/14 via-[#5ecf8a]/6 to-white/[0.04]"
+        : tint === "amber"
+          ? "border-[#f5d76e]/20 bg-gradient-to-br from-[#f5d76e]/14 via-[#f5d76e]/6 to-white/[0.04]"
+          : "border-white/10 bg-white/[0.07]";
+
   return (
-    <div className="mt-auto grid gap-3 pt-5 sm:grid-cols-2 sm:gap-4">
-      <StickyNote color="yellow" className="max-w-none scale-[0.92] origin-top-left sm:scale-100">
-        <p className="handwritten text-sm leading-snug text-ink">VP Engineering · game dev leadership</p>
-        <p className="handwritten mt-1 text-xs text-ink-soft">Build teams. Ship worlds.</p>
-      </StickyNote>
-      <StickyNote color="green" className="max-w-none scale-[0.92] origin-top-right sm:scale-100">
-        <p className="handwritten text-sm leading-snug text-ink">CO2T · ERGO · environmental work</p>
-        <p className="handwritten mt-1 text-xs text-ink-soft">Impact that outlasts the sprint.</p>
-      </StickyNote>
-      <StickyNote color="pink" className="max-w-none scale-[0.92] origin-top-left sm:col-span-2 sm:mx-auto sm:max-w-[280px] sm:scale-100">
-        <p className="handwritten text-sm leading-snug text-ink">Dad first. Then the maze.</p>
-        <p className="handwritten mt-1 text-xs text-ink-soft">— Edd Norris</p>
-      </StickyNote>
+    <div
+      className={cn(
+        "rounded-[22px] border p-3 shadow-[0_4px_20px_rgba(0,0,0,0.28)] backdrop-blur-md sm:p-3.5",
+        colSpan === 4 ? "col-span-4" : "col-span-2",
+        tintClass,
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
+function PhoneHomeWidgets({ dateStr }: { dateStr: string }) {
+  return (
+    <div className="relative grid grid-cols-4 gap-2 sm:gap-2.5">
+      <HomeWidget colSpan={4} tint="cyan">
+        <p className="font-mono text-[8px] uppercase tracking-[0.22em] text-white/45 sm:text-[9px]">Today</p>
+        <p className="mt-1 font-editorial text-base font-semibold leading-tight text-white/95 sm:text-lg">
+          {profile.name}
+        </p>
+        <p className="mt-0.5 text-[11px] font-medium text-white/70 sm:text-xs">{profile.tagline}</p>
+        <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.14em] text-white/40">{dateStr}</p>
+        <p className="mt-1 text-[10px] text-white/50 sm:text-[11px]">{profile.location}</p>
+        <p className="mt-2.5 border-t border-white/8 pt-2 font-mono text-[8px] uppercase tracking-[0.18em] text-[#7ec8ff]/80">
+          Norris Studio
+        </p>
+      </HomeWidget>
+
+      <HomeWidget tint="amber">
+        <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-white/40">Priorities</p>
+        <p className="mt-1.5 text-[11px] font-medium leading-snug text-white/90 sm:text-xs">
+          VP Engineering · game dev leadership
+        </p>
+        <p className="mt-1 text-[10px] leading-snug text-white/55">Build teams. Ship worlds.</p>
+      </HomeWidget>
+
+      <HomeWidget tint="green">
+        <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-white/40">Focus</p>
+        <p className="mt-1.5 text-[11px] font-medium leading-snug text-white/90 sm:text-xs">
+          CO2T · ERGO · environmental work
+        </p>
+        <p className="mt-1 text-[10px] leading-snug text-white/55">Impact that outlasts the sprint.</p>
+      </HomeWidget>
+
+      <HomeWidget colSpan={4} tint="neutral" className="py-2.5 sm:py-3">
+        <p className="text-center text-[11px] font-medium italic leading-snug text-white/85 sm:text-xs">
+          Dad first. Then the maze.
+        </p>
+        <p className="mt-0.5 text-center font-mono text-[8px] uppercase tracking-[0.14em] text-white/40">
+          — Edd Norris
+        </p>
+      </HomeWidget>
     </div>
   );
 }
@@ -440,14 +496,21 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
 
   const now = new Date();
   const timeStr = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  const dateStr = now.toLocaleDateString([], { weekday: "long", month: "short", day: "numeric" });
+  const dateShortStr = now.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" });
 
   return (
     <>
       <div className={cn("w-full", className)}>
         <Phone glow="cyan" mode="launcher" size="large" className="w-full">
           <div className="flex h-full min-h-0 flex-col bg-gradient-to-b from-[#0c0e14] to-[#12151c] pt-8">
-            <div className="flex shrink-0 items-center justify-between px-4 pb-2 sm:px-5">
-              <span className="font-mono text-[9px] font-medium text-white/70 sm:text-[10px]">{timeStr}</span>
+            <div className="flex shrink-0 items-center justify-between px-4 pb-1.5 sm:px-5">
+              <div className="min-w-0">
+                <span className="font-mono text-[9px] font-medium text-white/70 sm:text-[10px]">{timeStr}</span>
+                <span className="ml-2 hidden font-mono text-[8px] text-white/35 sm:inline sm:text-[9px]">
+                  {dateShortStr}
+                </span>
+              </div>
               <div className="flex items-center gap-1" aria-hidden>
                 <span className="h-1.5 w-2.5 rounded-sm bg-white/35" />
                 <span className="h-1.5 w-1.5 rounded-full bg-white/25" />
@@ -479,7 +542,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                 </div>
               </div>
             ) : (
-              <div className="relative flex flex-1 flex-col overflow-y-auto px-5 pb-8 pt-1 sm:px-8">
+              <div className="relative flex flex-1 flex-col overflow-y-auto px-4 pb-7 pt-0.5 sm:px-5">
                 <div
                   className="pointer-events-none absolute inset-0 opacity-40"
                   aria-hidden
@@ -488,34 +551,31 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                       "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59,158,255,0.12) 0%, transparent 55%), radial-gradient(circle at 20% 80%, rgba(59,158,255,0.06) 0%, transparent 40%)",
                   }}
                 />
-                <div className="relative">
-                  <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45 sm:text-[10px]">
-                    Norris Studio
-                  </p>
-                  <p className="mt-1 font-editorial text-lg font-medium text-white/90 sm:text-xl">Edd&apos;s desk</p>
-                  <p className="mt-0.5 text-[10px] text-white/45 sm:text-[11px]">
-                    Games · environment · career tools
-                  </p>
-                </div>
-                <div className="relative mt-5 grid grid-cols-3 gap-x-5 gap-y-6 content-start sm:mt-6 sm:gap-x-8 sm:gap-y-8">
-                  {tabletApps.map((app) => (
+
+                <PhoneHomeWidgets dateStr={dateStr} />
+
+                <div className="relative mt-4 grid grid-cols-4 gap-x-2 gap-y-5 sm:mt-5 sm:gap-x-3 sm:gap-y-6">
+                  {tabletApps.map((app, index) => (
                     <button
                       key={app.id}
                       type="button"
                       onClick={() => openApp(app.id)}
-                      className="group flex flex-col items-center gap-2 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9eff]/50 rounded-lg p-0.5"
+                      className={cn(
+                        "group flex flex-col items-center gap-1.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9eff]/50 rounded-xl p-0.5",
+                        index === 4 && "col-start-2",
+                        index === 5 && "col-start-3",
+                      )}
                       aria-label={`Open ${app.name}`}
                     >
-                      <div className="aspect-square w-[min(100%,72px)] transition group-hover:shadow-[0_4px_16px_rgba(59,158,255,0.22)] sm:w-[min(100%,80px)]">
+                      <div className="aspect-square w-[min(100%,60px)] transition group-hover:shadow-[0_4px_16px_rgba(59,158,255,0.22)] sm:w-[min(100%,68px)]">
                         <AppIcon app={app} large />
                       </div>
-                      <span className="max-w-[96px] truncate text-center text-[10px] font-medium leading-tight text-white/80 sm:text-[11px]">
+                      <span className="max-w-[72px] truncate text-center text-[9px] font-medium leading-tight text-white/80 sm:max-w-[80px] sm:text-[10px]">
                         {app.name}
                       </span>
                     </button>
                   ))}
                 </div>
-                <PhoneHomeWidgets />
               </div>
             )}
           </div>
