@@ -10,9 +10,8 @@ import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { Notebook } from "@/components/physical-ui/Notebook";
 import { ResumeBusinessCard } from "@/components/resume/ResumeBusinessCard";
 import { StickyNote } from "@/components/physical-ui/StickyNote";
-import { Polaroid } from "@/components/physical-ui/Polaroid";
+import { ContactPolaroidStack } from "@/components/contact/ContactPolaroidStack";
 import { Tablet } from "@/components/physical-ui/Tablet";
-import { contactPolaroidImage, contactPolaroidImageSecondary } from "@/data/career-images";
 import { ResumePreview } from "@/components/resume/ResumePreview";
 import { BentoCell } from "@/components/studio/BentoCell";
 import { StudioFooter } from "@/components/studio/StudioFooter";
@@ -182,20 +181,7 @@ export function VerticalBento() {
               <ContactPhoneApp className="mx-auto w-full" />
             </StudioObject>
 
-            <div className="relative mx-auto w-full max-w-md lg:ml-auto">
-              <StudioObject rotate={0.8} className="relative z-10">
-                <Polaroid
-                  size="lg"
-                  rotation={-1.5}
-                  image={contactPolaroidImage}
-                  caption="Human-centered systems for consequential work."
-                  subtitle="Oregon, USA · Edd Norris"
-                />
-              </StudioObject>
-              <StudioObject rotate={-2.5} className="absolute -bottom-5 -left-5 z-0 hidden sm:block">
-                <Polaroid size="sm" rotation={5} image={contactPolaroidImageSecondary} />
-              </StudioObject>
-            </div>
+            <ContactPolaroidStack />
           </div>
 
           <StudioFooter />

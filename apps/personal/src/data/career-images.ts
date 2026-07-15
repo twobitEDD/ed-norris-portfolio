@@ -171,18 +171,36 @@ export function getProjectImage(projectId: string): CareerImageEntry | undefined
   return projectImages[projectId];
 }
 
-/** Contact section polaroid — foggy road through Oregon evergreens. */
-export const contactPolaroidImage: CareerImageEntry = {
-  src: "/career/contact-oregon-fog-road.jpg",
-  alt: "Foggy road through snowy evergreen forest near Cottage Grove, Oregon",
-  status: "confirmed",
-  objectPosition: "center center",
-};
+/** Oregon photos for the contact desk polaroid stack — click to cycle. */
+export const contactPolaroidImages: CareerImageEntry[] = [
+  {
+    src: "/career/contact-oregon-fog-road.jpg",
+    alt: "Foggy road through snowy evergreen forest near Cottage Grove, Oregon",
+    status: "confirmed",
+    objectPosition: "center center",
+  },
+  {
+    src: "/career/contact-oregon-forest-floor.jpg",
+    alt: "Lush forest floor with ferns and moss in Oregon",
+    status: "confirmed",
+    objectPosition: "center center",
+  },
+  {
+    src: "/career/contact-oregon.jpg",
+    alt: "Sunlit evergreen forest in the Oregon Cascades",
+    status: "confirmed",
+    objectPosition: "center center",
+  },
+  {
+    src: "/career/contact-oregon-original.jpg",
+    alt: "Dense Oregon forest canopy with filtered light",
+    status: "confirmed",
+    objectPosition: "center center",
+  },
+];
 
-/** Secondary contact polaroid — forest floor accent for desk scatter. */
-export const contactPolaroidImageSecondary: CareerImageEntry = {
-  src: "/career/contact-oregon-forest-floor.jpg",
-  alt: "Lush forest floor with ferns and moss in Oregon",
-  status: "confirmed",
-  objectPosition: "center center",
-};
+/** Primary contact polaroid — first in the stack cycle. */
+export const contactPolaroidImage: CareerImageEntry = contactPolaroidImages[0]!;
+
+/** Secondary contact polaroid — second in the stack cycle. */
+export const contactPolaroidImageSecondary: CareerImageEntry = contactPolaroidImages[1]!;

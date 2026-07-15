@@ -658,10 +658,13 @@ body {
   width: 100%;
   overflow: hidden;
   background: #1a1814;
+  isolation: isolate;
+  backface-visibility: hidden;
 }
 
 .polaroid-photo {
   filter: sepia(0.34) contrast(1.06) saturate(0.8) brightness(0.93);
+  object-fit: cover;
 }
 
 .polaroid-placeholder {
