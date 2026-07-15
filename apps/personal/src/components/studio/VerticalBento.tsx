@@ -131,6 +131,7 @@ export function VerticalBento() {
                   preset={activePreset}
                   targetRole={resumeContent.targetRole}
                   summary={resumeContent.summary}
+                  accentColor={resumeContent.accentColor}
                   onDownload={exportPdf}
                 />
               </StudioObject>

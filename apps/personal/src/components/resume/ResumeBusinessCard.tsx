@@ -11,6 +11,7 @@ export type ResumeBusinessCardProps = {
   preset: ResumePreset;
   targetRole: string;
   summary: string;
+  accentColor?: string;
   email?: string;
   onDownload?: () => void;
   className?: string;
@@ -30,11 +31,12 @@ export function ResumeBusinessCard({
   preset,
   targetRole,
   summary,
+  accentColor,
   email = getEmailFromProfile(),
   onDownload,
   className,
 }: ResumeBusinessCardProps) {
-  const accent = getPresetAccentColor(preset);
+  const accent = accentColor ?? getPresetAccentColor(preset);
 
   return (
     <div className={cn("relative w-full max-w-[320px]", className)}>
