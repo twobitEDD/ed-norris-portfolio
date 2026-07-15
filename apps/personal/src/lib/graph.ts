@@ -3,7 +3,14 @@ import { graphEdges, graphNodes } from "@/data";
 import { storyStops } from "@/data/through-line";
 import type { Discipline, GraphNode } from "@/data/types";
 import { disciplineColors } from "@/data/types";
-import { getNodePosition } from "@/components/work-map/map-layout";
+import { getNodePosition, type MapLayoutOptions } from "@/components/work-map/map-layout";
+
+/** Story stops + through-line practice node — homepage preview subset. */
+export const previewNodeIds = new Set([
+  "person-ed",
+  "practice-environment",
+  ...storyStops.map((s) => s.nodeId),
+]);
 
 export type MapNodeData = {
   label: string;
@@ -35,15 +42,21 @@ export function buildFlowGraph(
   activeFilters: Discipline[] = [],
   selectedId?: string,
   activeThemeId?: string | null,
+  layoutOptions?: MapLayoutOptions,
 ) {
-  const themeVisible = activeThemeId ? getConnectedNodes(activeThemeId, 2) : null;
+  const preview = layoutOptions?.preview ?? false;
+  const visibleNodes = preview
+    ? graphNodes.filter((n) => previewNodeIds.has(n.id))
+    : graphNodes;
+  const visibleIds = new Set(visibleNodes.map((n) => n.id));
+  const themeVisible = !preview && activeThemeId ? getConnectedNodes(activeThemeId, 2) : null;
 
-  const nodes: Node<MapNodeData>[] = graphNodes.map((node, index) => {
+  const nodes: Node<MapNodeData>[] = visibleNodes.map((node, index) => {
     const disciplineDimmed =
       activeFilters.length > 0 &&
       !node.disciplines.some((d) => activeFilters.includes(d));
     const themeDimmed = themeVisible ? !themeVisible.has(node.id) : false;
-    const highlighted = selectedId ? isConnected(selectedId, node.id) : false;
+    const highlighted = selectedId ? isConnected(selectedId, node.id, visibleIds) : false;
     const dimmed =
       selectedId
         ? !highlighted && selectedId !== node.id
@@ -52,7 +65,7 @@ export function buildFlowGraph(
     return {
       id: node.id,
       type: "mapNode",
-      position: getNodePosition(node.id, index),
+      position: getNodePosition(node.id, index, layoutOptions),
       data: {
         label: node.label,
         subtitle: node.subtitle,
@@ -68,7 +81,15 @@ export function buildFlowGraph(
     };
   });
 
-  const edges: Edge[] = graphEdges.map((edge) => {
+  const edges: Edge[] = graphEdges
+    .filter((edge) => {
+      if (!visibleIds.has(edge.source) || !visibleIds.has(edge.target)) return false;
+      if (preview) {
+        return edge.throughLine === true;
+      }
+      return true;
+    })
+    .map((edge) => {
     const sourceNode = graphNodes.find((n) => n.id === edge.source);
     const edgeDimmed =
       activeFilters.length > 0 &&
@@ -84,7 +105,7 @@ export function buildFlowGraph(
       ? disciplineColors[sourceNode.disciplines[0]]
       : "#46c7d7";
 
-    const showLabel = edge.throughLine || highlighted;
+    const showLabel = edge.throughLine || highlighted || preview;
 
     return {
       id: edge.id,
@@ -115,12 +136,16 @@ export function buildFlowGraph(
   return { nodes, edges };
 }
 
-function isConnected(selectedId: string, nodeId: string): boolean {
+function isConnected(selectedId: string, nodeId: string, visibleIds?: Set<string>): boolean {
   if (selectedId === nodeId) return true;
   return graphEdges.some(
-    (e) =>
-      (e.source === selectedId && e.target === nodeId) ||
-      (e.target === selectedId && e.source === nodeId),
+    (e) => {
+      if (visibleIds && (!visibleIds.has(e.source) || !visibleIds.has(e.target))) return false;
+      return (
+        (e.source === selectedId && e.target === nodeId) ||
+        (e.target === selectedId && e.source === nodeId)
+      );
+    },
   );
 }
 

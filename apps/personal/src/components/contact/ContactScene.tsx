@@ -46,7 +46,7 @@ export function ContactScene() {
               rotation={0}
               image={contactPolaroidImage}
               caption="Human-centered systems for consequential work."
-              subtitle={`${profile.location} · ${profile.name}`}
+              subtitle="Oregon, USA · Edd Norris"
               className="mx-auto lg:ml-auto"
             />
             <StickyNote color="yellow" className="mt-6 max-w-[220px] lg:ml-8">

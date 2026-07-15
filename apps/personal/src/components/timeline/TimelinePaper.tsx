@@ -79,7 +79,7 @@ export function TimelinePaper({ compact, onEraSelect }: TimelinePaperProps) {
                     <p className="font-mono text-[9px] uppercase tracking-wider text-ink-soft">{era.period}</p>
                     <h3 className="font-editorial text-base font-semibold text-ink">{era.title}</h3>
                     <p className="text-xs font-medium text-ink-soft">{era.organization}</p>
-                    <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ink-soft">{era.summary}</p>
+                    <p className="mt-1 line-clamp-3 text-xs leading-relaxed text-ink-soft">{era.summary}</p>
                   </div>
                 </div>
               </button>

@@ -119,7 +119,7 @@ function PartnerStrip({ slide }: { slide: ExpertiseSlide }) {
 
   return (
     <div className="mt-4 border-t border-screen-border/60 pt-3">
-      <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-screen-muted">Partners</p>
+      <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-screen-muted">Partners</p>
       <div className="mt-2 flex flex-wrap items-center gap-3">
         {logos.map((logo) => (
           <span key={logo.id} className="relative inline-flex h-4 w-12 opacity-60 sm:h-5 sm:w-14">
@@ -129,7 +129,7 @@ function PartnerStrip({ slide }: { slide: ExpertiseSlide }) {
         {slide.partnerNotes?.map((note) => (
           <span
             key={note}
-            className="rounded-full border border-screen-border/80 px-2 py-0.5 font-mono text-[8px] uppercase tracking-wider text-screen-muted"
+            className="rounded-full border border-screen-border/80 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-screen-muted"
           >
             {note}
           </span>
@@ -145,7 +145,7 @@ function TechTags({ technologies }: { technologies: string[] }) {
       {technologies.map((tech) => (
         <span
           key={tech}
-          className="rounded border border-screen-border/70 bg-screen-panel/50 px-2 py-0.5 font-mono text-[8px] uppercase tracking-wider text-screen-muted"
+          className="rounded border border-screen-border/70 bg-screen-panel/50 px-2 py-0.5 font-mono text-[9px] uppercase tracking-wider text-screen-muted"
         >
           {tech}
         </span>

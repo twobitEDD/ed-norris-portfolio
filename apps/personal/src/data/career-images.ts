@@ -171,10 +171,10 @@ export function getProjectImage(projectId: string): CareerImageEntry | undefined
   return projectImages[projectId];
 }
 
-/** Contact section polaroid — Oregon mountain sunset. */
+/** Contact section polaroid — Oregon Willamette Valley landscape. */
 export const contactPolaroidImage: CareerImageEntry = {
-  src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80",
-  alt: "Mountain sunset over Oregon foothills",
+  src: "/career/contact-oregon.jpg",
+  alt: "Pacific Northwest forest trail in Oregon",
   status: "confirmed",
-  objectPosition: "center",
+  objectPosition: "center 40%",
 };

@@ -109,9 +109,17 @@ export function VerticalBento() {
               <StickyNote color="pink" className="pointer-events-none absolute -right-2 -top-3 z-10 hidden max-w-[160px] sm:block">
                 <p className="handwritten text-sm leading-snug text-ink">One arc, not six careers.</p>
               </StickyNote>
-              <LazyMount minHeight="380px">
-                <MapTablet className="w-full" />
+              <LazyMount minHeight="500px">
+                <MapTablet className="w-full" preview />
               </LazyMount>
+              <p className="mt-4 text-center">
+                <Link
+                  href="/map"
+                  className="font-mono text-[10px] uppercase tracking-[0.18em] text-paper-cream/60 transition hover:text-paper-cream"
+                >
+                  Open full work map →
+                </Link>
+              </p>
             </div>
           </StudioObject>
         </BentoCell>
@@ -155,12 +163,12 @@ export function VerticalBento() {
             <div className="flex flex-col items-center gap-4 lg:items-start">
               <StudioObject rotate={-2.5} className="flex justify-center lg:justify-start">
                 <Phone>
-                <p className="font-mono text-[8px] uppercase tracking-wider text-screen-muted">
+                <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted">
                   Résumé generator
                 </p>
                 <h3 className="mt-2 font-display text-sm font-bold text-screen-text">{resumeSnippet.name}</h3>
                 <p className="text-[10px] text-screen-muted">{resumeSnippet.targetRole}</p>
-                <p className="mt-2 line-clamp-4 text-[9px] leading-relaxed text-screen-muted">
+                <p className="mt-2 line-clamp-4 text-[10px] leading-relaxed text-screen-muted">
                   {resumeSnippet.summary}
                 </p>
                 <button
@@ -276,7 +284,7 @@ export function VerticalBento() {
                 rotation={0}
                 image={contactPolaroidImage}
                 caption="Human-centered systems for consequential work."
-                subtitle={`${profile.location} · ${profile.name}`}
+                subtitle="Oregon, USA · Edd Norris"
                 className="mx-auto lg:ml-auto"
               />
             </StudioObject>

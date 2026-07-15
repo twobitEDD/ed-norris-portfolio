@@ -66,7 +66,7 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
         {data.label}
       </p>
       {data.subtitle && (
-        <p className="mt-0.5 font-mono text-[8px] uppercase tracking-wider text-text-muted sm:mt-1 sm:text-[10px]">
+        <p className="mt-0.5 font-mono text-[9px] uppercase tracking-wider text-text-muted sm:mt-1 sm:text-[10px]">
           {data.subtitle}
         </p>
       )}

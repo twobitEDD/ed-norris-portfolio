@@ -13,10 +13,13 @@ export function MapDetailPanel({
   node,
   storyStop,
   onClose,
+  compact = false,
 }: {
   node: GraphNode | null;
   storyStop?: StoryStop | null;
   onClose: () => void;
+  /** Bottom docked panel for homepage map preview */
+  compact?: boolean;
 }) {
   if (!node) return null;
   const color = disciplineColors[node.disciplines[0]];
@@ -34,7 +37,11 @@ export function MapDetailPanel({
   return (
     <GlassPanel
       strong
-      className="absolute bottom-2 left-2 right-2 z-10 max-h-[45%] overflow-y-auto p-4 sm:bottom-4 sm:left-auto sm:right-4 sm:max-h-none sm:w-80 sm:p-5"
+      className={
+        compact
+          ? "absolute bottom-2 left-2 right-2 z-10 max-h-[38%] overflow-y-auto p-3 sm:bottom-3 sm:left-3 sm:right-3 sm:max-h-[42%] sm:p-4"
+          : "absolute bottom-2 left-2 right-2 z-10 max-h-[45%] overflow-y-auto p-4 sm:bottom-4 sm:left-auto sm:right-4 sm:max-h-none sm:w-80 sm:p-5"
+      }
     >
       <div className="flex items-start justify-between gap-3">
         <div>
@@ -91,7 +98,7 @@ export function MapDetailPanel({
         {node.disciplines.map((d) => (
           <span
             key={d}
-            className="rounded-full px-2 py-0.5 font-mono text-[8px] uppercase sm:text-[9px]"
+            className="rounded-full px-2 py-0.5 font-mono text-[9px] uppercase sm:text-[10px]"
             style={{ color: disciplineColors[d], background: `${disciplineColors[d]}18` }}
           >
             {disciplineLabels[d]}

@@ -27,24 +27,39 @@ type StudioWorkMapProps = {
   eagerLoad?: boolean;
   /** Taller map canvas for full-page layout */
   fullPage?: boolean;
+  /** Story-path subset for homepage bento — fewer nodes, through-line edges only */
+  preview?: boolean;
 };
 
-export function StudioWorkMap({ eagerLoad = false, fullPage = false }: StudioWorkMapProps) {
+export function StudioWorkMap({
+  eagerLoad = false,
+  fullPage = false,
+  preview = false,
+}: StudioWorkMapProps) {
   const mapAreaRef = useRef<HTMLDivElement>(null);
   const inViewport = useInViewport(mapAreaRef, { threshold: 0.1, rootMargin: "120px 0px" });
   const mapVisible = eagerLoad || inViewport;
   const [activeFilter, setActiveFilter] = useState("all");
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
-  const [storyIndex, setStoryIndex] = useState(-1);
+  const [storyIndex, setStoryIndex] = useState(preview ? 0 : -1);
 
   const activeThemeId = useMemo(() => {
+    if (preview) return null;
     const f = themeFilterOptions.find((o) => o.id === activeFilter);
     return f?.themeId ?? null;
-  }, [activeFilter]);
+  }, [activeFilter, preview]);
+
+  const layoutOptions = useMemo(
+    () => ({
+      preview,
+      scale: fullPage && !preview ? 1.28 : 1,
+    }),
+    [preview, fullPage],
+  );
 
   const graph = useMemo(
-    () => buildFlowGraph([], selectedNode?.id, activeThemeId),
-    [activeThemeId, selectedNode?.id],
+    () => buildFlowGraph([], selectedNode?.id, activeThemeId, layoutOptions),
+    [activeThemeId, selectedNode?.id, layoutOptions],
   );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(graph.nodes);
@@ -54,6 +69,12 @@ export function StudioWorkMap({ eagerLoad = false, fullPage = false }: StudioWor
     setNodes(graph.nodes);
     setEdges(graph.edges);
   }, [graph, setNodes, setEdges]);
+
+  useEffect(() => {
+    if (!preview || storyIndex < 0) return;
+    const path = getStoryPath();
+    setSelectedNode(graphNodes.find((n) => n.id === path[storyIndex]) ?? null);
+  }, [preview, storyIndex]);
 
   const onNodeClick: NodeMouseHandler<Node<MapNodeData>> = useCallback((_, node) => {
     setStoryIndex(-1);
@@ -69,22 +90,39 @@ export function StudioWorkMap({ eagerLoad = false, fullPage = false }: StudioWor
 
   const storyStop = storyIndex >= 0 ? getStoryStop(storyIndex) : null;
 
-  const rootMinH = fullPage ? "min-h-[min(80vh,720px)]" : "min-h-[300px] sm:min-h-[320px]";
-  const canvasMinH = fullPage ? "min-h-[min(60vh,560px)]" : "min-h-[220px] sm:min-h-[260px]";
+  const rootMinH = fullPage
+    ? "min-h-[min(80vh,720px)]"
+    : preview
+      ? "min-h-[420px] sm:min-h-[460px]"
+      : "min-h-[300px] sm:min-h-[320px]";
+  const canvasMinH = fullPage
+    ? "min-h-[min(60vh,560px)]"
+    : preview
+      ? "min-h-[320px] sm:min-h-[360px]"
+      : "min-h-[220px] sm:min-h-[260px]";
+
+  const filterOptions = preview
+    ? themeFilterOptions.filter((f) => f.id === "all")
+    : themeFilterOptions;
 
   return (
     <div className={cn("relative flex h-full flex-col", rootMinH)}>
-      <div className="flex flex-wrap gap-1 p-2 sm:gap-1.5 sm:p-3">
-        {themeFilterOptions.map((f) => (
+      <div className="flex flex-wrap items-center gap-1 p-2 sm:gap-1.5 sm:p-3">
+        {filterOptions.map((f) => (
           <FilterPill
             key={f.id}
             active={activeFilter === f.id}
-            onClick={() => setActiveFilter(f.id)}
-            className="!min-h-[28px] !px-1.5 !py-0.5 !text-[9px] sm:!min-h-[32px] sm:!px-2 sm:!py-1 sm:!text-[10px]"
+            onClick={() => !preview && setActiveFilter(f.id)}
+            className="!min-h-[28px] !px-1.5 !py-0.5 !text-[10px] sm:!min-h-[32px] sm:!px-2 sm:!py-1 sm:!text-[11px]"
           >
-            {f.label}
+            {preview ? "Story path" : f.label}
           </FilterPill>
         ))}
+        {preview && (
+          <span className="ml-auto font-mono text-[10px] uppercase tracking-wider text-screen-muted">
+            Key stops · open /map for full graph
+          </span>
+        )}
       </div>
       <div ref={mapAreaRef} className={cn("relative flex-1", canvasMinH)}>
         {mapVisible ? (
@@ -97,9 +135,9 @@ export function StudioWorkMap({ eagerLoad = false, fullPage = false }: StudioWor
             nodeTypes={nodeTypes}
             onlyRenderVisibleElements
             fitView
-            fitViewOptions={{ padding: 0.2 }}
-            minZoom={0.25}
-            maxZoom={1.2}
+            fitViewOptions={{ padding: preview ? 0.28 : fullPage ? 0.22 : 0.2 }}
+            minZoom={preview ? 0.35 : 0.25}
+            maxZoom={preview ? 1 : 1.2}
             proOptions={{ hideAttribution: true }}
             className="bg-transparent"
           >
@@ -108,15 +146,18 @@ export function StudioWorkMap({ eagerLoad = false, fullPage = false }: StudioWor
           </ReactFlow>
         ) : (
           <div className={cn("flex h-full items-center justify-center", canvasMinH)}>
-            <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted">Map loads on scroll</p>
+            <p className="font-mono text-[10px] uppercase tracking-wider text-screen-muted">
+              Map loads on scroll
+            </p>
           </div>
         )}
         <MapDetailPanel
           node={selectedNode}
           storyStop={storyStop}
+          compact={preview}
           onClose={() => {
             setSelectedNode(null);
-            setStoryIndex(-1);
+            setStoryIndex(preview ? 0 : -1);
           }}
         />
       </div>
@@ -125,17 +166,17 @@ export function StudioWorkMap({ eagerLoad = false, fullPage = false }: StudioWor
           type="button"
           onClick={() => {
             setSelectedNode(null);
-            setStoryIndex(-1);
+            setStoryIndex(preview ? 0 : -1);
             setActiveFilter("all");
           }}
-          className="rounded px-2 py-1 font-mono text-[9px] uppercase text-screen-muted hover:text-screen-text"
+          className="rounded px-2 py-1 font-mono text-[10px] uppercase text-screen-muted hover:text-screen-text"
         >
           Reset
         </button>
         <button
           type="button"
           onClick={tellStory}
-          className="rounded px-2 py-1 font-mono text-[9px] uppercase text-technology hover:text-screen-text"
+          className="rounded px-2 py-1 font-mono text-[10px] uppercase text-technology hover:text-screen-text"
         >
           {storyIndex < 0 ? "Tell me a story" : `Story ${storyIndex + 1}/${getStoryPath().length} →`}
         </button>
