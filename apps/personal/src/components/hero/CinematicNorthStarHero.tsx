@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ContactCTAs } from "@/components/contact/ContactCTAs";
 import { IntroPaper } from "@/components/hero/IntroPaper";
+import { IntroPaperOverlay } from "@/components/hero/IntroPaperOverlay";
+import { StudioObject } from "@/components/studio/StudioObject";
 import { useStudioTheme } from "@/components/studio/StudioThemeProvider";
 
 export function CinematicNorthStarHero() {
@@ -44,19 +44,20 @@ export function CinematicNorthStarHero() {
 
       <div className="relative mx-auto flex min-h-[78svh] max-w-[920px] flex-col px-4 pb-8 pt-[4.75rem] sm:min-h-[84svh] sm:px-8 sm:pb-10 sm:pt-28">
         <div className="flex flex-1 items-start justify-center">
-          <div id="intro" className="w-full max-w-[620px] min-w-0" style={{ transform: "rotate(-1.2deg)" }}>
-            <IntroPaper />
+          <div id="intro" className="relative w-full max-w-[620px] min-w-0">
+            <StudioObject rotate={-1.2} className="relative z-10">
+              <IntroPaper />
+            </StudioObject>
+            <StudioObject
+              rotate={2.4}
+              className="relative z-20 mx-auto mt-5 w-full max-w-[260px] sm:absolute sm:right-[-1.25rem] sm:top-[44%] sm:mt-0 sm:w-[min(44%,250px)] sm:-translate-y-1/2 md:right-[-1.75rem] md:w-[min(42%,270px)]"
+            >
+              <IntroPaperOverlay />
+            </StudioObject>
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center gap-5 sm:mt-10">
-          <ContactCTAs variant="hero" />
-          <Link
-            href="/#game"
-            className="rounded-full border border-paper-cream/35 bg-wood-dark/70 px-5 py-2.5 font-mono text-[10px] uppercase tracking-[0.22em] text-paper-cream transition hover:border-games/60 hover:bg-games/20 sm:text-[11px]"
-          >
-            Open studio apps ↓
-          </Link>
+        <div className="mt-8 flex flex-col items-center sm:mt-10">
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-paper-cream/70 motion-safe:animate-pulse sm:text-[11px]">
             Scroll the studio
           </p>

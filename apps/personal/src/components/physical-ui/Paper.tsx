@@ -10,6 +10,8 @@ type PaperProps = {
   elevated?: boolean;
   torn?: boolean;
   pinned?: boolean;
+  /** Tighter padding for small overlay sheets. */
+  compact?: boolean;
   /** `desk` — lifted sheet with dog-ear fold and subtle edge imperfection. */
   variant?: PaperVariant;
 };
@@ -20,6 +22,7 @@ export function Paper({
   elevated = true,
   torn = false,
   pinned = false,
+  compact = false,
   variant = "default",
 }: PaperProps) {
   const isDesk = variant === "desk";
@@ -42,7 +45,7 @@ export function Paper({
       <div
         className={cn(
           STUDIO_SURFACES.paper,
-          "relative px-7 py-8 sm:px-9 sm:py-10",
+          compact ? "relative px-5 py-5 sm:px-6 sm:py-6" : "relative px-7 py-8 sm:px-9 sm:py-10",
           isDesk && "paper-surface--desk",
           torn ? "paper-torn" : !isDesk && "rounded-[2px]",
         )}

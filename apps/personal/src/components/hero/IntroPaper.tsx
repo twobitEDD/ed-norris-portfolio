@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { profile, practices } from "@/data";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
-import { WorkVennDiagram } from "@/components/hero/WorkVennDiagram";
 import { Paper } from "@/components/physical-ui/Paper";
 
 const roles = [
@@ -34,8 +33,6 @@ export function IntroPaper() {
         <div className="mt-3 max-w-md">
           <ClientLogoStrip size="sm" ids={["adidas", "google", "co2t"]} />
         </div>
-
-        <WorkVennDiagram />
 
         <p className="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">{profile.summary}</p>
 
