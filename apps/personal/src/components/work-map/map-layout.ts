@@ -7,8 +7,11 @@
 const employmentOverviewPositions: Record<string, { x: number; y: number }> = {
   "person-ed": { x: 0, y: 150 },
 
-  "exp-node-ea": { x: -520, y: -20 },
-  "exp-node-2bit": { x: -300, y: -70 },
+  "exp-node-ea": { x: -640, y: -10 },
+  "exp-node-black-lantern": { x: -540, y: -25 },
+  "exp-node-seamless": { x: -450, y: -40 },
+  "exp-node-rocket": { x: -370, y: -55 },
+  "exp-node-2bit": { x: -290, y: -70 },
   "exp-node-pps": { x: -80, y: -50 },
   "exp-node-adidas": { x: 120, y: -90 },
   "client-google": { x: 320, y: -50 },
@@ -39,12 +42,18 @@ const positions: Record<string, { x: number; y: number }> = {
   "exp-node-id-tech": { x: -900, y: 200 },
 
   // Games chronology (northeast) — vertical spine with breathing room
-  "exp-node-ea": { x: 780, y: -480 },
-  "exp-node-seamless": { x: 860, y: -320 },
-  "exp-node-rocket": { x: 860, y: -140 },
+  "exp-node-ea": { x: 780, y: -560 },
+  "exp-node-bridge-2007": { x: 820, y: -500 },
+  "exp-node-black-lantern": { x: 860, y: -440 },
+  "exp-node-seamless": { x: 860, y: -360 },
+  "exp-node-bridge-2009": { x: 820, y: -300 },
+  "exp-node-rocket": { x: 860, y: -220 },
+  "exp-node-2bit-founder": { x: 780, y: -140 },
+  "exp-node-hatalom": { x: 980, y: -80 },
+  "exp-node-2bit-pause": { x: 780, y: -60 },
   "exp-node-2bit": { x: 780, y: 40 },
   "company-2bit": { x: 640, y: 200 },
-  "project-planets-core": { x: 920, y: 80 },
+  "project-planets-core": { x: 920, y: -100 },
 
   // Software / marketing crossover (east) — fan out from 2bit hub
   "exp-node-adidas": { x: 340, y: -360 },

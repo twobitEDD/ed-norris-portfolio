@@ -140,6 +140,32 @@ export const graphNodes: GraphNode[] = [
     description: "First exposure to professional game development during college.",
   },
   {
+    id: "exp-node-bridge-2007",
+    type: "experience",
+    label: "Freelance / Career Transition",
+    subtitle: "Independent game developer",
+    disciplines: ["games"],
+    period: "2006 – 2007",
+    experienceId: "exp-bridge-2007",
+    description:
+      "Independent projects and job search while completing Full Sail coursework — bridge between EA volunteer QA and Black Lantern Studios.",
+    connectionNarrative:
+      "Portfolio building and industry pursuit between EA Tiburon and the first credited Wii ship at Black Lantern — overlapping final Full Sail software degree work.",
+  },
+  {
+    id: "exp-node-black-lantern",
+    type: "experience",
+    label: "Black Lantern Studios",
+    subtitle: "Gameplay lead programmer",
+    disciplines: ["games"],
+    period: "2007 – 2008",
+    experienceId: "exp-black-lantern",
+    description:
+      "Iron Chef America: Supreme Cuisine (Nintendo Wii) — gameplay lead on licensed titles with strict publisher deadlines.",
+    connectionNarrative:
+      "First credited Wii release — led gameplay programming, team delivery, and art integration under tight publisher constraints.",
+  },
+  {
     id: "exp-node-seamless",
     type: "experience",
     label: "Seamless Entertainment",
@@ -148,6 +174,19 @@ export const graphNodes: GraphNode[] = [
     period: "2008 – 2009",
     experienceId: "exp-seamless",
     description: "Family Fun Football (Wii) — gameplay, art integration, and design.",
+  },
+  {
+    id: "exp-node-bridge-2009",
+    type: "experience",
+    label: "Freelance Contract Work",
+    subtitle: "Independent contracts",
+    disciplines: ["games", "software"],
+    period: "2009",
+    experienceId: "exp-bridge-2009",
+    description:
+      "Brief independent contract period between Seamless Entertainment and Rocket Gaming Systems.",
+    connectionNarrative:
+      "Short transition window after Family Fun Football shipped — before joining Rocket Gaming Systems in January 2010.",
   },
   {
     id: "exp-node-rocket",
@@ -160,17 +199,56 @@ export const graphNodes: GraphNode[] = [
     description: "Slot titles — gameplay, SCRUM product management, math database engineering.",
   },
   {
+    id: "exp-node-2bit-founder",
+    type: "experience",
+    label: "2bit Entertainment",
+    subtitle: "Founder · indie studio",
+    disciplines: ["games", "operations", "marketing"],
+    period: "2012 – 2014",
+    experienceId: "exp-2bit-founder",
+    description:
+      "Founded and operated an indie studio — shipping Planet's Core with technical design, art integration, team leadership, and business strategy.",
+    connectionNarrative:
+      "Founder-era indie game development after Rocket Gaming — established the studio in July 2012 and shipped Planet's Core before winding down operations.",
+  },
+  {
+    id: "exp-node-hatalom",
+    type: "experience",
+    label: "Hatalom Systems",
+    subtitle: "Software engineer",
+    disciplines: ["games", "software"],
+    period: "2014",
+    experienceId: "exp-hatalom",
+    description:
+      "Proprietary military simulation software — game-based training systems and defense simulation courseware for classified training environments.",
+    connectionNarrative:
+      "Applied game-industry UX discipline to serious-game and simulation deliverables — parallel to the final months of 2bit founder-era studio work.",
+  },
+  {
+    id: "exp-node-2bit-pause",
+    type: "experience",
+    label: "2bit Entertainment",
+    subtitle: "Studio on hold",
+    disciplines: ["games", "operations"],
+    period: "2014 – 2018",
+    experienceId: "exp-2bit-pause",
+    description:
+      "After Planet's Core studio operations wound down, 2bit remained on hold while focusing on public education, community mentoring, and independent practice.",
+    connectionNarrative:
+      "Honest studio pause between the 2012–2014 founder era and the 2018 agency-backed re-launch — parallel community work at PPS, Innovation Academy, and iD Tech.",
+  },
+  {
     id: "exp-node-2bit",
     type: "experience",
     label: "2bit Entertainment",
-    subtitle: "Founder · software production",
+    subtitle: "Senior interactive developer",
     disciplines: ["games", "marketing", "operations"],
-    period: "2012 – 2014 · 2018 – Present",
+    period: "2018 – Present",
     experienceId: "exp-2bit-senior",
     description:
-      "Indie studio building Planet's Core (2012–2014). Re-established in 2018 as a software production business — agency contracting for Google, Dell, Washington University, and more.",
+      "Re-established 2bit in 2018 as a software production studio — agency contracting for Google, Dell, Washington University, and more.",
     connectionNarrative:
-      "Two chapters, one studio: Planet's Core as operational indie game work (2012–2014), studio on hold during education and public-service work (2014–2018), then a 2018 re-establishment as agency-backed software production — including a continued contract engagement with adidas.",
+      "Agency-backed software production re-launch — contract engagements through Nice Touch, Uncorked, and others, including continued adidas support at leadership's request.",
   },
   {
     id: "exp-node-adidas",
@@ -384,17 +462,32 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-edu-pps", source: "theme-education", target: "exp-node-pps", relationship: "taught", connectionNote: "inclusive design roots" },
   { id: "e-edu-innov", source: "theme-education", target: "exp-node-innovation", relationship: "taught", connectionNote: "afterschool mentoring" },
   { id: "e-edu-full-sail", source: "theme-education", target: "edu-node-full-sail", relationship: "shaped", connectionNote: "software degree" },
+  { id: "e-edu-full-sail-bridge", source: "edu-node-full-sail", target: "exp-node-bridge-2007", relationship: "shaped", connectionNote: "degree coursework overlap" },
   { id: "e-edu-id-tech", source: "theme-education", target: "exp-node-id-tech", relationship: "taught", connectionNote: "summer STEM camps" },
   { id: "e-pps-innov", source: "exp-node-pps", target: "exp-node-innovation", relationship: "led-to", connectionNote: "same years, same mission" },
 
-  // Games theme → experiences
+  // Games theme → experiences (chronological spine)
   { id: "e-games-ea", source: "theme-games", target: "exp-node-ea", relationship: "led-to", connectionNote: "first industry exposure" },
-  { id: "e-ea-seamless", source: "exp-node-ea", target: "exp-node-seamless", relationship: "evolved-into", connectionNote: "college → first ship" },
-  { id: "e-seamless-rocket", source: "exp-node-seamless", target: "exp-node-rocket", relationship: "led-to", connectionNote: "licensed → casino" },
+  { id: "e-ea-bridge2007", source: "exp-node-ea", target: "exp-node-bridge-2007", relationship: "led-to", connectionNote: "college → portfolio" },
+  { id: "e-bridge2007-blacklantern", source: "exp-node-bridge-2007", target: "exp-node-black-lantern", relationship: "led-to", connectionNote: "first credited ship" },
+  { id: "e-blacklantern-seamless", source: "exp-node-black-lantern", target: "exp-node-seamless", relationship: "led-to", connectionNote: "Wii studio transfer" },
+  { id: "e-seamless-bridge2009", source: "exp-node-seamless", target: "exp-node-bridge-2009", relationship: "led-to", connectionNote: "between studios" },
+  { id: "e-bridge2009-rocket", source: "exp-node-bridge-2009", target: "exp-node-rocket", relationship: "led-to", connectionNote: "casino games era" },
   { id: "e-games-rocket", source: "theme-games", target: "exp-node-rocket", relationship: "built-with", connectionNote: "game math & SCRUM" },
-  { id: "e-rocket-2bit", source: "exp-node-rocket", target: "exp-node-2bit", relationship: "led-to", connectionNote: "founded studio" },
-  { id: "e-games-2bit", source: "theme-games", target: "exp-node-2bit", relationship: "created", connectionNote: "studio founder" },
-  { id: "e-2bit-company", source: "exp-node-2bit", target: "company-2bit", relationship: "created", connectionNote: "the studio" },
+  { id: "e-rocket-2bit-founder", source: "exp-node-rocket", target: "exp-node-2bit-founder", relationship: "led-to", connectionNote: "founded studio" },
+  { id: "e-2bit-founder-hatalom", source: "exp-node-2bit-founder", target: "exp-node-hatalom", relationship: "built-with", connectionNote: "parallel simulation work" },
+  { id: "e-2bit-founder-pause", source: "exp-node-2bit-founder", target: "exp-node-2bit-pause", relationship: "led-to", connectionNote: "studio wound down" },
+  { id: "e-hatalom-pause", source: "exp-node-hatalom", target: "exp-node-2bit-pause", relationship: "led-to", connectionNote: "transition period" },
+  { id: "e-pause-pps", source: "exp-node-2bit-pause", target: "exp-node-pps", relationship: "led-to", connectionNote: "public education chapter" },
+  { id: "e-pause-innov", source: "exp-node-2bit-pause", target: "exp-node-innovation", relationship: "taught", connectionNote: "afterschool mentoring" },
+  { id: "e-pause-idtech", source: "exp-node-2bit-pause", target: "exp-node-id-tech", relationship: "taught", connectionNote: "summer STEM camps" },
+  { id: "e-pause-adidas", source: "exp-node-2bit-pause", target: "exp-node-adidas", relationship: "led-to", connectionNote: "brand innovation pivot" },
+  { id: "e-pause-2bit-senior", source: "exp-node-2bit-pause", target: "exp-node-2bit", relationship: "led-to", connectionNote: "2018 re-launch" },
+  { id: "e-games-2bit-founder", source: "theme-games", target: "exp-node-2bit-founder", relationship: "created", connectionNote: "studio founder" },
+  { id: "e-games-2bit", source: "theme-games", target: "exp-node-2bit", relationship: "created", connectionNote: "software production" },
+  { id: "e-games-hatalom", source: "theme-games", target: "exp-node-hatalom", relationship: "built-with", connectionNote: "serious games & sim" },
+  { id: "e-2bit-founder-company", source: "exp-node-2bit-founder", target: "company-2bit", relationship: "created", connectionNote: "founded studio" },
+  { id: "e-2bit-company", source: "exp-node-2bit", target: "company-2bit", relationship: "created", connectionNote: "re-established studio" },
 
   // Software theme → experiences & projects
   { id: "e-sw-rocket", source: "theme-software", target: "exp-node-rocket", relationship: "built-with", connectionNote: "math DB engineering" },
@@ -425,13 +518,16 @@ export const graphEdges: GraphEdge[] = [
 
   // Product theme → experiences
   { id: "e-prod-rocket", source: "theme-product", target: "exp-node-rocket", relationship: "managed", connectionNote: "SCRUM ownership" },
-  { id: "e-prod-2bit", source: "theme-product", target: "exp-node-2bit", relationship: "managed", connectionNote: "studio strategy" },
+  { id: "e-prod-2bit-founder", source: "theme-product", target: "exp-node-2bit-founder", relationship: "managed", connectionNote: "studio strategy" },
+  { id: "e-prod-2bit", source: "theme-product", target: "exp-node-2bit", relationship: "managed", connectionNote: "production strategy" },
   { id: "e-prod-co2t", source: "theme-product", target: "exp-node-co2t", relationship: "managed", connectionNote: "VP product ops" },
   { id: "e-prod-ergo", source: "theme-product", target: "project-ergo", relationship: "designed", connectionNote: "platform product" },
 
   // Production theme → experiences
   { id: "e-ops-pps", source: "theme-production", target: "exp-node-pps", relationship: "managed", connectionNote: "classroom operations" },
-  { id: "e-ops-2bit", source: "theme-production", target: "exp-node-2bit", relationship: "managed", connectionNote: "studio management" },
+  { id: "e-ops-2bit-founder", source: "theme-production", target: "exp-node-2bit-founder", relationship: "managed", connectionNote: "studio management" },
+  { id: "e-ops-2bit-pause", source: "theme-production", target: "exp-node-2bit-pause", relationship: "managed", connectionNote: "studio on hold" },
+  { id: "e-ops-2bit", source: "theme-production", target: "exp-node-2bit", relationship: "managed", connectionNote: "production studio" },
   { id: "e-ops-co2t", source: "theme-production", target: "exp-node-co2t", relationship: "managed", connectionNote: "field & marketplace ops" },
 
   // Environmental arc
@@ -444,7 +540,8 @@ export const graphEdges: GraphEdge[] = [
 
   // Planet's Core — founder-era indie game
   { id: "e-games-planets-core", source: "theme-games", target: "project-planets-core", relationship: "created", connectionNote: "indie game shipped" },
-  { id: "e-2bit-planets-core", source: "exp-node-2bit", target: "project-planets-core", relationship: "created", connectionNote: "founder era" },
+  { id: "e-2bit-founder-planets-core", source: "exp-node-2bit-founder", target: "project-planets-core", relationship: "created", connectionNote: "founder era ship" },
+  { id: "e-2bit-pause-planets-core", source: "exp-node-2bit-pause", target: "project-planets-core", relationship: "managed", connectionNote: "catalog legacy" },
   { id: "e-company-planets-core", source: "company-2bit", target: "project-planets-core", relationship: "created", connectionNote: "2012–2014 studio" },
 
   // Games present — ERGO

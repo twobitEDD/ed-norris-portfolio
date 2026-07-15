@@ -13,6 +13,9 @@ import { getEdgeHandles, getNodePosition, type MapLayoutOptions } from "@/compon
 export const previewGraphNodeIds = [
   "person-ed",
   "exp-node-ea",
+  "exp-node-black-lantern",
+  "exp-node-seamless",
+  "exp-node-rocket",
   "exp-node-2bit",
   "exp-node-pps",
   "exp-node-adidas",
