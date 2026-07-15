@@ -82,36 +82,40 @@ export function VerticalBento() {
           </StudioObject>
         </BentoCell>
 
-        <BentoCell id="timeline" deferPaint>
-          <StudioObject rotate={-1.8}>
-            <TimelinePaper />
-          </StudioObject>
-        </BentoCell>
+        <BentoCell id="timeline" deferPaint className="bento-cell--timeline">
+          <div className="timeline-desk-cluster">
+            <div className="timeline-desk-cluster__paper">
+              <StudioObject rotate={-1.8}>
+                <TimelinePaper />
+              </StudioObject>
+            </div>
 
-        <BentoCell deferPaint className="bento-cell--notebook">
-          <div className="flex flex-col gap-5">
-            <StudioObject rotate={2}>
-              <Notebook title="Current focus">
-                <ul className="mt-3 space-y-2">
-                  {focusItems.map((item) => (
-                    <li key={item} className="flex gap-2 text-sm text-ink-soft">
-                      <span className="font-mono text-xs text-environment">☑</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </Notebook>
-            </StudioObject>
+            <div className="timeline-desk-cluster__margin">
+              <div className="flex flex-col gap-5">
+                <StudioObject rotate={2}>
+                  <Notebook title="Current focus">
+                    <ul className="mt-3 space-y-2">
+                      {focusItems.map((item) => (
+                        <li key={item} className="flex gap-2 text-sm text-ink-soft">
+                          <span className="font-mono text-xs text-environment">☑</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </Notebook>
+                </StudioObject>
 
-            <div className="flex flex-wrap gap-5 pt-1">
-              <StickyNote color="green" className="max-w-[210px]">
-                <p className="handwritten text-base leading-snug text-ink">Seeking opportunities.</p>
-                <p className="handwritten text-sm text-ink-soft">Building what&apos;s next.</p>
-              </StickyNote>
-              <StickyNote color="yellow" className="max-w-[210px]">
-                <p className="handwritten text-base leading-snug text-ink">Systems that scale.</p>
-                <p className="handwritten text-sm text-ink-soft">Impact that lasts.</p>
-              </StickyNote>
+                <div className="flex flex-wrap gap-5 pt-1">
+                  <StickyNote color="green" className="max-w-[210px]">
+                    <p className="handwritten text-base leading-snug text-ink">Seeking opportunities.</p>
+                    <p className="handwritten text-sm text-ink-soft">Building what&apos;s next.</p>
+                  </StickyNote>
+                  <StickyNote color="yellow" className="max-w-[210px]">
+                    <p className="handwritten text-base leading-snug text-ink">Systems that scale.</p>
+                    <p className="handwritten text-sm text-ink-soft">Impact that lasts.</p>
+                  </StickyNote>
+                </div>
+              </div>
             </div>
           </div>
         </BentoCell>

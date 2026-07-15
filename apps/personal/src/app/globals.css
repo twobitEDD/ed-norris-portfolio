@@ -211,11 +211,49 @@ body {
   }
 }
 
-.bento-cell--notebook {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-block: 1.25rem;
+.bento-cell--timeline {
+  grid-column: 1 / -1;
+}
+
+.timeline-desk-cluster {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+.timeline-desk-cluster__paper {
+  min-width: 0;
+}
+
+.timeline-desk-cluster__margin {
+  min-width: 0;
+  padding-inline: 0.25rem;
+}
+
+@media (min-width: 768px) {
+  .timeline-desk-cluster {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .timeline-desk-cluster__paper {
+    width: 100%;
+  }
+
+  .timeline-desk-cluster__margin {
+    margin-top: 2.5rem;
+    margin-left: -2.75rem;
+    z-index: 2;
+    padding-right: 0.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .timeline-desk-cluster__margin {
+    margin-top: 3rem;
+    margin-left: -3.25rem;
+  }
 }
 
 .bento-cell--game {
