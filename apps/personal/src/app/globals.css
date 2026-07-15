@@ -938,6 +938,24 @@ body {
   background: #2a312c;
 }
 
+.contact-phone-app__btn-send {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2rem;
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 0.5rem;
+}
+
+.contact-phone-app__input--message {
+  max-height: 4.5rem;
+}
+
 .contact-phone-app__btn-secondary {
   background: var(--contact-app-surface);
   color: var(--contact-app-ink);

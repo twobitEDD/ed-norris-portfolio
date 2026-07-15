@@ -5,6 +5,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowLeft,
+  ArrowRight,
   Calendar,
   ChevronRight,
   ExternalLink,
@@ -281,18 +282,18 @@ function MessageScreen({ onBack }: { onBack: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex h-full min-h-0 flex-col">
-      <p className="contact-phone-app__label mb-2 font-mono text-[8px] uppercase tracking-[0.18em]">
+    <form onSubmit={handleSubmit} className="flex h-full min-h-0 flex-col overflow-hidden">
+      <p className="contact-phone-app__label mb-1 shrink-0 font-mono text-[8px] uppercase tracking-[0.18em]">
         Leave a message
       </p>
-      <div className="grid min-h-0 flex-1 grid-cols-1 gap-2 overflow-y-auto sm:grid-cols-2 sm:gap-x-3">
+      <div className="grid min-h-0 flex-1 grid-cols-2 grid-rows-[auto_auto_minmax(0,1fr)] gap-x-2 gap-y-1 overflow-hidden">
         <label className="contact-phone-app__label block text-[10px]">
           Your name
           <input
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="contact-phone-app__input mt-1 w-full min-h-[38px] rounded-lg px-2.5 py-1.5 text-sm"
+            className="contact-phone-app__input mt-0.5 w-full min-h-[32px] rounded-lg px-2 py-1 text-[13px]"
             autoComplete="name"
           />
         </label>
@@ -303,38 +304,41 @@ function MessageScreen({ onBack }: { onBack: () => void }) {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="contact-phone-app__input mt-1 w-full min-h-[38px] rounded-lg px-2.5 py-1.5 text-sm"
+            className="contact-phone-app__input mt-0.5 w-full min-h-[32px] rounded-lg px-2 py-1 text-[13px]"
             autoComplete="email"
           />
         </label>
-        <label className="contact-phone-app__label col-span-1 block text-[10px] sm:col-span-2">
+        <label className="contact-phone-app__label col-span-2 flex min-h-0 flex-col text-[10px]">
           Message
           <textarea
             required
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            rows={3}
+            rows={2}
             minLength={10}
-            className="contact-phone-app__input mt-1 w-full resize-none rounded-lg px-2.5 py-1.5 text-sm"
+            className="contact-phone-app__input contact-phone-app__input--message mt-0.5 min-h-0 flex-1 resize-none rounded-lg px-2 py-1 text-[13px]"
             placeholder="Project, role, collaboration…"
           />
         </label>
         {errorMessage && (
           <p
-            className="col-span-1 rounded-lg border border-red-300/50 bg-red-50 px-2.5 py-2 text-[11px] text-red-900 sm:col-span-2"
+            className="col-span-2 rounded-lg border border-red-300/50 bg-red-50 px-2 py-1 text-[10px] leading-snug text-red-900"
             role="alert"
           >
             {errorMessage}
           </p>
         )}
       </div>
-      <button
-        type="submit"
-        disabled={submitState === "submitting"}
-        className="contact-phone-app__btn-primary mt-2 min-h-[42px] shrink-0 rounded-xl px-4 py-2 text-sm font-semibold disabled:opacity-60"
-      >
-        {submitState === "submitting" ? "Sending…" : "Send message"}
-      </button>
+      <div className="mt-1 flex shrink-0 justify-end">
+        <button
+          type="submit"
+          disabled={submitState === "submitting"}
+          className="contact-phone-app__btn-primary contact-phone-app__btn-send disabled:opacity-60"
+        >
+          <ArrowRight className="h-3 w-3 shrink-0" strokeWidth={2} aria-hidden />
+          {submitState === "submitting" ? "Sending…" : "Send"}
+        </button>
+      </div>
     </form>
   );
 }
