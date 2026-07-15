@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { profile, practices } from "@/data";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
+import { WorkVennDiagram } from "@/components/hero/WorkVennDiagram";
 import { Paper } from "@/components/physical-ui/Paper";
 
 const roles = [
@@ -36,13 +37,18 @@ export function IntroPaper() {
 
         <p className="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">{profile.summary}</p>
 
-        <ul className="mt-3.5 flex flex-col gap-1.5 sm:mt-4" aria-label="Roles">
-          {roles.map((role) => (
-            <li key={role} className="handwritten text-sm text-ink-soft">
-              · {role}
-            </li>
-          ))}
-        </ul>
+        <section className="mt-3.5 sm:mt-4" aria-label="Roles">
+          <div className="flex flex-col items-center">
+            <WorkVennDiagram className="mt-0" />
+            <ul className="mt-3 flex flex-col gap-1.5">
+              {roles.map((role) => (
+                <li key={role} className="handwritten text-sm text-ink-soft">
+                  · {role}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
         <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
           {practices.map((practice) => (

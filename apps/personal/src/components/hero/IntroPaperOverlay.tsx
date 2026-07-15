@@ -1,13 +1,11 @@
 import Link from "next/link";
 import { ContactCTAs } from "@/components/contact/ContactCTAs";
-import { WorkVennDiagram } from "@/components/hero/WorkVennDiagram";
 import { Paper } from "@/components/physical-ui/Paper";
 
 export function IntroPaperOverlay() {
   return (
     <Paper compact elevated className="w-full">
-      <WorkVennDiagram className="mt-0" />
-      <div className="mt-3 flex flex-col gap-2.5">
+      <div className="flex flex-col gap-2.5">
         <ContactCTAs variant="desk" className="flex-col !gap-2 sm:flex-row sm:!gap-2" />
         <Link
           href="/#game"
