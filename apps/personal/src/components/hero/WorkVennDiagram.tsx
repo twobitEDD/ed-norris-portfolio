@@ -4,14 +4,21 @@ type WorkVennDiagramProps = {
   className?: string;
 };
 
+const RADIUS = 44;
+const INTERSECTION_CENTER_X = 135;
+const OVERLAP_HALF_WIDTH = Math.sqrt(RADIUS ** 2 - (74 / 2) ** 2);
+const LEFT_LOBE_CENTER_X = (98 - RADIUS + INTERSECTION_CENTER_X - OVERLAP_HALF_WIDTH) / 2;
+const RIGHT_LOBE_CENTER_X =
+  (INTERSECTION_CENTER_X + OVERLAP_HALF_WIDTH + 172 + RADIUS) / 2;
+
 const circles = [
   {
     id: "humanity",
     cx: 98,
     cy: 58,
     label: "Humanity",
-    x: 68,
-    y: 62,
+    labelX: LEFT_LOBE_CENTER_X,
+    labelY: 58,
     stroke: "var(--marketing)",
     fill: "var(--marketing)",
   },
@@ -20,8 +27,8 @@ const circles = [
     cx: 172,
     cy: 58,
     label: "Technology",
-    x: 188,
-    y: 62,
+    labelX: RIGHT_LOBE_CENTER_X,
+    labelY: 58,
     stroke: "var(--technology)",
     fill: "var(--technology)",
   },
@@ -44,7 +51,7 @@ export function WorkVennDiagram({ className }: WorkVennDiagramProps) {
             key={circle.id}
             cx={circle.cx}
             cy={circle.cy}
-            r={44}
+            r={RADIUS}
             fill={circle.fill}
             fillOpacity={0.07}
             stroke={circle.stroke}
@@ -55,21 +62,28 @@ export function WorkVennDiagram({ className }: WorkVennDiagramProps) {
         {circles.map((circle) => (
           <text
             key={`${circle.id}-label`}
-            x={circle.x}
-            y={circle.y}
+            x={circle.labelX}
+            y={circle.labelY}
             textAnchor="middle"
+            dominantBaseline="middle"
             className="fill-ink-soft font-mono text-[7.5px] font-semibold uppercase tracking-[0.14em] sm:text-[8px]"
           >
             {circle.label}
           </text>
         ))}
         <text
-          x={135}
-          y={54}
+          x={INTERSECTION_CENTER_X}
+          y={58}
           textAnchor="middle"
+          dominantBaseline="middle"
           className="handwritten fill-ink text-[11px] font-medium sm:text-[12px]"
         >
-          {"Edd Lives Here ⬇️"}
+          <tspan x={INTERSECTION_CENTER_X} dy="-0.55em">
+            Edd Lives Here
+          </tspan>
+          <tspan x={INTERSECTION_CENTER_X} dy="1.1em">
+            ⬇️
+          </tspan>
         </text>
       </svg>
       <figcaption className="sr-only">
