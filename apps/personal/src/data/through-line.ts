@@ -1,7 +1,11 @@
-/** Through-line thesis and guided story copy for the living work map. */
+/** Career through-line thesis (timeline, intro) — not used to drive work map layout. */
 
 export const throughLineThesis =
   "I've worked across many areas of software, always anchored in user experience and human-centered design — from public education classrooms to environmental technology, indie game development to marketing and product work with major brands like adidas and Google. The through-line is consistent: apply these skills thoughtfully, and help people thrive.";
+
+/** Work map header — relationship graph, separate from career through-line narrative. */
+export const mapGraphThesis =
+  "Companies, clients, projects, and roles connected by how the work actually relates — tap a node to explore who built what, for whom, and why it matters.";
 
 export type StoryStop = {
   nodeId: string;
@@ -9,7 +13,7 @@ export type StoryStop = {
   copy: string;
 };
 
-/** Guided narrative: education → games → software → marketing → product → production → present. */
+/** Guided career narrative for timeline and intro — not used to drive work map node layout. */
 export const storyStops: StoryStop[] = [
   {
     nodeId: "theme-education",

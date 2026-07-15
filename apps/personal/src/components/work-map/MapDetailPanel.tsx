@@ -6,30 +6,23 @@ import { experiences, projects } from "@/data";
 import { getNodeImage } from "@/data/career-images";
 import type { GraphNode } from "@/data/types";
 import { disciplineColors, disciplineLabels } from "@/data/types";
-import type { StoryStop } from "@/data/through-line";
 import { getConnectionNotes, getRelatedThemes } from "@/lib/graph";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 
 export function MapDetailPanel({
   node,
-  storyStop,
-  storyIndex = -1,
-  storyPathLength = 0,
   onClose,
   compact = false,
 }: {
   node: GraphNode | null;
-  storyStop?: StoryStop | null;
-  storyIndex?: number;
-  storyPathLength?: number;
   onClose: () => void;
   compact?: boolean;
 }) {
   if (!node) return null;
   const color = disciplineColors[node.disciplines[0]];
   const isTheme = node.type === "theme";
-  const narrative = storyStop?.copy ?? node.connectionNarrative ?? node.description;
-  const headline = storyStop?.headline ?? node.label;
+  const narrative = node.connectionNarrative ?? node.description;
+  const headline = node.label;
   const brandImage = node.image
     ? { src: node.image, alt: node.imageAlt ?? node.label, objectPosition: undefined }
     : getNodeImage(node.id);
@@ -52,16 +45,9 @@ export function MapDetailPanel({
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          {storyStop && storyPathLength > 0 && (
-            <p className="font-mono text-[9px] uppercase tracking-wider text-technology sm:text-[10px]">
-              Story {storyIndex + 1}/{storyPathLength} · {storyStop.headline}
-            </p>
-          )}
-          {!storyStop && (
-            <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted sm:text-[10px]">
-              {isTheme ? "Focus area" : node.type}
-            </p>
-          )}
+          <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted sm:text-[10px]">
+            {isTheme ? "Theme hub" : node.type}
+          </p>
           <h3 className="mt-1 font-display text-base font-bold text-screen-text sm:text-lg">{headline}</h3>
         </div>
         <button
@@ -104,7 +90,7 @@ export function MapDetailPanel({
       {relatedThemes.length > 0 && (
         <div className="mt-3 sm:mt-4">
           <p className="font-mono text-[9px] uppercase tracking-wider text-screen-muted sm:text-[10px]">
-            Related focus areas
+            Related theme hubs
           </p>
           <div className="mt-1.5 flex flex-wrap gap-1.5">
             {relatedThemes.map((theme) => (

@@ -34,32 +34,39 @@ export const projects: Project[] = [
     id: "proj-co2t-platform",
     slug: "co2t-platform",
     title: "CO2T Environmental Platform",
-    organization: "CO2T",
+    organization: "CO2T.earth & CO2True.com",
     startDate: "2024",
     status: "active",
     disciplines: ["environment", "software", "operations"],
     industries: ["agriculture", "climate"],
-    roles: ["Product Lead", "Software Architect"],
-    skills: ["product strategy", "traceability", "operations"],
+    roles: ["VP Operations", "Software Architect", "Brand Designer"],
+    skills: ["software architecture", "product design", "brand design", "e-commerce", "carbon credits"],
     technologies: ["TypeScript", "React", "BigQuery"],
     summary:
-      "Integrated software for biochar, agriculture, carbon tracking, e-commerce, and field operations at CO2T.earth.",
-    challenge: "Unify disconnected field data, product sales, and carbon reporting into one coherent system.",
+      "End-to-end platform for CO2T's Soil Additive Business — software architecture, product design, brand identity (including the Bigfoot mascot), e-commerce, and environmental impact tracking at CO2T.earth and CO2True.com.",
+    challenge:
+      "Unify brand, product sales, field operations, and carbon impact tracking for a new environmental business — with no existing software or visual identity to build on.",
+    approach:
+      "Personally designed the Bigfoot character and overall brand from scratch, then architected bulletproof e-commerce and product sales software integrated with CO2T's environmental impact tracking system. Connected biochar and carbon capture product sales to traceability pipelines used for carbon credit issuance.",
     outcomes: [
-      "Delivered end-to-end traceability from field to customer.",
-      "Connected operational workflows with public sustainability communication.",
+      "Delivered industry-leading e-commerce and product sales software built from the ground up.",
+      "Integrated biochar and carbon capture sales into auditable environmental impact tracking.",
+      "Established brand identity and product UX for CO2T.earth and CO2True.com sustainability programs.",
+      "Built systems supporting carbon credit issuance and field-to-customer traceability.",
     ],
     metrics: [
-      { label: "Domains", value: "Carbon · Ag · Ops" },
+      { label: "Domains", value: "Carbon · Ag · Commerce" },
+      { label: "Brand", value: "Bigfoot mascot" },
     ],
     images: [
       {
         src: "/brands/co2t/co2t-mascot-welcome.png",
-        alt: "CO2T.earth mascot — Welcome to Sustainability",
+        alt: "CO2T.earth Bigfoot mascot — Welcome to Sustainability",
       },
     ],
     links: [
       { label: "CO2T.earth", url: "https://co2t.earth" },
+      { label: "CO2True.com", url: "https://co2true.com" },
       { label: "GitHub", url: "https://github.com/co2trust-org" },
     ],
     featured: true,
@@ -68,17 +75,26 @@ export const projects: Project[] = [
   {
     id: "proj-carbon-tracking",
     slug: "carbon-tracking",
-    title: "Carbon Tracking Infrastructure",
-    organization: "CO2T",
+    title: "Carbon Tracking & Credit Infrastructure",
+    organization: "CO2T.earth & CO2True.com",
     startDate: "2022",
-    status: "completed",
+    status: "active",
     disciplines: ["environment", "data", "software"],
     industries: ["climate"],
-    roles: ["Systems Architect"],
-    skills: ["data systems", "traceability", "reporting"],
+    roles: ["Systems Architect", "VP Operations"],
+    skills: ["data systems", "traceability", "carbon credits", "reporting"],
     technologies: ["BigQuery", "TypeScript"],
-    summary: "Traceability and reporting systems for carbon and biochar programs at CO2T.earth.",
-    outcomes: ["Built auditable carbon data pipelines and reporting surfaces."],
+    summary:
+      "Environmental impact tracking, traceability, and carbon credit issuance infrastructure — connecting biochar programs, product sales, and auditable reporting at CO2T.earth.",
+    challenge:
+      "Make carbon and biochar program data auditable from field operations through product sale to credit issuance — without losing accuracy or public trust.",
+    approach:
+      "Built data pipelines and reporting surfaces integrated with CO2T's e-commerce and impact tracking platform. Connected soil additive and carbon capture product sales to the systems used for environmental impact measurement and carbon credit workflows.",
+    outcomes: [
+      "Built auditable carbon data pipelines from field to customer.",
+      "Integrated product sales with environmental impact tracking for credit issuance.",
+      "Delivered reporting surfaces for biochar programs and sustainability communication.",
+    ],
     images: [
       {
         src: "/brands/co2t/co2t-biochar-guide.png",
@@ -87,6 +103,7 @@ export const projects: Project[] = [
     ],
     links: [
       { label: "CO2T.earth", url: "https://co2t.earth" },
+      { label: "CO2True.com", url: "https://co2true.com" },
       { label: "GitHub", url: "https://github.com/co2trust-org" },
     ],
     featured: true,

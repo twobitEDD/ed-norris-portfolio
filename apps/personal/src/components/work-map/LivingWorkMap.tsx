@@ -13,13 +13,13 @@ import {
 import "@xyflow/react/dist/style.css";
 import { graphNodes, themeFilterOptions } from "@/data";
 import type { GraphNode } from "@/data/types";
-import { buildFlowGraph, getStoryPath, getStoryStop, type MapNodeData } from "@/lib/graph";
+import { buildFlowGraph, type MapNodeData } from "@/lib/graph";
 import { FilterPill } from "@/components/ui/FilterPill";
 import { GlowButton } from "@/components/ui/GlowButton";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SectionShell } from "@/components/layout/SectionShell";
 import { TechnicalGrid } from "@/components/ui/TechnicalGrid";
-import { throughLineThesis } from "@/data/through-line";
+import { mapGraphThesis } from "@/data/through-line";
 import { MapDetailPanel } from "./MapDetailPanel";
 import { MapNode } from "./MapNode";
 import { useInViewport } from "@/lib/useInViewport";
@@ -31,7 +31,6 @@ export function LivingWorkMap() {
   const mapVisible = useInViewport(mapAreaRef, { threshold: 0.1, rootMargin: "80px 0px" });
   const [activeFilter, setActiveFilter] = useState("all");
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
-  const [storyIndex, setStoryIndex] = useState(-1);
 
   const activeThemeId = useMemo(() => {
     const f = themeFilterOptions.find((o) => o.id === activeFilter);
@@ -52,33 +51,21 @@ export function LivingWorkMap() {
   }, [graph, setNodes, setEdges]);
 
   const onNodeClick: NodeMouseHandler<Node<MapNodeData>> = useCallback((_, node) => {
-    setStoryIndex(-1);
     const found = graphNodes.find((n) => n.id === node.id) ?? null;
     setSelectedNode(found);
   }, []);
 
   const resetMap = () => {
     setSelectedNode(null);
-    setStoryIndex(-1);
     setActiveFilter("all");
   };
-
-  const tellStory = () => {
-    const path = getStoryPath();
-    const next = (storyIndex + 1) % path.length;
-    setStoryIndex(next);
-    const found = graphNodes.find((n) => n.id === path[next]) ?? null;
-    setSelectedNode(found);
-  };
-
-  const storyStop = storyIndex >= 0 ? getStoryStop(storyIndex) : null;
 
   return (
     <SectionShell id="map" grid>
       <SectionHeading
         eyebrow="Knowledge graph"
         title="The living work map."
-        description={throughLineThesis}
+        description={mapGraphThesis}
       />
 
       <div className="mt-8 flex flex-wrap gap-2">
@@ -124,20 +111,13 @@ export function LivingWorkMap() {
         )}
         <MapDetailPanel
           node={selectedNode}
-          storyStop={storyStop}
-          onClose={() => {
-            setSelectedNode(null);
-            setStoryIndex(-1);
-          }}
+          onClose={() => setSelectedNode(null)}
         />
       </div>
 
       <div className="mt-4 flex flex-wrap gap-3">
         <GlowButton onClick={resetMap} variant="ghost">
           Reset map
-        </GlowButton>
-        <GlowButton onClick={tellStory}>
-          {storyIndex < 0 ? "Tell me a story" : `Story ${storyIndex + 1}/${getStoryPath().length} →`}
         </GlowButton>
       </div>
     </SectionShell>

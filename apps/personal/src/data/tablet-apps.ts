@@ -36,11 +36,11 @@ export const tabletApps: TabletApp[] = [
   {
     id: "co2t",
     name: "CO2T",
-    domain: "co2true.earth",
+    domain: "co2true.com",
     tagline: "Environmental platform",
     description:
       co2t?.summary ??
-      "Integrated software for biochar, agriculture, carbon tracking, and field operations — traceability from soil to customer at CO2T.earth.",
+      "Software architecture, Bigfoot brand design, e-commerce, and environmental impact tracking — integrated for carbon credit issuance at CO2T.earth.",
     href: "https://co2t.earth",
     iconBg: "linear-gradient(145deg, #0d2818 0%, #1a5c3a 50%, #3d9b6a 100%)",
     iconAccent: "#7ee8a8",

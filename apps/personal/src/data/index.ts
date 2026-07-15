@@ -6,7 +6,7 @@ export { timelineEras, type TimelineEra, type EraRelatedLink } from "./timeline-
 export { projects } from "./projects";
 export { skills } from "./skills";
 export { graphNodes, graphEdges } from "./relationships";
-export { throughLineThesis, storyStops, themeFilterOptions } from "./through-line";
+export { throughLineThesis, mapGraphThesis, storyStops, themeFilterOptions } from "./through-line";
 export {
   co2tBrand,
   eraImages,

@@ -1,34 +1,46 @@
 import type { Node, Edge } from "@xyflow/react";
 import { graphEdges, graphNodes } from "@/data";
-import { storyStops } from "@/data/through-line";
 import type { Discipline, GraphNode } from "@/data/types";
 import { disciplineColors } from "@/data/types";
 import { getEdgeHandles, getNodePosition, type MapLayoutOptions } from "@/components/work-map/map-layout";
 
-/** Homepage bento — minimal story spine (8 key stops). */
-export const previewSpineNodeIds = [
-  "theme-education",
-  "theme-games",
-  "theme-software",
-  "theme-marketing",
-  "practice-environment",
-  "company-co2t",
-  "project-ergo",
+/**
+ * Homepage bento preview — relationship graph subset (companies, roles, clients, projects).
+ * Uses real edges from relationships.ts, not the career through-line story path.
+ */
+export const previewGraphNodeIds = [
   "person-ed",
+  "exp-node-adidas",
+  "exp-node-2bit",
+  "company-2bit",
+  "client-google",
+  "client-dell",
+  "project-ergo",
+  "exp-node-oibw",
+  "exp-node-co2t",
+  "company-co2t",
+  "project-carbon",
 ] as const;
 
-/** Sequential story spine edges — preview only, not in graphEdges. */
-const previewSpineEdges = [
-  { id: "preview-spine-1", source: "theme-education", target: "theme-games" },
-  { id: "preview-spine-2", source: "theme-games", target: "theme-software" },
-  { id: "preview-spine-3", source: "theme-software", target: "theme-marketing" },
-  { id: "preview-spine-4", source: "theme-marketing", target: "practice-environment" },
-  { id: "preview-spine-5", source: "practice-environment", target: "company-co2t" },
-  { id: "preview-spine-6", source: "company-co2t", target: "project-ergo" },
-  { id: "preview-spine-7", source: "project-ergo", target: "person-ed" },
-] as const;
+/** Bridge edges so person-ed connects to the preview subgraph (full graph routes via theme hubs). */
+const previewPersonBridgeEdges = [
+  {
+    id: "preview-pe-2bit",
+    source: "person-ed",
+    target: "exp-node-2bit",
+    relationship: "created" as const,
+    connectionNote: "studio founder",
+  },
+  {
+    id: "preview-pe-co2t",
+    source: "person-ed",
+    target: "exp-node-co2t",
+    relationship: "managed" as const,
+    connectionNote: "VP Operations",
+  },
+];
 
-export const previewNodeIds = new Set<string>(previewSpineNodeIds);
+export const previewNodeIds = new Set<string>(previewGraphNodeIds);
 
 const themeHubIds = new Set(
   graphNodes.filter((n) => n.type === "theme").map((n) => n.id),
@@ -44,15 +56,12 @@ export type MapNodeData = {
   dimmed?: boolean;
   highlighted?: boolean;
   isThemeHub?: boolean;
-  onStoryPath?: boolean;
-  isStoryFocus?: boolean;
   index: number;
   preview?: boolean;
 };
 
 export type MapEdgeData = {
   highlighted?: boolean;
-  throughLine?: boolean;
   dimmed?: boolean;
 };
 
@@ -69,51 +78,13 @@ function getConnectedNodes(nodeId: string, depth = 1): Set<string> {
   return connected;
 }
 
-function getStoryPathSet(preview: boolean, storyIndex: number): Set<string> {
-  const path = getStoryPath(preview);
-  if (storyIndex < 0) return new Set();
-  const ids = new Set<string>(["person-ed"]);
-
-  const start = Math.max(0, storyIndex - 1);
-  const end = Math.min(path.length - 1, storyIndex + 1);
-  for (let i = start; i <= end; i++) ids.add(path[i]);
-
-  const focusId = path[storyIndex];
-  getRelatedThemes(focusId).forEach((t) => ids.add(t.id));
-
-  // Keep focus-area hubs visible so the arc stays readable during story mode
-  if (!preview) {
-    graphNodes.filter((n) => n.type === "theme").forEach((t) => ids.add(t.id));
-    if (focusId.startsWith("practice-") || focusId.startsWith("company-co2t")) {
-      ids.add("practice-environment");
-      ids.add("company-co2t");
-    }
-  }
-
-  return ids;
-}
-
-function getStoryEdgeIds(preview: boolean, storyIndex: number): Set<string> {
-  const path = getStoryPath(preview);
-  const ids = new Set<string>();
-  if (storyIndex < 0) return ids;
-
-  const focusId = path[storyIndex];
-  const prevId = storyIndex > 0 ? path[storyIndex - 1] : null;
-  const nextId = storyIndex < path.length - 1 ? path[storyIndex + 1] : null;
-  const edgeList = preview ? previewSpineEdges : graphEdges;
-
-  for (const e of edgeList) {
-    if (prevId && e.source === prevId && e.target === focusId) ids.add(e.id);
-    if (nextId && e.source === focusId && e.target === nextId) ids.add(e.id);
-    if ("throughLine" in e && e.throughLine) ids.add(e.id);
-    if (e.source === focusId || e.target === focusId) {
-      const other = e.source === focusId ? e.target : e.source;
-      if (path.includes(other) || themeHubIds.has(other)) ids.add(e.id);
-    }
-  }
-
-  return ids;
+function getPreviewEdges() {
+  const ids = previewNodeIds;
+  const fromGraph = graphEdges.filter((e) => ids.has(e.source) && ids.has(e.target));
+  const bridge = previewPersonBridgeEdges.filter(
+    (e) => ids.has(e.source) && ids.has(e.target),
+  );
+  return [...fromGraph, ...bridge];
 }
 
 export function getRelatedThemes(nodeId: string): GraphNode[] {
@@ -144,12 +115,8 @@ export function buildFlowGraph(
   selectedId?: string,
   activeThemeId?: string | null,
   layoutOptions?: MapLayoutOptions,
-  storyIndex = -1,
 ) {
   const preview = layoutOptions?.preview ?? false;
-  const storyActive = storyIndex >= 0;
-  const storyPathNodes = getStoryPathSet(preview, storyIndex);
-  const storyPathEdges = getStoryEdgeIds(preview, storyIndex);
   const themeVisible = !preview && activeThemeId ? getConnectedNodes(activeThemeId, 2) : null;
 
   let visibleNodes = preview
@@ -167,16 +134,12 @@ export function buildFlowGraph(
       activeFilters.length > 0 &&
       !node.disciplines.some((d) => activeFilters.includes(d));
     const connected = selectedId ? isConnected(selectedId, node.id, visibleIds) : false;
-    const onStoryPath = storyPathNodes.has(node.id);
-    const isStoryFocus = storyActive && getStoryPath(preview)[storyIndex] === node.id;
 
     const dimmed = preview
       ? false
-      : storyActive
-        ? !onStoryPath && !isStoryFocus
-        : selectedId
-          ? !connected && selectedId !== node.id
-          : disciplineDimmed;
+      : selectedId
+        ? !connected && selectedId !== node.id
+        : disciplineDimmed;
 
     return {
       id: node.id,
@@ -192,8 +155,6 @@ export function buildFlowGraph(
         dimmed,
         highlighted: selectedId === node.id || connected,
         isThemeHub: node.type === "theme",
-        onStoryPath,
-        isStoryFocus,
         index,
         preview,
       },
@@ -201,7 +162,7 @@ export function buildFlowGraph(
   });
 
   const edgeSource = preview
-    ? previewSpineEdges.map((e) => ({ ...e, throughLine: true, connectionNote: undefined }))
+    ? getPreviewEdges()
     : graphEdges.filter(
         (edge) => visibleIds.has(edge.source) && visibleIds.has(edge.target),
       );
@@ -213,30 +174,17 @@ export function buildFlowGraph(
         activeFilters.length > 0 &&
         sourceNode &&
         !sourceNode.disciplines.some((d) => activeFilters.includes(d));
-      const selectedHighlight = selectedId
+      const highlighted = selectedId
         ? edge.source === selectedId || edge.target === selectedId
         : false;
-      const throughLine = "throughLine" in edge && edge.throughLine;
-      const onStoryPath = storyPathEdges.has(edge.id);
-      const highlighted = selectedHighlight || onStoryPath;
 
       const color = sourceNode?.disciplines[0]
         ? disciplineColors[sourceNode.disciplines[0]]
         : "#46c7d7";
 
-      const showThroughLineLabel = !preview && throughLine;
-      const showSelectedLabel =
-        !preview && selectedHighlight && "connectionNote" in edge && edge.connectionNote;
-      const label = showThroughLineLabel || showSelectedLabel
-        ? ("connectionNote" in edge ? edge.connectionNote : undefined)
-        : undefined;
-
+      const showLabel = !preview && highlighted && edge.connectionNote;
       const handles = getEdgeHandles(edge.source, edge.target, layoutOptions);
-
-      const storyDimmed = storyActive && !throughLine && !onStoryPath;
-      const baseOpacity = preview ? 0.85 : throughLine ? 0.9 : highlighted ? 0.95 : 0.22;
-      const opacity =
-        edgeDimmed && !highlighted ? 0.08 : storyDimmed ? 0.1 : baseOpacity;
+      const opacity = edgeDimmed && !highlighted ? 0.08 : highlighted ? 0.95 : preview ? 0.75 : 0.28;
 
       return {
         id: edge.id,
@@ -245,7 +193,7 @@ export function buildFlowGraph(
         target: edge.target,
         sourceHandle: handles.sourceHandle,
         targetHandle: handles.targetHandle,
-        label,
+        label: showLabel ? edge.connectionNote : undefined,
         labelStyle: {
           fill: "#e2e8f0",
           fontSize: 10,
@@ -253,16 +201,15 @@ export function buildFlowGraph(
         },
         data: {
           highlighted,
-          throughLine: !!throughLine,
-          dimmed: storyDimmed || (edgeDimmed && !highlighted),
+          dimmed: edgeDimmed && !highlighted,
         },
         style: {
           stroke: color,
-          strokeWidth: preview ? 2.5 : throughLine ? 3 : highlighted ? 2.5 : 1.5,
+          strokeWidth: preview ? 2 : highlighted ? 2.5 : 1.5,
           opacity,
         },
-        animated: highlighted || (!preview && throughLine),
-        zIndex: throughLine ? 10 : highlighted ? 5 : 0,
+        animated: highlighted,
+        zIndex: highlighted ? 5 : 0,
       };
     });
 
@@ -281,25 +228,3 @@ function isConnected(selectedId: string, nodeId: string, visibleIds?: Set<string
     },
   );
 }
-
-export function getStoryPath(preview = false): string[] {
-  if (preview) {
-    return [...previewSpineNodeIds];
-  }
-  return storyStops.map((s) => s.nodeId);
-}
-
-export function getStoryStop(index: number, preview = false) {
-  const path = getStoryPath(preview);
-  const nodeId = path[index % path.length];
-  const stop = storyStops.find((s) => s.nodeId === nodeId);
-  if (stop) return stop;
-  const node = graphNodes.find((n) => n.id === nodeId);
-  return {
-    nodeId,
-    headline: node?.label ?? nodeId,
-    copy: node?.connectionNarrative ?? node?.description ?? "",
-  };
-}
-
-export { storyStops };

@@ -75,7 +75,7 @@
       "id": "tl-environmental",
       "era": "Environmental practice",
       "title": "OIBW → CO2T VP Operations",
-      "summary": "Oregon Institute for a Better Way (2022–2024), then VP Operations at CO2T.earth (Mar 2024–present). CO2T founded 2024.",
+      "summary": "Oregon Institute for a Better Way (2022–2024), then VP Operations at CO2T.earth & CO2True.com (Mar 2024–present). Hands-on architecture, product, brand (Bigfoot mascot), e-commerce, and carbon credit infrastructure.",
       "start": "2022",
       "tags": ["environmental", "operations"]
     },
@@ -243,13 +243,15 @@
       "title": "CO2T",
       "start": "2024",
       "end": null,
-      "summary": "Founded 2024 — environmental products, carbon infrastructure, biochar, agriculture, software, and operations.",
+      "summary": "Founded 2024 — soil additive business, biochar, carbon capture, e-commerce, brand identity, and impact tracking at CO2T.earth and CO2True.com.",
       "actions": [
-        "VP Operations — strategic operations across carbon, biochar, and marketplace platforms.",
-        "Connected traceability, e-commerce, field operations, and public sustainability communication."
+        "VP Operations — software architecture, product design, and brand design (Bigfoot mascot) for Soil Additive Business.",
+        "Built industry-leading e-commerce and product sales software from the ground up.",
+        "Integrated biochar and carbon capture sales with environmental impact tracking and carbon credit issuance."
       ],
       "outcomes": [
-        "Delivered integrated systems spanning biochar, agriculture, and carbon tracking."
+        "Delivered integrated platform spanning brand, commerce, traceability, and carbon credits.",
+        "Established Bigfoot mascot brand and product UX for CO2T.earth sustainability programs."
       ],
       "tags": ["environmental", "agriculture", "software", "operations"],
       "skills": ["product strategy", "software architecture", "operations"],
@@ -257,6 +259,29 @@
       "visibility": "public",
       "featured": true,
       "map": { "x": 7, "y": 70, "tone": "env" }
+    },
+    {
+      "id": "proj-co2t-platform",
+      "type": "project",
+      "title": "CO2T Environmental Platform",
+      "start": "2024",
+      "end": null,
+      "summary": "Software architecture, product design, Bigfoot brand identity, e-commerce, and impact tracking for CO2T.earth and CO2True.com.",
+      "actions": [
+        "Designed Bigfoot mascot and overall brand from scratch.",
+        "Built e-commerce and product sales software integrated with environmental impact tracking.",
+        "Connected biochar and carbon capture sales to carbon credit issuance infrastructure."
+      ],
+      "outcomes": [
+        "Industry-leading commerce and traceability platform for Soil Additive Business.",
+        "Unified brand, product UX, and operational systems at CO2T.earth."
+      ],
+      "tags": ["environmental", "software", "operations"],
+      "skills": ["software architecture", "product design", "brand design", "e-commerce"],
+      "industries": ["agriculture", "climate"],
+      "visibility": "public",
+      "featured": true,
+      "map": { "x": 10, "y": 78, "tone": "env" }
     },
     {
       "id": "proj-ergo",
@@ -285,7 +310,14 @@
       "title": "Carbon Tracking",
       "start": "2022",
       "end": null,
-      "summary": "Traceability and reporting for carbon and biochar programs at CO2T.earth.",
+      "summary": "Traceability, environmental impact tracking, and carbon credit issuance for biochar and carbon capture programs at CO2T.earth and CO2True.com.",
+      "actions": [
+        "Built auditable data pipelines from field operations through product sale to credit issuance.",
+        "Integrated carbon capture product sales with CO2T environmental impact tracking system."
+      ],
+      "outcomes": [
+        "Delivered reporting and traceability infrastructure supporting carbon credit workflows."
+      ],
       "tags": ["environmental", "software"],
       "skills": ["data systems", "traceability"],
       "industries": ["climate"],
@@ -317,6 +349,7 @@
     { "from": "org-2bit", "to": "client-dell", "kind": "supports", "weight": 0.6, "note": "via Nice Touch" },
     { "from": "org-2bit", "to": "client-wash-u", "kind": "supports", "weight": 0.6, "note": "via Nice Touch" },
     { "from": "proj-ergo", "to": "org-2bit", "kind": "evolved-into", "weight": 0.7 },
+    { "from": "org-co2t", "to": "proj-co2t-platform", "kind": "produced-outcome", "weight": 0.95 },
     { "from": "org-co2t", "to": "proj-carbon", "kind": "produced-outcome", "weight": 0.9 },
     { "from": "org-adidas", "to": "org-2bit", "kind": "led-to", "weight": 0.8, "note": "continued via contract engagement" }
   ],

@@ -29,7 +29,7 @@ function MapEdgeComponent({
     targetY,
     sourcePosition,
     targetPosition,
-    borderRadius: edgeData?.throughLine ? 28 : 20,
+    borderRadius: edgeData?.highlighted ? 28 : 20,
     offset: edgeData?.highlighted ? 24 : 16,
   });
 
@@ -49,7 +49,7 @@ function MapEdgeComponent({
           strokeLinecap: "round",
           strokeLinejoin: "round",
         }}
-        interactionWidth={edgeData?.highlighted || edgeData?.throughLine ? 20 : 12}
+        interactionWidth={edgeData?.highlighted ? 20 : 12}
       />
       {label && (
         <EdgeLabelRenderer>

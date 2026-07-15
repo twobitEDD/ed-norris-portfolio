@@ -8,13 +8,14 @@ export const experiences: Experience[] = [
     organization: "CO2T.earth & CO2True",
     period: { start: "Mar 2024" },
     summary:
-      "Strategic operations and development for CO2T.earth and the CO2True carbon credit platform — connecting software, blockchain, field operations, and business management.",
+      "Hands-on leadership across software architecture, product design, brand identity, and operations for CO2T's soil additive and carbon capture business — from Bigfoot mascot brand design to industry-leading e-commerce and carbon credit infrastructure.",
     details: [
-      "Lead strategic operations across CO2T.earth and CO2True marketplace and accreditation initiatives.",
-      "Bridge software, interactive media, and sustainability program delivery for agriculture and biochar clients.",
+      "Designed comprehensive software architecture, product UX, and brand identity for the Soil Additive Business — including Bigfoot character designs and overall visual brand from scratch.",
+      "Built bulletproof e-commerce and product sales software from the ground up — integrated biochar and carbon capture product sales into CO2T's environmental impact tracking system.",
+      "Led systems used for carbon credit issuance, traceability from field to customer, and public sustainability communication at CO2T.earth and CO2True.com.",
     ],
     disciplines: ["environment", "operations", "software"],
-    skills: ["operations", "product strategy", "blockchain"],
+    skills: ["software architecture", "product design", "brand design", "e-commerce", "carbon credits"],
     projects: ["proj-co2t-platform", "proj-carbon-tracking"],
     featured: true,
   },
@@ -40,11 +41,14 @@ export const experiences: Experience[] = [
     organization: "Oregon Institute for a Better Way",
     period: { start: "Sep 2022", end: "Apr 2024" },
     summary:
-      "Built software and automation tools to streamline operations and support data-informed decision-making.",
-    details: ["Improved organizational processes through effective software and technology integration."],
+      "Built software and automation for environmental programs — the bridge between field operations and the carbon, biochar, and marketplace platforms that became CO2T.earth.",
+    details: [
+      "Developed software and automation tools to streamline operations and support data-informed decision-making for soil stewardship and biochar programs.",
+      "Laid groundwork for integrated traceability, product sales, and impact tracking systems later scaled at CO2T under VP Operations leadership.",
+    ],
     disciplines: ["environment", "software", "data"],
-    skills: ["automation", "software production"],
-    projects: ["proj-co2t-platform"],
+    skills: ["automation", "software production", "traceability"],
+    projects: ["proj-co2t-platform", "proj-carbon-tracking"],
     featured: true,
   },
   {

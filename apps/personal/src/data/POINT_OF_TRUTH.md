@@ -146,6 +146,17 @@ Answer each **Answer:** in chat when ready. Updates will be applied to `experien
 **Why it matters:** Timeline `era-environment`, `exp-node-oibw`, `exp-node-co2t`, `company-co2t`.  
 **Answer:** **OIBW Sep 2022–Apr 2024** → **VP Operations CO2T Mar 2024–present**; **CO2T org founded 2024**. Fix `company-co2t` period from 2020 to **2024**. Fix `proj-co2t-platform` start date to **2024**. OIBW → CO2T is the correct narrative chain.
 
+### CO2T / CO2True leadership detail (2026-07-15)
+
+**Confirmed VP Operations scope at CO2T.earth & CO2True.com:**
+- Comprehensive software architecture, product design, and brand design for Soil Additive Business
+- Bigfoot character designs and overall brand design — Edd personally, from scratch (`/brands/co2t/co2t-mascot-welcome.png`)
+- E-commerce and product sales software built from ground up — industry-leading, bulletproof
+- Biochar and carbon capture product sales integrated into environmental impact tracking
+- Systems used for carbon credit issuance and field-to-customer traceability
+
+**Map vs through-line (2026-07-15):** Work map shows **relationship graph** from `relationships.ts` (companies, roles, clients, projects). Career through-line thesis and `storyStops` remain in `through-line.ts` for timeline/intro — **not** map layout or "Tell me a story" mode.
+
 ### Prompt 9: Through-line thesis wording
 **Current value:** `Every role taught me how people learn, play, and adopt systems — from classroom support and game loops to marketing funnels and production pipelines. The medium changed; the work didn't: make complex things usable and worth people's time.`  
 **Question:** Keep, edit, or replace this thesis? Any phrases to avoid for hiring contexts?  

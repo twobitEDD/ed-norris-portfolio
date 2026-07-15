@@ -276,7 +276,9 @@ export const graphNodes: GraphNode[] = [
     disciplines: ["environment", "software", "data"],
     period: "2022 – 2024",
     experienceId: "exp-oibw",
-    description: "Streamlining and automating decision-making for organizational effectiveness.",
+    description: "Streamlining and automating decision-making for soil stewardship and biochar programs — groundwork for CO2T's integrated platform.",
+    connectionNarrative:
+      "Built software and automation at Oregon Institute for a Better Way (2022–2024) — connecting field operations to the traceability, e-commerce, and impact tracking systems later scaled at CO2T.",
     image: co2tBrand.biocharGuide.src,
     imageAlt: "Oregon Institute — biochar & soil stewardship",
   },
@@ -289,9 +291,11 @@ export const graphNodes: GraphNode[] = [
     period: "Mar 2024 – Present",
     experienceId: "exp-co2t-vp",
     description:
-      "Strategic operations across carbon, biochar, and marketplace platforms — CO2T founded 2024.",
+      "Software architecture, product design, brand identity, e-commerce, and carbon credit infrastructure for the Soil Additive Business.",
+    connectionNarrative:
+      "Personally designed the Bigfoot mascot and overall brand from scratch. Built industry-leading e-commerce software integrated with environmental impact tracking and carbon credit issuance at CO2T.earth and CO2True.com.",
     image: co2tBrand.mascot.src,
-    imageAlt: "CO2T.earth VP Operations",
+    imageAlt: "CO2T.earth VP Operations — Bigfoot mascot brand",
   },
 
   // —— Companies & projects ——
@@ -312,9 +316,12 @@ export const graphNodes: GraphNode[] = [
     label: "CO2T",
     disciplines: ["environment", "operations"],
     period: "2024 – Present",
-    description: "Founded 2024 — carbon infrastructure, biochar, and agriculture programs at CO2T.earth.",
+    description:
+      "Founded 2024 — soil additive business, biochar, carbon capture products, e-commerce, and impact tracking at CO2T.earth and CO2True.com.",
+    connectionNarrative:
+      "Carbon infrastructure and agriculture programs where software, brand, product sales, and field operations meet — including the Bigfoot mascot brand and systems for carbon credit issuance.",
     image: co2tBrand.mascot.src,
-    imageAlt: "CO2T — carbon infrastructure and biochar programs",
+    imageAlt: "CO2T — Bigfoot mascot, carbon infrastructure and biochar programs",
   },
   {
     id: "project-ergo",
@@ -364,14 +371,14 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-pe-prod", source: "person-ed", target: "theme-product", relationship: "managed", connectionNote: "what ships" },
   { id: "e-pe-ops", source: "person-ed", target: "theme-production", relationship: "managed", connectionNote: "how work happens" },
 
-  // Through-line chain (the narrative spine)
-  { id: "e-tl-1", source: "theme-education", target: "theme-games", relationship: "led-to", connectionNote: "teaching game dev club", throughLine: true },
-  { id: "e-tl-2", source: "theme-games", target: "theme-software", relationship: "evolved-into", connectionNote: "gameplay → engineering", throughLine: true },
-  { id: "e-tl-3", source: "theme-software", target: "theme-marketing", relationship: "led-to", connectionNote: "prototypes for brands", throughLine: true },
-  { id: "e-tl-4", source: "theme-marketing", target: "theme-product", relationship: "shaped", connectionNote: "owning the whole story", throughLine: true },
-  { id: "e-tl-5", source: "theme-product", target: "theme-production", relationship: "led-to", connectionNote: "shipping at scale", throughLine: true },
-  { id: "e-tl-6", source: "theme-production", target: "practice-environment", relationship: "supports", connectionNote: "field → platform", throughLine: true },
-  { id: "e-tl-7", source: "practice-environment", target: "person-ed", relationship: "led-to", connectionNote: "one connected arc", throughLine: true },
+  // Theme hub connections (career through-line lives in timeline/intro — not map story mode)
+  { id: "e-tl-1", source: "theme-education", target: "theme-games", relationship: "led-to", connectionNote: "teaching game dev club" },
+  { id: "e-tl-2", source: "theme-games", target: "theme-software", relationship: "evolved-into", connectionNote: "gameplay → engineering" },
+  { id: "e-tl-3", source: "theme-software", target: "theme-marketing", relationship: "led-to", connectionNote: "prototypes for brands" },
+  { id: "e-tl-4", source: "theme-marketing", target: "theme-product", relationship: "shaped", connectionNote: "owning the whole story" },
+  { id: "e-tl-5", source: "theme-product", target: "theme-production", relationship: "led-to", connectionNote: "shipping at scale" },
+  { id: "e-tl-6", source: "theme-production", target: "practice-environment", relationship: "supports", connectionNote: "field → platform" },
+  { id: "e-tl-7", source: "practice-environment", target: "person-ed", relationship: "led-to", connectionNote: "one connected arc" },
 
   // Education theme → experiences
   { id: "e-edu-pps", source: "theme-education", target: "exp-node-pps", relationship: "taught", connectionNote: "inclusive design roots" },

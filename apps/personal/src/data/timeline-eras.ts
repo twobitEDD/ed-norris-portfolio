@@ -205,14 +205,15 @@ export const timelineEras: TimelineEra[] = [
     polaroidGradient: "linear-gradient(160deg, #4a6b42, #1a2e18)",
     detailBody: [
       "At Oregon Institute for a Better Way (2022–2024), built software and automation tools to streamline operations and support data-informed decision-making for environmental programs — the bridge between field work and digital infrastructure.",
-      "As VP of Operations at CO2T.earth (founded 2024), lead strategic operations across carbon, biochar, and marketplace platforms — connecting software, blockchain traceability, field operations, and business management for agriculture clients.",
-      "The work spans accreditation and action planning (CO2True), biochar programs, soil stewardship communication, and the operational systems that keep sustainability work actually happening in the field.",
+      "As VP of Operations at CO2T.earth (founded 2024), personally led comprehensive software architecture, product design, and brand design for the Soil Additive Business — including Bigfoot character designs and overall visual identity from scratch.",
+      "Built industry-leading e-commerce and product sales software from the ground up, integrating biochar and carbon capture product sales into CO2T's environmental impact tracking system — infrastructure used for carbon credit issuance and traceability at CO2T.earth and CO2True.com.",
     ],
     highlights: [
       "Software engineer at Oregon Institute for a Better Way (2022–2024)",
-      "VP Operations at CO2T.earth — carbon and biochar platforms (2024–Present)",
-      "CO2True accreditation and greenhouse-gas reduction action planning — carbon credit platform",
-      "Field operations, traceability, and sustainability communication",
+      "VP Operations at CO2T.earth — architecture, product, brand, and ops (2024–Present)",
+      "Bigfoot mascot and brand design — built from scratch",
+      "E-commerce and impact tracking integrated for carbon credit issuance",
+      "CO2True.com accreditation and greenhouse-gas reduction action planning",
       "Built from Nature. Backed by Science. — product storytelling",
     ],
     employers: [
@@ -234,6 +235,7 @@ export const timelineEras: TimelineEra[] = [
       { label: "CO2T platform", href: "/projects/co2t-platform" },
       { label: "Carbon tracking", href: "/projects/carbon-tracking" },
       { label: "CO2T.earth", href: "https://co2t.earth", external: true },
+      { label: "CO2True.com", href: "https://co2true.com", external: true },
     ],
   },
   {

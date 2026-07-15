@@ -44,16 +44,14 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
         isExperience && "min-w-[110px] max-w-[170px] px-3 py-2 sm:min-w-[130px] sm:px-3.5 sm:py-2.5",
         data.preview && isTheme && "min-w-[130px] sm:min-w-[150px]",
         data.dimmed && "pointer-events-none opacity-[0.12]",
-        data.onStoryPath && !data.dimmed && "opacity-100",
         data.highlighted && "opacity-100",
-        data.isStoryFocus && "ring-2 ring-technology/60",
       )}
       style={{
         borderColor: surface.borderColor,
         borderWidth: isTheme || isPerson ? 2 : 1,
         background: surface.background,
         boxShadow:
-          data.highlighted || selected || data.isStoryFocus
+          data.highlighted || selected
             ? `0 0 28px ${surface.borderColor}55, 0 8px 24px rgba(0,0,0,0.35)`
             : "0 4px 16px rgba(0,0,0,0.28)",
       }}

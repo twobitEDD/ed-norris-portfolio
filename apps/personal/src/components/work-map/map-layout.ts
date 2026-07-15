@@ -3,17 +3,21 @@
  * Coordinates are tuned for full-page /map; `scale` multiplies spread further.
  */
 
-/** Story spine — clean left-to-right arc above Edd Norris anchor (homepage bento). */
+/** Relationship graph preview — companies, roles, clients, projects (not through-line spine). */
 const previewPositions: Record<string, { x: number; y: number }> = {
-  "person-ed": { x: 0, y: 220 },
+  "person-ed": { x: 0, y: 120 },
 
-  "theme-education": { x: -520, y: 20 },
-  "theme-games": { x: -340, y: -100 },
-  "theme-software": { x: -100, y: -180 },
-  "theme-marketing": { x: 160, y: -180 },
-  "practice-environment": { x: 400, y: -100 },
-  "company-co2t": { x: 540, y: 20 },
-  "project-ergo": { x: 260, y: 100 },
+  "exp-node-adidas": { x: -320, y: -60 },
+  "exp-node-2bit": { x: -120, y: -100 },
+  "company-2bit": { x: 80, y: -60 },
+  "client-google": { x: 280, y: -100 },
+  "client-dell": { x: 380, y: 20 },
+  "project-ergo": { x: 200, y: 40 },
+
+  "exp-node-oibw": { x: -360, y: 140 },
+  "exp-node-co2t": { x: -160, y: 180 },
+  "company-co2t": { x: 40, y: 220 },
+  "project-carbon": { x: 260, y: 200 },
 };
 
 const positions: Record<string, { x: number; y: number }> = {

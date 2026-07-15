@@ -1,7 +1,7 @@
 "use client";
 
 import { Tablet } from "@/components/physical-ui/Tablet";
-import { throughLineThesis } from "@/data/through-line";
+import { mapGraphThesis } from "@/data/through-line";
 import { cn } from "@/lib/cn";
 import { StudioWorkMap } from "./StudioWorkMap";
 
@@ -11,7 +11,7 @@ type MapTabletProps = {
   eagerLoad?: boolean;
   /** Taller layout for full-page /map route */
   fullPage?: boolean;
-  /** Story-path subset for homepage bento */
+  /** Relationship-graph subset for homepage bento */
   preview?: boolean;
 };
 
@@ -38,12 +38,12 @@ export function MapTablet({
             Work map
           </p>
           <h2 className="mt-1 font-editorial text-base font-medium text-screen-text sm:text-lg">
-            {preview ? "Career through-line." : "The living work map."}
+            {preview ? "How the work connects." : "The living work map."}
           </h2>
           <p className="mt-2 text-[11px] leading-relaxed text-screen-muted sm:text-xs">
             {preview
-              ? "Key stops on one arc — tap nodes or use Tell me a story. Open the full map for every role and connection."
-              : throughLineThesis}
+              ? "A sample of companies, clients, and projects — tap nodes to see relationships. Open the full map for every role and connection."
+              : mapGraphThesis}
           </p>
         </div>
         <StudioWorkMap eagerLoad={eagerLoad} fullPage={fullPage} preview={preview} />
