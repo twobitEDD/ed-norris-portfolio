@@ -2,6 +2,7 @@ import Link from "next/link";
 import { profile, practices } from "@/data";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { IdentityBadgeRow } from "@/components/hero/IdentityBadgeRow";
+import { WorkVennDiagram } from "@/components/hero/WorkVennDiagram";
 import { Paper } from "@/components/physical-ui/Paper";
 
 const roles = [
@@ -11,12 +12,6 @@ const roles = [
   "designer",
   "adventurer",
   "dad",
-];
-
-const disciplines = [
-  { label: "People", className: "text-environment border-environment/35 bg-environment/10" },
-  { label: "Technology", className: "text-technology border-technology/35 bg-technology/10" },
-  { label: "Planet", className: "text-environment border-environment/35 bg-environment/10" },
 ];
 
 export function IntroPaper() {
@@ -40,16 +35,7 @@ export function IntroPaper() {
             <ClientLogoStrip size="sm" ids={["adidas", "google", "co2t"]} />
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-2" aria-label="Where I work">
-            {disciplines.map((d) => (
-              <span
-                key={d.label}
-                className={`rounded-full border px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider ${d.className}`}
-              >
-                {d.label}
-              </span>
-            ))}
-          </div>
+          <WorkVennDiagram />
 
           <p className="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">{profile.summary}</p>
 
