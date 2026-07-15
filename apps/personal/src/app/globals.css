@@ -743,6 +743,111 @@ body {
   box-shadow: inset 0 0 0 1px rgba(31, 77, 46, 0.35);
 }
 
+/* iPad fork tablet — landscape practice paths */
+.device-frame--tablet-fork {
+  border-radius: 20px;
+  padding: 11px 12px;
+}
+
+.tablet-camera-dot {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  z-index: 30;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #1a1a1c;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.35);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.practice-fork {
+  background: linear-gradient(180deg, var(--screen-panel), var(--screen-black));
+}
+
+.practice-fork__header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.practice-fork__body {
+  isolation: isolate;
+}
+
+.practice-fork-path {
+  transition:
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.28s ease;
+}
+
+.practice-fork-path:hover {
+  z-index: 15;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.practice-fork-path--left {
+  clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
+}
+
+.practice-fork-path--right {
+  clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.practice-fork-path--left:hover {
+  transform: translate(-2px, -3px) rotate(-0.6deg);
+}
+
+.practice-fork-path--right:hover {
+  transform: translate(2px, -3px) rotate(0.6deg);
+}
+
+.practice-fork-path--env .practice-panel-scrim {
+  background: linear-gradient(
+    180deg,
+    rgba(31, 77, 46, 0.12) 0%,
+    rgba(31, 77, 46, 0.45) 50%,
+    rgba(0, 0, 0, 0.82) 100%
+  );
+}
+
+.practice-fork-path__wash {
+  opacity: 0.55;
+  transition: opacity 0.3s ease;
+}
+
+.practice-fork-path--env .practice-fork-path__wash {
+  background: radial-gradient(ellipse at 30% 25%, rgba(126, 166, 106, 0.55), transparent 65%);
+}
+
+.practice-fork-path--right .practice-fork-path__wash {
+  background: radial-gradient(ellipse at 70% 25%, rgba(140, 92, 199, 0.5), transparent 65%);
+}
+
+.practice-fork-path:hover .practice-fork-path__wash {
+  opacity: 0.72;
+}
+
+@media (max-width: 639px) {
+  .practice-fork-path--left {
+    clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+  }
+
+  .practice-fork-path--right {
+    clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .practice-fork-path--left:hover {
+    transform: translateY(-2px) rotate(-0.4deg);
+  }
+
+  .practice-fork-path--right:hover {
+    transform: translateY(-2px) rotate(0.4deg);
+  }
+}
+
 .wood-grain {
   opacity: 0.55;
   background-image:

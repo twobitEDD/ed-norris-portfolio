@@ -50,7 +50,7 @@ export function CinematicNorthStarHero() {
           </div>
 
           <div id="practices" className="min-w-0 md:mt-1 lg:mt-2" style={{ transform: "rotate(1deg)" }}>
-            <div className="mx-auto max-w-[420px] md:max-w-none md:ml-auto">
+            <div className="mx-auto w-full max-w-[520px] md:max-w-none md:ml-auto">
               <PracticeTablet />
             </div>
           </div>
