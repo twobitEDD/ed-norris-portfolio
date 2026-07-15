@@ -225,6 +225,51 @@ export const experiences: Experience[] = [
     featured: true,
   },
   {
+    id: "exp-bridge-2007",
+    title: "Independent Game Developer",
+    organization: "Freelance / career transition",
+    period: { start: "Oct 2006", end: "Oct 2007" },
+    summary:
+      "Independent projects and job search while completing Full Sail coursework — bridge between EA volunteer QA and Black Lantern Studios.",
+    details: [
+      "Continued building portfolio work and pursuing game-industry roles after EA volunteer QA concluded.",
+      "Overlapped with final Full Sail University software degree coursework (2005–2008).",
+    ],
+    disciplines: ["games"],
+    skills: ["game development", "portfolio building"],
+    projects: [],
+    featured: false,
+  },
+  {
+    id: "exp-bridge-2009",
+    title: "Independent Contract Work",
+    organization: "Freelance",
+    period: { start: "Nov 2009", end: "Dec 2009" },
+    summary:
+      "Brief independent contract period between Seamless Entertainment and Rocket Gaming Systems.",
+    details: ["Short transition window before joining Rocket Gaming Systems in January 2010."],
+    disciplines: ["games", "software"],
+    skills: ["contract work"],
+    projects: [],
+    featured: false,
+  },
+  {
+    id: "exp-2bit-pause",
+    title: "Studio Operations on Hold",
+    organization: "2bit Entertainment",
+    period: { start: "Jun 2014", end: "Mar 2018" },
+    summary:
+      "After Planet's Core studio operations wound down, 2bit remained on hold while focusing on public education, community mentoring, and independent practice — re-established as a software production business in April 2018.",
+    details: [
+      "Honest studio pause between the 2012–2014 founder era and the 2018 agency-backed re-launch.",
+      "Parallel community work: Portland Public Schools (2014–2017), Innovation Academy mentoring, and iD Tech summer instruction.",
+    ],
+    disciplines: ["games", "operations"],
+    skills: ["independent development", "community education"],
+    projects: ["proj-planets-core"],
+    featured: false,
+  },
+  {
     id: "exp-black-lantern",
     title: "Gameplay Lead Programmer",
     organization: "Black Lantern Studios",

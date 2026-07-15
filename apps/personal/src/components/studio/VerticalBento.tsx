@@ -139,9 +139,7 @@ export function VerticalBento() {
 
         <BentoCell id="game" deferPaint className="bento-cell--game">
           <StudioObject rotate={-1.2} className="bento-cell--game-object">
-            <LazyMount minHeight="140px">
-              <PacManEasterEgg className="w-full" />
-            </LazyMount>
+            <PacManEasterEgg className="w-full" />
           </StudioObject>
         </BentoCell>
 

@@ -170,7 +170,7 @@ export const graphNodes: GraphNode[] = [
     description:
       "Indie studio building Planet's Core (2012–2014). Re-established in 2018 as a software production business — agency contracting for Google, Dell, Washington University, and more.",
     connectionNarrative:
-      "Two chapters, one studio: Planet's Core as operational indie game work, then a 2018 re-establishment as agency-backed software production — including a continued contract engagement with adidas.",
+      "Two chapters, one studio: Planet's Core as operational indie game work (2012–2014), studio on hold during education and public-service work (2014–2018), then a 2018 re-establishment as agency-backed software production — including a continued contract engagement with adidas.",
   },
   {
     id: "exp-node-adidas",

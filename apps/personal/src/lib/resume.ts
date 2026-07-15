@@ -9,6 +9,7 @@ import {
 } from "@/data";
 import { DEFAULT_RESUME_PRESET_ID } from "@/data/resume-presets";
 import type { Discipline, Education, ResumePreset } from "@/data/types";
+import { parsePeriodDate, sortExperiencesChronologically } from "@/lib/career-dates";
 
 export type ResumeConfig = {
   presetId: string;
@@ -49,8 +50,7 @@ function getDefaultPreset() {
 }
 
 function parsePeriodStart(start: string): number {
-  const yearMatch = start.match(/\d{4}/);
-  return yearMatch ? Number(yearMatch[0]) : 0;
+  return parsePeriodDate(start);
 }
 
 function buildEducationRows(includeEducation: boolean): ResumeEducationRow[] {
@@ -120,8 +120,8 @@ export function applyPreset(presetId: string): ResumeConfig {
 }
 
 export function buildResumeContent(config: ResumeConfig): ResumeContent {
-  const filteredExperiences = experiences.filter((exp) =>
-    exp.disciplines.some((d) => config.disciplines.includes(d)),
+  const filteredExperiences = sortExperiencesChronologically(
+    experiences.filter((exp) => exp.disciplines.some((d) => config.disciplines.includes(d))),
   );
   const selectedProjects = projects.filter((p) => config.selectedProjectIds.includes(p.id));
   const filteredSkills = config.includeSkills

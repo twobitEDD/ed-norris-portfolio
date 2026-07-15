@@ -18,7 +18,7 @@ export const timelineEras: TimelineEra[] = [
     title: "Game industry foundation",
     organization: "EA · Black Lantern · Seamless · Rocket Gaming",
     summary:
-      "Gameplay programming and production across licensed titles, slot systems, and team leadership — from volunteer QA at EA Tiburon to lead programmer roles.",
+      "Gameplay programming and production across licensed titles, slot systems, and team leadership — from volunteer QA at EA Tiburon through independent transition work (2006–2007) to lead programmer roles.",
     disciplines: ["games", "software"],
     polaroidGradient: "linear-gradient(160deg, #4a3f6e, #1a1528)",
   },
@@ -28,9 +28,19 @@ export const timelineEras: TimelineEra[] = [
     title: "2Bit Entertainment",
     organization: "Founder · Software production business",
     summary:
-      "Operational studio 2012–2014 building indie game Planet's Core. Re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and additional clients.",
+      "Operational studio 2012–2014 building indie game Planet's Core. Studio on hold 2014–2018 during education and public-service work. Re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and additional clients.",
     disciplines: ["games", "marketing", "operations"],
     polaroidGradient: "linear-gradient(160deg, #6b5a8a, #2a2038)",
+  },
+  {
+    id: "era-education",
+    period: "2014–2018",
+    title: "Education & public service",
+    organization: "Portland Public Schools · Innovation Academy · iD Tech",
+    summary:
+      "Special education support, afterschool mentoring, and summer STEM instruction while 2bit studio operations were on hold — deliberate community and inclusive-learning work before the 2018 studio re-launch and adidas Future Team role.",
+    disciplines: ["operations"],
+    polaroidGradient: "linear-gradient(160deg, #6a5a4a, #2a2218)",
   },
   {
     id: "era-software",

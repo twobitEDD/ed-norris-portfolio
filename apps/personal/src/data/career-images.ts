@@ -35,6 +35,11 @@ export const eraImages: Record<string, CareerImageEntry> = {
     alt: "2bit Entertainment studio — indie game development desk",
     status: "placeholder",
   },
+  "era-education": {
+    src: "/career/era-software.jpg",
+    alt: "Education and public service — classroom and mentoring work",
+    status: "placeholder",
+  },
   "era-software": {
     src: "/career/era-software.jpg",
     alt: "Software and brand prototyping — innovation lab workspace",

@@ -19,6 +19,7 @@ const GameTablet = dynamic(
 const DOT_SPACING = 36;
 const PAC_SIZE = 28;
 const PAC_SPEED = 120;
+const REVEAL_THRESHOLD = 0.05;
 
 type PacManEasterEggProps = {
   className?: string;
@@ -39,9 +40,11 @@ function PacManGlyph({ mouth, className }: { mouth: number; className?: string }
 function ScrollPacAnimation({
   reducedMotion,
   onActivate,
+  animationKey,
 }: {
   reducedMotion: boolean;
   onActivate: () => void;
+  animationKey: number;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouthRef = useRef(0);
@@ -50,6 +53,12 @@ function ScrollPacAnimation({
   const frameRef = useRef(0);
 
   const dotCount = useRef(0);
+
+  useEffect(() => {
+    progressRef.current = 0;
+    eatenRef.current.clear();
+    mouthRef.current = 0;
+  }, [animationKey]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -123,7 +132,7 @@ function ScrollPacAnimation({
       cancelAnimationFrame(frameRef.current);
       window.removeEventListener("resize", resize);
     };
-  }, [reducedMotion]);
+  }, [animationKey, reducedMotion]);
 
   if (reducedMotion) {
     return (
@@ -145,21 +154,30 @@ function ScrollPacAnimation({
     <button
       type="button"
       onClick={onActivate}
-      className="group relative w-full overflow-hidden rounded-2xl border border-games/25 bg-gradient-to-r from-wood-dark/50 via-wood-dark/30 to-wood-dark/50 py-2 transition hover:border-games/50 hover:shadow-[0_0_24px_rgba(152,92,255,0.15)]"
+      className="group relative w-full overflow-hidden rounded-2xl border border-games/35 bg-gradient-to-r from-wood-dark/60 via-games/10 to-wood-dark/60 py-2 shadow-[0_0_20px_rgba(140,92,199,0.12)] transition hover:border-games/60 hover:shadow-[0_0_28px_rgba(152,92,255,0.22)]"
       aria-label="Click Pac-Man to open Dot Explorer"
     >
       <canvas ref={canvasRef} className="block h-[70px] w-full" />
-      <span className="pointer-events-none absolute inset-x-0 bottom-1 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-paper-cream/45 group-hover:text-paper-cream/70">
-        Click Pac-Man to play
+      <span className="pointer-events-none absolute inset-x-0 bottom-1 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-paper-cream/65 group-hover:text-paper-cream/90">
+        Click Pac-Man to play Dot Explorer
       </span>
     </button>
   );
+}
+
+function isElementRevealed(el: HTMLElement, threshold: number) {
+  const rect = el.getBoundingClientRect();
+  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+  if (visibleHeight <= 0) return false;
+  return visibleHeight / Math.max(rect.height, 1) >= threshold;
 }
 
 export function PacManEasterEgg({ className }: PacManEasterEggProps) {
   const placeholderRef = useRef<HTMLDivElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [revealed, setRevealed] = useState(false);
+  const [revealCount, setRevealCount] = useState(0);
   const [gameOpen, setGameOpen] = useState(false);
   const [closing, setClosing] = useState(false);
 
@@ -175,13 +193,30 @@ export function PacManEasterEgg({ className }: PacManEasterEggProps) {
     const el = placeholderRef.current;
     if (!el) return;
 
+    let wasVisible = false;
+
+    const handleVisibility = (visible: boolean) => {
+      if (!visible) {
+        wasVisible = false;
+        return;
+      }
+      if (wasVisible) return;
+      wasVisible = true;
+      setRevealed(true);
+      setRevealCount((count) => count + 1);
+    };
+
+    if (isElementRevealed(el, REVEAL_THRESHOLD)) {
+      handleVisibility(true);
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
-          setRevealed(true);
-        }
+        handleVisibility(
+          entry.isIntersecting && entry.intersectionRatio >= REVEAL_THRESHOLD,
+        );
       },
-      { threshold: [0, 0.2, 0.5] },
+      { threshold: [0, REVEAL_THRESHOLD, 0.25, 0.5], rootMargin: "0px 0px -5% 0px" },
     );
 
     observer.observe(el);
@@ -223,17 +258,26 @@ export function PacManEasterEgg({ className }: PacManEasterEggProps) {
       <div ref={placeholderRef} className={cn("relative", className)}>
         {!revealed && (
           <div
-            className="flex min-h-[120px] items-center justify-center rounded-2xl border border-dashed border-paper-cream/10 bg-wood-dark/20 sm:min-h-[140px]"
+            className="flex min-h-[120px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-games/40 bg-gradient-to-b from-wood-dark/35 to-games/10 px-4 sm:min-h-[140px]"
             aria-hidden
           >
-            <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-paper-cream/25">
-              Scroll to discover
+            <PacManGlyph mouth={0.35} className="h-8 w-8 animate-pulse opacity-80" />
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper-cream/60">
+              Scroll down — something&apos;s hiding
+            </p>
+            <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-games/80">
+              Pac-Man eats dots when you arrive
             </p>
           </div>
         )}
 
         {revealed && !gameOpen && (
-          <ScrollPacAnimation reducedMotion={reducedMotion} onActivate={openGame} />
+          <ScrollPacAnimation
+            key={revealCount}
+            animationKey={revealCount}
+            reducedMotion={reducedMotion}
+            onActivate={openGame}
+          />
         )}
       </div>
 
