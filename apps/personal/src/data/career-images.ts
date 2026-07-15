@@ -36,9 +36,10 @@ export const eraImages: Record<string, CareerImageEntry> = {
     status: "placeholder",
   },
   "era-education": {
-    src: "/career/era-software.jpg",
-    alt: "Education and public service — classroom and mentoring work",
+    src: "/career/era-education.jpg",
+    alt: "Education and public service — mentoring students in a colorful STEM classroom computer lab",
     status: "placeholder",
+    objectPosition: "center 35%",
   },
   "era-software": {
     src: "/career/era-software.jpg",
