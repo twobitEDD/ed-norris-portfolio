@@ -7,11 +7,11 @@
 const employmentOverviewPositions: Record<string, { x: number; y: number }> = {
   "person-ed": { x: 0, y: 150 },
 
-  "exp-node-ea": { x: -640, y: -10 },
-  "exp-node-black-lantern": { x: -540, y: -25 },
-  "exp-node-seamless": { x: -450, y: -40 },
-  "exp-node-rocket": { x: -370, y: -55 },
-  "exp-node-2bit": { x: -290, y: -70 },
+  "exp-node-ea": { x: -700, y: -5 },
+  "exp-node-black-lantern": { x: -590, y: -22 },
+  "exp-node-seamless": { x: -480, y: -38 },
+  "exp-node-rocket": { x: -370, y: -54 },
+  "exp-node-2bit": { x: -260, y: -70 },
   "exp-node-pps": { x: -80, y: -50 },
   "exp-node-adidas": { x: 120, y: -90 },
   "client-google": { x: 320, y: -50 },

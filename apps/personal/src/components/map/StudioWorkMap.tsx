@@ -254,8 +254,8 @@ function StudioWorkMapInner({
             edgeTypes={edgeTypes}
             onlyRenderVisibleElements
             fitView
-            fitViewOptions={{ padding: isOverview ? 0.32 : fullPage ? 0.28 : 0.24 }}
-            minZoom={isOverview ? 0.4 : 0.18}
+            fitViewOptions={{ padding: isOverview ? 0.28 : fullPage ? 0.28 : 0.24 }}
+            minZoom={isOverview ? 0.32 : 0.18}
             maxZoom={isOverview ? 1 : 1.1}
             proOptions={{ hideAttribution: true }}
             className="work-map-flow bg-transparent"
