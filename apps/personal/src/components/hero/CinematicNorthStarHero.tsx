@@ -17,7 +17,7 @@ export function CinematicNorthStarHero() {
   }, [mode]);
 
   return (
-    <section id="hero" className="relative z-[3] max-h-[90svh] min-h-[82svh] scroll-mt-20 sm:min-h-[88svh]">
+    <section id="hero" className="relative min-h-[82svh] scroll-mt-20 pb-10 sm:min-h-[88svh] sm:pb-14">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
         <Image
           src="/northstar-day.webp"
@@ -43,13 +43,13 @@ export function CinematicNorthStarHero() {
         <div className="absolute inset-x-0 bottom-0 h-[38vh] bg-gradient-to-b from-transparent via-wood-dark/25 to-wood-dark/90" />
       </div>
 
-      <div className="relative z-[1] mx-auto flex min-h-[82svh] max-w-[920px] flex-col px-4 pb-16 pt-[4.75rem] sm:min-h-[88svh] sm:px-8 sm:pb-20 sm:pt-28">
+      <div className="relative mx-auto flex min-h-[82svh] max-w-[920px] flex-col px-4 pb-12 pt-[4.75rem] sm:min-h-[88svh] sm:px-8 sm:pb-14 sm:pt-28">
         <div className="grid flex-1 items-start gap-5 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-7 lg:items-end lg:gap-8">
           <div id="intro" className="min-w-0" style={{ transform: "rotate(-1.2deg)" }}>
             <IntroPaper />
           </div>
 
-          <div id="practices" className="min-w-0 md:-mt-2 lg:-mt-10" style={{ transform: "rotate(1deg)" }}>
+          <div id="practices" className="min-w-0 md:mt-1 lg:mt-2" style={{ transform: "rotate(1deg)" }}>
             <div className="mx-auto max-w-[420px] md:max-w-none md:ml-auto">
               <PracticeTablet />
             </div>

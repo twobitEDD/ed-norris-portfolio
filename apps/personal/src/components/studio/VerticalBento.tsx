@@ -89,7 +89,7 @@ export function VerticalBento() {
   };
 
   return (
-    <section className="vertical-bento relative z-[1] px-4 pb-24 pt-6 sm:px-8 sm:pt-8 lg:pt-10">
+    <section className="vertical-bento relative px-4 pb-24 pt-10 sm:px-8 sm:pt-12 lg:pt-14">
       <div className="vertical-bento__grid mx-auto max-w-[920px]">
         <BentoCell id="game" deferPaint className="bento-cell--game">
           <StudioObject rotate={-1.2} className="bento-cell--game-object flex flex-col items-center">
