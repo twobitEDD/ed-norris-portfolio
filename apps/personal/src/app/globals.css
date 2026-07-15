@@ -79,7 +79,8 @@ body {
 
 .studio-desk-flow {
   position: relative;
-  padding-top: 1.5rem;
+  z-index: 1;
+  padding-top: 2.5rem;
   background:
     linear-gradient(180deg, transparent 0%, rgba(30, 20, 14, 0.72) 4%, rgba(30, 20, 14, 0.94) 12%, #1a120c 100%);
 }
@@ -184,14 +185,23 @@ body {
 
 .bento-cell--game {
   grid-column: 1 / -1;
-  padding-top: 1.25rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
   padding-bottom: 0.75rem;
 }
 
 @media (min-width: 640px) {
   .bento-cell--game {
-    padding-top: 1.5rem;
+    margin-top: 3rem;
+    padding-top: 2.5rem;
     padding-bottom: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bento-cell--game {
+    margin-top: 3.5rem;
+    padding-top: 3rem;
   }
 }
 
@@ -220,7 +230,8 @@ body {
 }
 
 .bento-cell--game-object {
-  transform-origin: center center;
+  transform-origin: center top;
+  padding-top: 0.5rem;
 }
 
 .studio-object {

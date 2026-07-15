@@ -17,7 +17,7 @@ export function CinematicNorthStarHero() {
   }, [mode]);
 
   return (
-    <section id="hero" className="relative max-h-[90svh] min-h-[82svh] scroll-mt-20 sm:min-h-[88svh]">
+    <section id="hero" className="relative z-[3] max-h-[90svh] min-h-[82svh] scroll-mt-20 sm:min-h-[88svh]">
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
         <Image
           src="/northstar-day.webp"
