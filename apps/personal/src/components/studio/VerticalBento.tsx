@@ -4,11 +4,10 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { profile, resumePresets } from "@/data";
-import { ContactCTAs } from "@/components/contact/ContactCTAs";
+import { ContactPhoneApp } from "@/components/contact/ContactPhoneApp";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { Notebook } from "@/components/physical-ui/Notebook";
-import { Phone } from "@/components/physical-ui/Phone";
 import { ResumeBusinessCard } from "@/components/resume/ResumeBusinessCard";
 import { Paper } from "@/components/physical-ui/Paper";
 import { StickyNote } from "@/components/physical-ui/StickyNote";
@@ -209,28 +208,7 @@ export function VerticalBento() {
         <BentoCell id="contact" span="wide" deferPaint className="bento-cell--contact">
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-12">
             <StudioObject rotate={-1.2}>
-              <Phone orientation="landscape" screenTheme="warm">
-                <h2 className="font-editorial text-xl font-semibold text-ink sm:text-2xl">
-                  Let&apos;s build something useful.
-                </h2>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft sm:mt-3">{profile.availability}</p>
-                <ContactCTAs variant="desk" className="mt-4 sm:mt-5" />
-              </Phone>
-
-              <Notebook title="Contact" className="mt-6">
-                <div className="mt-3 space-y-3 text-sm text-ink">
-                  {profile.links.map((link) => (
-                    <a
-                      key={link.url}
-                      href={link.url}
-                      className="block font-medium underline-offset-4 hover:underline"
-                    >
-                      {link.label}
-                    </a>
-                  ))}
-                  <p className="font-mono text-xs uppercase tracking-wider text-ink-soft">{profile.location}</p>
-                </div>
-              </Notebook>
+              <ContactPhoneApp />
             </StudioObject>
 
             <StudioObject rotate={0.8}>

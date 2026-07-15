@@ -6,6 +6,8 @@ type PhoneOrientation = "portrait" | "landscape";
 type PhoneScreenTheme = "device" | "warm";
 type PhoneSize = "default" | "large";
 
+type PhoneScreenLayout = "centered" | "app";
+
 type PhoneProps = {
   children: React.ReactNode;
   className?: string;
@@ -16,6 +18,8 @@ type PhoneProps = {
   orientation?: PhoneOrientation;
   /** `warm` — paper-toned screen for studio contact content. */
   screenTheme?: PhoneScreenTheme;
+  /** `app` — full-bleed in-app layout (contact slide flow). */
+  screenLayout?: PhoneScreenLayout;
   /** `large` — full bento-width studio device (~920px). */
   size?: PhoneSize;
 };
@@ -34,11 +38,13 @@ export function Phone({
   mode = "card",
   orientation = "portrait",
   screenTheme = "device",
+  screenLayout = "centered",
   size = "default",
 }: PhoneProps) {
   const isLauncher = mode === "launcher";
   const isLandscape = orientation === "landscape";
   const isLarge = size === "large";
+  const isAppLayout = screenLayout === "app";
   const showChrome = isLauncher || isLandscape;
 
   return (
@@ -88,8 +94,9 @@ export function Phone({
           ) : (
             <div
               className={cn(
-                "flex flex-1 flex-col justify-center",
-                isLandscape ? "px-5 py-4 sm:px-7 sm:py-5" : "p-5",
+                "flex min-h-0 flex-1 flex-col",
+                isAppLayout ? "overflow-hidden px-3 py-3 sm:px-4 sm:py-3.5" : "justify-center",
+                !isAppLayout && (isLandscape ? "px-5 py-4 sm:px-7 sm:py-5" : "p-5"),
               )}
             >
               {children}
