@@ -169,3 +169,11 @@ export function getNodeImage(nodeId: string): CareerImageEntry | undefined {
 export function getProjectImage(projectId: string): CareerImageEntry | undefined {
   return projectImages[projectId];
 }
+
+/** Contact section polaroid — Oregon mountain sunset. */
+export const contactPolaroidImage: CareerImageEntry = {
+  src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80",
+  alt: "Mountain sunset over Oregon foothills",
+  status: "confirmed",
+  objectPosition: "center",
+};

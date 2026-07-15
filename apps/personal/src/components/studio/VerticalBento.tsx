@@ -16,7 +16,9 @@ import { Notebook } from "@/components/physical-ui/Notebook";
 import { Phone } from "@/components/physical-ui/Phone";
 import { Paper } from "@/components/physical-ui/Paper";
 import { StickyNote } from "@/components/physical-ui/StickyNote";
+import { Polaroid } from "@/components/physical-ui/Polaroid";
 import { Tablet } from "@/components/physical-ui/Tablet";
+import { contactPolaroidImage } from "@/data/career-images";
 import { ResumePreview } from "@/components/resume/ResumePreview";
 import { BentoCell } from "@/components/studio/BentoCell";
 import { LazyMount } from "@/components/studio/LazyMount";
@@ -261,7 +263,7 @@ export function VerticalBento() {
 
         <BentoCell id="work" deferPaint className="bento-cell--work">
           <StudioObject rotate={0.5}>
-            <Paper className="mb-6">
+            <Paper variant="desk" className="mb-6">
               <h2 className="font-editorial text-2xl font-semibold text-ink sm:text-3xl">
                 Work that solves real problems.
               </h2>
@@ -282,14 +284,14 @@ export function VerticalBento() {
 
         <BentoCell id="contact" span="wide" deferPaint className="bento-cell--contact">
           <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-            <StudioObject rotate={-1}>
-              <Paper>
-                <h2 className="font-editorial text-2xl font-semibold text-ink sm:text-3xl">
+            <StudioObject rotate={-2}>
+              <Phone orientation="landscape" screenTheme="warm">
+                <h2 className="font-editorial text-xl font-semibold text-ink sm:text-2xl">
                   Let&apos;s build something useful.
                 </h2>
-                <p className="mt-4 text-sm leading-relaxed text-ink-soft">{profile.availability}</p>
-                <ContactCTAs variant="desk" className="mt-6" />
-              </Paper>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft sm:mt-3">{profile.availability}</p>
+                <ContactCTAs variant="desk" className="mt-4 sm:mt-5" />
+              </Phone>
 
               <Notebook title="Contact" className="mt-6">
                 <div className="mt-3 space-y-3 text-sm text-ink">
@@ -308,19 +310,14 @@ export function VerticalBento() {
             </StudioObject>
 
             <StudioObject rotate={1.2}>
-              <Tablet glow="green" className="w-full">
-                <div
-                  className="flex min-h-[260px] flex-col items-center justify-end p-8 text-center"
-                  style={{
-                    background:
-                      "linear-gradient(180deg, transparent 15%, rgba(0,0,0,0.78) 100%), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80') center/cover",
-                  }}
-                >
-                  <p className="font-editorial text-xl font-semibold text-white sm:text-2xl">
-                    Human-centered systems for consequential work.
-                  </p>
-                </div>
-              </Tablet>
+              <Polaroid
+                size="lg"
+                rotation={0}
+                image={contactPolaroidImage}
+                caption="Human-centered systems for consequential work."
+                subtitle={`${profile.location} · ${profile.name}`}
+                className="mx-auto lg:ml-auto"
+              />
             </StudioObject>
           </div>
 

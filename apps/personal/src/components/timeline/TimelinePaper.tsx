@@ -43,7 +43,12 @@ export function TimelinePaper({ compact }: { compact?: boolean }) {
               />
               <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-start">
                 {!compact && (
-                  <Polaroid caption={era.period} eraId={era.id} className="shrink-0 scale-90" />
+                  <Polaroid
+                    caption={era.caption}
+                    eraId={era.id}
+                    gradient={era.polaroidGradient}
+                    className="shrink-0 scale-90"
+                  />
                 )}
                 <div className="min-w-0">
                   <p className="font-mono text-[9px] uppercase tracking-wider text-ink-soft">{era.period}</p>

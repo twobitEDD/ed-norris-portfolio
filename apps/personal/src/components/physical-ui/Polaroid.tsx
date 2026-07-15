@@ -1,48 +1,63 @@
 import Image from "next/image";
 import { cn } from "@/lib/cn";
-import { getEraImage } from "@/data/career-images";
+import { getEraImage, type CareerImageEntry } from "@/data/career-images";
 import { ObjectShadow } from "./ObjectShadow";
 
 export function Polaroid({
   caption,
   eraId,
+  image,
   className,
   gradient,
+  rotation = 4,
+  size = "sm",
+  subtitle,
 }: {
   caption?: string;
   eraId?: string;
+  image?: CareerImageEntry;
   className?: string;
   gradient?: string;
+  rotation?: number;
+  size?: "sm" | "lg";
+  subtitle?: string;
 }) {
   const eraImage = eraId ? getEraImage(eraId) : undefined;
+  const photo = image ?? eraImage;
+  const isLarge = size === "lg";
 
   return (
-    <div className={cn("relative w-24 sm:w-28", className)} style={{ transform: "rotate(4deg)" }}>
-      <ObjectShadow depth={2} />
-      <div className="bg-white p-1.5 pb-7 shadow-paper">
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-ink/10">
-          {eraImage ? (
+    <div
+      className={cn("relative", isLarge ? "w-full max-w-md" : "w-24 sm:w-28", className)}
+      style={rotation !== 0 ? { transform: `rotate(${rotation}deg)` } : undefined}
+    >
+      <ObjectShadow depth={isLarge ? 3 : 2} />
+      <div className={cn("polaroid-frame shadow-paper", isLarge && "polaroid-frame--lg")}>
+        <div className="polaroid-image-wrap">
+          {photo ? (
             <Image
-              src={eraImage.src}
-              alt={eraImage.alt}
+              src={photo.src}
+              alt={photo.alt}
               fill
-              className="object-cover"
-              style={{ objectPosition: eraImage.objectPosition ?? "center" }}
-              sizes="112px"
+              className="polaroid-photo object-cover"
+              style={{ objectPosition: photo.objectPosition ?? "center" }}
+              sizes={isLarge ? "(max-width: 768px) 90vw, 448px" : "112px"}
             />
           ) : (
             <div
-              className="h-full w-full bg-cover bg-center"
+              className="polaroid-photo polaroid-placeholder h-full w-full bg-cover bg-center"
               style={{
                 background: gradient ?? "linear-gradient(160deg, #5a7a52, #2d4a35)",
               }}
             />
           )}
+          <div className="polaroid-vintage-fx" aria-hidden="true" />
         </div>
         {caption && (
-          <p className="handwritten absolute bottom-1.5 left-1 right-1 text-center text-[10px] text-ink">
-            {caption}
-          </p>
+          <div className={cn("polaroid-caption", isLarge && "polaroid-caption--lg")}>
+            <p className="handwritten polaroid-caption-text">{caption}</p>
+            {subtitle && <p className="polaroid-subtitle">{subtitle}</p>}
+          </div>
         )}
       </div>
     </div>

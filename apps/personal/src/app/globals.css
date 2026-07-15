@@ -10,8 +10,10 @@
   --wood-light: #8a6548;
   --wood-warm: #a07850;
 
-  --paper-cream: #e8dfc8;
-  --paper-aged: #cfc1a3;
+  --paper-cream: #f5f0e4;
+  --paper-aged: #e5dbc4;
+  --paper-fold: #d4c8ae;
+  --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
   --ink: #1b211e;
   --ink-soft: #4e5148;
 
@@ -36,7 +38,7 @@
   --operations: #b6a65d;
   --data: #bd5878;
 
-  --shadow-paper: 0 2px 2px rgba(0, 0, 0, 0.18), 0 14px 30px rgba(0, 0, 0, 0.2);
+  --shadow-paper: 0 1px 1px rgba(0, 0, 0, 0.12), 0 3px 6px rgba(0, 0, 0, 0.1), 0 16px 36px rgba(0, 0, 0, 0.18);
   --shadow-device: 0 4px 5px rgba(0, 0, 0, 0.2), 0 16px 40px rgba(0, 0, 0, 0.28);
   --ease-studio: cubic-bezier(0.22, 1, 0.36, 1);
 
@@ -325,9 +327,65 @@ body {
 .paper-surface {
   background-color: var(--paper-cream);
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E"),
-    linear-gradient(145deg, var(--paper-cream), var(--paper-aged));
-  box-shadow: var(--shadow-paper);
+    var(--paper-texture),
+    radial-gradient(ellipse 120% 80% at 18% 8%, rgba(255, 252, 245, 0.9), transparent 55%),
+    linear-gradient(152deg, var(--paper-cream) 0%, #f0e9da 42%, var(--paper-aged) 100%);
+  border: 1px solid rgba(60, 48, 32, 0.07);
+  box-shadow:
+    var(--shadow-paper),
+    inset 0 1px 0 rgba(255, 252, 245, 0.75),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04),
+    inset 1px 0 0 rgba(255, 250, 240, 0.35),
+    inset -1px 0 0 rgba(0, 0, 0, 0.03);
+}
+
+.paper-surface--desk {
+  clip-path: polygon(
+    0.4% 0.6%,
+    97.8% 0.2%,
+    99.6% 0.8%,
+    99.8% 2.2%,
+    100% 98.2%,
+    99.2% 99.6%,
+    0.6% 100%,
+    0% 98.8%,
+    0.2% 0.9%
+  );
+}
+
+.paper-surface--desk .paper-dog-ear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.paper-surface--desk .paper-dog-ear::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 26px 26px 0;
+  border-color: transparent var(--paper-fold) transparent transparent;
+  filter: brightness(0.94);
+}
+
+.paper-surface--desk .paper-dog-ear::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  background: linear-gradient(225deg, rgba(0, 0, 0, 0.1) 0%, transparent 55%);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
 }
 
 .paper-torn {
@@ -349,6 +407,98 @@ body {
 
 .handwritten {
   font-family: var(--font-caveat), cursive;
+}
+
+/* Polaroid — aged instant photo */
+.polaroid-frame {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+    linear-gradient(168deg, #f8f3e8 0%, #ede4d2 48%, #e4d9c3 100%);
+  padding: 5px 5px 0;
+}
+
+.polaroid-image-wrap {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  overflow: hidden;
+  background: #1a1814;
+}
+
+.polaroid-photo {
+  filter: sepia(0.34) contrast(1.06) saturate(0.8) brightness(0.93);
+}
+
+.polaroid-placeholder {
+  filter: sepia(0.42) contrast(1.04) saturate(0.72) brightness(0.9);
+}
+
+.polaroid-vintage-fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.55'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 88% 78% at 50% 44%, transparent 42%, rgba(18, 12, 8, 0.38) 100%),
+    linear-gradient(
+      180deg,
+      rgba(255, 236, 200, 0.08) 0%,
+      transparent 22%,
+      transparent 78%,
+      rgba(30, 20, 12, 0.12) 100%
+    );
+  mix-blend-mode: multiply;
+  opacity: 0.62;
+}
+
+.polaroid-caption {
+  display: flex;
+  min-height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 6px 7px;
+}
+
+.polaroid-caption-text {
+  color: #2a241c;
+  font-size: 0.72rem;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-align: center;
+  text-shadow: 0 0.5px 0 rgba(255, 255, 255, 0.35);
+  transform: rotate(-0.6deg);
+}
+
+[data-studio-mode="night"] .polaroid-frame {
+  filter: brightness(0.94) sepia(0.08);
+}
+
+.polaroid-frame--lg {
+  padding: 12px 12px 0;
+}
+
+.polaroid-caption--lg {
+  flex-direction: column;
+  gap: 6px;
+  min-height: 5.5rem;
+  padding: 12px 20px 22px;
+}
+
+.polaroid-frame--lg .polaroid-caption-text {
+  font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+  line-height: 1.25;
+  max-width: 30ch;
+}
+
+.polaroid-subtitle {
+  color: #5a5048;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  transform: rotate(-0.3deg);
 }
 
 /* Devices */
@@ -402,6 +552,53 @@ body {
   background: rgba(255, 255, 255, 0.32);
   transform: translateX(-50%);
   pointer-events: none;
+}
+
+/* Landscape phone — contact card held sideways */
+.device-frame--phone-landscape {
+  border-radius: 24px;
+  padding: 10px 14px;
+}
+
+.device-frame--phone-landscape .screen-surface {
+  border-radius: 16px;
+}
+
+.phone-dynamic-island--landscape {
+  top: 50%;
+  left: 8px;
+  width: 18px;
+  height: 56px;
+  transform: translateY(-50%);
+}
+
+.phone-home-indicator--landscape {
+  bottom: 5px;
+  width: 72px;
+  height: 3px;
+}
+
+.screen-surface--warm {
+  background-color: var(--paper-cream);
+  background-image:
+    var(--paper-texture),
+    linear-gradient(145deg, var(--paper-cream), var(--paper-aged));
+  color: var(--ink);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.screen-surface--warm .phone-dynamic-island {
+  background: #1a1814;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.screen-surface--warm .phone-home-indicator {
+  background: rgba(0, 0, 0, 0.16);
+}
+
+[data-studio-mode="night"] .screen-surface--warm {
+  filter: brightness(0.92) sepia(0.06);
 }
 
 [data-studio-mode="night"] .screen-surface {

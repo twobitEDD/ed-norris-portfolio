@@ -2,6 +2,8 @@ import { cn } from "@/lib/cn";
 import { ObjectShadow } from "./ObjectShadow";
 
 type PhoneGlow = "none" | "green" | "cyan" | "purple" | "amber";
+type PhoneOrientation = "portrait" | "landscape";
+type PhoneScreenTheme = "device" | "warm";
 
 type PhoneProps = {
   children: React.ReactNode;
@@ -9,6 +11,10 @@ type PhoneProps = {
   glow?: PhoneGlow;
   /** `card` — padded content (résumé preview). `launcher` — full-bleed app screen. */
   mode?: "card" | "launcher";
+  /** `landscape` — phone held sideways (contact card). */
+  orientation?: PhoneOrientation;
+  /** `warm` — paper-toned screen for studio contact content. */
+  screenTheme?: PhoneScreenTheme;
 };
 
 const glowClass: Record<Exclude<PhoneGlow, "none">, string> = {
@@ -18,33 +24,77 @@ const glowClass: Record<Exclude<PhoneGlow, "none">, string> = {
   amber: "device-glow-amber",
 };
 
-export function Phone({ children, className, glow = "none", mode = "card" }: PhoneProps) {
+export function Phone({
+  children,
+  className,
+  glow = "none",
+  mode = "card",
+  orientation = "portrait",
+  screenTheme = "device",
+}: PhoneProps) {
   const isLauncher = mode === "launcher";
+  const isLandscape = orientation === "landscape";
+  const showChrome = isLauncher || isLandscape;
 
   return (
     <div
       className={cn(
         "relative",
-        isLauncher ? "mx-auto w-[min(100%,210px)] sm:w-[220px]" : "w-[220px] sm:w-[248px]",
+        isLandscape
+          ? "mx-auto w-full max-w-[min(100%,520px)]"
+          : isLauncher
+            ? "mx-auto w-[min(100%,210px)] sm:w-[220px]"
+            : "w-[220px] sm:w-[248px]",
         className,
       )}
     >
-      <ObjectShadow depth={4} />
+      <ObjectShadow depth={isLandscape ? 3 : 4} />
       <div
         className={cn(
           "device-frame device-bezel device-frame--phone",
+          isLandscape && "device-frame--phone-landscape",
           glow !== "none" && glowClass[glow],
         )}
       >
         <div
           className={cn(
             "screen-surface relative flex flex-col overflow-hidden",
-            isLauncher ? "aspect-[9/19] min-h-[400px]" : "max-h-[440px] overflow-y-auto",
+            screenTheme === "warm" && "screen-surface--warm",
+            isLandscape && "aspect-[19/9] min-h-0",
+            isLauncher && !isLandscape && "aspect-[9/19] min-h-[400px]",
+            !isLauncher && !isLandscape && "max-h-[440px] overflow-y-auto",
           )}
         >
-          {isLauncher && <div className="phone-dynamic-island" aria-hidden />}
-          {isLauncher ? children : <div className="p-5">{children}</div>}
-          {isLauncher && <div className="phone-home-indicator" aria-hidden />}
+          {showChrome && (
+            <div
+              className={cn(
+                "phone-dynamic-island",
+                isLandscape && "phone-dynamic-island--landscape",
+              )}
+              aria-hidden
+            />
+          )}
+          {isLauncher && !isLandscape ? (
+            children
+          ) : (
+            <div
+              className={cn(
+                "flex flex-1 flex-col justify-center",
+                isLandscape ? "px-5 py-4 sm:px-7 sm:py-5" : "p-5",
+              )}
+            >
+              {children}
+            </div>
+          )}
+          {showChrome && (
+            <div
+              className={cn(
+                "phone-home-indicator",
+                isLandscape && "phone-home-indicator--landscape",
+              )}
+              aria-hidden
+            />
+          )}
         </div>
       </div>
     </div>

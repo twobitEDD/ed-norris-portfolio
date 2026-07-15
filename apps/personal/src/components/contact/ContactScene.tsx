@@ -1,6 +1,7 @@
 import { profile } from "@/data";
 import { Paper } from "@/components/physical-ui/Paper";
-import { Tablet } from "@/components/physical-ui/Tablet";
+import { Polaroid } from "@/components/physical-ui/Polaroid";
+import { contactPolaroidImage } from "@/data/career-images";
 import { StickyNote } from "@/components/physical-ui/StickyNote";
 import { Notebook } from "@/components/physical-ui/Notebook";
 import { StudioScene } from "@/components/studio/StudioScene";
@@ -40,19 +41,14 @@ export function ContactScene() {
           </StudioObject>
 
           <StudioObject parallax={0.03} rotate={1.5}>
-            <Tablet glow="green" className="w-full max-w-lg lg:ml-auto">
-              <div
-                className="flex min-h-[300px] flex-col items-center justify-end p-8 text-center"
-                style={{
-                  background:
-                    "linear-gradient(180deg, transparent 15%, rgba(0,0,0,0.78) 100%), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=80') center/cover",
-                }}
-              >
-                <p className="font-editorial text-xl font-semibold text-white sm:text-2xl">
-                  Human-centered systems for consequential work.
-                </p>
-              </div>
-            </Tablet>
+            <Polaroid
+              size="lg"
+              rotation={0}
+              image={contactPolaroidImage}
+              caption="Human-centered systems for consequential work."
+              subtitle={`${profile.location} · ${profile.name}`}
+              className="mx-auto lg:ml-auto"
+            />
             <StickyNote color="yellow" className="mt-6 max-w-[220px] lg:ml-8">
               <p className="handwritten text-lg text-ink">Systems that scale. Impact that lasts.</p>
               <p className="mt-1 text-xs text-ink-soft">soil · water · energy · people</p>
