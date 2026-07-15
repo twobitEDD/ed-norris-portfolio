@@ -35,20 +35,17 @@ export function IntroPaper() {
           <ClientLogoStrip size="sm" ids={["adidas", "google", "co2t"]} />
         </div>
 
+        <WorkVennDiagram className="mt-3 sm:mt-4" />
+
         <p className="mt-4 max-w-[34ch] text-sm leading-snug text-ink-soft">{profile.summary}</p>
 
-        <section className="relative mt-3.5 sm:mt-4" aria-label="Roles">
-          <ul className="flex flex-col gap-1.5">
-            {roles.map((role) => (
-              <li key={role} className="handwritten text-sm text-ink-soft">
-                · {role}
-              </li>
-            ))}
-          </ul>
-          <div className="pointer-events-none absolute bottom-full left-0 mb-1.5 sm:left-auto sm:right-0 sm:mb-2">
-            <WorkVennDiagram className="mt-0" />
-          </div>
-        </section>
+        <ul className="mt-3.5 flex flex-col gap-1.5 sm:mt-4" aria-label="Roles">
+          {roles.map((role) => (
+            <li key={role} className="handwritten text-sm text-ink-soft">
+              · {role}
+            </li>
+          ))}
+        </ul>
 
         <div className="mt-5 flex flex-wrap gap-2 sm:mt-6">
           {practices.map((practice) => (
