@@ -7,7 +7,6 @@ import {
   pdf,
   Svg,
   Line,
-  Rect,
 } from "@react-pdf/renderer";
 import type { ResumeContent } from "@/lib/resume";
 import { disciplineColors } from "@/data/types";
@@ -85,7 +84,7 @@ function ResumeDocument({ content }: { content: ResumeContent }) {
   return (
     <Document>
       <Page size="LETTER" style={baseStyles.page}>
-        <Rect
+        <View
           style={{
             position: "absolute",
             left: 0,
