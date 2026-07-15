@@ -2,7 +2,7 @@
 
 import { STUDIO_DEVICE, STUDIO_SPACING, STUDIO_TYPOGRAPHY } from "@/design/studio-language";
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { profile, resumePresets } from "@/data";
 import { ContactPhoneApp } from "@/components/contact/ContactPhoneApp";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
@@ -23,6 +23,7 @@ import {
   getDefaultResumeConfig,
   type ResumeConfig,
 } from "@/lib/resume";
+import { downloadBusinessCard } from "@/lib/resume/download-business-card";
 
 const StudioPhoneApps = dynamic(
   () => import("@/components/studio/StudioPhoneApps").then((m) => m.StudioPhoneApps),
@@ -45,6 +46,7 @@ const focusItems = [
 
 export function VerticalBento() {
   const [config, setConfig] = useState<ResumeConfig>(getDefaultResumeConfig());
+  const businessCardRef = useRef<HTMLElement>(null);
   const resumeContent = useMemo(() => buildResumeContent(config), [config]);
   const activePreset = useMemo(
     () => resumePresets.find((p) => p.id === config.presetId) ?? resumePresets[0],
@@ -65,6 +67,11 @@ export function VerticalBento() {
     a.click();
     URL.revokeObjectURL(url);
   };
+
+  const handleDownloadBusinessCard = useCallback(async () => {
+    if (!businessCardRef.current) return;
+    await downloadBusinessCard(businessCardRef.current);
+  }, []);
 
   return (
     <section className={cn("vertical-bento", STUDIO_SPACING.bentoSection)}>
@@ -114,12 +121,13 @@ export function VerticalBento() {
             <div className="flex flex-col items-center gap-5 lg:items-start">
               <StudioObject rotate={-2.2} className="flex w-full justify-center lg:justify-start">
                 <ResumeBusinessCard
+                  ref={businessCardRef}
                   name={resumeContent.name}
                   preset={activePreset}
                   targetRole={resumeContent.targetRole}
                   summary={resumeContent.summary}
                   accentColor={resumeContent.accentColor}
-                  onDownload={exportPdf}
+                  onDownload={handleDownloadBusinessCard}
                 />
               </StudioObject>
               <ClientLogoStrip size="sm" variant="on-dark" className="max-w-[320px]" />

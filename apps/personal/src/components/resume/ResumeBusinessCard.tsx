@@ -1,5 +1,6 @@
 "use client";
 
+import { forwardRef } from "react";
 import { profile } from "@/data";
 import type { ResumePreset } from "@/data/types";
 import { getResumeAccentColor } from "@/lib/resume";
@@ -26,22 +27,26 @@ function getEmailFromProfile(): string {
   return emailLink?.url.replace("mailto:", "") ?? "EddNorris@2bitdev.com";
 }
 
-export function ResumeBusinessCard({
-  name,
-  preset,
-  targetRole,
-  summary,
-  accentColor,
-  email = getEmailFromProfile(),
-  onDownload,
-  className,
-}: ResumeBusinessCardProps) {
+export const ResumeBusinessCard = forwardRef<HTMLElement, ResumeBusinessCardProps>(function ResumeBusinessCard(
+  {
+    name,
+    preset,
+    targetRole,
+    summary,
+    accentColor,
+    email = getEmailFromProfile(),
+    onDownload,
+    className,
+  },
+  ref,
+) {
   const accent = accentColor ?? getPresetAccentColor(preset);
 
   return (
     <div className={cn("relative w-full max-w-[320px]", className)}>
       <ObjectShadow depth={3} />
       <article
+        ref={ref}
         className="business-card relative flex aspect-[3.5/2] w-full flex-col overflow-hidden rounded-[3px]"
         style={{ "--card-accent": accent } as React.CSSProperties}
       >
@@ -64,6 +69,7 @@ export function ResumeBusinessCard({
               <button
                 type="button"
                 onClick={onDownload}
+                data-capture-exclude
                 className="business-card__action shrink-0 text-[8px] font-semibold"
               >
                 Download →
@@ -78,4 +84,4 @@ export function ResumeBusinessCard({
       </article>
     </div>
   );
-}
+});
