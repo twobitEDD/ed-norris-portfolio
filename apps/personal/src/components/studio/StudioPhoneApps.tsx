@@ -14,9 +14,8 @@ import {
   History,
   Wifi,
 } from "lucide-react";
-import { Phone } from "@/components/physical-ui/Phone";
+import { Tablet } from "@/components/physical-ui/Tablet";
 import { MicrobeSvgGlyph } from "@/components/games/microbeDraw";
-import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
@@ -185,10 +184,13 @@ function DeviceAppHeader({
 
 function SpringboardStatusBar({ timeStr, dateShortStr }: { timeStr: string; dateShortStr: string }) {
   return (
-    <div className="flex shrink-0 items-center justify-between px-4 pb-1 pt-7 sm:px-5 sm:pt-8">
+    <div className="flex shrink-0 items-center justify-between px-4 pb-1 pt-6 sm:px-5 sm:pt-7">
       <div className="min-w-0">
-        <span className="font-semibold text-[11px] text-white/90 sm:text-xs">{timeStr}</span>
-        <span className="ml-2 hidden text-[10px] text-white/50 sm:inline">{dateShortStr}</span>
+        <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/40">Norris Studio</p>
+        <p className="mt-0.5">
+          <span className="font-semibold text-[11px] text-white/90 sm:text-xs">{timeStr}</span>
+          <span className="ml-2 hidden text-[10px] text-white/50 sm:inline">{dateShortStr}</span>
+        </p>
       </div>
       <div className="flex items-center gap-1.5" aria-hidden>
         <Wifi className="h-3 w-3 text-white/60" strokeWidth={2.5} />
@@ -199,25 +201,45 @@ function SpringboardStatusBar({ timeStr, dateShortStr }: { timeStr: string; date
   );
 }
 
+function SpringboardMiniWidgets({ timeStr, dateShortStr }: { timeStr: string; dateShortStr: string }) {
+  return (
+    <div className="mb-5 grid grid-cols-4 gap-2.5 sm:mb-6 sm:gap-3">
+      <div className="col-span-2 rounded-[18px] border border-white/[0.07] bg-black/20 px-3 py-2.5 sm:px-3.5 sm:py-3">
+        <p className="font-editorial text-[1.35rem] font-semibold leading-none text-white/95 sm:text-2xl">{timeStr}</p>
+        <p className="mt-1 text-[10px] text-white/50 sm:text-[11px]">{dateShortStr}</p>
+      </div>
+      <div className="relative col-span-2 min-h-[68px] overflow-hidden rounded-[18px] border border-white/[0.07] sm:min-h-[76px]">
+        <Image
+          src="/career/contact-oregon.jpg"
+          alt=""
+          fill
+          className="object-cover object-center"
+          sizes="160px"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+        <p className="absolute bottom-2 left-2.5 font-mono text-[7px] uppercase tracking-[0.14em] text-white/70">
+          Oregon
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function AppIconGrid({ onOpenApp }: { onOpenApp: (id: TabletAppId) => void }) {
   return (
-    <div className="grid grid-cols-4 gap-x-2 gap-y-5 sm:gap-x-3 sm:gap-y-6">
-      {tabletApps.map((app, index) => (
+    <div className="mx-auto grid w-full max-w-[360px] grid-cols-4 gap-x-3 gap-y-6 sm:max-w-[400px] sm:gap-x-4 sm:gap-y-7">
+      {tabletApps.map((app) => (
         <button
           key={app.id}
           type="button"
           onClick={() => onOpenApp(app.id)}
-          className={cn(
-            "group flex flex-col items-center gap-1.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-xl p-0.5",
-            index === 4 && "col-start-2",
-            index === 5 && "col-start-3",
-          )}
+          className="group flex flex-col items-center gap-1.5 rounded-xl p-0.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
           aria-label={`Open ${app.name}`}
         >
-          <div className="aspect-square w-[min(100%,64px)] shadow-[0_2px_8px_rgba(0,0,0,0.35)] transition group-hover:shadow-[0_4px_14px_rgba(0,0,0,0.45)] sm:w-[min(100%,72px)]">
+          <div className="aspect-square w-[min(100%,72px)] shadow-[0_3px_10px_rgba(0,0,0,0.4)] transition group-hover:shadow-[0_5px_16px_rgba(0,0,0,0.5)] sm:w-[min(100%,80px)]">
             <AppIcon app={app} large />
           </div>
-          <span className="max-w-[76px] truncate text-center text-[10px] font-medium leading-tight text-white/90 sm:max-w-[84px]">
+          <span className="max-w-[80px] truncate text-center text-[10px] font-medium leading-tight text-white/90 sm:max-w-[88px] sm:text-[11px]">
             {app.name}
           </span>
         </button>
@@ -226,22 +248,12 @@ function AppIconGrid({ onOpenApp }: { onOpenApp: (id: TabletAppId) => void }) {
   );
 }
 
-function StudioIdentityStrip() {
-  return (
-    <div className="mt-6 rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 text-center">
-      <p className="font-mono text-[8px] uppercase tracking-[0.22em] text-white/40">Norris Studio</p>
-      <p className="mt-1 font-editorial text-sm font-medium text-white/85">{profile.name}</p>
-      <p className="mt-0.5 text-[11px] leading-snug text-white/55">{profile.tagline}</p>
-    </div>
-  );
-}
-
 function SpringboardDock({ onOpenApp }: { onOpenApp: (id: TabletAppId) => void }) {
   const dockApps = DOCK_APP_IDS.map((id) => tabletApps.find((a) => a.id === id)!).filter(Boolean);
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex justify-center px-4 pb-3 sm:px-5 sm:pb-4">
-      <div className="pointer-events-auto flex items-center gap-4 rounded-[28px] border border-white/10 bg-black/40 px-4 py-2.5 backdrop-blur-md sm:gap-5 sm:px-5">
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex justify-center px-4 pb-5 sm:px-5 sm:pb-6">
+      <div className="pointer-events-auto flex items-center gap-4 rounded-[28px] border border-white/[0.12] bg-white/[0.08] px-4 py-2.5 sm:gap-5 sm:px-5">
         {dockApps.map((app) => (
           <button
             key={app.id}
@@ -250,7 +262,7 @@ function SpringboardDock({ onOpenApp }: { onOpenApp: (id: TabletAppId) => void }
             className="group rounded-[22%] transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
             aria-label={`Open ${app.name}`}
           >
-            <div className="aspect-square w-[48px] sm:w-[52px]">
+            <div className="aspect-square w-[50px] sm:w-[54px]">
               <AppIcon app={app} large />
             </div>
           </button>
@@ -548,13 +560,13 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   return (
     <>
       <div className={cn("w-full", className)}>
-        <Phone glow="cyan" mode="launcher" size="large" className="w-full">
+        <Tablet glow="cyan" mode="launcher" size="large" className="w-full">
           <div className="studio-springboard-wallpaper relative flex h-full min-h-0 flex-col">
             {inDeviceContent ? (
               <div
                 className={cn(
-                  "relative z-10 flex min-h-0 flex-1 flex-col",
-                  screen === "microbe" ? "bg-[#040a14]/95 pb-6" : "bg-[#0c0e14]/95",
+                  "relative z-10 flex min-h-0 flex-1 flex-col pb-5",
+                  screen === "microbe" ? "bg-[#040a14]/95" : "bg-[#0c0e14]/95",
                 )}
               >
                 {inDeviceContent}
@@ -563,16 +575,16 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
               <>
                 <SpringboardStatusBar timeStr={timeStr} dateShortStr={dateShortStr} />
 
-                <div className="relative z-[1] flex flex-1 flex-col overflow-y-auto px-4 pb-[88px] pt-2 sm:px-5 sm:pb-[96px]">
+                <div className="relative z-[1] flex min-h-0 flex-1 flex-col justify-center overflow-y-auto px-4 pb-[100px] pt-1 sm:px-5 sm:pb-[108px]">
+                  <SpringboardMiniWidgets timeStr={timeStr} dateShortStr={dateShortStr} />
                   <AppIconGrid onOpenApp={openApp} />
-                  <StudioIdentityStrip />
                 </div>
 
                 <SpringboardDock onOpenApp={openApp} />
               </>
             )}
           </div>
-        </Phone>
+        </Tablet>
       </div>
 
       {gameOpen && gameFullscreen && (
