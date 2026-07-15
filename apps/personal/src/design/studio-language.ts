@@ -37,6 +37,31 @@ export const STUDIO_CONCEPTS = [
   },
 ] as const;
 
+export type DeviceKind = "phone" | "tablet" | "ipad";
+export type DeviceSize = "sm" | "md" | "lg";
+
+/** Width / aspect targets per device family and size tier. */
+export const DEVICE_SIZE_MATRIX: Record<
+  DeviceKind,
+  Record<DeviceSize, { maxWidth: string; aspectRatio?: string }>
+> = {
+  phone: {
+    sm: { maxWidth: "220px", aspectRatio: "9/19" },
+    md: { maxWidth: "560px", aspectRatio: "19/9" },
+    lg: { maxWidth: "920px", aspectRatio: "3/4" },
+  },
+  tablet: {
+    sm: { maxWidth: "480px", aspectRatio: "4/3" },
+    md: { maxWidth: "640px", aspectRatio: "4/3" },
+    lg: { maxWidth: "920px", aspectRatio: "4/3" },
+  },
+  ipad: {
+    sm: { maxWidth: "400px", aspectRatio: "3/4" },
+    md: { maxWidth: "640px", aspectRatio: "3/4" },
+    lg: { maxWidth: "920px", aspectRatio: "3/4" },
+  },
+} as const;
+
 /** Shared device chrome — one large studio width, consistent bezels. */
 export const STUDIO_DEVICE = {
   largeMaxWidth: "920px",

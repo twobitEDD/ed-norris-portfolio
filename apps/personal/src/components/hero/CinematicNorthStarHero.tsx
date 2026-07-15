@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ContactCTAs } from "@/components/contact/ContactCTAs";
 import { IntroPaper } from "@/components/hero/IntroPaper";
-import { PracticeTablet } from "@/components/hero/PracticeTablet";
 import { useStudioTheme } from "@/components/studio/StudioThemeProvider";
 
 export function CinematicNorthStarHero() {
@@ -44,15 +43,9 @@ export function CinematicNorthStarHero() {
       </div>
 
       <div className="relative mx-auto flex min-h-[78svh] max-w-[920px] flex-col px-4 pb-8 pt-[4.75rem] sm:min-h-[84svh] sm:px-8 sm:pb-10 sm:pt-28">
-        <div className="grid flex-1 items-start gap-6 md:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] md:gap-8 lg:items-end lg:gap-10">
-          <div id="intro" className="min-w-0" style={{ transform: "rotate(-1.2deg)" }}>
+        <div className="flex flex-1 items-start justify-center">
+          <div id="intro" className="w-full max-w-[620px] min-w-0" style={{ transform: "rotate(-1.2deg)" }}>
             <IntroPaper />
-          </div>
-
-          <div id="practices" className="min-w-0 md:mt-1 lg:mt-2" style={{ transform: "rotate(1deg)" }}>
-            <div className="mx-auto w-full max-w-[520px] md:max-w-none md:ml-auto">
-              <PracticeTablet />
-            </div>
           </div>
         </div>
 

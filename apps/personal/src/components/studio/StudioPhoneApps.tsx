@@ -13,16 +13,20 @@ import {
   Gamepad2,
   GitBranch,
   History,
+  Leaf,
   Mail,
+  Palette,
   Wifi,
 } from "lucide-react";
-import { Tablet } from "@/components/physical-ui/Tablet";
+import { DeviceViewer } from "@/components/physical-ui/DeviceViewer";
 import { ContactAppContent } from "@/components/contact/ContactPhoneApp";
 import { WorkAppSlideshow } from "@/components/work/WorkAppSlideshow";
+import { DisciplineAppSlideshow } from "@/components/work/DisciplineAppSlideshow";
 import { MicrobeSvgGlyph } from "@/components/games/microbeDraw";
 import { projects } from "@/data/projects";
+import { creativeSlides, environmentalSlides } from "@/data/discipline-slides";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
-import { tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
+import { tabletAppCategories, tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
 import { cn } from "@/lib/cn";
 
 const GameTablet = dynamic(
@@ -155,6 +159,28 @@ function AppIcon({ app, large }: { app: TabletApp; large?: boolean }) {
     );
   }
 
+  if (app.id === "environmental") {
+    return (
+      <div
+        className="flex h-full w-full items-center justify-center rounded-[22%] shadow-inner"
+        style={{ background: app.iconBg }}
+      >
+        <Leaf className="h-[44%] w-[44%]" style={{ color: app.iconAccent }} strokeWidth={1.75} />
+      </div>
+    );
+  }
+
+  if (app.id === "creative") {
+    return (
+      <div
+        className="flex h-full w-full items-center justify-center rounded-[22%] shadow-inner"
+        style={{ background: app.iconBg }}
+      >
+        <Palette className="h-[44%] w-[44%]" style={{ color: app.iconAccent }} strokeWidth={1.75} />
+      </div>
+    );
+  }
+
   if (app.imageSrc) {
     return (
       <div
@@ -253,23 +279,37 @@ function SpringboardMiniWidgets({ timeStr, dateShortStr }: { timeStr: string; da
 
 function AppIconGrid({ onOpenApp }: { onOpenApp: (id: TabletAppId) => void }) {
   return (
-    <div className="mx-auto grid w-full max-w-[360px] grid-cols-4 gap-x-3 gap-y-6 sm:max-w-[400px] sm:gap-x-4 sm:gap-y-7">
-      {tabletApps.map((app) => (
-        <button
-          key={app.id}
-          type="button"
-          onClick={() => onOpenApp(app.id)}
-          className="group flex flex-col items-center gap-1.5 rounded-xl p-0.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
-          aria-label={`Open ${app.name}`}
-        >
-          <div className="aspect-square w-[min(100%,72px)] shadow-[0_3px_10px_rgba(0,0,0,0.4)] transition group-hover:shadow-[0_5px_16px_rgba(0,0,0,0.5)] sm:w-[min(100%,80px)]">
-            <AppIcon app={app} large />
+    <div className="mx-auto w-full max-w-[400px] space-y-5 sm:max-w-[440px] sm:space-y-6">
+      {tabletAppCategories.map((category) => {
+        const apps = tabletApps.filter((app) => app.category === category.id);
+        if (apps.length === 0) return null;
+
+        return (
+          <div key={category.id}>
+            <p className="mb-2.5 px-1 font-mono text-[8px] uppercase tracking-[0.2em] text-white/35 sm:text-[9px]">
+              {category.label}
+            </p>
+            <div className="grid grid-cols-4 gap-x-3 gap-y-5 sm:gap-x-4 sm:gap-y-6">
+              {apps.map((app) => (
+                <button
+                  key={app.id}
+                  type="button"
+                  onClick={() => onOpenApp(app.id)}
+                  className="group flex flex-col items-center gap-1.5 rounded-xl p-0.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                  aria-label={`Open ${app.name}`}
+                >
+                  <div className="aspect-square w-[min(100%,72px)] shadow-[0_3px_10px_rgba(0,0,0,0.4)] transition group-hover:shadow-[0_5px_16px_rgba(0,0,0,0.5)] sm:w-[min(100%,80px)]">
+                    <AppIcon app={app} large />
+                  </div>
+                  <span className="max-w-[80px] truncate text-center text-[10px] font-medium leading-tight text-white/90 sm:max-w-[88px] sm:text-[11px]">
+                    {app.name}
+                  </span>
+                </button>
+              ))}
+            </div>
           </div>
-          <span className="max-w-[80px] truncate text-center text-[10px] font-medium leading-tight text-white/90 sm:max-w-[88px] sm:text-[11px]">
-            {app.name}
-          </span>
-        </button>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -429,6 +469,58 @@ function WorkHistoryInDevice({ onBack }: { onBack: () => void }) {
   );
 }
 
+function EnvironmentalInDevice({ onBack }: { onBack: () => void }) {
+  return (
+    <div className="relative flex min-h-0 flex-1 flex-col pb-6">
+      <DeviceAppHeader title="Environmental" onBack={onBack} />
+      <div className="shrink-0 border-b border-white/6 px-4 py-2 sm:px-5 sm:py-2.5">
+        <p className="handwritten text-sm leading-snug text-[#7ee8a8]/90">Built from Nature. Backed by Science.</p>
+        <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.16em] text-white/40">Environmental practice</p>
+        <h3 className="mt-0.5 font-editorial text-sm font-medium text-white/90">
+          Carbon, soil stewardship &amp; field ops.
+        </h3>
+      </div>
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-5">
+        <DisciplineAppSlideshow slides={environmentalSlides} ariaLabel="Environmental practice highlights" />
+      </div>
+      <p className="shrink-0 px-4 pt-2 text-center">
+        <Link
+          href="/work#environmental"
+          className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/50 transition hover:text-white/80"
+        >
+          Full environmental work →
+        </Link>
+      </p>
+    </div>
+  );
+}
+
+function CreativeInDevice({ onBack }: { onBack: () => void }) {
+  return (
+    <div className="relative flex min-h-0 flex-1 flex-col pb-6">
+      <DeviceAppHeader title="Creative" onBack={onBack} />
+      <div className="shrink-0 border-b border-white/6 px-4 py-2 sm:px-5 sm:py-2.5">
+        <p className="handwritten text-sm leading-snug text-[#c9a0ff]/90">Games, interactive media &amp; storytelling.</p>
+        <p className="mt-1 font-mono text-[8px] uppercase tracking-[0.16em] text-white/40">Creative practice</p>
+        <h3 className="mt-0.5 font-editorial text-sm font-medium text-white/90">
+          Platforms, brands &amp; participation.
+        </h3>
+      </div>
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-5">
+        <DisciplineAppSlideshow slides={creativeSlides} ariaLabel="Creative practice highlights" />
+      </div>
+      <p className="shrink-0 px-4 pt-2 text-center">
+        <Link
+          href="/work#creative"
+          className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/50 transition hover:text-white/80"
+        >
+          Full creative work →
+        </Link>
+      </p>
+    </div>
+  );
+}
+
 function WorkInDevice({ onBack }: { onBack: () => void }) {
   return (
     <div className="relative flex min-h-0 flex-1 flex-col pb-6">
@@ -479,6 +571,14 @@ function renderInDeviceScreen(
 
   if (screen === "work") {
     return <WorkInDevice onBack={handlers.onBack} />;
+  }
+
+  if (screen === "environmental") {
+    return <EnvironmentalInDevice onBack={handlers.onBack} />;
+  }
+
+  if (screen === "creative") {
+    return <CreativeInDevice onBack={handlers.onBack} />;
   }
 
   if (screen === "reach") {
@@ -630,7 +730,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   return (
     <>
       <div className={cn("w-full", className)}>
-        <Tablet glow="cyan" mode="launcher" size="large" className="w-full">
+        <DeviceViewer device="ipad" size="lg" glow="cyan" mode="launcher" className="w-full">
           <div className="studio-springboard-wallpaper relative flex h-full min-h-0 flex-col">
             {inDeviceContent ? (
               <div
@@ -658,7 +758,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
               </>
             )}
           </div>
-        </Tablet>
+        </DeviceViewer>
       </div>
 
       {gameOpen && gameFullscreen && (

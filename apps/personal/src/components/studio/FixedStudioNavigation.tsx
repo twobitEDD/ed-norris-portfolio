@@ -10,8 +10,10 @@ import { StudioThemeToggle } from "./StudioThemeToggle";
 
 const links = [
   { href: "/#game", label: "Apps" },
-  { href: "/#game?app=work-map", label: "Map" },
+  { href: "/#game?app=environmental", label: "Environmental" },
+  { href: "/#game?app=creative", label: "Creative" },
   { href: "/#game?app=work", label: "Work" },
+  { href: "/#game?app=work-map", label: "Map" },
   { href: "/timeline", label: "Timeline" },
   { href: "/resume", label: "Résumé" },
   { href: "/#contact", label: "Contact" },

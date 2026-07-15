@@ -1,6 +1,8 @@
 import { projects } from "./projects";
 
 export type TabletAppId =
+  | "environmental"
+  | "creative"
   | "ergo"
   | "co2t"
   | "fishfight"
@@ -27,12 +29,59 @@ export type TabletApp = {
   inDevice?: boolean;
   /** Portfolio project slug for richer in-device showcase content */
   projectSlug?: string;
+  /** Springboard grouping label */
+  category?: "practice" | "projects" | "studio";
 };
 
 const ergo = projects.find((p) => p.slug === "ergo-games");
 const co2t = projects.find((p) => p.slug === "co2t-platform");
 
+/** Springboard page order — practice paths first, then shipped projects, then studio tools. */
+export const tabletAppCategories = [
+  { id: "practice" as const, label: "Practice" },
+  { id: "projects" as const, label: "Projects" },
+  { id: "studio" as const, label: "Studio" },
+];
+
 export const tabletApps: TabletApp[] = [
+  {
+    id: "environmental",
+    name: "Environmental",
+    domain: "Practice",
+    tagline: "Built from Nature. Backed by Science.",
+    description:
+      "CO2T.earth biochar, soil stewardship, carbon reporting, and field operations — environmental systems with auditable impact.",
+    iconBg: "linear-gradient(145deg, #0a2818 0%, #1a5c3a 45%, #3d9b6a 100%)",
+    iconAccent: "#7ee8a8",
+    imageSrc: "/brands/co2t/co2t-mascot-welcome.png",
+    inDevice: true,
+    category: "practice",
+  },
+  {
+    id: "creative",
+    name: "Creative",
+    domain: "Practice",
+    tagline: "Games & interactive media",
+    description:
+      "Game platforms, web experiences, identity systems, and marketing tools built to earn attention and create participation.",
+    iconBg: "linear-gradient(145deg, #1a1035 0%, #4a2d8a 55%, #8c5cc7 100%)",
+    iconAccent: "#c9a0ff",
+    imageSrc: "/assets/practice-creative-bg.webp",
+    inDevice: true,
+    category: "practice",
+  },
+  {
+    id: "work",
+    name: "Work",
+    domain: "Portfolio",
+    tagline: "Real problems solved",
+    description:
+      "Highlights from environmental systems, game platforms, and infrastructure — swipe through selected work or open the full portfolio.",
+    iconBg: "linear-gradient(145deg, #1a1f2e 0%, #2d4a6a 50%, #4a90c2 100%)",
+    iconAccent: "#9ecfff",
+    inDevice: true,
+    category: "practice",
+  },
   {
     id: "ergo",
     name: "ERGO",
@@ -46,6 +95,7 @@ export const tabletApps: TabletApp[] = [
     iconAccent: "#c9a0ff",
     inDevice: true,
     projectSlug: "ergo-games",
+    category: "projects",
   },
   {
     id: "co2t",
@@ -61,17 +111,7 @@ export const tabletApps: TabletApp[] = [
     imageSrc: "/brands/co2t/co2t-mascot-welcome.png",
     inDevice: true,
     projectSlug: "co2t-platform",
-  },
-  {
-    id: "work",
-    name: "Work",
-    domain: "Portfolio",
-    tagline: "Real problems solved",
-    description:
-      "Highlights from environmental systems, game platforms, and infrastructure — swipe through selected work or open the full portfolio.",
-    iconBg: "linear-gradient(145deg, #1a1f2e 0%, #2d4a6a 50%, #4a90c2 100%)",
-    iconAccent: "#9ecfff",
-    inDevice: true,
+    category: "projects",
   },
   {
     id: "fishfight",
@@ -85,6 +125,7 @@ export const tabletApps: TabletApp[] = [
     iconAccent: "#7ec8ff",
     inDevice: true,
     projectSlug: "fish-fight",
+    category: "projects",
   },
   {
     id: "microbe",
@@ -96,6 +137,7 @@ export const tabletApps: TabletApp[] = [
     iconBg: "linear-gradient(145deg, #050812 0%, #0d1a3a 50%, #1a3a6c 100%)",
     iconAccent: "#3b9eff",
     isGame: true,
+    category: "projects",
   },
   {
     id: "work-map",
@@ -107,6 +149,7 @@ export const tabletApps: TabletApp[] = [
     iconBg: "linear-gradient(145deg, #1a0f2e 0%, #4a2d6a 50%, #8c5cc7 100%)",
     iconAccent: "#d4b0ff",
     inDevice: true,
+    category: "studio",
   },
   {
     id: "work-history",
@@ -118,6 +161,7 @@ export const tabletApps: TabletApp[] = [
     iconBg: "linear-gradient(145deg, #3d3428 0%, #6b5a42 45%, #c9b896 100%)",
     iconAccent: "#f0e4cc",
     inDevice: true,
+    category: "studio",
   },
   {
     id: "reach",
@@ -129,5 +173,6 @@ export const tabletApps: TabletApp[] = [
     iconBg: "linear-gradient(145deg, #2a2820 0%, #5c5648 50%, #c9b896 100%)",
     iconAccent: "#f0e4cc",
     inDevice: true,
+    category: "studio",
   },
 ];

@@ -18,8 +18,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { profile } from "@/data";
-import { Tablet } from "@/components/physical-ui/Tablet";
-import { STUDIO_DEVICE } from "@/design/studio-language";
+import { DeviceViewer } from "@/components/physical-ui/DeviceViewer";
 import {
   categorizeContactLinks,
   linkIconKind,
@@ -626,20 +625,17 @@ type ContactPhoneAppProps = {
 
 export function ContactPhoneApp({ className }: ContactPhoneAppProps) {
   return (
-    <Tablet
+    <DeviceViewer
+      device="phone"
+      size="md"
+      orientation="landscape"
       glow="amber"
-      mode="launcher"
+      mode="card"
       screenTheme="warm"
-      className={cn("contact-tablet-device mx-auto w-full", className)}
+      screenLayout="app"
+      className={cn("contact-phone-device mx-auto w-full", className)}
     >
-      <div
-        className={cn(
-          STUDIO_DEVICE.classes.screenContent,
-          "contact-tablet-screen flex h-full min-h-0 flex-col",
-        )}
-      >
-        <ContactAppContent layout="tablet" />
-      </div>
-    </Tablet>
+      <ContactAppContent layout="tablet" />
+    </DeviceViewer>
   );
 }

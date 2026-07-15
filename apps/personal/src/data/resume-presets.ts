@@ -14,7 +14,7 @@ export const practices: Practice[] = [
     tagline: "Built from Nature. Backed by Science.",
     tags: ["Biochar", "Soil Stewardship", "Carbon", "CO2T.earth"],
     disciplines: ["environment", "data", "operations"],
-    href: "/work#environmental",
+    href: "/#game?app=environmental",
   },
   {
     id: "creative",
@@ -25,7 +25,7 @@ export const practices: Practice[] = [
       "Game platforms, web experiences, identity systems, and marketing tools built to earn attention and create participation.",
     tags: ["Game Platforms", "Interactive UX", "Brand Systems", "Web Products"],
     disciplines: ["games", "marketing", "software"],
-    href: "/work#creative",
+    href: "/#game?app=creative",
     offset: true,
   },
 ];
