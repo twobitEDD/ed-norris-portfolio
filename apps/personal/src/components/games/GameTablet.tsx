@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { Tablet } from "@/components/physical-ui/Tablet";
+import { ArcadeCabinet } from "@/components/games/ArcadeCabinet";
 
 const InfinitePacExplorer = dynamic(
   () => import("./InfinitePacExplorer").then((m) => m.InfinitePacExplorer),
@@ -19,9 +20,42 @@ type GameTabletProps = {
   className?: string;
   /** When true, hides redundant header copy (used in overlay panel). */
   overlay?: boolean;
+  /** Fullscreen arcade cabinet shell with marquee and fixed viewport. */
+  arcade?: boolean;
+  onClose?: () => void;
+  closing?: boolean;
+  reducedMotion?: boolean;
 };
 
-export function GameTablet({ className, overlay = false }: GameTabletProps) {
+export function GameTablet({
+  className,
+  overlay = false,
+  arcade = false,
+  onClose,
+  closing = false,
+  reducedMotion = false,
+}: GameTabletProps) {
+  const game = (
+    <InfinitePacExplorer
+      className="h-full w-full"
+      arcadeMode={arcade}
+      autoLock={arcade}
+    />
+  );
+
+  if (arcade && onClose) {
+    return (
+      <ArcadeCabinet
+        onClose={onClose}
+        closing={closing}
+        reducedMotion={reducedMotion}
+        className={className}
+      >
+        {game}
+      </ArcadeCabinet>
+    );
+  }
+
   return (
     <Tablet glow="purple" orientation="landscape" className={className}>
       <div className="relative flex h-full min-h-0 flex-col overflow-hidden">
@@ -41,7 +75,7 @@ export function GameTablet({ className, overlay = false }: GameTabletProps) {
             <h2 className="font-editorial text-sm font-medium text-screen-text sm:text-base">Dot Explorer</h2>
           </div>
         )}
-        <div className="relative min-h-0 flex-1 overflow-hidden">
+        <div className="relative min-h-[240px] flex-1 overflow-hidden">
           <InfinitePacExplorer className="absolute inset-0" />
         </div>
       </div>

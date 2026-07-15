@@ -3,6 +3,13 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
+import {
+  FOOTPATH_MAIN_D,
+  FOOTPATH_VIEWBOX,
+  sampleSvgPath,
+  type PathPoint,
+} from "@/components/games/footPathData";
+import { drawPacMan, pacManMouthFromPhase, PacManSvgGlyph } from "@/components/games/pacManDraw";
 
 const GameTablet = dynamic(
   () => import("@/components/games/GameTablet").then((m) => m.GameTablet),
@@ -16,26 +23,15 @@ const GameTablet = dynamic(
   },
 );
 
-const DOT_SPACING = 36;
-const PAC_SIZE = 28;
-const PAC_SPEED = 120;
+const PAC_SIZE = 22;
+const PAC_SPEED = 95;
+const DOT_SPACING = 22;
 const REVEAL_THRESHOLD = 0.05;
+const CANVAS_HEIGHT = 120;
 
 type PacManEasterEggProps = {
   className?: string;
 };
-
-function PacManGlyph({ mouth, className }: { mouth: number; className?: string }) {
-  const open = 0.25 + Math.abs(Math.sin(mouth)) * 0.3;
-  return (
-    <svg viewBox="-1 -1 2 2" className={className} aria-hidden>
-      <path
-        d={`M 0 0 L ${Math.cos(open)} ${Math.sin(open)} A 1 1 0 1 1 ${Math.cos(-open)} ${Math.sin(-open)} Z`}
-        fill="#ffde00"
-      />
-    </svg>
-  );
-}
 
 function ScrollPacAnimation({
   reducedMotion,
@@ -47,30 +43,44 @@ function ScrollPacAnimation({
   animationKey: number;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouthRef = useRef(0);
-  const eatenRef = useRef<Set<number>>(new Set());
+  const pathRef = useRef<PathPoint[]>([]);
   const progressRef = useRef(0);
+  const mouthPhaseRef = useRef(0);
+  const eatingRef = useRef(false);
+  const eatenRef = useRef<Set<number>>(new Set());
   const frameRef = useRef(0);
-
-  const dotCount = useRef(0);
 
   useEffect(() => {
     progressRef.current = 0;
     eatenRef.current.clear();
-    mouthRef.current = 0;
+    mouthPhaseRef.current = 0;
+    eatingRef.current = false;
   }, [animationKey]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    const rebuildPath = () => {
+      const w = window.innerWidth;
+      const h = CANVAS_HEIGHT;
+      const padX = 48;
+      pathRef.current = sampleSvgPath(
+        FOOTPATH_MAIN_D,
+        FOOTPATH_VIEWBOX,
+        w - padX * 2,
+        h - 24,
+        7,
+      ).map((p) => ({ ...p, x: p.x + padX, y: p.y + 12 }));
+    };
+
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.floor(window.innerWidth * dpr);
-      canvas.height = Math.floor(PAC_SIZE * 2.5 * dpr);
+      canvas.height = Math.floor(CANVAS_HEIGHT * dpr);
       const ctx = canvas.getContext("2d");
       if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      dotCount.current = Math.max(4, Math.floor((window.innerWidth - 80) / DOT_SPACING));
+      rebuildPath();
     };
 
     resize();
@@ -82,46 +92,72 @@ function ScrollPacAnimation({
     const loop = (time: number) => {
       const dt = last ? Math.min((time - last) / 1000, 0.05) : 0;
       last = time;
-      mouthRef.current += dt * 10;
-      progressRef.current += PAC_SPEED * dt;
 
       const ctx = canvas.getContext("2d");
-      if (ctx) {
+      const points = pathRef.current;
+      if (ctx && points.length > 1) {
         const w = window.innerWidth;
-        const h = PAC_SIZE * 2.5;
+        const h = CANVAS_HEIGHT;
         ctx.clearRect(0, 0, w, h);
 
-        const y = h * 0.55;
-        const totalWidth = dotCount.current * DOT_SPACING;
-        const startX = (w - totalWidth) / 2;
-
-        for (let i = 0; i <= dotCount.current; i += 1) {
-          if (eatenRef.current.has(i)) continue;
-          const dx = startX + i * DOT_SPACING;
-          ctx.fillStyle = "#f8f4d8";
-          ctx.beginPath();
-          ctx.arc(dx, y, 3, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        const pacX = startX + Math.min(progressRef.current, totalWidth);
-        for (let i = 0; i <= dotCount.current; i += 1) {
-          const dx = startX + i * DOT_SPACING;
-          if (Math.abs(pacX - dx) < 14) eatenRef.current.add(i);
-        }
-
-        if (progressRef.current > totalWidth + 80) {
-          progressRef.current = -40;
+        const totalLen = (points.length - 1) * DOT_SPACING;
+        progressRef.current += PAC_SPEED * dt;
+        if (progressRef.current > totalLen + 60) {
+          progressRef.current = 0;
           eatenRef.current.clear();
         }
 
-        const open = 0.25 + Math.abs(Math.sin(mouthRef.current)) * 0.3;
-        ctx.fillStyle = "#ffde00";
+        ctx.strokeStyle = "rgba(248, 244, 216, 0.12)";
+        ctx.lineWidth = 1.5;
+        ctx.lineCap = "round";
         ctx.beginPath();
-        ctx.moveTo(pacX, y);
-        ctx.arc(pacX, y, PAC_SIZE / 2, open, -open, true);
-        ctx.closePath();
-        ctx.fill();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 1; i < points.length; i += 1) {
+          ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.stroke();
+
+        for (let i = 0; i < points.length; i += 1) {
+          if (eatenRef.current.has(i)) continue;
+          const p = points[i];
+          ctx.fillStyle = "#f8f4d8";
+          ctx.globalAlpha = 0.85;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+
+        const dist = progressRef.current;
+        const segFloat = dist / DOT_SPACING;
+        const segIdx = Math.min(Math.floor(segFloat), points.length - 2);
+        const segT = segFloat - segIdx;
+        const a = points[segIdx];
+        const b = points[segIdx + 1];
+        const pacX = a.x + (b.x - a.x) * segT;
+        const pacY = a.y + (b.y - a.y) * segT;
+        const angle = Math.atan2(b.y - a.y, b.x - a.x);
+
+        let eating = false;
+        for (let i = 0; i < points.length; i += 1) {
+          const p = points[i];
+          if (Math.hypot(pacX - p.x, pacY - p.y) < 12) {
+            eatenRef.current.add(i);
+            eating = true;
+          }
+        }
+
+        eatingRef.current = eating;
+        if (eating) mouthPhaseRef.current += dt * 12;
+        else mouthPhaseRef.current = 0;
+
+        drawPacMan(ctx, {
+          x: pacX,
+          y: pacY,
+          radius: PAC_SIZE / 2,
+          angle,
+          mouthOpen: pacManMouthFromPhase(mouthPhaseRef.current, eating),
+        });
       }
 
       frameRef.current = requestAnimationFrame(loop);
@@ -139,10 +175,10 @@ function ScrollPacAnimation({
       <button
         type="button"
         onClick={onActivate}
-        className="group flex w-full items-center justify-center gap-3 rounded-2xl border border-dashed border-games/35 bg-wood-dark/40 px-4 py-5 transition hover:border-games/60 hover:bg-games/10"
+        className="group flex w-full items-center justify-center gap-3 rounded-2xl border border-dashed border-games/35 bg-wood-dark/25 px-4 py-5 transition hover:border-games/60 hover:bg-games/10"
         aria-label="Open Dot Explorer game"
       >
-        <PacManGlyph mouth={0.4} className="h-7 w-7" />
+        <PacManSvgGlyph className="h-7 w-7" />
         <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-paper-cream/70 group-hover:text-paper-cream">
           Tap to play Dot Explorer
         </span>
@@ -154,12 +190,12 @@ function ScrollPacAnimation({
     <button
       type="button"
       onClick={onActivate}
-      className="group relative w-full overflow-hidden rounded-2xl border border-games/35 bg-gradient-to-r from-wood-dark/60 via-games/10 to-wood-dark/60 py-2 shadow-[0_0_20px_rgba(140,92,199,0.12)] transition hover:border-games/60 hover:shadow-[0_0_28px_rgba(152,92,255,0.22)]"
-      aria-label="Click Pac-Man to open Dot Explorer"
+      className="group relative w-full overflow-hidden rounded-2xl border border-games/25 bg-wood-dark/20 py-1 shadow-[inset_0_0_40px_rgba(140,92,199,0.06)] transition hover:border-games/50 hover:bg-games/5 hover:shadow-[0_0_28px_rgba(152,92,255,0.18)]"
+      aria-label="Click Pac-Man or path to open Dot Explorer"
     >
-      <canvas ref={canvasRef} className="block h-[70px] w-full" />
-      <span className="pointer-events-none absolute inset-x-0 bottom-1 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-paper-cream/65 group-hover:text-paper-cream/90">
-        Click Pac-Man to play Dot Explorer
+      <canvas ref={canvasRef} className="block h-[120px] w-full opacity-90" />
+      <span className="pointer-events-none absolute inset-x-0 bottom-2 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-paper-cream/50 group-hover:text-paper-cream/80">
+        Click to play Dot Explorer
       </span>
     </button>
   );
@@ -258,15 +294,12 @@ export function PacManEasterEgg({ className }: PacManEasterEggProps) {
       <div ref={placeholderRef} className={cn("relative", className)}>
         {!revealed && (
           <div
-            className="flex min-h-[120px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-games/40 bg-gradient-to-b from-wood-dark/35 to-games/10 px-4 sm:min-h-[140px]"
+            className="flex min-h-[120px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-games/30 bg-gradient-to-b from-wood-dark/20 to-transparent px-4 sm:min-h-[140px]"
             aria-hidden
           >
-            <PacManGlyph mouth={0.35} className="h-8 w-8 animate-pulse opacity-80" />
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper-cream/60">
+            <PacManSvgGlyph className="h-8 w-8 animate-pulse opacity-70" />
+            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-paper-cream/50">
               Scroll down — something&apos;s hiding
-            </p>
-            <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-games/80">
-              Pac-Man eats dots when you arrive
             </p>
           </div>
         )}
@@ -283,41 +316,24 @@ export function PacManEasterEgg({ className }: PacManEasterEggProps) {
 
       {gameOpen && (
         <div
-          className="fixed inset-0 z-[80] flex items-end justify-center sm:items-center"
+          className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-6"
           role="dialog"
           aria-modal="true"
-          aria-label="Dot Explorer game"
+          aria-label="Dot Explorer arcade game"
         >
           <button
             type="button"
-            className="absolute inset-0 bg-ink/55 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-ink/70 backdrop-blur-sm"
             aria-label="Close game"
             onClick={closeGame}
           />
-
-          <div
-            className={cn(
-              "relative z-10 mx-4 mb-6 w-full max-w-[640px] sm:mb-0",
-              reducedMotion
-                ? closing
-                  ? "opacity-0"
-                  : "opacity-100"
-                : closing
-                  ? "animate-[tablet-slide-out_0.32s_ease-in_forwards]"
-                  : "animate-[tablet-slide-in_0.38s_ease-out]",
-            )}
-          >
-            <div className="relative">
-              <button
-                type="button"
-                onClick={closeGame}
-                className="absolute -right-1 -top-1 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-paper-cream/20 bg-ink/90 font-mono text-sm text-paper-cream/80 shadow-lg transition hover:bg-ink hover:text-paper-cream sm:-right-3 sm:-top-3"
-                aria-label="Close game"
-              >
-                ×
-              </button>
-              <GameTablet overlay className="w-full shadow-[0_24px_80px_rgba(0,0,0,0.55)]" />
-            </div>
+          <div className="relative z-10 w-full max-w-[min(96vw,920px)]">
+            <GameTablet
+              arcade
+              onClose={closeGame}
+              closing={closing}
+              reducedMotion={reducedMotion}
+            />
           </div>
         </div>
       )}

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { useInViewport, useViewportCentered } from "@/lib/useInViewport";
+import { drawPacMan, pacManMouthFromPhase } from "@/components/games/pacManDraw";
 import {
   CHUNK_SIZE,
   TILE_SIZE,
@@ -107,7 +108,15 @@ function drawMaze(
     }
   }
 
-  drawPlayer(ctx, player.x, player.y, player.dirX, player.dirY, animateMouth ? player.mouth : 0.4);
+  drawPlayer(
+    ctx,
+    player.x,
+    player.y,
+    player.dirX,
+    player.dirY,
+    animateMouth ? player.mouth : 0,
+    animateMouth && player.eating,
+  );
   ctx.restore();
 }
 
@@ -140,25 +149,35 @@ function drawPlayer(
   y: number,
   dirX: number,
   dirY: number,
-  mouth: number,
+  mouthPhase: number,
+  eating: boolean,
 ) {
   const angle = Math.atan2(dirY, dirX);
-  const mouthOpen = 0.2 + Math.abs(Math.sin(mouth)) * 0.35;
-  const radius = 0.42;
-
-  ctx.fillStyle = COLORS.player;
-  ctx.beginPath();
-  ctx.arc(x, y, radius, angle + mouthOpen, angle - mouthOpen);
-  ctx.lineTo(x, y);
-  ctx.closePath();
-  ctx.fill();
+  drawPacMan(ctx, {
+    x,
+    y,
+    radius: 0.42,
+    angle,
+    mouthOpen: pacManMouthFromPhase(mouthPhase, eating),
+  });
 }
 
 type InfinitePacExplorerProps = {
   className?: string;
+  /** Fixed arcade viewport — uses explicit 4:3 buffer sizing. */
+  arcadeMode?: boolean;
+  /** Auto-focus and lock keyboard (arcade overlay). */
+  autoLock?: boolean;
 };
 
-export function InfinitePacExplorer({ className }: InfinitePacExplorerProps) {
+const ARCADE_VIEW_WIDTH = 640;
+const ARCADE_VIEW_HEIGHT = 480;
+
+export function InfinitePacExplorer({
+  className,
+  arcadeMode = false,
+  autoLock = false,
+}: InfinitePacExplorerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const displaySizeRef = useRef({ width: GAME_WIDTH, height: GAME_HEIGHT });
@@ -174,7 +193,17 @@ export function InfinitePacExplorer({ className }: InfinitePacExplorerProps) {
   const [lockSuppressed, setLockSuppressed] = useState(false);
   const inViewport = useInViewport(containerRef, { threshold: 0.15 });
   const viewportCentered = useViewportCentered(containerRef, { minRatio: 0.5 });
-  const locked = !lockSuppressed && (manualLock || viewportCentered);
+  const locked = !lockSuppressed && (autoLock || manualLock || viewportCentered);
+
+  useEffect(() => {
+    if (!autoLock) return;
+    const id = window.requestAnimationFrame(() => {
+      containerRef.current?.focus();
+      setManualLock(true);
+      setLockSuppressed(false);
+    });
+    return () => cancelAnimationFrame(id);
+  }, [autoLock]);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -203,12 +232,25 @@ export function InfinitePacExplorer({ className }: InfinitePacExplorerProps) {
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const rawWidth = container.clientWidth;
-    const rawHeight = container.clientHeight;
+    let rawWidth = container.clientWidth;
+    let rawHeight = container.clientHeight;
+
+    if (arcadeMode) {
+      rawWidth = ARCADE_VIEW_WIDTH;
+      rawHeight = ARCADE_VIEW_HEIGHT;
+    } else if (rawWidth < 1 || rawHeight < 1) {
+      rawWidth = GAME_WIDTH;
+      rawHeight = GAME_HEIGHT;
+    }
+
     if (rawWidth < 1 || rawHeight < 1) return;
 
-    const width = Math.min(rawWidth, MAX_BUFFER_WIDTH);
-    const height = Math.min(rawHeight, MAX_BUFFER_HEIGHT);
+    const width = arcadeMode
+      ? ARCADE_VIEW_WIDTH
+      : Math.min(rawWidth, MAX_BUFFER_WIDTH);
+    const height = arcadeMode
+      ? ARCADE_VIEW_HEIGHT
+      : Math.min(rawHeight, MAX_BUFFER_HEIGHT);
     const prev = displaySizeRef.current;
     if (prev.width === width && prev.height === height && canvas.width > 0) return;
 
@@ -225,7 +267,7 @@ export function InfinitePacExplorer({ className }: InfinitePacExplorerProps) {
     const snap = getSnapshot();
     drawMaze(ctx, snap, width, height, !reducedMotion);
     syncScore(snap.score);
-  }, [getSnapshot, reducedMotion, syncScore]);
+  }, [arcadeMode, getSnapshot, reducedMotion, syncScore]);
 
   useEffect(() => {
     let debounceId: ReturnType<typeof setTimeout> | null = null;
@@ -303,7 +345,7 @@ export function InfinitePacExplorer({ className }: InfinitePacExplorerProps) {
         e.preventDefault();
       }
 
-      if (e.key === "Escape") {
+      if (e.key === "Escape" && !autoLock) {
         setLockSuppressed(true);
         setManualLock(false);
         inputRef.current = { x: 0, y: 0 };
@@ -326,7 +368,7 @@ export function InfinitePacExplorer({ className }: InfinitePacExplorerProps) {
       window.removeEventListener("keydown", onKeyDown, { capture: true });
       window.removeEventListener("keyup", onKeyUp);
     };
-  }, [locked]);
+  }, [autoLock, locked]);
 
   const handlePointerDown = () => {
     setLockSuppressed(false);
@@ -364,6 +406,7 @@ export function InfinitePacExplorer({ className }: InfinitePacExplorerProps) {
       ref={containerRef}
       className={cn(
         "relative overflow-hidden outline-none transition-shadow duration-300",
+        arcadeMode && "mx-auto aspect-[4/3] w-full max-w-[640px]",
         locked && "ring-2 ring-[#ffde00]/45 ring-inset",
         className,
       )}

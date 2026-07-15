@@ -24,6 +24,7 @@ export type PlayerState = {
   dirX: number;
   dirY: number;
   mouth: number;
+  eating: boolean;
 };
 
 export type ChunkData = {
@@ -241,7 +242,7 @@ export function createInitialSnapshot(): GameSnapshot {
   const spawn = findWalkableSpawn(chunks, 8, 8);
 
   return {
-    player: { x: tileCenter(spawn.x), y: tileCenter(spawn.y), dirX: 1, dirY: 0, mouth: 0 },
+    player: { x: tileCenter(spawn.x), y: tileCenter(spawn.y), dirX: 1, dirY: 0, mouth: 0, eating: false },
     score: 0,
     chunks,
   };
@@ -439,13 +440,16 @@ export function useInfiniteMaze() {
       player.dirY = 0;
     }
 
-    player.mouth = (player.mouth + dt * 9) % (Math.PI * 2);
-
     ensureChunks(snap.chunks, player.x, player.y);
 
     const collected = collectAtTile(snap.chunks, tileX, tileY);
     if (collected) {
       snap.score += scoreFor(collected);
+      player.eating = true;
+      player.mouth = (player.mouth + dt * 9) % (Math.PI * 2);
+    } else {
+      player.eating = false;
+      player.mouth = 0;
     }
 
     bump((n) => n + 1);
