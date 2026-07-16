@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   BatteryMedium,
   Briefcase,
@@ -222,20 +222,47 @@ function DeviceAppHeader({
   );
 }
 
-function SpringboardStatusBar({ timeStr, dateShortStr }: { timeStr: string; dateShortStr: string }) {
+function SpringboardStatusBar({
+  timeStr,
+  dateShortStr,
+  compact = false,
+}: {
+  timeStr: string;
+  dateShortStr: string;
+  compact?: boolean;
+}) {
   return (
-    <div className="flex shrink-0 items-center justify-between px-4 pb-1 pt-6 sm:px-5 sm:pt-7">
+    <div
+      className={cn(
+        "flex shrink-0 items-center justify-between",
+        compact ? "px-3 pb-0.5 pt-4" : "px-4 pb-1 pt-6 sm:px-5 sm:pt-7",
+      )}
+    >
       <div className="min-w-0">
-        <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/40">Norris Studio</p>
+        <p className="font-mono text-[7px] uppercase tracking-[0.2em] text-white/40 sm:text-[8px]">
+          Norris Studio
+        </p>
         <p className="mt-0.5">
-          <span className="font-semibold text-[11px] text-white/90 sm:text-xs">{timeStr}</span>
-          <span className="ml-2 hidden text-[10px] text-white/50 sm:inline">{dateShortStr}</span>
+          <span
+            className={cn(
+              "font-semibold text-white/90",
+              compact ? "text-[10px]" : "text-[11px] sm:text-xs",
+            )}
+          >
+            {timeStr}
+          </span>
+          {!compact && (
+            <span className="ml-2 hidden text-[10px] text-white/50 sm:inline">{dateShortStr}</span>
+          )}
         </p>
       </div>
       <div className="flex items-center gap-1.5" aria-hidden>
-        <Wifi className="h-3 w-3 text-white/60" strokeWidth={2.5} />
-        <span className="font-mono text-[9px] font-medium text-white/55">5G</span>
-        <BatteryMedium className="h-3.5 w-4 text-white/60" strokeWidth={2} />
+        <Wifi className={cn("text-white/60", compact ? "h-2.5 w-2.5" : "h-3 w-3")} strokeWidth={2.5} />
+        <span className="font-mono text-[8px] font-medium text-white/55 sm:text-[9px]">5G</span>
+        <BatteryMedium
+          className={cn("text-white/60", compact ? "h-3 w-3.5" : "h-3.5 w-4")}
+          strokeWidth={2}
+        />
       </div>
     </div>
   );
@@ -252,32 +279,27 @@ function SpringboardMiniWidgets({
 }) {
   if (compact) {
     return (
-      <div className="mb-3 space-y-2.5">
-        <div className="flex aspect-[2.2/1] flex-col justify-center rounded-[18px] border border-white/[0.07] bg-black/20 px-3 py-2.5">
-          <p className="font-editorial text-[1.35rem] font-semibold leading-none text-white/95">{timeStr}</p>
-          <p className="mt-1 text-[10px] text-white/50">{dateShortStr}</p>
+      <div className="mb-2 grid grid-cols-[minmax(0,1fr)_auto_auto] items-stretch gap-1.5">
+        <div className="flex min-w-0 flex-col justify-center rounded-[14px] border border-white/[0.07] bg-black/20 px-2 py-1.5">
+          <p className="font-editorial text-[1rem] font-semibold leading-none text-white/95">{timeStr}</p>
+          <p className="mt-0.5 truncate text-[8px] text-white/50">{dateShortStr}</p>
         </div>
-        <div className="grid grid-cols-2 gap-2.5">
-          <div className="relative aspect-square overflow-hidden rounded-[18px] border border-white/[0.07]">
-            <Image
-              src={contactPolaroidImage.src}
-              alt={contactPolaroidImage.alt}
-              fill
-              className="object-cover object-center"
-              sizes="96px"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-            <p className="absolute bottom-2 left-2 font-mono text-[7px] uppercase tracking-[0.14em] text-white/70">
-              Oregon
-            </p>
-          </div>
-          <div className="flex aspect-square flex-col justify-end rounded-[18px] border border-white/[0.07] bg-white/[0.04] px-2.5 py-2.5">
-            <p className="font-mono text-[7px] uppercase tracking-[0.14em] text-white/40">Studio</p>
-            <p className="mt-0.5 font-editorial text-lg font-semibold leading-none text-white/90">
-              {tabletApps.length}
-            </p>
-            <p className="mt-0.5 text-[9px] text-white/45">apps</p>
-          </div>
+        <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-[14px] border border-white/[0.07]">
+          <Image
+            src={contactPolaroidImage.src}
+            alt={contactPolaroidImage.alt}
+            fill
+            className="object-cover object-center"
+            sizes="44px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+          <p className="absolute bottom-1 left-1.5 font-mono text-[5px] uppercase tracking-[0.12em] text-white/70">
+            Oregon
+          </p>
+        </div>
+        <div className="flex h-11 w-11 shrink-0 flex-col justify-end rounded-[14px] border border-white/[0.07] bg-white/[0.04] px-1.5 py-1.5">
+          <p className="font-mono text-[5px] uppercase tracking-[0.12em] text-white/40">Studio</p>
+          <p className="font-editorial text-sm font-semibold leading-none text-white/90">{tabletApps.length}</p>
         </div>
       </div>
     );
@@ -325,8 +347,8 @@ function AppIconGrid({
   return (
     <div
       className={cn(
-        "flex min-h-0 w-full flex-1 flex-col justify-start",
-        compact ? "space-y-4" : "space-y-5 sm:space-y-6",
+        "flex min-h-0 w-full flex-1 flex-col",
+        compact ? "justify-between gap-1" : "justify-start space-y-4 sm:space-y-5",
       )}
     >
       {tabletAppCategories.map((category) => {
@@ -334,11 +356,11 @@ function AppIconGrid({
         if (apps.length === 0) return null;
 
         return (
-          <div key={category.id}>
+          <div key={category.id} className="min-h-0">
             <p
               className={cn(
-                "mb-2.5 px-0.5 font-mono uppercase tracking-[0.2em] text-white/35",
-                compact ? "text-[7px]" : "mb-3 text-[8px] sm:text-[9px]",
+                "px-0.5 font-mono uppercase tracking-[0.2em] text-white/35",
+                compact ? "mb-1 text-[6px]" : "mb-2.5 text-[8px] sm:mb-3 sm:text-[9px]",
               )}
             >
               {category.label}
@@ -347,8 +369,8 @@ function AppIconGrid({
               className={cn(
                 "grid",
                 compact
-                  ? "grid-cols-3 gap-x-3 gap-y-4"
-                  : "grid-cols-4 gap-x-4 gap-y-5 sm:gap-x-5 sm:gap-y-6",
+                  ? "grid-cols-4 gap-x-1.5 gap-y-1.5"
+                  : "grid-cols-4 gap-x-3 gap-y-4 sm:gap-x-4 sm:gap-y-5",
               )}
             >
               {apps.map((app) => (
@@ -356,23 +378,24 @@ function AppIconGrid({
                   key={app.id}
                   type="button"
                   onClick={() => onOpenApp(app.id)}
-                  className="group flex flex-col items-center gap-1.5 rounded-xl p-0.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 sm:gap-2"
+                  className={cn(
+                    "group flex flex-col items-center rounded-lg p-0.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+                    compact ? "gap-0.5" : "gap-1.5 sm:gap-2",
+                  )}
                   aria-label={`Open ${app.name}`}
                 >
                   <div
                     className={cn(
                       "aspect-square shadow-[0_3px_10px_rgba(0,0,0,0.4)] transition group-hover:shadow-[0_5px_16px_rgba(0,0,0,0.5)]",
-                      compact ? "w-[min(100%,68px)]" : "w-[min(100%,84px)] sm:w-[min(100%,92px)]",
+                      compact ? "w-[min(100%,50px)]" : "w-[min(100%,72px)] sm:w-[min(100%,80px)]",
                     )}
                   >
                     <AppIcon app={app} large={!compact} />
                   </div>
                   <span
                     className={cn(
-                      "truncate text-center font-medium leading-tight text-white/90",
-                      compact
-                        ? "max-w-[72px] text-[9px]"
-                        : "max-w-[92px] text-[10px] sm:max-w-[100px] sm:text-[11px]",
+                      "w-full truncate text-center font-medium leading-tight text-white/90",
+                      compact ? "text-[7px]" : "text-[9px] sm:text-[10px]",
                     )}
                   >
                     {app.name}
@@ -665,9 +688,52 @@ function renderInDeviceScreen(
   return null;
 }
 
+/** Scale springboard content down when it would overflow the fixed device screen. */
+function useSpringboardFitScale(
+  screenRef: React.RefObject<HTMLDivElement | null>,
+  contentRef: React.RefObject<HTMLDivElement | null>,
+  enabled: boolean,
+) {
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    if (!enabled) {
+      setScale(1);
+      return;
+    }
+
+    const screen = screenRef.current;
+    const content = contentRef.current;
+    if (!screen || !content) return;
+
+    const fit = () => {
+      const available = screen.clientHeight;
+      const needed = content.scrollHeight;
+      if (available > 0 && needed > available) {
+        setScale(Math.max(0.82, available / needed));
+      } else {
+        setScale(1);
+      }
+    };
+
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(screen);
+    observer.observe(content);
+    return () => observer.disconnect();
+  }, [contentRef, enabled, screenRef]);
+
+  return scale;
+}
+
 export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const springboardScreenRef = useRef<HTMLDivElement>(null);
+  const springboardContentRef = useRef<HTMLDivElement>(null);
   const containerWidth = useElementWidth(containerRef);
+  const [viewportWidth, setViewportWidth] = useState<number | null>(() =>
+    typeof window !== "undefined" ? window.innerWidth : null,
+  );
   const [screen, setScreen] = useState<"home" | TabletAppId>("home");
   const [gameOpen, setGameOpen] = useState(false);
   const [gameFullscreen, setGameFullscreen] = useState(false);
@@ -703,6 +769,12 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   const goHome = useCallback(() => {
@@ -780,26 +852,43 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     isAppOpen &&
     renderInDeviceScreen(screen, { onBack: goHome, onExpandGame: openFullscreenGame });
 
+  const layoutWidth = useMemo(() => {
+    const widths = [containerWidth, viewportWidth].filter((w): w is number => w !== null);
+    if (widths.length === 0) return null;
+    return Math.min(...widths);
+  }, [containerWidth, viewportWidth]);
+
   const isCompactDevice =
-    containerWidth !== null
-      ? containerWidth < STUDIO_SPRINGBOARD_COMPACT_WIDTH
-      : typeof window !== "undefined" && window.innerWidth < STUDIO_SPRINGBOARD_COMPACT_WIDTH;
+    layoutWidth !== null ? layoutWidth < STUDIO_SPRINGBOARD_COMPACT_WIDTH : false;
+
+  const usePhoneChrome = isCompactDevice;
+  const springboardScale = useSpringboardFitScale(
+    springboardScreenRef,
+    springboardContentRef,
+    !isAppOpen,
+  );
 
   return (
     <>
       <div ref={containerRef} className={cn("w-full", className)}>
         <DeviceViewer
-          device={isCompactDevice ? "phone" : "ipad"}
+          device={usePhoneChrome ? "phone" : "ipad"}
           size="lg"
           glow="cyan"
           mode="launcher"
-          className="studio-springboard-device w-full transition-[max-width] duration-300 ease-out"
+          className={cn(
+            "studio-springboard-device w-full transition-[max-width] duration-300 ease-out",
+            isCompactDevice && "studio-springboard-device--compact",
+          )}
         >
-          <div className="studio-springboard-wallpaper relative flex h-full min-h-0 flex-col">
+          <div
+            ref={springboardScreenRef}
+            className="studio-springboard-wallpaper relative flex h-full min-h-0 flex-col overflow-hidden"
+          >
             {inDeviceContent ? (
               <div
                 className={cn(
-                  "relative z-10 flex min-h-0 flex-1 flex-col pb-5",
+                  "relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden pb-5",
                   screen === "microbe"
                     ? "bg-[#040a14]/95"
                     : screen === "reach"
@@ -811,20 +900,33 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
               </div>
             ) : (
               <>
-                <SpringboardStatusBar timeStr={timeStr} dateShortStr={dateShortStr} />
+                <SpringboardStatusBar
+                  timeStr={timeStr}
+                  dateShortStr={dateShortStr}
+                  compact={isCompactDevice}
+                />
 
                 <div
                   className={cn(
-                    "relative z-[1] flex min-h-0 flex-1 flex-col justify-start overflow-y-auto pb-6 pt-2",
-                    isCompactDevice ? "px-3 pb-5 pt-1.5" : "px-4 pb-6 pt-2 sm:px-6 sm:pb-7 sm:pt-3",
+                    "relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden",
+                    isCompactDevice ? "px-2.5 pb-4 pt-0" : "px-4 pb-5 pt-1 sm:px-5 sm:pb-6 sm:pt-2",
                   )}
                 >
-                  <SpringboardMiniWidgets
-                    timeStr={timeStr}
-                    dateShortStr={dateShortStr}
-                    compact={isCompactDevice}
-                  />
-                  <AppIconGrid onOpenApp={openApp} compact={isCompactDevice} />
+                  <div
+                    ref={springboardContentRef}
+                    className="flex min-h-0 flex-1 origin-top flex-col"
+                    style={{
+                      transform: springboardScale < 1 ? `scale(${springboardScale})` : undefined,
+                      width: springboardScale < 1 ? `${100 / springboardScale}%` : undefined,
+                    }}
+                  >
+                    <SpringboardMiniWidgets
+                      timeStr={timeStr}
+                      dateShortStr={dateShortStr}
+                      compact={isCompactDevice}
+                    />
+                    <AppIconGrid onOpenApp={openApp} compact={isCompactDevice} />
+                  </div>
                 </div>
               </>
             )}

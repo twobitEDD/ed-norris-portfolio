@@ -1692,6 +1692,20 @@ body {
     radial-gradient(ellipse 55% 40% at 82% 18%, rgba(45, 143, 212, 0.14) 0%, transparent 50%),
     radial-gradient(ellipse 60% 35% at 50% 88%, rgba(26, 92, 58, 0.12) 0%, transparent 55%),
     linear-gradient(168deg, #0b1210 0%, #0a1018 42%, #080c12 100%);
+  overflow: hidden;
+}
+
+/* Compact springboard — tall phone proportions, no internal scroll */
+.studio-springboard-device--compact[data-device="phone"] {
+  max-width: min(100%, 420px);
+  margin-inline: auto;
+}
+
+.studio-springboard-device--compact[data-device="phone"] .device-frame--phone-large .screen-surface {
+  aspect-ratio: 9 / 19;
+  width: 100%;
+  min-height: 0;
+  max-height: min(88vh, 780px);
 }
 
 /* Portrait iPad springboard — studio apps section */

@@ -62,8 +62,8 @@ export const DEVICE_SIZE_MATRIX: Record<
   },
 } as const;
 
-/** Below this bento-cell width, Norris Studio springboard uses phone chrome instead of iPad. */
-export const STUDIO_SPRINGBOARD_COMPACT_WIDTH = 640;
+/** Below this width (container or viewport), springboard uses phone chrome and compact layout. */
+export const STUDIO_SPRINGBOARD_COMPACT_WIDTH = 768;
 
 /** Shared device chrome — one large studio width, consistent bezels. */
 export const STUDIO_DEVICE = {
