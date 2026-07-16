@@ -5,8 +5,8 @@ import { StudioThemeProvider } from "./StudioThemeProvider";
 /** Ambient desk surface — must not wrap fixed header (filter breaks position:fixed). */
 export function StudioContent({ children }: { children: React.ReactNode }) {
   return (
-    <div className="studio-surface studio-ambient relative">
-      <main id="studio-main" className="relative z-[1]">
+    <div className="studio-surface studio-ambient relative max-w-full overflow-x-clip">
+      <main id="studio-main" className="relative z-[1] max-w-full overflow-x-clip">
         {children}
       </main>
     </div>

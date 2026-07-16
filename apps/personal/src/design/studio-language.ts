@@ -91,7 +91,7 @@ export const STUDIO_DEVICE = {
 export const STUDIO_SPACING = {
   bentoMaxWidth: "1200px",
   bentoSection: "relative px-4 pb-28 pt-2 sm:px-8 sm:pb-32 sm:pt-4",
-  bentoGrid: "vertical-bento__grid mx-auto max-w-[1200px]",
+  bentoGrid: "vertical-bento__grid mx-auto w-full min-w-0 max-w-[1200px]",
   bentoCellResume: "bento-cell--resume",
   bentoCellWork: "bento-cell--work",
   bentoCellContact: "bento-cell--contact",

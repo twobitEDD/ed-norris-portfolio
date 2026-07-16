@@ -137,6 +137,8 @@ body {
 
 .studio-desk-flow {
   position: relative;
+  max-width: 100%;
+  overflow-x: clip;
   padding-top: 4rem;
   background:
     linear-gradient(180deg, transparent 0%, rgba(30, 20, 14, 0.72) 4%, rgba(30, 20, 14, 0.94) 12%, #1a120c 100%);
@@ -184,12 +186,17 @@ body {
 /* Vertical bento scroll layout */
 .vertical-bento {
   position: relative;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 .vertical-bento__grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 3.5rem;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {
@@ -201,6 +208,8 @@ body {
 
 .bento-cell {
   position: relative;
+  min-width: 0;
+  max-width: 100%;
   padding: 1rem 0.75rem;
   isolation: isolate;
   scroll-margin-top: 6.5rem;
@@ -261,15 +270,40 @@ body {
   grid-template-columns: 1fr;
   gap: 1.75rem;
   align-items: start;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .timeline-desk-cluster__paper {
   min-width: 0;
+  max-width: 100%;
 }
 
 .timeline-desk-cluster__margin {
   min-width: 0;
+  max-width: 100%;
   padding-inline: 0.25rem;
+}
+
+@media (max-width: 767px) {
+  .timeline-desk-cluster {
+    gap: 2rem;
+  }
+
+  .timeline-desk-cluster__paper,
+  .timeline-desk-cluster__margin {
+    overflow-x: clip;
+  }
+
+  /* Rotation + grid min-width:auto pushes paper off-screen on narrow viewports */
+  .timeline-desk-cluster .studio-object,
+  .bento-cell--contact .studio-object,
+  .bento-cell--resume .studio-object,
+  .bento-cell--game .studio-object {
+    transform: none !important;
+    margin-inline: 0;
+  }
 }
 
 @media (min-width: 768px) {
@@ -294,6 +328,14 @@ body {
   .timeline-desk-cluster__margin {
     margin-top: 3rem;
     margin-left: -3.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .bento-cell--contact,
+  .bento-cell--resume,
+  .bento-cell--game {
+    overflow-x: clip;
   }
 }
 
@@ -364,6 +406,8 @@ body {
 
 .studio-object {
   transform-origin: center center;
+  width: 100%;
+  min-width: 0;
   max-width: 100%;
 }
 

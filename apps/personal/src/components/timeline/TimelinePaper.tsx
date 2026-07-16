@@ -34,7 +34,7 @@ export function TimelinePaper({ compact, onEraSelect }: TimelinePaperProps) {
 
   return (
     <>
-      <Paper className="w-full max-w-none">
+      <Paper className="w-full min-w-0 max-w-full">
         <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-soft">Career arc</p>
         <h2 className="mt-2 font-editorial text-xl font-semibold text-ink sm:text-2xl">
           A career told as connected decisions.

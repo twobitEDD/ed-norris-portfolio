@@ -28,7 +28,7 @@ export function Paper({
   const isDesk = variant === "desk";
 
   return (
-    <div className={cn("relative", STUDIO_SURFACES.paperContent, className)}>
+    <div className={cn("relative min-w-0 max-w-full", STUDIO_SURFACES.paperContent, className)}>
       {elevated && <ObjectShadow depth={isDesk ? 3 : 2} />}
       {pinned && (
         <>
@@ -45,7 +45,9 @@ export function Paper({
       <div
         className={cn(
           STUDIO_SURFACES.paper,
-          compact ? "relative px-5 py-5 sm:px-6 sm:py-6" : "relative px-7 py-8 sm:px-9 sm:py-10",
+          compact
+            ? "relative px-5 py-5 sm:px-6 sm:py-6"
+            : "relative px-4 py-6 sm:px-7 sm:py-8 md:px-9 md:py-10",
           isDesk && "paper-surface--desk",
           torn ? "paper-torn" : !isDesk && "rounded-[2px]",
         )}
