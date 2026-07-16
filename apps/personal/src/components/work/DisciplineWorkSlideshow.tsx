@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ClientLogoMark } from "@/components/hero/ClientLogoMark";
 import { Tablet } from "@/components/physical-ui/Tablet";
 import { clientLogos } from "@/data/client-logos";
 import { co2tBrand } from "@/data/career-images";
@@ -95,8 +96,12 @@ function ConsultingDecor({ partnerIds }: { partnerIds: string[] }) {
       {logos.length > 0 && (
         <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3 px-4 opacity-30">
           {logos.slice(0, 4).map((logo) => (
-            <div key={logo.id} className="relative h-5 w-10 sm:h-6 sm:w-12">
-              <Image src={logo.src} alt="" fill className="object-contain grayscale" />
+            <div key={logo.id} className="relative flex h-5 min-w-[2.5rem] items-center sm:h-6">
+              <ClientLogoMark
+                logo={logo}
+                fill={logo.display !== "text"}
+                imageClassName="object-contain grayscale"
+              />
             </div>
           ))}
         </div>
@@ -132,8 +137,12 @@ function PartnerStrip({ slide }: { slide: DisciplineSlide }) {
       <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-screen-muted">Partners</p>
       <div className="mt-2 flex flex-wrap items-center gap-3">
         {logos.map((logo) => (
-          <span key={logo.id} className="relative inline-flex h-4 w-12 opacity-60 sm:h-5 sm:w-14">
-            <Image src={logo.src} alt={logo.alt} fill className="object-contain object-left grayscale" />
+          <span key={logo.id} className="relative inline-flex h-4 min-w-[3rem] items-center opacity-60 sm:h-5">
+            <ClientLogoMark
+              logo={logo}
+              fill={logo.display !== "text"}
+              imageClassName="object-contain object-left grayscale"
+            />
           </span>
         ))}
         {slide.partnerNotes?.map((note) => (

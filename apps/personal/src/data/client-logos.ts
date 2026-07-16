@@ -3,17 +3,21 @@ export type ClientLogo = {
   name: string;
   /** Short context shown on hover / screen readers */
   context?: string;
-  src: string;
+  /** Official logo asset; omitted when `display` is `text`. */
+  src?: string;
   alt: string;
   url?: string;
+  /** Render company name typography instead of a logo asset. */
+  display?: "logo" | "text";
 };
 
-/** Clients, employers, and partners — monochrome assets in `public/brands/clients/`. */
+/** Clients, employers, and partners — official marks in `public/brands/clients/` or text labels. */
 export const clientLogos: ClientLogo[] = [
   {
     id: "adidas",
     name: "adidas",
     context: "Full-time — marketing & product",
+    display: "logo",
     src: "/brands/clients/adidas.svg",
     alt: "adidas logo",
     url: "https://www.adidas.com",
@@ -22,6 +26,7 @@ export const clientLogos: ClientLogo[] = [
     id: "google",
     name: "Google",
     context: "Contract via Uncorked Studios",
+    display: "logo",
     src: "/brands/clients/google.svg",
     alt: "Google logo",
     url: "https://www.google.com",
@@ -30,6 +35,7 @@ export const clientLogos: ClientLogo[] = [
     id: "dell",
     name: "Dell",
     context: "Agency contract — 2bit Entertainment",
+    display: "logo",
     src: "/brands/clients/dell.svg",
     alt: "Dell Technologies logo",
     url: "https://www.dell.com",
@@ -38,23 +44,23 @@ export const clientLogos: ClientLogo[] = [
     id: "washu",
     name: "WashU",
     context: "Contract via Nice Touch",
-    src: "/brands/clients/washu.svg",
-    alt: "Washington University in St. Louis logo",
+    display: "text",
+    alt: "Washington University in St. Louis",
     url: "https://wustl.edu",
   },
   {
     id: "co2t",
     name: "CO2T",
     context: "VP, environmental platform",
-    src: "/brands/clients/co2t.svg",
-    alt: "CO2T logo",
+    display: "text",
+    alt: "CO2T",
     url: "https://co2t.earth",
   },
   {
     id: "agencies",
     name: "Agencies",
     context: "Uncorked, Nice Touch & partner studios",
-    src: "/brands/clients/agencies.svg",
+    display: "text",
     alt: "Agency partners",
   },
 ];

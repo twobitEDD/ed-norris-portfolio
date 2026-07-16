@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type { CSSProperties } from "react";
+import { ClientLogoMark } from "@/components/hero/ClientLogoMark";
 import { clientLogos, type ClientLogo } from "@/data/client-logos";
 import { cn } from "@/lib/cn";
 
@@ -33,19 +33,20 @@ function LogoItem({
     <span
       className={cn(
         "relative inline-flex h-[var(--logo-h)] w-full items-center justify-center transition duration-300",
-        variant === "on-dark"
-          ? "opacity-80 brightness-0 invert grayscale-[15%] group-hover:opacity-100 group-hover:grayscale-0"
-          : "opacity-55 grayscale group-hover:opacity-100 group-hover:grayscale-0",
-        "group-focus-visible:opacity-100 group-focus-visible:grayscale-0",
+        logo.display === "text"
+          ? "opacity-80 group-hover:opacity-100 group-focus-visible:opacity-100"
+          : variant === "on-dark"
+            ? "opacity-80 brightness-0 invert grayscale-[15%] group-hover:opacity-100 group-hover:grayscale-0 group-focus-visible:opacity-100 group-focus-visible:grayscale-0"
+            : "opacity-55 grayscale group-hover:opacity-100 group-hover:grayscale-0 group-focus-visible:opacity-100 group-focus-visible:grayscale-0",
       )}
       style={{ "--logo-h": `${dims.height}px` } as CSSProperties}
     >
-      <Image
-        src={logo.src}
-        alt={logo.alt}
+      <ClientLogoMark
+        logo={logo}
+        variant={variant}
         width={120}
         height={32}
-        className={cn("h-full w-auto max-w-full object-contain", dims.maxW)}
+        imageClassName={cn("h-full w-auto max-w-full object-contain", dims.maxW)}
       />
     </span>
   );

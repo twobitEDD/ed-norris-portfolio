@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ClientLogoMark } from "@/components/hero/ClientLogoMark";
 import { clientLogos } from "@/data/client-logos";
 import {
   WORK_APP_AUTO_ADVANCE_MS,
@@ -54,8 +55,12 @@ function PartnerStrip({ slide }: { slide: WorkAppSlide }) {
       <p className="font-mono text-[8px] uppercase tracking-[0.16em] text-white/35">Partners</p>
       <div className="mt-2 flex flex-wrap items-center gap-2.5">
         {logos.map((logo) => (
-          <span key={logo.id} className="relative inline-flex h-4 w-11 opacity-55">
-            <Image src={logo.src} alt={logo.alt} fill className="object-contain object-left grayscale" />
+          <span key={logo.id} className="relative inline-flex h-4 min-w-[2.75rem] opacity-55">
+            <ClientLogoMark
+              logo={logo}
+              fill={logo.display !== "text"}
+              imageClassName="object-contain object-left grayscale"
+            />
           </span>
         ))}
         {slide.partnerNotes?.map((note) => (
