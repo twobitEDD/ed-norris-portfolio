@@ -1,88 +1,73 @@
-# Deploy — Edd Norris portfolio (2bitDEV.com)
+# Deployment — Edd Norris portfolio (2bitDEV.com)
 
-Personal portfolio (`apps/personal`) for **Edd Norris / 2bitDEV**.
+## Rule: GitHub push only — never `railway up` on `2bitent-site`
 
-## Standard workflow (required)
+| Item | Value |
+|------|-------|
+| **Project** | `twobitENT` (`3b864b9d-7403-40f2-9a9a-863f393d9e70`) |
+| **Environment** | `production` (`2d1f98bb-ee10-449e-a8a9-81f940acbfd9`) |
+| **Service** | `2bitdev-portfolio` (`4abc3283-3867-4802-b9d4-7baebd1e78f8`) |
+| **GitHub** | `twobitEDD/ed-norris-portfolio` → branch `main` |
+| **Railway URL** | https://2bitdev-portfolio-production.up.railway.app |
+| **Custom domain** | `2bitdev.com` (attach in Railway dashboard → this service) |
 
-**Always deploy via GitHub → Railway.** Do **not** use `railway up` CLI uploads.
+### Forbidden service — do not deploy here
 
-1. Push to `main` on `twobitEDD/ed-norris-portfolio`
-2. Railway auto-builds and deploys from the connected service
-3. Verify at the Railway URL or custom domain
+**`2bitent-site`** (`8334c011-9071-46ca-bb97-7929d618d176`) hosts the legacy **2bit Entertainment** site from `servprotocolorg/serv-website`. It is **not** the portfolio.
 
-This lets any machine or agent contribute by pushing git commits — no local Railway CLI deploy needed.
+- **Never** run `railway up`, `railway link`, or CLI deploys targeting `2bitent-site`.
+- **Never** link this repo locally to `2bitent-site` (`railway unlink` if accidentally linked).
+- That service is managed by its own GitHub repo/branch only.
 
-## Railway service
+## Standard workflow
 
-| Field | Value |
-|-------|-------|
-| Project | [twobitENT](https://railway.com/project/3b864b9d-7403-40f2-9a9a-863f393d9e70) |
-| Service | **edd-norris-portfolio** |
-| Service ID | `7d600c0a-942c-4e56-b964-7c32eabe6b35` |
-| GitHub | `twobitEDD/ed-norris-portfolio` → branch `main` |
-| Build | Dockerfile at repo root (`railway.toml`) |
-| Start | `npm run start` (delegates to `@ed-norris/personal`) |
-| Railway URL | https://edd-norris-portfolio-production.up.railway.app |
-| Custom domain | **2bitdev.com** (see DNS below) |
+1. Edit code locally (monorepo root; app lives in `apps/personal`).
+2. Commit and **push to `main`** on GitHub.
+3. Railway auto-builds from the connected GitHub source (`railway.toml` + `Dockerfile`).
+4. Verify: https://2bitdev-portfolio-production.up.railway.app
 
-### Do not use
+Do **not** use `railway up` for production deploys. CLI uploads bypass git history and make multi-machine/agent workflows unreliable.
 
-- **2bitent-site** (`8334c011-9071-46ca-bb97-7929d618d176`) — legacy entertainment service; do not CLI-deploy or reconfigure
-- **2bitdev-portfolio** (`4abc3283-3867-4802-b9d4-7baebd1e78f8`) — earlier duplicate from CLI setup; ignore or delete in dashboard when convenient
+## Build config
 
-## Environment variables
+- `railway.toml` — Dockerfile builder, watch patterns for `apps/personal` and `packages/`
+- `Dockerfile` — monorepo install + `npm run start` (workspace delegates to `@ed-norris/personal`)
 
-Set in Railway → **edd-norris-portfolio** → Variables.
+## Environment variables (Railway dashboard)
 
-| Variable | Required | Purpose |
-|----------|----------|---------|
-| `NEXT_PUBLIC_SITE_URL` | Recommended | Canonical URL, e.g. `https://2bitdev.com` |
-| `RESEND_API_KEY` | For contact/schedule email | Resend API key |
-| `RESEND_FROM_EMAIL` | Optional | Sender address (default: Resend onboarding) |
-| `SCHEDULE_NOTIFY_EMAIL` | Optional | Booking notification inbox |
-| `CONTACT_NOTIFY_EMAIL` | Optional | Contact form notification inbox |
-| `SCHEDULE_ADMIN_SECRET` | For `/schedule/admin` | Admin token for schedule management |
-| `UPSTASH_REDIS_REST_URL` | For schedule persistence | Upstash Redis REST URL |
-| `UPSTASH_REDIS_REST_TOKEN` | For schedule persistence | Upstash Redis REST token |
-| `NEXT_PUBLIC_SCHEDULING_URL` | Optional | External scheduling link override |
+Set on **`2bitdev-portfolio`** only:
 
-`PORT` is set automatically by Railway.
+| Variable | Required | Notes |
+|----------|----------|-------|
+| `RESEND_API_KEY` | For email | Booking notifications |
+| `SCHEDULE_ADMIN_SECRET` | For admin | Protects `/schedule/admin` |
+| `NEXT_PUBLIC_SITE_URL` | Recommended | e.g. `https://2bitdev.com` |
+| `RESEND_FROM_EMAIL` | Optional | Verified Resend sender |
+| `SCHEDULE_NOTIFY_EMAIL` | Optional | Defaults to EddNorris@2bitdev.com |
+| `UPSTASH_REDIS_REST_URL` | Optional | Admin calendar / double-booking guard |
+| `UPSTASH_REDIS_REST_TOKEN` | Optional | Pair with Upstash URL |
 
-## Custom domain — 2bitdev.com
+See `apps/personal/.env.example` for full list.
 
-**User action in Railway dashboard + Cloudflare** (do not attach via CLI):
+## Custom domain: 2bitdev.com
 
-1. **Railway** → **edd-norris-portfolio** → **Settings → Networking → Custom Domain**
-   - Add `2bitdev.com` and `www.2bitdev.com`
-   - Copy the CNAME target Railway provides (e.g. `edd-norris-portfolio-production.up.railway.app`)
+1. Railway → **twobitENT** → **2bitdev-portfolio** → **Settings** → **Networking** → **Custom Domain** → add `2bitdev.com` (and `www` if desired).
+2. At your DNS provider, point `2bitdev.com` to Railway (CNAME to the value Railway shows, or A/ALIAS per their instructions).
+3. Remove `2bitdev.com` from **`2bitent-site`** if it is still attached there.
+4. Wait for certificate provisioning; verify https://2bitdev.com shows the portfolio title **Edd Norris — Technical Designer**.
 
-2. **Remove** `2bitdev.com` from legacy **2bitent-site** (only after new domain verifies on edd-norris-portfolio)
+## Local Railway CLI (optional)
 
-3. **Cloudflare DNS** (2bitdev.com zone):
-
-| Type | Name | Value | Proxy |
-|------|------|-------|-------|
-| CNAME | `www` | `edd-norris-portfolio-production.up.railway.app` | DNS only (grey cloud) initially, then proxied after SSL works |
-| CNAME or ALIAS | `@` | Railway apex target from wizard | Per registrar |
-
-4. **Cloudflare SSL/TLS** → set mode to **Full** (not Flexible) so HTTPS terminates correctly between Cloudflare and Railway.
-
-5. Wait for Railway domain verification (green check), then test `https://2bitdev.com`.
-
-## Local development
+For logs/variables only — not deploys:
 
 ```bash
-npm install
-npm run dev:clean
+railway link --project 3b864b9d-7403-40f2-9a9a-863f393d9e70 --environment production --service 2bitdev-portfolio
+railway logs
+railway variables
 ```
 
-## Connect GitHub (one-time / new service)
-
-If setting up a fresh service:
+Unlink when done to avoid accidental `railway up`:
 
 ```bash
-railway link -p 3b864b9d-7403-40f2-9a9a-863f393d9e70 -e production -s edd-norris-portfolio
-railway service source connect --repo twobitEDD/ed-norris-portfolio --branch main --service edd-norris-portfolio
+railway unlink -y
 ```
-
-Do **not** run `railway up` for production deploys.

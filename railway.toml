@@ -4,9 +4,12 @@
 # Deploy via GitHub push only — see DEPLOY.md (do NOT use `railway up`).
 #
 # Railway (twobitENT project):
-#   Service: edd-norris-portfolio (GitHub: twobitEDD/ed-norris-portfolio, branch main)
-#   Domain:  2bitdev.com (user attaches in dashboard — see DEPLOY.md)
-#   URL:     https://edd-norris-portfolio-production.up.railway.app
+#   Service: 2bitdev-portfolio (4abc3283-3867-4802-b9d4-7baebd1e78f8)
+#   GitHub:  twobitEDD/ed-norris-portfolio → main
+#   Domain:  2bitdev.com (attach in dashboard — see DEPLOY.md)
+#   URL:     https://2bitdev-portfolio-production.up.railway.app
+#
+# FORBIDDEN: never CLI deploy to 2bitent-site (8334c011-9071-46ca-bb97-7929d618d176).
 
 [build]
 builder = "dockerfile"
