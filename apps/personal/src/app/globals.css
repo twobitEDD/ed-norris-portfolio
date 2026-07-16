@@ -94,7 +94,7 @@
   [data-studio-mode="day"],
   [data-studio-mode="night"] {
     --studio-hero-max: min(1180px, 94vw);
-    --studio-intro-max: min(900px, 80vw);
+    --studio-intro-max: min(760px, 68vw);
     --studio-intro-overlay-max: 290px;
   }
 }
@@ -106,7 +106,7 @@
     --studio-bento-max: min(1560px, 92vw);
     --studio-device-max: min(1080px, 76vw);
     --studio-hero-max: min(1480px, 92vw);
-    --studio-intro-max: min(1040px, 72vw);
+    --studio-intro-max: min(820px, 62vw);
     --studio-intro-overlay-max: 310px;
   }
 }
@@ -118,7 +118,7 @@
     --studio-bento-max: min(1680px, 88vw);
     --studio-device-max: min(1200px, 72vw);
     --studio-hero-max: min(1680px, 88vw);
-    --studio-intro-max: min(1100px, 66vw);
+    --studio-intro-max: min(860px, 58vw);
     --studio-intro-overlay-max: 330px;
   }
 }
@@ -1989,7 +1989,7 @@ body {
   display: grid;
   width: 100%;
   grid-template-columns: repeat(var(--sb-cols, 4), minmax(0, 1fr));
-  grid-template-rows: repeat(2, var(--sb-widget-cell, minmax(0, 1fr)));
+  grid-template-rows: repeat(var(--sb-widget-rows, 2), var(--sb-widget-cell, minmax(0, 1fr)));
   gap: var(--sb-gap, clamp(14px, 4.5cqi, 28px));
   margin-bottom: var(--sb-widget-mb, var(--sb-gap, 22px));
   flex-shrink: 0;
@@ -2036,6 +2036,100 @@ body {
 
 .springboard-widget-studio-count {
   font-size: clamp(1rem, 8.5cqi, 2rem);
+}
+
+/* Analog clockface widget — iOS-style frosted dial */
+.springboard-widget--clockface {
+  background:
+    radial-gradient(ellipse 90% 80% at 30% 18%, rgba(255, 255, 255, 0.1) 0%, transparent 55%),
+    linear-gradient(155deg, rgba(42, 52, 68, 0.72) 0%, rgba(18, 22, 32, 0.88) 100%);
+  padding: clamp(0.35rem, 3cqi, 0.85rem);
+}
+
+.springboard-clockface-svg {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1;
+}
+
+.springboard-clockface-tick {
+  stroke: rgba(255, 255, 255, 0.42);
+}
+
+.springboard-clockface-hand {
+  stroke: rgba(255, 255, 255, 0.95);
+}
+
+.springboard-clockface-hand--hour {
+  opacity: 0.92;
+}
+
+.springboard-clockface-center {
+  fill: rgba(255, 255, 255, 0.95);
+}
+
+/* Calendar widget — iOS month grid */
+.springboard-widget--calendar {
+  background:
+    radial-gradient(ellipse 75% 55% at 12% 8%, rgba(255, 120, 90, 0.14) 0%, transparent 58%),
+    linear-gradient(160deg, rgba(36, 40, 52, 0.78) 0%, rgba(14, 16, 24, 0.9) 100%);
+}
+
+.springboard-calendar-header {
+  padding: clamp(0.45rem, 3.2cqi, 0.9rem) clamp(0.55rem, 3.8cqi, 1rem) 0;
+}
+
+.springboard-calendar-month {
+  font-size: clamp(0.75rem, 5.5cqi, 1.35rem);
+  line-height: 1.1;
+}
+
+.springboard-calendar-weekday {
+  margin-top: 0.12rem;
+  font-size: clamp(0.5rem, 3cqi, 0.78rem);
+}
+
+.springboard-calendar-grid {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: clamp(1px, 0.6cqi, 3px);
+  padding: clamp(0.25rem, 2cqi, 0.55rem) clamp(0.45rem, 3.2cqi, 0.85rem)
+    clamp(0.4rem, 2.8cqi, 0.75rem);
+  align-content: start;
+}
+
+.springboard-calendar-weekday-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.42rem, 2.4cqi, 0.62rem);
+  font-weight: 600;
+  padding-bottom: 0.15rem;
+}
+
+.springboard-calendar-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  font-size: clamp(0.42rem, 2.6cqi, 0.68rem);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+  border-radius: 999px;
+}
+
+.springboard-calendar-day--empty {
+  visibility: hidden;
+}
+
+.springboard-calendar-day--today {
+  background: #ff3b30;
+  color: #fff;
+  font-weight: 700;
 }
 
 /* Norris Studio — nature + technology springboard wallpaper */

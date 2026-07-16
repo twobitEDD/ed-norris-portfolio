@@ -30,6 +30,7 @@ import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
 import {
   computeSpringboardWidgetCellPx,
+  isSpringboardTabletLargeTier,
   resolveSpringboardDeviceTier,
   SPRINGBOARD_ICON_GRID,
   springboardIconGridStyleProps,
@@ -38,6 +39,9 @@ import {
 } from "@/design/studio-language";
 import { cn } from "@/lib/cn";
 import { useElementWidth } from "@/lib/use-element-width";
+import { useLiveNow } from "@/lib/use-live-now";
+import { SpringboardCalendarWidget } from "@/components/studio/SpringboardCalendarWidget";
+import { SpringboardClockfaceWidget } from "@/components/studio/SpringboardClockfaceWidget";
 import {
   parseStudioAppFromLocation,
   scrollToStudioApps,
@@ -266,18 +270,23 @@ function SpringboardStatusBar({
 }
 
 function SpringboardMiniWidgets({
-  timeStr,
-  dateShortStr,
+  now,
   tier,
   contentWidthPx,
   compact = false,
 }: {
-  timeStr: string;
-  dateShortStr: string;
+  now: Date;
   tier: SpringboardDeviceTier;
   contentWidthPx?: number | null;
   compact?: boolean;
 }) {
+  const timeStr = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  const dateShortStr = now.toLocaleDateString([], {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+  });
+  const showCalendar = isSpringboardTabletLargeTier(tier);
   const gridStyle = springboardWidgetGridStyleProps(tier, contentWidthPx);
   const widgetCellPx =
     contentWidthPx != null && contentWidthPx > 0
@@ -323,6 +332,11 @@ function SpringboardMiniWidgets({
           <p className="springboard-widget-date mt-0.5 text-white/55">{dateShortStr}</p>
         </div>
       </div>
+      <SpringboardClockfaceWidget
+        now={now}
+        compact={compact}
+        style={{ gridColumn: "3", gridRow: "2" }}
+      />
       <div
         className={cn(
           "springboard-widget flex h-full min-h-0 flex-col justify-end",
@@ -338,6 +352,13 @@ function SpringboardMiniWidgets({
           <p className="springboard-widget-studio-label text-white/45">apps</p>
         </div>
       </div>
+      {showCalendar ? (
+        <SpringboardCalendarWidget
+          now={now}
+          compact={compact}
+          style={{ gridColumn: "3 / span 2", gridRow: "3 / span 2" }}
+        />
+      ) : null}
     </div>
   );
 }
@@ -824,9 +845,8 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     };
   }, [closeGame, gameFullscreen, gameOpen]);
 
-  const now = new Date();
+  const now = useLiveNow();
   const timeStr = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-  const dateShortStr = now.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" });
 
   const isAppOpen = screen !== "home";
   const inDeviceContent =
@@ -903,8 +923,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                     }}
                   >
                     <SpringboardMiniWidgets
-                      timeStr={timeStr}
-                      dateShortStr={dateShortStr}
+                      now={now}
                       tier={springboardTier}
                       contentWidthPx={springboardContentWidth}
                       compact={isPhoneTier}

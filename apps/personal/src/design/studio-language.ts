@@ -130,6 +130,16 @@ export const SPRINGBOARD_ICON_GRID = {
 /** Widget row always uses four columns so each 1×1 tile ≈ ¼ content width. */
 export const SPRINGBOARD_WIDGET_COLUMNS = 4;
 
+/** Tablet-large (iPad) springboard — calendar widget and expanded widget row. */
+export function isSpringboardTabletLargeTier(tier: SpringboardDeviceTier): boolean {
+  return tier === "ipad";
+}
+
+/** Widget grid row count — iPad adds a second row pair for the 2×2 calendar. */
+export function springboardWidgetRowCount(tier: SpringboardDeviceTier): number {
+  return isSpringboardTabletLargeTier(tier) ? 4 : 2;
+}
+
 /** Minimum rendered icon edge (px) so labels stay legible on very narrow containers. */
 export const SPRINGBOARD_ICON_MIN_PX = 32;
 
@@ -213,6 +223,7 @@ export function springboardWidgetGridStyleProps(
     "--sb-cols": String(SPRINGBOARD_WIDGET_COLUMNS),
     "--sb-gap": `${gapPx}px`,
     "--sb-widget-cell": `${widgetCellPx}px`,
+    "--sb-widget-rows": String(springboardWidgetRowCount(tier)),
     "--sb-widget-mb": `${gapPx}px`,
   };
 }
