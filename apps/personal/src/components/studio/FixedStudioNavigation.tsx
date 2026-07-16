@@ -62,7 +62,7 @@ function HomeBrandLink() {
     <Link
       href="/"
       className={cn(
-        "shrink-0 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-paper-cream/85 transition-colors hover:text-paper-cream sm:text-[11px]",
+        "shrink-0 font-mono text-[10px] font-semibold tracking-[0.02em] text-paper-cream/85 transition-colors hover:text-paper-cream sm:text-[11px]",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper-cream/50",
       )}
       aria-label="Home — 2bitdev.com"
@@ -117,11 +117,12 @@ export function FixedStudioNavigation() {
       )}
     >
       <div className="mx-auto flex w-full max-w-[1600px] items-start justify-between gap-4 px-3 py-2.5 sm:px-6 sm:py-3 lg:gap-6 lg:px-8 lg:py-4">
-        {pastHero ? <SiteIdentity className="hidden min-w-0 lg:block" /> : null}
-
-        <div className="ml-auto flex min-w-0 flex-col items-end gap-1 lg:shrink-0">
+        <div className="flex min-w-0 flex-col gap-1">
           <HomeBrandLink />
+          {pastHero ? <SiteIdentity className="hidden min-w-0 lg:block" /> : null}
+        </div>
 
+        <div className="flex min-w-0 flex-col items-end gap-1 lg:shrink-0">
           <div className="flex w-full items-center justify-end gap-2 sm:gap-3 lg:gap-4">
             <nav
               className="flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] lg:flex-none lg:overflow-visible [&::-webkit-scrollbar]:hidden"
