@@ -337,6 +337,10 @@ body {
   .bento-cell--game {
     overflow-x: clip;
   }
+
+  .bento-cell--contact .contact-phone-bleed {
+    overflow-x: visible;
+  }
 }
 
 .bento-cell--game {
@@ -1174,7 +1178,30 @@ body {
 /* Legacy phone contact device — kept for any embedded phone usages */
 .contact-phone-device {
   width: 100%;
-  max-width: min(100%, 560px);
+  max-width: min(100%, 720px);
+}
+
+/* Contact landscape phone — bleed into section padding for a larger device */
+.contact-phone-bleed {
+  --contact-phone-bleed: clamp(0.75rem, 3.5vw, 2rem);
+  position: relative;
+  z-index: 1;
+  width: min(720px, calc(100% + var(--contact-phone-bleed) * 2));
+  max-width: min(720px, calc(100vw - 0.5rem));
+  margin-left: calc(-1 * var(--contact-phone-bleed));
+  margin-right: calc(-0.5 * var(--contact-phone-bleed));
+}
+
+@media (min-width: 1024px) {
+  .contact-phone-bleed {
+    margin-right: 0;
+    width: min(720px, calc(100% + var(--contact-phone-bleed)));
+    margin-left: calc(-1 * var(--contact-phone-bleed));
+  }
+}
+
+.bento-cell--contact {
+  overflow-x: visible;
 }
 
 .contact-phone-device .screen-surface {
@@ -1219,6 +1246,19 @@ body {
 
 .contact-phone-app--landscape .contact-phone-app__row {
   border-radius: 0.625rem;
+}
+
+.contact-phone-app--landscape .contact-phone-app__row--nested {
+  margin-left: 0.375rem;
+  padding-left: 0.375rem;
+  border-left: 1px solid rgba(27, 33, 30, 0.1);
+}
+
+.contact-phone-app--landscape .contact-phone-app__folder-children {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-left: 0.125rem;
 }
 
 .contact-phone-device .phone-home-indicator--landscape {

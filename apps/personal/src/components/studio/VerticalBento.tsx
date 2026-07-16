@@ -181,9 +181,11 @@ export function VerticalBento() {
 
         <BentoCell id="contact" span="wide" deferPaint className={STUDIO_SPACING.bentoCellContact}>
           <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-12">
-            <StudioObject rotate={-1.2} className="w-full">
-              <ContactPhoneApp className="mx-auto w-full" />
-            </StudioObject>
+            <div className="contact-phone-bleed">
+              <StudioObject rotate={-1.2} className="w-full">
+                <ContactPhoneApp className="w-full" />
+              </StudioObject>
+            </div>
 
             <ContactPolaroidStack />
           </div>

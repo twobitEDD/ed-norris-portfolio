@@ -7,6 +7,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Calendar,
+  ChevronDown,
   ChevronRight,
   ExternalLink,
   GitBranch,
@@ -16,6 +17,7 @@ import {
   MessageSquare,
   Send,
   UserRound,
+  Users,
 } from "lucide-react";
 import { profile } from "@/data";
 import { DeviceViewer } from "@/components/physical-ui/DeviceViewer";
@@ -81,6 +83,9 @@ function AppListRow({
   external,
   compact,
   layout,
+  truncate = true,
+  nested,
+  folderOpen,
 }: {
   icon: React.ReactNode;
   label: string;
@@ -90,6 +95,9 @@ function AppListRow({
   external?: boolean;
   compact?: boolean;
   layout?: ContactLayout;
+  truncate?: boolean;
+  nested?: boolean;
+  folderOpen?: boolean;
 }) {
   const isTablet = layout === "tablet";
   const isLandscape = layout === "phone-landscape";
@@ -99,6 +107,7 @@ function AppListRow({
         className={cn(
           "contact-phone-app__row-icon flex shrink-0 items-center justify-center rounded-lg",
           isLandscape ? "h-6 w-6" : isTablet ? "h-9 w-9" : compact ? "h-7 w-7" : "h-8 w-8",
+          nested && isLandscape && "h-5 w-5",
         )}
       >
         {icon}
@@ -106,8 +115,10 @@ function AppListRow({
       <span className="min-w-0 flex-1">
         <span
           className={cn(
-            "contact-phone-app__title block truncate font-medium",
-            isLandscape ? "text-[11px]" : isTablet ? "text-sm" : "text-[13px]",
+            "contact-phone-app__title block font-medium",
+            truncate && "truncate",
+            isLandscape ? "text-[11px] leading-snug" : isTablet ? "text-sm" : "text-[13px]",
+            nested && isLandscape && "text-[10px]",
           )}
         >
           {label}
@@ -115,8 +126,10 @@ function AppListRow({
         {detail && (
           <span
             className={cn(
-              "contact-phone-app__chip-detail block truncate",
-              isLandscape ? "text-[9px]" : isTablet ? "text-[11px]" : "text-[10px]",
+              "contact-phone-app__chip-detail block",
+              truncate && "truncate",
+              isLandscape ? "text-[9px] leading-snug" : isTablet ? "text-[11px]" : "text-[10px]",
+              nested && isLandscape && "text-[8px]",
             )}
           >
             {detail}
@@ -125,6 +138,12 @@ function AppListRow({
       </span>
       {external ? (
         <ExternalLink className="contact-phone-app__row-chevron h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+      ) : folderOpen !== undefined ? (
+        folderOpen ? (
+          <ChevronDown className="contact-phone-app__row-chevron h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+        ) : (
+          <ChevronRight className="contact-phone-app__row-chevron h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+        )
       ) : (
         <ChevronRight className="contact-phone-app__row-chevron h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
       )}
@@ -133,6 +152,7 @@ function AppListRow({
 
   const className = cn(
     "contact-phone-app__row flex w-full items-center gap-2.5 rounded-xl px-2.5 text-left",
+    nested && "contact-phone-app__row--nested",
     isLandscape
       ? "min-h-[34px] gap-2 py-1"
       : isTablet
@@ -161,6 +181,73 @@ function AppListRow({
   );
 }
 
+function ContactLinkFolder({
+  icon,
+  label,
+  detail,
+  links,
+  layout,
+  defaultOpen = false,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  detail?: string;
+  links: ProfileLink[];
+  layout: ContactLayout;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  const isLandscape = layout === "phone-landscape";
+
+  if (links.length === 0) return null;
+
+  if (links.length === 1) {
+    const link = links[0];
+    return (
+      <AppListRow
+        icon={icon}
+        label={link.label}
+        detail={detail}
+        href={link.url}
+        external
+        layout={layout}
+        truncate={!isLandscape}
+      />
+    );
+  }
+
+  return (
+    <div className="flex flex-col gap-0.5">
+      <AppListRow
+        icon={icon}
+        label={label}
+        detail={detail ?? `${links.length} links`}
+        onClick={() => setOpen((prev) => !prev)}
+        layout={layout}
+        truncate={!isLandscape}
+        folderOpen={open}
+      />
+      {open && (
+        <div className={cn(isLandscape && "contact-phone-app__folder-children")}>
+          {links.map((link) => (
+            <AppListRow
+              key={link.url}
+              icon={<LinkIcon link={link} className={isLandscape ? "h-3 w-3" : undefined} />}
+              label={link.label}
+              detail={link.url.replace(/^https?:\/\/(www\.)?/, "")}
+              href={link.url}
+              external
+              layout={layout}
+              truncate={!isLandscape}
+              nested={isLandscape}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function HomeScreen({
   onNavigate,
   categorized,
@@ -176,19 +263,16 @@ function HomeScreen({
 }) {
   const isTablet = layout === "tablet";
   const isLandscape = layout === "phone-landscape";
-  const extraLinks = [
-    ...categorized.github,
-    ...categorized.social.filter((link) => !link.url.includes("linkedin.com")),
-    ...categorized.projects,
-  ];
-  const extraLinkLimit = isLandscape ? 2 : isTablet ? 5 : 3;
+  const socialLinks = categorized.social;
+  const githubLinks = categorized.github;
+  const projectLinks = categorized.projects;
 
   return (
     <div
       className={cn(
         "grid h-full min-h-0",
         isLandscape
-          ? "grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-2.5"
+          ? "grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)] gap-3"
           : isTablet
             ? "grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-5 sm:gap-6"
             : "grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-5",
@@ -197,22 +281,22 @@ function HomeScreen({
       <div
         className={cn(
           "flex min-h-0 flex-col",
-          isLandscape ? "justify-start gap-0" : "justify-center gap-0.5",
+          isLandscape ? "justify-start gap-0.5 pr-0.5" : "justify-center gap-0.5",
         )}
       >
         <p
           className={cn(
             "contact-phone-app__label font-mono uppercase tracking-[0.2em]",
-            isLandscape ? "text-[8px] tracking-[0.16em]" : isTablet ? "text-[10px]" : "text-[9px]",
+            isLandscape ? "text-[8px] tracking-[0.14em]" : isTablet ? "text-[10px]" : "text-[9px]",
           )}
         >
           Reach
         </p>
         <h2
           className={cn(
-            "contact-phone-app__headline font-editorial font-semibold leading-snug",
+            "contact-phone-app__headline font-editorial font-semibold",
             isLandscape
-              ? "mt-0.5 text-[15px] leading-tight"
+              ? "mt-0.5 text-[16px] leading-[1.2]"
               : isTablet
                 ? "mt-3 text-2xl sm:text-[1.65rem]"
                 : "mt-2 text-lg sm:mt-2.5 sm:text-xl",
@@ -222,38 +306,41 @@ function HomeScreen({
         </h2>
         <p
           className={cn(
-            "contact-phone-app__body leading-relaxed",
+            "contact-phone-app__body",
             isLandscape
-              ? "mt-1 text-[10px] leading-snug"
+              ? "mt-1 text-[10px] leading-[1.35]"
               : isTablet
-                ? "mt-3 text-sm"
-                : "mt-2.5 text-[11px] sm:mt-3 sm:text-xs",
+                ? "mt-3 text-sm leading-relaxed"
+                : "mt-2.5 text-[11px] leading-relaxed sm:mt-3 sm:text-xs",
           )}
         >
           {profile.availability}
         </p>
         <p
           className={cn(
-            "contact-phone-app__label flex items-center gap-1.5 font-mono uppercase tracking-wider",
+            "contact-phone-app__label flex items-start gap-1.5 font-mono uppercase tracking-wider",
             isLandscape
-              ? "mt-1.5 gap-1 text-[7px]"
+              ? "mt-1.5 gap-1 text-[7px] leading-snug"
               : isTablet
                 ? "mt-auto gap-2 pt-5 text-[9px]"
                 : "mt-auto pt-4 text-[8px] sm:pt-5",
           )}
         >
           <MapPin
-            className={cn(isLandscape ? "h-2.5 w-2.5" : isTablet ? "h-3.5 w-3.5" : "h-3 w-3")}
+            className={cn(
+              "shrink-0",
+              isLandscape ? "mt-px h-2.5 w-2.5" : isTablet ? "h-3.5 w-3.5" : "h-3 w-3",
+            )}
             strokeWidth={1.75}
           />
-          {profile.location}
+          <span>{profile.location}</span>
         </p>
       </div>
 
       <div className="flex min-h-0 flex-col">
         <p
           className={cn(
-            "contact-phone-app__label font-mono uppercase tracking-[0.16em]",
+            "contact-phone-app__label shrink-0 font-mono uppercase tracking-[0.16em]",
             isLandscape ? "mb-1 text-[7px]" : isTablet ? "mb-2 text-[9px]" : "mb-1.5 text-[8px]",
           )}
         >
@@ -273,40 +360,48 @@ function HomeScreen({
               href={CONTACT_MAILTO}
               compact={!isTablet && !isLandscape}
               layout={layout}
+              truncate={!isLandscape}
             />
           )}
           <AppListRow
             icon={<Calendar className="h-3.5 w-3.5" strokeWidth={1.75} />}
             label="Schedule a chat"
-            detail={scheduleExternal ? "Book a time" : "On-site booking"}
+            detail={scheduleExternal ? "Book a time online" : "On-site booking"}
             href={scheduleHref}
             external={scheduleExternal}
             compact={!isTablet && !isLandscape}
             layout={layout}
+            truncate={!isLandscape}
           />
-          {categorized.social
-            .filter((link) => link.url.includes("linkedin.com"))
-            .map((link) => (
-              <AppListRow
-                key={link.url}
-                icon={<UserRound className="h-3.5 w-3.5" strokeWidth={1.75} />}
-                label={link.label}
-                detail="Professional profile"
-                href={link.url}
-                external
-                compact={!isTablet && !isLandscape}
-                layout={layout}
-              />
-            ))}
-          {extraLinks.slice(0, extraLinkLimit).map((link) => (
+          {githubLinks.length > 0 && (
+            <ContactLinkFolder
+              icon={<GitBranch className="h-3.5 w-3.5" strokeWidth={1.75} />}
+              label="GitHub"
+              detail={`${githubLinks.length} repositories`}
+              links={githubLinks}
+              layout={layout}
+            />
+          )}
+          {socialLinks.length > 0 && (
+            <ContactLinkFolder
+              icon={<Users className="h-3.5 w-3.5" strokeWidth={1.75} />}
+              label="Social"
+              detail={`${socialLinks.length} profiles`}
+              links={socialLinks}
+              layout={layout}
+            />
+          )}
+          {projectLinks.map((link) => (
             <AppListRow
               key={link.url}
               icon={<LinkIcon link={link} />}
               label={link.label}
+              detail={link.url.replace(/^https?:\/\/(www\.)?/, "")}
               href={link.url}
               external
               compact={!isTablet && !isLandscape}
               layout={layout}
+              truncate={!isLandscape}
             />
           ))}
           <AppListRow
@@ -316,6 +411,7 @@ function HomeScreen({
             onClick={() => onNavigate("message")}
             compact={!isTablet && !isLandscape}
             layout={layout}
+            truncate={!isLandscape}
           />
         </div>
       </div>
@@ -682,7 +778,7 @@ export function ContactPhoneApp({ className }: ContactPhoneAppProps) {
       mode="card"
       screenTheme="warm"
       screenLayout="app"
-      className={cn("contact-phone-device mx-auto w-full", className)}
+      className={cn("contact-phone-device w-full", className)}
     >
       <ContactAppContent layout="phone-landscape" />
     </DeviceViewer>

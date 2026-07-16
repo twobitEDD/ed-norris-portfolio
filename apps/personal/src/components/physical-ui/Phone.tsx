@@ -53,7 +53,7 @@ export function Phone({
       className={cn(
         "relative",
         isLandscape
-          ? "mx-auto w-full max-w-[min(100%,560px)]"
+          ? "mx-auto w-full max-w-[min(100%,720px)]"
           : isLarge
             ? "mx-auto w-full max-w-[min(100%,920px)]"
             : isLauncher
