@@ -291,7 +291,7 @@ function HomeScreen({
               isTablet ? "text-[10px]" : "text-[9px]",
             )}
           >
-            Reach
+            Contact Me
           </p>
         )}
         <h2

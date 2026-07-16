@@ -165,7 +165,7 @@ export const tabletApps: TabletApp[] = [
   },
   {
     id: "reach",
-    name: "Reach",
+    name: "Contact Me",
     domain: "Contact",
     tagline: "Get in touch",
     description:
