@@ -31,14 +31,6 @@ export const careerGraphNodes: CareerGraphNode[] = [
     timelineEmployerAliases: ["EA Tiburon"],
   },
   {
-    id: "exp-node-bridge-2007",
-    kind: "experience",
-    label: "Freelance / Career Transition",
-    experienceId: "exp-bridge-2007",
-    skippableInOverview: true,
-    timelineEmployerAliases: [],
-  },
-  {
     id: "exp-node-black-lantern",
     kind: "experience",
     label: "Black Lantern Studios",
@@ -59,14 +51,6 @@ export const careerGraphNodes: CareerGraphNode[] = [
     overviewLabel: "Seamless",
     focusSlug: "seamless",
     timelineEmployerAliases: ["Seamless Entertainment"],
-  },
-  {
-    id: "exp-node-bridge-2009",
-    kind: "experience",
-    label: "Freelance Contract Work",
-    experienceId: "exp-bridge-2009",
-    skippableInOverview: true,
-    timelineEmployerAliases: [],
   },
   {
     id: "exp-node-rocket",
@@ -317,11 +301,9 @@ export const careerGraphNodes: CareerGraphNode[] = [
 export const careerGraphEdges: CareerGraphEdge[] = [
   // Games foundation
   { id: "cg-pe-ea", source: PERSON_NODE_ID, target: "exp-node-ea", type: "employment_sequence", connectionNote: "first industry exposure" },
-  { id: "cg-ea-bridge2007", source: "exp-node-ea", target: "exp-node-bridge-2007", type: "employment_sequence", connectionNote: "college → portfolio" },
-  { id: "cg-bridge2007-blacklantern", source: "exp-node-bridge-2007", target: "exp-node-black-lantern", type: "employment_sequence", connectionNote: "first credited ship" },
+  { id: "cg-ea-blacklantern", source: "exp-node-ea", target: "exp-node-black-lantern", type: "employment_sequence", connectionNote: "first credited ship" },
   { id: "cg-blacklantern-seamless", source: "exp-node-black-lantern", target: "exp-node-seamless", type: "employment_sequence", connectionNote: "Wii studio transfer" },
-  { id: "cg-seamless-bridge2009", source: "exp-node-seamless", target: "exp-node-bridge-2009", type: "employment_sequence", connectionNote: "between studios" },
-  { id: "cg-bridge2009-rocket", source: "exp-node-bridge-2009", target: "exp-node-rocket", type: "employment_sequence", connectionNote: "casino games era" },
+  { id: "cg-seamless-rocket", source: "exp-node-seamless", target: "exp-node-rocket", type: "employment_sequence", connectionNote: "casino games era" },
   { id: "cg-rocket-2bit-founder", source: "exp-node-rocket", target: "exp-node-2bit-founder", type: "employment_sequence", connectionNote: "founded studio" },
   { id: "cg-2bit-founder-hatalom", source: "exp-node-2bit-founder", target: "exp-node-hatalom", type: "employment_sequence", connectionNote: "parallel simulation work" },
   { id: "cg-2bit-founder-pause", source: "exp-node-2bit-founder", target: "exp-node-2bit-pause", type: "employment_sequence", connectionNote: "studio wound down" },

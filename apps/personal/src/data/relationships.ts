@@ -140,19 +140,6 @@ export const graphNodes: GraphNode[] = [
     description: "First exposure to professional game development during college.",
   },
   {
-    id: "exp-node-bridge-2007",
-    type: "experience",
-    label: "Freelance / Career Transition",
-    subtitle: "Independent game developer",
-    disciplines: ["games"],
-    period: "2006 – 2007",
-    experienceId: "exp-bridge-2007",
-    description:
-      "Independent projects and job search while completing Full Sail coursework — bridge between EA volunteer QA and Black Lantern Studios.",
-    connectionNarrative:
-      "Portfolio building and industry pursuit between EA Tiburon and the first credited Wii ship at Black Lantern — overlapping final Full Sail software degree work.",
-  },
-  {
     id: "exp-node-black-lantern",
     type: "experience",
     label: "Black Lantern Studios",
@@ -174,19 +161,6 @@ export const graphNodes: GraphNode[] = [
     period: "2008 – 2009",
     experienceId: "exp-seamless",
     description: "Family Fun Football (Wii) — gameplay, art integration, and design.",
-  },
-  {
-    id: "exp-node-bridge-2009",
-    type: "experience",
-    label: "Freelance Contract Work",
-    subtitle: "Independent contracts",
-    disciplines: ["games", "software"],
-    period: "2009",
-    experienceId: "exp-bridge-2009",
-    description:
-      "Brief independent contract period between Seamless Entertainment and Rocket Gaming Systems.",
-    connectionNarrative:
-      "Short transition window after Family Fun Football shipped — before joining Rocket Gaming Systems in January 2010.",
   },
   {
     id: "exp-node-rocket",
@@ -380,7 +354,7 @@ export const graphNodes: GraphNode[] = [
   {
     id: "company-2bit",
     type: "company",
-    label: "2Bit Entertainment",
+    label: "2bit Entertainment",
     disciplines: ["games", "marketing"],
     period: "2012 – 2014 · 2018 – Present",
     description:
@@ -483,17 +457,15 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-edu-pps", source: "theme-education", target: "exp-node-pps", relationship: "taught", connectionNote: "inclusive design roots" },
   { id: "e-edu-innov", source: "theme-education", target: "exp-node-innovation", relationship: "taught", connectionNote: "afterschool mentoring" },
   { id: "e-edu-full-sail", source: "theme-education", target: "edu-node-full-sail", relationship: "shaped", connectionNote: "software degree" },
-  { id: "e-edu-full-sail-bridge", source: "edu-node-full-sail", target: "exp-node-bridge-2007", relationship: "shaped", connectionNote: "degree coursework overlap" },
+  { id: "e-edu-full-sail-blacklantern", source: "edu-node-full-sail", target: "exp-node-black-lantern", relationship: "shaped", connectionNote: "degree coursework overlap" },
   { id: "e-edu-id-tech", source: "theme-education", target: "exp-node-id-tech", relationship: "taught", connectionNote: "summer STEM camps" },
   { id: "e-pps-innov", source: "exp-node-pps", target: "exp-node-innovation", relationship: "led-to", connectionNote: "same years, same mission" },
 
   // Games theme → experiences (chronological spine)
   { id: "e-games-ea", source: "theme-games", target: "exp-node-ea", relationship: "led-to", connectionNote: "first industry exposure" },
-  { id: "e-ea-bridge2007", source: "exp-node-ea", target: "exp-node-bridge-2007", relationship: "led-to", connectionNote: "college → portfolio" },
-  { id: "e-bridge2007-blacklantern", source: "exp-node-bridge-2007", target: "exp-node-black-lantern", relationship: "led-to", connectionNote: "first credited ship" },
+  { id: "e-ea-blacklantern", source: "exp-node-ea", target: "exp-node-black-lantern", relationship: "led-to", connectionNote: "first credited ship" },
   { id: "e-blacklantern-seamless", source: "exp-node-black-lantern", target: "exp-node-seamless", relationship: "led-to", connectionNote: "Wii studio transfer" },
-  { id: "e-seamless-bridge2009", source: "exp-node-seamless", target: "exp-node-bridge-2009", relationship: "led-to", connectionNote: "between studios" },
-  { id: "e-bridge2009-rocket", source: "exp-node-bridge-2009", target: "exp-node-rocket", relationship: "led-to", connectionNote: "casino games era" },
+  { id: "e-seamless-rocket", source: "exp-node-seamless", target: "exp-node-rocket", relationship: "led-to", connectionNote: "casino games era" },
   { id: "e-games-rocket", source: "theme-games", target: "exp-node-rocket", relationship: "built-with", connectionNote: "game math & SCRUM" },
   { id: "e-rocket-2bit-founder", source: "exp-node-rocket", target: "exp-node-2bit-founder", relationship: "led-to", connectionNote: "founded studio" },
   { id: "e-2bit-founder-hatalom", source: "exp-node-2bit-founder", target: "exp-node-hatalom", relationship: "built-with", connectionNote: "parallel simulation work" },

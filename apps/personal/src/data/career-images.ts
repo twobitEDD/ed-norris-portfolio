@@ -171,7 +171,7 @@ export const projectImages: Record<string, CareerImageEntry> = {
   },
   "proj-2bit-games": {
     src: "/career/era-2bit.jpg",
-    alt: "2Bit Entertainment — indie game studio",
+    alt: "2bit Entertainment — indie game studio",
     status: "confirmed",
     objectPosition: "center 40%",
   },

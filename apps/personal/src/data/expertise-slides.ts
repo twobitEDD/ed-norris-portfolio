@@ -49,7 +49,7 @@ export const expertiseSlides: ExpertiseSlide[] = [
     title: "ERGO.games",
     body: "Online gaming hub for ergonomic gaming — games for everyone, always easy to play, never easy to win.",
     partnerIds: [],
-    partnerNotes: ["Indie developers", "2Bit Entertainment"],
+    partnerNotes: ["Indie developers", "2bit Entertainment"],
     technologies: ["Next.js", "TypeScript", "PostgreSQL", "Web games"],
     links: [{ label: "ERGO.games", href: "https://ergo.games", external: true }],
     theme: "ergo",

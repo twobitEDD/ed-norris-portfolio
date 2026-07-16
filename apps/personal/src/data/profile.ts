@@ -14,7 +14,7 @@ export const profile: Profile = {
     { label: "Email", url: "mailto:EddNorris@2bitdev.com" },
     { label: "LinkedIn", url: "https://linkedin.com/in/eddnorris" },
     { label: "GitHub", url: "https://github.com/twobitEDD" },
-    { label: "2Bit Entertainment", url: "https://github.com/twobitENT" },
+    { label: "2bit Entertainment", url: "https://github.com/twobitENT" },
     { label: "CO2T.earth", url: "https://co2t.earth" },
     { label: "CO2True", url: "https://co2true.com" },
     { label: "ERGO.games", url: "https://ergo.games" },

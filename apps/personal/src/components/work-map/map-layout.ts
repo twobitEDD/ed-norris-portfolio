@@ -68,10 +68,8 @@ const detailSlots: Record<string, { col: number; row: number }> = {
 
   // Games chronology (northeast column)
   "exp-node-ea": { col: 6, row: -6 },
-  "exp-node-bridge-2007": { col: 5, row: -5 },
   "exp-node-black-lantern": { col: 7, row: -5 },
   "exp-node-seamless": { col: 7, row: -4 },
-  "exp-node-bridge-2009": { col: 5, row: -4 },
   "exp-node-rocket": { col: 7, row: -3 },
   "exp-node-2bit-founder": { col: 6, row: -2 },
   "exp-node-hatalom": { col: 8, row: -2 },

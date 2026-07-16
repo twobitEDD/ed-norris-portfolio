@@ -9,7 +9,7 @@
       { "label": "Email", "url": "mailto:EddNorris@2bitdev.com" },
       { "label": "LinkedIn", "url": "https://linkedin.com/in/eddnorris" },
       { "label": "GitHub", "url": "https://github.com/twobitEDD" },
-      { "label": "2Bit Entertainment", "url": "https://github.com/twobitENT" },
+      { "label": "2bit Entertainment", "url": "https://github.com/twobitENT" },
       { "label": "CO2T.earth", "url": "https://co2t.earth" },
       { "label": "CO2Trust", "url": "https://github.com/co2trust-org" }
     ]
@@ -92,7 +92,7 @@
     {
       "id": "org-2bit",
       "type": "company",
-      "title": "2Bit Entertainment",
+      "title": "2bit Entertainment",
       "start": "2012",
       "end": null,
       "summary": "Indie game studio (Planet's Core, Fish Fight, ERGnomes, PokePocket) and software production business (2018–present).",

@@ -108,7 +108,7 @@ export const creativeSlides: DisciplineSlide[] = [
     eyebrow: "Game platform",
     title: "ERGO.games",
     body: "Browser-based gaming hub built for ergonomic play — accessible indie catalog, entitlements, and human-centered UX where games are easy to pick up but never easy to win.",
-    partnerNotes: ["Indie developers", "2Bit Entertainment"],
+    partnerNotes: ["Indie developers", "2bit Entertainment"],
     partnerIds: [],
     technologies: ["Next.js", "TypeScript", "PostgreSQL", "Web games"],
     links: [
@@ -140,7 +140,7 @@ export const creativeSlides: DisciplineSlide[] = [
   {
     id: "2bit",
     eyebrow: "Indie studio",
-    title: "2Bit Entertainment",
+    title: "2bit Entertainment",
     body: "Founder-led indie games across eras — Planet's Core, Fish Fight, ERGnomes, and PokePocket — plus software production for major clients through agency partnerships.",
     partnerIds: [],
     partnerNotes: ["Fish Fight", "Planet's Core", "ERGnomes", "PokePocket"],
@@ -152,7 +152,7 @@ export const creativeSlides: DisciplineSlide[] = [
     glow: "purple",
     image: {
       src: "/career/era-2bit.jpg",
-      alt: "2Bit Entertainment — indie game studio",
+      alt: "2bit Entertainment — indie game studio",
     },
     decor: "games",
   },

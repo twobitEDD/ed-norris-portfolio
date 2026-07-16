@@ -50,7 +50,7 @@ Validation fails if overview edges skip non-skippable employers (e.g. EA → 2bi
 
 ## Skippable bridge roles
 
-Short freelance / overlap periods use `skippableInOverview: true` so the overview map can simplify without breaking chronology validation. Examples: `exp-node-bridge-2007`, `exp-node-2bit-pause`.
+Short freelance / overlap periods use `skippableInOverview: true` so the overview map can simplify without breaking chronology validation. Example: `exp-node-2bit-pause`.
 
 ## Edge types
 

@@ -43,14 +43,13 @@ export const timelineEras: TimelineEra[] = [
     detailBody: [
       "This era started with volunteer QA at EA Tiburon while finishing a software degree at Full Sail — a deliberate choice to learn how professional game studios actually ship product, not just how to write code.",
       "From Black Lantern's Iron Chef America: Supreme Cuisine (Nintendo Wii) to Seamless Entertainment's Family Fun Football (Wii) and Rocket Gaming's casino slot-machine titles, the work spanned gameplay programming, team leadership, SCRUM product management, and production under hard deadlines.",
-      "Brief independent stretches (2006–2007 and late 2009) bridged employer transitions and kept portfolio work moving. The through-line: ship playable systems, document clearly, and earn trust on small teams before taking lead roles.",
+      "The through-line: ship playable systems, document clearly, and earn trust on small teams before taking lead roles.",
     ],
     highlights: [
       "Volunteer QA at EA Tiburon — first exposure to professional game development",
       "Iron Chef America: Supreme Cuisine (Nintendo Wii) — gameplay lead at Black Lantern Studios",
       "Family Fun Football (Nintendo Wii) — credited release at Seamless Entertainment",
       "Several casino gambling games — slot titles at Rocket Gaming Systems",
-      "Independent transition projects while completing Full Sail coursework",
     ],
     employers: [
       "EA Tiburon",
@@ -64,7 +63,7 @@ export const timelineEras: TimelineEra[] = [
   {
     id: "era-2bit",
     period: "2012–2014 · 2018–Present",
-    title: "2Bit Entertainment",
+    title: "2bit Entertainment",
     organization: "Founder · Indie games · Software production",
     summary:
       "Operational indie studio 2012–2014 shipping Planet's Core, then Fish Fight, ERGnomes, and PokePocket alongside agency contracts. Studio on hold 2014–2018 during teaching jobs and public-service work. Re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and additional clients.",
