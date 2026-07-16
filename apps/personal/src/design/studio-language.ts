@@ -65,6 +65,68 @@ export const DEVICE_SIZE_MATRIX: Record<
 /** Below this width (container or viewport), springboard uses phone chrome and compact layout. */
 export const STUDIO_SPRINGBOARD_COMPACT_WIDTH = 768;
 
+/** At or above this width, springboard uses iPad chrome and the widest icon grid. */
+export const STUDIO_SPRINGBOARD_IPAD_WIDTH = 1024;
+
+export type SpringboardDeviceTier = "phone" | "tablet" | "ipad";
+
+/** Resolve springboard device tier from the effective layout width. */
+export function resolveSpringboardDeviceTier(layoutWidth: number | null): SpringboardDeviceTier {
+  if (layoutWidth === null || layoutWidth >= STUDIO_SPRINGBOARD_IPAD_WIDTH) return "ipad";
+  if (layoutWidth < STUDIO_SPRINGBOARD_COMPACT_WIDTH) return "phone";
+  return "tablet";
+}
+
+/** Uniform springboard icon grid per device tier — fixed columns, icon size, and gap. */
+export const SPRINGBOARD_ICON_GRID = {
+  phone: {
+    columns: 4,
+    iconPx: 56,
+    gridClass: "grid-cols-[repeat(4,56px)] gap-3",
+    buttonClass: "w-[56px] items-center gap-0.5",
+    iconClass: "w-[56px]",
+    labelClass: "text-[7px]",
+    categoryLabelClass: "mb-1 text-[6px]",
+    containerClass: "gap-3",
+    imageSizes: "56px",
+  },
+  tablet: {
+    columns: 5,
+    iconPx: 64,
+    gridClass: "grid-cols-[repeat(5,64px)] gap-3",
+    buttonClass: "w-[64px] items-center gap-1",
+    iconClass: "w-[64px]",
+    labelClass: "text-[8px]",
+    categoryLabelClass: "mb-2 text-[7px]",
+    containerClass: "gap-4",
+    imageSizes: "64px",
+  },
+  ipad: {
+    columns: 6,
+    iconPx: 72,
+    gridClass: "grid-cols-[repeat(6,72px)] gap-3 gap-y-4",
+    buttonClass: "w-[72px] items-center gap-1.5",
+    iconClass: "w-[72px]",
+    labelClass: "text-[9px] sm:text-[10px]",
+    categoryLabelClass: "mb-2.5 text-[8px] sm:mb-3 sm:text-[9px]",
+    containerClass: "min-h-0 flex-1 justify-start space-y-4 sm:space-y-5",
+    imageSizes: "72px",
+  },
+} as const satisfies Record<
+  SpringboardDeviceTier,
+  {
+    columns: number;
+    iconPx: number;
+    gridClass: string;
+    buttonClass: string;
+    iconClass: string;
+    labelClass: string;
+    categoryLabelClass: string;
+    containerClass: string;
+    imageSizes: string;
+  }
+>;
+
 /** Shared device chrome — one large studio width, consistent bezels. */
 export const STUDIO_DEVICE = {
   largeMaxWidth: "920px",

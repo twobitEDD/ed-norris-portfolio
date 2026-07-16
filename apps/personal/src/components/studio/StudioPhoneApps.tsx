@@ -28,7 +28,11 @@ import { projects } from "@/data/projects";
 import { creativeSlides, environmentalSlides } from "@/data/discipline-slides";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { tabletAppCategories, tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
-import { STUDIO_SPRINGBOARD_COMPACT_WIDTH } from "@/design/studio-language";
+import {
+  resolveSpringboardDeviceTier,
+  SPRINGBOARD_ICON_GRID,
+  type SpringboardDeviceTier,
+} from "@/design/studio-language";
 import { cn } from "@/lib/cn";
 import { useElementWidth } from "@/lib/use-element-width";
 import {
@@ -69,7 +73,7 @@ const LAUNCHABLE_APP_IDS = new Set<TabletAppId>(
   tabletApps.filter((a) => a.inDevice || a.isGame).map((a) => a.id),
 );
 
-function AppIcon({ app, large }: { app: TabletApp; large?: boolean }) {
+function AppIcon({ app, imageSizes = "56px" }: { app: TabletApp; imageSizes?: string }) {
   if (app.id === "ergo") {
     return (
       <div
@@ -175,7 +179,7 @@ function AppIcon({ app, large }: { app: TabletApp; large?: boolean }) {
         className="relative h-full w-full overflow-hidden rounded-[22%] shadow-inner"
         style={{ background: app.iconBg }}
       >
-        <Image src={app.imageSrc} alt="" fill className="object-cover object-center" sizes={large ? "80px" : "56px"} />
+        <Image src={app.imageSrc} alt="" fill className="object-cover object-center" sizes={imageSizes} />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
       </div>
     );
@@ -339,18 +343,15 @@ function SpringboardMiniWidgets({
 
 function AppIconGrid({
   onOpenApp,
-  compact = false,
+  tier,
 }: {
   onOpenApp: (id: TabletAppId) => void;
-  compact?: boolean;
+  tier: SpringboardDeviceTier;
 }) {
+  const grid = SPRINGBOARD_ICON_GRID[tier];
+
   return (
-    <div
-      className={cn(
-        "flex w-full flex-col",
-        compact ? "gap-3" : "min-h-0 flex-1 justify-start space-y-4 sm:space-y-5",
-      )}
-    >
+    <div className={cn("flex w-full flex-col", grid.containerClass)}>
       {tabletAppCategories.map((category) => {
         const apps = tabletApps.filter((app) => app.category === category.id);
         if (apps.length === 0) return null;
@@ -360,19 +361,12 @@ function AppIconGrid({
             <p
               className={cn(
                 "px-0.5 font-mono uppercase tracking-[0.2em] text-white/35",
-                compact ? "mb-1 text-[6px]" : "mb-2.5 text-[8px] sm:mb-3 sm:text-[9px]",
+                grid.categoryLabelClass,
               )}
             >
               {category.label}
             </p>
-            <div
-              className={cn(
-                "grid justify-items-start",
-                compact
-                  ? "grid-cols-[repeat(4,56px)] gap-3"
-                  : "grid-cols-4 gap-x-3 gap-y-4 sm:gap-x-4 sm:gap-y-5",
-              )}
-            >
+            <div className={cn("grid justify-items-start", grid.gridClass)}>
               {apps.map((app) => (
                 <button
                   key={app.id}
@@ -380,22 +374,22 @@ function AppIconGrid({
                   onClick={() => onOpenApp(app.id)}
                   className={cn(
                     "group flex flex-col rounded-lg p-0 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-                    compact ? "w-[56px] items-center gap-0.5" : "items-center gap-1.5 p-0.5 sm:gap-2",
+                    grid.buttonClass,
                   )}
                   aria-label={`Open ${app.name}`}
                 >
                   <div
                     className={cn(
                       "aspect-square shadow-[0_3px_10px_rgba(0,0,0,0.4)] transition group-hover:shadow-[0_5px_16px_rgba(0,0,0,0.5)]",
-                      compact ? "w-[56px]" : "w-[min(100%,72px)] sm:w-[min(100%,80px)]",
+                      grid.iconClass,
                     )}
                   >
-                    <AppIcon app={app} large={!compact} />
+                    <AppIcon app={app} imageSizes={grid.imageSizes} />
                   </div>
                   <span
                     className={cn(
                       "w-full truncate text-center font-medium leading-tight text-white/90",
-                      compact ? "text-[7px]" : "text-[9px] sm:text-[10px]",
+                      grid.labelClass,
                     )}
                   >
                     {app.name}
@@ -420,7 +414,7 @@ function AppShowcaseInDevice({ app, onBack }: { app: TabletApp; onBack: () => vo
       <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-5">
         <div className="flex items-start gap-3">
           <div className="h-14 w-14 shrink-0 sm:h-16 sm:w-16">
-            <AppIcon app={app} large />
+            <AppIcon app={app} imageSizes="80px" />
           </div>
           <div className="min-w-0">
             <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-white/40">{app.domain}</p>
@@ -858,10 +852,8 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     return Math.min(...widths);
   }, [containerWidth, viewportWidth]);
 
-  const isCompactDevice =
-    layoutWidth !== null ? layoutWidth < STUDIO_SPRINGBOARD_COMPACT_WIDTH : false;
-
-  const usePhoneChrome = isCompactDevice;
+  const springboardTier = resolveSpringboardDeviceTier(layoutWidth);
+  const isPhoneTier = springboardTier === "phone";
   const springboardScale = useSpringboardFitScale(
     springboardScreenRef,
     springboardContentRef,
@@ -872,13 +864,13 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     <>
       <div ref={containerRef} className={cn("w-full", className)}>
         <DeviceViewer
-          device={usePhoneChrome ? "phone" : "ipad"}
+          device={springboardTier}
           size="lg"
           glow="cyan"
           mode="launcher"
           className={cn(
             "studio-springboard-device w-full transition-[max-width] duration-300 ease-out",
-            isCompactDevice && "studio-springboard-device--compact",
+            isPhoneTier && "studio-springboard-device--compact",
           )}
         >
           <div
@@ -903,20 +895,24 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                 <SpringboardStatusBar
                   timeStr={timeStr}
                   dateShortStr={dateShortStr}
-                  compact={isCompactDevice}
+                  compact={isPhoneTier}
                 />
 
                 <div
                   className={cn(
                     "relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden",
-                    isCompactDevice ? "px-2.5 pb-4 pt-0" : "px-4 pb-5 pt-1 sm:px-5 sm:pb-6 sm:pt-2",
+                    isPhoneTier
+                      ? "px-2.5 pb-4 pt-0"
+                      : springboardTier === "tablet"
+                        ? "px-3.5 pb-5 pt-1"
+                        : "px-4 pb-5 pt-1 sm:px-5 sm:pb-6 sm:pt-2",
                   )}
                 >
                   <div
                     ref={springboardContentRef}
                     className={cn(
                       "flex origin-top flex-col",
-                      isCompactDevice ? "gap-0" : "min-h-0 flex-1",
+                      isPhoneTier ? "gap-0" : "min-h-0 flex-1",
                     )}
                     style={{
                       transform: springboardScale < 1 ? `scale(${springboardScale})` : undefined,
@@ -926,9 +922,9 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                     <SpringboardMiniWidgets
                       timeStr={timeStr}
                       dateShortStr={dateShortStr}
-                      compact={isCompactDevice}
+                      compact={isPhoneTier}
                     />
-                    <AppIconGrid onOpenApp={openApp} compact={isCompactDevice} />
+                    <AppIconGrid onOpenApp={openApp} tier={springboardTier} />
                   </div>
                 </div>
               </>
