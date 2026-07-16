@@ -1177,25 +1177,26 @@ body {
 
 /* Legacy phone contact device — kept for any embedded phone usages */
 .contact-phone-device {
+  --contact-phone-landscape-max: 920px;
   width: 100%;
-  max-width: min(100%, 720px);
+  max-width: min(100%, var(--contact-phone-landscape-max));
 }
 
 /* Contact landscape phone — bleed into section padding for a larger device */
 .contact-phone-bleed {
-  --contact-phone-bleed: clamp(0.75rem, 3.5vw, 2rem);
+  --contact-phone-bleed: clamp(1rem, 5vw, 3.5rem);
   position: relative;
   z-index: 1;
-  width: min(720px, calc(100% + var(--contact-phone-bleed) * 2));
-  max-width: min(720px, calc(100vw - 0.5rem));
+  width: min(var(--contact-phone-landscape-max, 920px), calc(100% + var(--contact-phone-bleed) * 2));
+  max-width: min(var(--contact-phone-landscape-max, 920px), calc(100vw - 0.25rem));
   margin-left: calc(-1 * var(--contact-phone-bleed));
-  margin-right: calc(-0.5 * var(--contact-phone-bleed));
+  margin-right: calc(-1 * var(--contact-phone-bleed));
 }
 
 @media (min-width: 1024px) {
   .contact-phone-bleed {
-    margin-right: 0;
-    width: min(720px, calc(100% + var(--contact-phone-bleed)));
+    margin-right: calc(-0.75 * var(--contact-phone-bleed));
+    width: min(var(--contact-phone-landscape-max, 920px), calc(100% + var(--contact-phone-bleed) * 1.75));
     margin-left: calc(-1 * var(--contact-phone-bleed));
   }
 }
@@ -1244,6 +1245,17 @@ body {
 
 .contact-phone-app--landscape .contact-phone-app__headline {
   letter-spacing: -0.01em;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+}
+
+.contact-phone-app--landscape .contact-phone-app__body {
+  font-size: 0.5rem;
+  line-height: 1.35;
+}
+
+.contact-phone-app--landscape .contact-phone-app__header-location {
+  color: var(--contact-app-ink-faint);
 }
 
 .contact-phone-app--landscape .contact-phone-app__row {
@@ -1293,7 +1305,7 @@ body {
 }
 
 /* Wide landscape (two columns): only the contact list scrolls */
-@container contact-phone (min-width: 440px) {
+@container contact-phone (min-width: 380px) {
   .contact-phone-app--landscape .contact-phone-app__screen-body {
     overflow: hidden;
   }
@@ -1304,7 +1316,7 @@ body {
 }
 
 /* Narrow landscape (stacked): single scroll on screen body, full-width touch rows */
-@container contact-phone (max-width: 439px) {
+@container contact-phone (max-width: 379px) {
   .contact-phone-app--landscape .contact-phone-app__screen-body {
     overflow-x: hidden;
     overflow-y: auto;
@@ -1347,12 +1359,12 @@ body {
   }
 
   .contact-phone-app--landscape .contact-phone-app__headline {
-    font-size: 0.9375rem;
+    font-size: 0.75rem;
     line-height: 1.25;
   }
 
   .contact-phone-app--landscape .contact-phone-app__body {
-    font-size: 0.625rem;
+    font-size: 0.4375rem;
     line-height: 1.4;
   }
 

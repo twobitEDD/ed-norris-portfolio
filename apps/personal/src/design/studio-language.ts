@@ -47,7 +47,7 @@ export const DEVICE_SIZE_MATRIX: Record<
 > = {
   phone: {
     sm: { maxWidth: "220px", aspectRatio: "9/19" },
-    md: { maxWidth: "720px", aspectRatio: "19/9" },
+    md: { maxWidth: "920px", aspectRatio: "19/9" },
     lg: { maxWidth: "920px", aspectRatio: "3/4" },
   },
   tablet: {
@@ -177,7 +177,7 @@ export function springboardIconGridStyleProps(tier: SpringboardDeviceTier): Reco
 /** Shared device chrome — one large studio width, consistent bezels. */
 export const STUDIO_DEVICE = {
   largeMaxWidth: "920px",
-  phoneLandscapeMaxWidth: "720px",
+  phoneLandscapeMaxWidth: "920px",
   phonePortraitDefault: "248px",
   phonePortraitCompact: "220px",
   phoneLauncherWidth: "220px",

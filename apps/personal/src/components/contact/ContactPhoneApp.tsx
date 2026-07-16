@@ -281,22 +281,24 @@ function HomeScreen({
       <div
         className={cn(
           "flex min-h-0 flex-col",
-          isLandscape ? "contact-phone-app__reach-col justify-start gap-0.5 pr-0.5" : "justify-center gap-0.5",
+          isLandscape ? "contact-phone-app__reach-col justify-start gap-0 pr-0.5" : "justify-center gap-0.5",
         )}
       >
-        <p
-          className={cn(
-            "contact-phone-app__label font-mono uppercase tracking-[0.2em]",
-            isLandscape ? "text-[8px] tracking-[0.14em]" : isTablet ? "text-[10px]" : "text-[9px]",
-          )}
-        >
-          Reach
-        </p>
+        {!isLandscape && (
+          <p
+            className={cn(
+              "contact-phone-app__label font-mono uppercase tracking-[0.2em]",
+              isTablet ? "text-[10px]" : "text-[9px]",
+            )}
+          >
+            Reach
+          </p>
+        )}
         <h2
           className={cn(
             "contact-phone-app__headline font-editorial font-semibold",
             isLandscape
-              ? "mt-0.5 text-[16px] leading-[1.2]"
+              ? "text-[13px] leading-[1.2]"
               : isTablet
                 ? "mt-3 text-2xl sm:text-[1.65rem]"
                 : "mt-2 text-lg sm:mt-2.5 sm:text-xl",
@@ -308,7 +310,7 @@ function HomeScreen({
           className={cn(
             "contact-phone-app__body",
             isLandscape
-              ? "mt-1 text-[10px] leading-[1.35]"
+              ? "mt-0.5 text-[8px] leading-[1.35]"
               : isTablet
                 ? "mt-3 text-sm leading-relaxed"
                 : "mt-2.5 text-[11px] leading-relaxed sm:mt-3 sm:text-xs",
@@ -316,25 +318,22 @@ function HomeScreen({
         >
           {profile.availability}
         </p>
-        <p
-          className={cn(
-            "contact-phone-app__label flex items-start gap-1.5 font-mono uppercase tracking-wider",
-            isLandscape
-              ? "mt-1.5 gap-1 text-[7px] leading-snug"
-              : isTablet
+        {!isLandscape && (
+          <p
+            className={cn(
+              "contact-phone-app__label flex items-start gap-1.5 font-mono uppercase tracking-wider",
+              isTablet
                 ? "mt-auto gap-2 pt-5 text-[9px]"
                 : "mt-auto pt-4 text-[8px] sm:pt-5",
-          )}
-        >
-          <MapPin
-            className={cn(
-              "shrink-0",
-              isLandscape ? "mt-px h-2.5 w-2.5" : isTablet ? "h-3.5 w-3.5" : "h-3 w-3",
             )}
-            strokeWidth={1.75}
-          />
-          <span>{profile.location}</span>
-        </p>
+          >
+            <MapPin
+              className={cn("shrink-0", isTablet ? "h-3.5 w-3.5" : "h-3 w-3")}
+              strokeWidth={1.75}
+            />
+            <span>{profile.location}</span>
+          </p>
+        )}
       </div>
 
       <div className={cn("flex min-h-0 flex-col", isLandscape && "contact-phone-app__touch-col")}>
@@ -690,6 +689,17 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
           >
             {screen === "home" ? "Contact" : "Message"}
           </p>
+          {isLandscape && screen === "home" && (
+            <p
+              className={cn(
+                "contact-phone-app__header-location contact-phone-app__label mt-0.5 flex items-center gap-1 font-mono uppercase tracking-wider",
+                "text-[6px] leading-none",
+              )}
+            >
+              <MapPin className="h-2 w-2 shrink-0" strokeWidth={1.75} aria-hidden />
+              <span className="truncate">{profile.location}</span>
+            </p>
+          )}
         </div>
         {!scheduleExternal && screen === "home" ? (
           <Link
