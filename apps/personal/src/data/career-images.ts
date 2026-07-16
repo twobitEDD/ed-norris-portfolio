@@ -61,9 +61,8 @@ export const eraImages: Record<string, CareerImageEntry> = {
     objectPosition: "center 20%",
   },
   "era-advisory": {
-    src: "/career/era-ergo.jpg",
+    ...technologyAdvisoryImage,
     alt: "Technology advisory — cross-disciplinary consulting on modern and legacy systems",
-    status: "placeholder",
   },
 };
 
