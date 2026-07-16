@@ -5,7 +5,7 @@ export const profile: Profile = {
   tagline: "Technical Designer — UX & Software",
   headline: "I love building solutions, for fun and function.",
   summary:
-    "Twenty years in game development and software leadership — from credited Wii releases and casino gambling titles to consumer experience platforms, military simulation, and the CO2True carbon credit platform.",
+    "Twenty years from Wii credits to software leadership — building CO2True carbon platforms and ERGO accessible games with human-centered design.",
   proofStrip: ["Iron Chef Wii", "Family Fun Football", "CO2True"],
   location: "Cottage Grove, Oregon",
   availability:
