@@ -272,7 +272,7 @@ function HomeScreen({
       className={cn(
         "grid h-full min-h-0",
         isLandscape
-          ? "grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)] gap-3"
+          ? "contact-phone-app__home-grid grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)] gap-3"
           : isTablet
             ? "grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-5 sm:gap-6"
             : "grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] sm:gap-5",
@@ -281,7 +281,7 @@ function HomeScreen({
       <div
         className={cn(
           "flex min-h-0 flex-col",
-          isLandscape ? "justify-start gap-0.5 pr-0.5" : "justify-center gap-0.5",
+          isLandscape ? "contact-phone-app__reach-col justify-start gap-0.5 pr-0.5" : "justify-center gap-0.5",
         )}
       >
         <p
@@ -337,7 +337,7 @@ function HomeScreen({
         </p>
       </div>
 
-      <div className="flex min-h-0 flex-col">
+      <div className={cn("flex min-h-0 flex-col", isLandscape && "contact-phone-app__touch-col")}>
         <p
           className={cn(
             "contact-phone-app__label shrink-0 font-mono uppercase tracking-[0.16em]",
@@ -348,8 +348,9 @@ function HomeScreen({
         </p>
         <div
           className={cn(
-            "flex min-h-0 flex-1 flex-col overflow-y-auto pr-0.5",
-            isLandscape ? "gap-1" : isTablet ? "gap-2" : "gap-1.5",
+            "flex min-h-0 flex-1 flex-col pr-0.5",
+            isLandscape ? "contact-phone-app__contact-list gap-1" : "gap-1.5 overflow-y-auto",
+            isTablet && !isLandscape && "gap-2",
           )}
         >
           {categorized.email && (
@@ -714,7 +715,10 @@ export function ContactAppContent({ layout = "tablet", onExit }: ContactAppConte
             initial="enter"
             animate="center"
             exit="exit"
-            className={cn("absolute inset-0 min-h-0", isLandscape && "overflow-y-auto")}
+            className={cn(
+              "absolute inset-0 min-h-0",
+              isLandscape && "contact-phone-app__screen-body",
+            )}
           >
             {screen === "home" && (
               <HomeScreen
