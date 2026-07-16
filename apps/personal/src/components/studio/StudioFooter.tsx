@@ -8,6 +8,8 @@ type FooterLinkItem = {
   href: string;
   external?: boolean;
   hoverClass?: string;
+  /** Skip parent `uppercase` so mixed-case brands (e.g. 2bitENT) render correctly */
+  preserveCase?: boolean;
 };
 
 function resolveProfileUrl(...needles: string[]): string | undefined {
@@ -35,10 +37,11 @@ const footerLinks: FooterLinkItem[] = [
     hoverClass: "hover:text-games",
   },
   {
-    label: "2bitENT (2bitENT.com)",
+    label: "2bitENT",
     href: resolveProfileUrl("2bitent.com", "2bitent") ?? "https://2bitent.com",
     external: true,
     hoverClass: "hover:text-games",
+    preserveCase: true,
   },
 ];
 
@@ -77,6 +80,7 @@ export function StudioFooter({ className, showBorder = true }: StudioFooterProps
                 rel="noopener noreferrer"
                 className={cn(
                   "chrome-text-faint transition-colors duration-200",
+                  item.preserveCase && "normal-case",
                   item.hoverClass,
                 )}
               >
