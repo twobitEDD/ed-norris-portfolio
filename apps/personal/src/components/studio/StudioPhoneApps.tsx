@@ -295,7 +295,7 @@ function SpringboardMiniWidgets({
     <div className="springboard-widget-grid" style={gridStyle}>
       <div
         className={cn("springboard-widget relative", compact && "springboard-widget--compact")}
-        style={{ gridColumn: "span 2", gridRow: "span 2" }}
+        style={{ gridColumn: "1 / span 2", gridRow: "1 / span 2" }}
       >
         <Image
           src={contactPolaroidImage.src}
@@ -314,7 +314,7 @@ function SpringboardMiniWidgets({
           "springboard-widget flex flex-col justify-center",
           compact && "springboard-widget--compact",
         )}
-        style={{ gridColumn: "span 2", gridRow: "span 1" }}
+        style={{ gridColumn: "3 / span 2", gridRow: "1" }}
       >
         <div className="springboard-widget-clock-inner flex flex-col justify-center">
           <p className="springboard-widget-time font-semibold tabular-nums leading-none text-white">
@@ -325,10 +325,10 @@ function SpringboardMiniWidgets({
       </div>
       <div
         className={cn(
-          "springboard-widget flex aspect-square flex-col justify-end",
+          "springboard-widget flex h-full min-h-0 flex-col justify-end",
           compact && "springboard-widget--compact",
         )}
-        style={{ gridColumn: "span 1", gridRow: "span 1" }}
+        style={{ gridColumn: "4", gridRow: "2" }}
       >
         <div className="springboard-widget-studio-inner">
           <p className="springboard-widget-studio-label font-medium text-white/45">Norris Studio</p>
@@ -659,9 +659,10 @@ function renderInDeviceScreen(
 
 /** Scale springboard content down when it would overflow the fixed device screen. */
 function useSpringboardFitScale(
-  screenRef: React.RefObject<HTMLDivElement | null>,
+  layoutRef: React.RefObject<HTMLDivElement | null>,
   contentRef: React.RefObject<HTMLDivElement | null>,
   enabled: boolean,
+  layoutKey: string,
 ) {
   const [scale, setScale] = useState(1);
 
@@ -671,12 +672,12 @@ function useSpringboardFitScale(
       return;
     }
 
-    const screen = screenRef.current;
+    const layout = layoutRef.current;
     const content = contentRef.current;
-    if (!screen || !content) return;
+    if (!layout || !content) return;
 
     const fit = () => {
-      const available = screen.clientHeight;
+      const available = layout.clientHeight;
       const needed = content.scrollHeight;
       if (available > 0 && needed > available) {
         setScale(Math.max(0.82, available / needed));
@@ -685,12 +686,22 @@ function useSpringboardFitScale(
       }
     };
 
+    // Reset before measuring so width compensation on the content node cannot
+    // inflate grid tracks and keep scale pinned after a tier/breakpoint change.
+    setScale(1);
     fit();
+
     const observer = new ResizeObserver(fit);
-    observer.observe(screen);
+    observer.observe(layout);
     observer.observe(content);
-    return () => observer.disconnect();
-  }, [contentRef, enabled, screenRef]);
+
+    const afterTransition = window.setTimeout(fit, 320);
+
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(afterTransition);
+    };
+  }, [contentRef, enabled, layoutKey, layoutRef]);
 
   return scale;
 }
@@ -698,6 +709,7 @@ function useSpringboardFitScale(
 export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const springboardScreenRef = useRef<HTMLDivElement>(null);
+  const springboardLayoutRef = useRef<HTMLDivElement>(null);
   const springboardContentRef = useRef<HTMLDivElement>(null);
   const containerWidth = useElementWidth(containerRef);
   const [viewportWidth, setViewportWidth] = useState<number | null>(() =>
@@ -828,12 +840,13 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   }, [containerWidth, viewportWidth]);
 
   const springboardTier = resolveSpringboardDeviceTier(layoutWidth);
-  const springboardContentWidth = useElementWidth(springboardContentRef);
+  const springboardContentWidth = useElementWidth(springboardLayoutRef);
   const isPhoneTier = springboardTier === "phone";
   const springboardScale = useSpringboardFitScale(
-    springboardScreenRef,
+    springboardLayoutRef,
     springboardContentRef,
     !isAppOpen,
+    springboardTier,
   );
 
   return (
@@ -871,6 +884,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                 <SpringboardStatusBar timeStr={timeStr} compact={isPhoneTier} />
 
                 <div
+                  ref={springboardLayoutRef}
                   className={cn(
                     "relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden pb-5",
                     SPRINGBOARD_ICON_GRID[springboardTier].edgePaddingClass,
@@ -879,7 +893,10 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                 >
                   <div
                     ref={springboardContentRef}
-                    className="flex origin-top flex-col"
+                    className={cn(
+                      "flex origin-top flex-col",
+                      !isPhoneTier && "min-h-0 flex-1",
+                    )}
                     style={{
                       transform: springboardScale < 1 ? `scale(${springboardScale})` : undefined,
                       width: springboardScale < 1 ? `${100 / springboardScale}%` : undefined,
