@@ -347,8 +347,8 @@ function AppIconGrid({
   return (
     <div
       className={cn(
-        "flex min-h-0 w-full flex-1 flex-col",
-        compact ? "justify-between gap-1" : "justify-start space-y-4 sm:space-y-5",
+        "flex w-full flex-col",
+        compact ? "gap-3" : "min-h-0 flex-1 justify-start space-y-4 sm:space-y-5",
       )}
     >
       {tabletAppCategories.map((category) => {
@@ -367,9 +367,9 @@ function AppIconGrid({
             </p>
             <div
               className={cn(
-                "grid",
+                "grid justify-items-start",
                 compact
-                  ? "grid-cols-4 gap-x-1.5 gap-y-1.5"
+                  ? "grid-cols-[repeat(4,56px)] gap-3"
                   : "grid-cols-4 gap-x-3 gap-y-4 sm:gap-x-4 sm:gap-y-5",
               )}
             >
@@ -379,15 +379,15 @@ function AppIconGrid({
                   type="button"
                   onClick={() => onOpenApp(app.id)}
                   className={cn(
-                    "group flex flex-col items-center rounded-lg p-0.5 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-                    compact ? "gap-0.5" : "gap-1.5 sm:gap-2",
+                    "group flex flex-col rounded-lg p-0 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+                    compact ? "w-[56px] items-center gap-0.5" : "items-center gap-1.5 p-0.5 sm:gap-2",
                   )}
                   aria-label={`Open ${app.name}`}
                 >
                   <div
                     className={cn(
                       "aspect-square shadow-[0_3px_10px_rgba(0,0,0,0.4)] transition group-hover:shadow-[0_5px_16px_rgba(0,0,0,0.5)]",
-                      compact ? "w-[min(100%,50px)]" : "w-[min(100%,72px)] sm:w-[min(100%,80px)]",
+                      compact ? "w-[56px]" : "w-[min(100%,72px)] sm:w-[min(100%,80px)]",
                     )}
                   >
                     <AppIcon app={app} large={!compact} />
@@ -914,7 +914,10 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                 >
                   <div
                     ref={springboardContentRef}
-                    className="flex min-h-0 flex-1 origin-top flex-col"
+                    className={cn(
+                      "flex origin-top flex-col",
+                      isCompactDevice ? "gap-0" : "min-h-0 flex-1",
+                    )}
                     style={{
                       transform: springboardScale < 1 ? `scale(${springboardScale})` : undefined,
                       width: springboardScale < 1 ? `${100 / springboardScale}%` : undefined,
