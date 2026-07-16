@@ -167,7 +167,7 @@ export const experiences: Experience[] = [
       "Summer camp instructor at Lewis & Clark College — guided students through week-long game development courses.",
     details: [
       "Helped operate the Portland branch camp; instructed classes of 8+ students.",
-      "Combined paid summer instruction with STEM education volunteer work.",
+      "Paid summer employment — week-long game development courses at Lewis & Clark College.",
     ],
     disciplines: ["operations", "games"],
     skills: ["teaching", "game development", "instruction"],
@@ -180,13 +180,13 @@ export const experiences: Experience[] = [
     organization: "Portland Public Schools",
     period: { start: "Apr 2014", end: "Feb 2017" },
     summary:
-      "Supported students with diverse learning needs in public education — experience that shaped later work in accessible technology and inclusive design.",
+      "Supported students with diverse learning needs at Portland Public Schools — experience that shaped later work in accessible technology and inclusive design.",
     details: [
       "Provided classroom support for students with diverse communication and learning needs.",
       "Co-led a game development after-school club alongside mentoring work.",
     ],
     disciplines: ["operations"],
-    skills: ["education", "community"],
+    skills: ["special education", "inclusive design", "community"],
     projects: [],
     featured: false,
   },
@@ -289,13 +289,13 @@ export const experiences: Experience[] = [
     organization: "2bit Entertainment",
     period: { start: "Jun 2014", end: "Mar 2018" },
     summary:
-      "After Planet's Core studio operations wound down, 2bit remained on hold while focusing on public education, community mentoring, and independent practice — re-established as a software production business in April 2018.",
+      "After Planet's Core studio operations wound down, 2bit remained on hold while taking teaching and community mentoring jobs — re-established as a software production business in April 2018.",
     details: [
       "Honest studio pause between the 2012–2014 founder era and the 2018 agency-backed re-launch.",
-      "Parallel community work: Portland Public Schools (2014–2017), Innovation Academy mentoring, and iD Tech summer instruction.",
+      "Parallel employment: Portland Public Schools (2014–2017), Innovation Academy mentoring, and iD Tech summer instruction.",
     ],
     disciplines: ["games", "operations"],
-    skills: ["independent development", "community education"],
+    skills: ["independent development", "teaching", "mentoring"],
     projects: ["proj-planets-core"],
     featured: false,
   },

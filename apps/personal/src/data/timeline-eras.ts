@@ -67,14 +67,14 @@ export const timelineEras: TimelineEra[] = [
     title: "2Bit Entertainment",
     organization: "Founder · Indie games · Software production",
     summary:
-      "Operational indie studio 2012–2014 shipping Planet's Core, then Fish Fight, ERGnomes, and PokePocket alongside agency contracts. Studio on hold 2014–2018 during education and public-service work. Re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and additional clients.",
+      "Operational indie studio 2012–2014 shipping Planet's Core, then Fish Fight, ERGnomes, and PokePocket alongside agency contracts. Studio on hold 2014–2018 during teaching jobs and public-service work. Re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and additional clients.",
     disciplines: ["games", "marketing", "operations"],
     caption: "2bit studio",
     polaroidGradient: "linear-gradient(160deg, #6b5a8a, #2a2038)",
     detailBody: [
       "Founded 2bit Entertainment in 2012 after Rocket Gaming, shipping Planet's Core as an indie studio — technical design, art integration, team leadership, and business strategy on a founder's timeline.",
       "The studio catalog grew across both phases: Planet's Core in the founder era; Fish Fight (fishFight.app) for ocean-conservation web play; ERGnomes.io for NFT ecosystem technical design on the Ergo Platform; and PokePocket as accessible pocket-format game experiments — shipped alongside agency-backed client work, not instead of it.",
-      "Studio operations paused 2014–2018 while focusing on public education and community mentoring. The brand stayed alive; the honest gap is part of the story, not a footnote.",
+      "Studio operations paused 2014–2018 while working teaching and mentoring jobs in Portland. The brand stayed alive; the honest gap is part of the story, not a footnote.",
       "Re-established in April 2018 as a software production business, delivering contract work through agency partnerships — Nice Touch, Uncorked, Fresh, Opus — for clients including Google, Dell, Washington University, and continued adidas support after the full-time Future Team role concluded.",
     ],
     highlights: [
@@ -108,18 +108,18 @@ export const timelineEras: TimelineEra[] = [
   {
     id: "era-education",
     period: "2014–2018",
-    title: "Education, simulation & public service",
+    title: "Teaching years — simulation & public service",
     organization: "Hatalom Systems · Portland Public Schools · Innovation Academy · iD Tech",
     summary:
-      "Military simulation software at Hatalom Systems, then special education support, afterschool mentoring, and summer STEM instruction while 2bit studio operations were on hold — deliberate community and inclusive-learning work before the 2018 studio re-launch.",
+      "Military simulation software at Hatalom Systems, then teaching and mentoring jobs — special education educator at Portland Public Schools, afterschool club mentor at Innovation Academy PDX, and summer instructor at iD Tech Camps — while 2bit studio operations were on hold.",
     disciplines: ["operations"],
     caption: "Teaching years",
     polaroidGradient: "linear-gradient(160deg, #6a5a4a, #2a2218)",
     detailBody: [
       "After the 2012–2014 indie studio era, a six-month engineering role at Hatalom Systems built proprietary military simulation and game-based training software — applying game-industry craft to defense simulation deliverables.",
-      "While 2bit studio operations were on hold, this period was deliberate community work — not a career gap. Special education support at Portland Public Schools shaped a lasting interest in accessible technology and inclusive design.",
+      "While 2bit studio operations were on hold, this period was deliberate employment — not a career gap. A special education educator role at Portland Public Schools shaped a lasting interest in accessible technology and inclusive design.",
       "Volunteer mentoring at Innovation Academy PDX ran an afterschool game-development club, teaching software development and design principles to high school students alongside classroom support.",
-      "Summer instruction at iD Tech Camps (Lewis & Clark College) combined paid STEM education with the same ethos: meet learners where they are, build confidence through making, and show that creative technology is for everyone.",
+      "Summer employment at iD Tech Camps (Lewis & Clark College) combined paid game-development instruction with the same ethos: meet learners where they are, build confidence through making, and show that creative technology is for everyone.",
     ],
     highlights: [
       "Software engineer at Hatalom Systems — proprietary military simulation software (2014)",

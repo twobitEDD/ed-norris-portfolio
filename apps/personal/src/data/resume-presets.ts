@@ -34,7 +34,7 @@ export const resumePresets: ResumePreset[] = [
   {
     id: "educationCentric",
     label: "Education Centric",
-    description: "Teaching, mentoring, and inclusive learning — formal degree plus public education and STEM instruction.",
+    description: "Teaching, mentoring, and inclusive learning — formal degree plus teaching and mentoring employment history.",
     targetRole: "Education & Technology Specialist",
     tone: "executive",
     pages: 2,

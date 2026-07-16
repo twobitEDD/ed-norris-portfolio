@@ -186,11 +186,11 @@ Answer each **Answer:** in chat when ready. Updates will be applied to `experien
 **Question:** List any degrees, bootcamps, or certs to add. Include iD Tech and PPS/Innovation Academy as “education” on résumé?  
 **Why it matters:** Résumé `includeEducation`, map `theme-education`, story stop `theme-education`.  
 **Answer:**  
-- **PPS** — Special Education Educator (`exp-pps`) — include on résumé education section  
-- **Innovation Academy PDX** — afterschool club mentored (`exp-innovation-academy`) — include on résumé education section  
-- **iD Tech Camps** — summer jobs, volunteer work, and instructor role (`exp-id-tech`) — include on résumé education section  
-- **Full Sail University** — Bachelor's Degree — Software (`education.ts` → `edu-full-sail`) — formal degree entry added  
-- Résumé `includeEducation` defaults **on**; map `theme-education` copy updated to reflect degree + teaching path
+- **PPS** — Special Education Educator (`exp-pps`) — employment / experience section  
+- **Innovation Academy PDX** — Software Specialist Student Mentor (`exp-innovation-academy`) — employment / experience section  
+- **iD Tech Camps** — Game Development Instructor (`exp-id-tech`) — employment / experience section  
+- **Full Sail University** — Bachelor's Degree — Software (`education.ts` → `edu-full-sail`) — formal degree entry in education section only  
+- Résumé `includeEducation` shows formal degrees only; teaching jobs appear under experience
 
 ### Prompt 14: Availability / hiring message
 **Current value:** `Open to collaboration — software leadership, environmental technology, and creative technology roles.`  

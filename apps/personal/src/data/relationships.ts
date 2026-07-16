@@ -17,12 +17,12 @@ export const graphNodes: GraphNode[] = [
   {
     id: "theme-education",
     type: "theme",
-    label: "Education & Inclusive Learning",
+    label: "Teaching & Inclusive Learning",
     subtitle: "Helping students succeed",
     disciplines: ["operations"],
-    description: "Full Sail software degree, public education, afterschool mentoring, and summer STEM instruction — human-centered foundations in patience, structure, and accessible design.",
+    description: "Full Sail software degree, plus teaching and mentoring jobs — Portland Public Schools special education educator, Innovation Academy afterschool mentoring, and iD Tech Camps summer instruction — human-centered foundations in patience, structure, and accessible design.",
     connectionNarrative:
-      "Full Sail University software degree, classroom support for students with diverse learning needs at Portland Public Schools, Innovation Academy afterschool mentoring, and iD Tech Camps summer instruction — where I learned that adoption is a design problem, not a technology problem.",
+      "Full Sail University software degree, special education educator at Portland Public Schools, Innovation Academy afterschool mentoring, and iD Tech Camps summer instruction — where I learned that adoption is a design problem, not a technology problem.",
   },
   {
     id: "theme-games",
@@ -90,7 +90,7 @@ export const graphNodes: GraphNode[] = [
     id: "exp-node-pps",
     type: "experience",
     label: "Portland Public Schools",
-    subtitle: "Public education support",
+    subtitle: "Special Education Educator",
     disciplines: ["operations"],
     period: "2014 – 2017",
     experienceId: "exp-pps",
@@ -127,7 +127,7 @@ export const graphNodes: GraphNode[] = [
     period: "2015",
     experienceId: "exp-id-tech",
     description:
-      "Game development instructor at Lewis & Clark College — summer camp jobs and STEM education volunteer work.",
+      "Game development instructor at Lewis & Clark College — paid summer camp employment teaching week-long game development courses.",
   },
   {
     id: "exp-node-ea",
@@ -233,7 +233,7 @@ export const graphNodes: GraphNode[] = [
     period: "2014 – 2018",
     experienceId: "exp-2bit-pause",
     description:
-      "After Planet's Core studio operations wound down, 2bit remained on hold while focusing on public education, community mentoring, and independent practice.",
+      "After Planet's Core studio operations wound down, 2bit remained on hold while taking teaching and community mentoring jobs — parallel employment at PPS, Innovation Academy, and iD Tech.",
     connectionNarrative:
       "Honest studio pause between the 2012–2014 founder era and the 2018 agency-backed re-launch — parallel community work at PPS, Innovation Academy, and iD Tech.",
   },
@@ -499,7 +499,7 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-2bit-founder-hatalom", source: "exp-node-2bit-founder", target: "exp-node-hatalom", relationship: "built-with", connectionNote: "parallel simulation work" },
   { id: "e-2bit-founder-pause", source: "exp-node-2bit-founder", target: "exp-node-2bit-pause", relationship: "led-to", connectionNote: "studio wound down" },
   { id: "e-hatalom-pause", source: "exp-node-hatalom", target: "exp-node-2bit-pause", relationship: "led-to", connectionNote: "transition period" },
-  { id: "e-pause-pps", source: "exp-node-2bit-pause", target: "exp-node-pps", relationship: "led-to", connectionNote: "public education chapter" },
+  { id: "e-pause-pps", source: "exp-node-2bit-pause", target: "exp-node-pps", relationship: "led-to", connectionNote: "teaching chapter" },
   { id: "e-pps-adidas", source: "exp-node-pps", target: "exp-node-adidas", relationship: "led-to", connectionNote: "education chapter → brand innovation" },
   { id: "e-pause-innov", source: "exp-node-2bit-pause", target: "exp-node-innovation", relationship: "taught", connectionNote: "afterschool mentoring" },
   { id: "e-pause-idtech", source: "exp-node-2bit-pause", target: "exp-node-id-tech", relationship: "taught", connectionNote: "summer STEM camps" },

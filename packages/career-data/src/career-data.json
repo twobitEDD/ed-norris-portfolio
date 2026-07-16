@@ -49,18 +49,18 @@
       "id": "tl-2bit",
       "era": "2bit Entertainment",
       "title": "Planet's Core, Fish Fight, ERGnomes & PokePocket",
-      "summary": "Operational indie studio 2012–2014 shipping Planet's Core, then Fish Fight, ERGnomes, and PokePocket alongside agency contracts. Studio on hold 2014–2018 during education and public-service work. Re-established in 2018 as agency-backed software production for Google (via Uncorked), Dell, Washington University, and other clients.",
+      "summary": "Operational indie studio 2012–2014 shipping Planet's Core, then Fish Fight, ERGnomes, and PokePocket alongside agency contracts. Studio on hold 2014–2018 during teaching jobs and public-service work. Re-established in 2018 as agency-backed software production for Google (via Uncorked), Dell, Washington University, and other clients.",
       "start": "2012",
       "tags": ["games", "creative-technology", "software"]
     },
     {
       "id": "tl-education",
-      "era": "Education & public service",
+      "era": "Teaching years",
       "title": "PPS · Innovation Academy · iD Tech",
-      "summary": "Special education support, afterschool mentoring, and summer STEM instruction while 2bit studio operations were on hold (2014–2018) before the agency-backed re-launch.",
+      "summary": "Teaching and mentoring jobs — special education educator at Portland Public Schools, afterschool club mentor at Innovation Academy PDX, and summer instructor at iD Tech Camps — while 2bit studio operations were on hold (2014–2018) before the agency-backed re-launch.",
       "start": "2014",
       "end": "2018",
-      "tags": ["operations", "education"]
+      "tags": ["operations", "teaching"]
     },
     {
       "id": "tl-software",

@@ -1,7 +1,7 @@
 /** Career through-line thesis (timeline, intro) — not used to drive work map layout. */
 
 export const throughLineThesis =
-  "I've worked across many areas of software, always anchored in user experience and human-centered design — from public education classrooms to environmental technology, indie game development to marketing and product work with major brands like adidas and Google. The through-line is consistent: apply these skills thoughtfully, and help people thrive.";
+  "I've worked across many areas of software, always anchored in user experience and human-centered design — from teaching roles in public schools to environmental technology, indie game development to marketing and product work with major brands like adidas and Google. The through-line is consistent: apply these skills thoughtfully, and help people thrive.";
 
 /** Work map header — relationship graph, separate from career through-line narrative. */
 export const mapGraphThesis =
@@ -17,9 +17,9 @@ export type StoryStop = {
 export const storyStops: StoryStop[] = [
   {
     nodeId: "theme-education",
-    headline: "Education & inclusive learning",
+    headline: "Teaching & inclusive learning",
     copy:
-      "Full Sail University software degree, Portland Public Schools classroom support for students with diverse learning needs, Innovation Academy afterschool mentoring, and iD Tech Camps summer instruction — human-centered design started here: patience, clear structure, and feedback loops that help every student succeed.",
+      "Full Sail University software degree, plus teaching and mentoring jobs — Portland Public Schools special education educator, Innovation Academy afterschool mentoring, and iD Tech Camps summer instruction — human-centered design started here: patience, clear structure, and feedback loops that help every student succeed.",
   },
   {
     nodeId: "exp-node-ea",
@@ -97,7 +97,7 @@ export const storyStops: StoryStop[] = [
 
 export const themeFilterOptions = [
   { id: "all", label: "All", themeId: null as string | null },
-  { id: "education", label: "Education & Inclusive Learning", themeId: "theme-education" },
+  { id: "education", label: "Teaching & Inclusive Learning", themeId: "theme-education" },
   { id: "games", label: "Games & UX", themeId: "theme-games" },
   { id: "software", label: "UX & Design", themeId: "theme-software" },
   { id: "marketing", label: "Marketing & Brands", themeId: "theme-marketing" },

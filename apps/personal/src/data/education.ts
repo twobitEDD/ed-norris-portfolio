@@ -13,11 +13,7 @@ export const education: Education[] = [
 ];
 
 /**
- * Experience IDs surfaced on the résumé education section alongside formal degrees
- * (public education, mentoring, and summer STEM instruction).
+ * Experience IDs surfaced on the résumé education section alongside formal degrees.
+ * Teaching and employment roles belong in the experience section — only degrees/credentials here.
  */
-export const resumeEducationExperienceIds = [
-  "exp-pps",
-  "exp-innovation-academy",
-  "exp-id-tech",
-] as const;
+export const resumeEducationExperienceIds = [] as const;
