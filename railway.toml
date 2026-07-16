@@ -1,5 +1,10 @@
 # Edd Norris portfolio (apps/personal) — deploy to 2bitDEV.com on Railway.
 # Monorepo root: npm workspaces build/start delegate to @ed-norris/personal.
+#
+# Railway (twobitENT project):
+#   Service: edd-norris-portfolio (GitHub: twobitEDD/ed-norris-portfolio, branch main)
+#   Domain:  2bitDEV.com (after removing it from 2bitent-site)
+#   URL:     https://edd-norris-portfolio-production.up.railway.app
 
 [build]
 builder = "dockerfile"
