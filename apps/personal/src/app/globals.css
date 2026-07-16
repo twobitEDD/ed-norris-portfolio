@@ -1850,25 +1850,22 @@ body {
   }
 }
 
-/* Springboard icon grid — fixed columns, left-aligned rows like iOS (see studio-language.ts). */
+/* Springboard icon grid — fixed columns, uniform gutters, left-aligned rows like iOS. */
 .springboard-icon-grid {
   container-type: inline-size;
   display: grid;
   width: 100%;
   grid-template-columns: repeat(var(--sb-cols, 4), minmax(0, 1fr));
-  gap: var(--sb-gap, 16px);
-  justify-items: center;
+  gap: var(--sb-gap, 22px);
+  justify-items: stretch;
 }
 
 .springboard-icon-button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: min(
-    100%,
-    var(--sb-icon-max, 76px),
-    calc((100cqw - (var(--sb-cols) - 1) * var(--sb-gap)) / var(--sb-cols))
-  );
+  width: 100%;
+  gap: var(--sb-label-gap, 5px);
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
@@ -1880,6 +1877,7 @@ body {
 
 .springboard-icon-tile {
   width: 100%;
+  max-width: var(--sb-icon-max, 96px);
   aspect-ratio: 1;
   transition: transform 120ms ease, opacity 120ms ease, box-shadow 180ms ease;
 }
@@ -1897,8 +1895,8 @@ body {
   display: grid;
   width: 100%;
   grid-template-columns: repeat(var(--sb-cols, 4), minmax(0, 1fr));
-  gap: var(--sb-gap, 16px);
-  margin-bottom: var(--sb-widget-mb, 20px);
+  gap: var(--sb-gap, 22px);
+  margin-bottom: var(--sb-widget-mb, var(--sb-gap, 22px));
 }
 
 .springboard-widget {

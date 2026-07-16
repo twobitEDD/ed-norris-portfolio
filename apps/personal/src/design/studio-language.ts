@@ -77,53 +77,47 @@ export function resolveSpringboardDeviceTier(layoutWidth: number | null): Spring
   return "tablet";
 }
 
-/** Horizontal gap between springboard icon cells (px) — iOS-like inter-icon spacing. */
-export const SPRINGBOARD_ICON_GAP_PX = 16;
-
-/** Horizontal inset from device screen edge to icon grid (px). */
-export const SPRINGBOARD_EDGE_PADDING_PX = 18;
-
 /**
- * Touch-device springboard grid per tier.
- * Icon size is computed at render time: min(maxIconPx, (contentWidth − (cols − 1) × gap) ÷ cols).
+ * Touch-device springboard grid per tier — tuned to iOS home-screen proportions.
+ * Uniform row/column gutters, generous edge insets on phone, icons fill column tracks.
  * Grid tracks use repeat(cols, minmax(0, 1fr)) — partial rows stay left-aligned like iOS.
  */
 export const SPRINGBOARD_ICON_GRID = {
   phone: {
     columns: 4,
-    gapPx: SPRINGBOARD_ICON_GAP_PX,
-    maxIconPx: 60,
-    labelClass: "text-[10px] leading-[1.1]",
+    gapPx: 22,
+    edgePaddingPx: 22,
+    maxIconPx: 80,
+    labelGapPx: 5,
+    labelClass: "text-[10px] leading-[1.15]",
     containerClass: "",
-    buttonGapClass: "gap-1",
-    rowGapClass: "gap-y-[18px]",
-    edgePaddingClass: "px-[18px]",
+    edgePaddingClass: "px-[22px]",
     widgetClockSpan: 2,
     widgetPhotoSpan: 1,
     widgetStudioSpan: 1,
   },
   tablet: {
     columns: 5,
-    gapPx: SPRINGBOARD_ICON_GAP_PX,
-    maxIconPx: 68,
-    labelClass: "text-[10px] leading-[1.1] sm:text-[11px]",
+    gapPx: 20,
+    edgePaddingPx: 24,
+    maxIconPx: 88,
+    labelGapPx: 5,
+    labelClass: "text-[10px] leading-[1.15] sm:text-[11px]",
     containerClass: "",
-    buttonGapClass: "gap-1",
-    rowGapClass: "gap-y-5",
-    edgePaddingClass: "px-5",
+    edgePaddingClass: "px-6",
     widgetClockSpan: 3,
     widgetPhotoSpan: 1,
     widgetStudioSpan: 1,
   },
   ipad: {
     columns: 6,
-    gapPx: SPRINGBOARD_ICON_GAP_PX,
-    maxIconPx: 76,
-    labelClass: "text-[11px] leading-[1.1]",
+    gapPx: 22,
+    edgePaddingPx: 28,
+    maxIconPx: 96,
+    labelGapPx: 6,
+    labelClass: "text-[11px] leading-[1.15]",
     containerClass: "min-h-0 flex-1",
-    buttonGapClass: "gap-1.5",
-    rowGapClass: "gap-y-6",
-    edgePaddingClass: "px-5 sm:px-6",
+    edgePaddingClass: "px-7",
     widgetClockSpan: 4,
     widgetPhotoSpan: 1,
     widgetStudioSpan: 1,
@@ -133,11 +127,11 @@ export const SPRINGBOARD_ICON_GRID = {
   {
     columns: number;
     gapPx: number;
+    edgePaddingPx: number;
     maxIconPx: number;
+    labelGapPx: number;
     labelClass: string;
     containerClass: string;
-    buttonGapClass: string;
-    rowGapClass: string;
     edgePaddingClass: string;
     widgetClockSpan: number;
     widgetPhotoSpan: number;
@@ -164,13 +158,15 @@ export function computeSpringboardIconPx(
   return Math.min(maxIconPx, Math.max(SPRINGBOARD_ICON_MIN_PX, Math.floor(raw)));
 }
 
-/** CSS custom properties consumed by `.springboard-icon-grid` in globals.css. */
+/** CSS custom properties consumed by springboard grids in globals.css. */
 export function springboardIconGridStyleProps(tier: SpringboardDeviceTier): Record<string, string> {
-  const { columns, gapPx, maxIconPx } = SPRINGBOARD_ICON_GRID[tier];
+  const { columns, gapPx, maxIconPx, labelGapPx } = SPRINGBOARD_ICON_GRID[tier];
   return {
     "--sb-cols": String(columns),
     "--sb-gap": `${gapPx}px`,
     "--sb-icon-max": `${maxIconPx}px`,
+    "--sb-label-gap": `${labelGapPx}px`,
+    "--sb-widget-mb": `${gapPx}px`,
   };
 }
 

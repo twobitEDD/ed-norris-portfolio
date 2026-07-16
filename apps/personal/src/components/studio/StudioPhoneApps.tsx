@@ -238,7 +238,7 @@ function SpringboardStatusBar({
     <div
       className={cn(
         "relative z-[2] flex shrink-0 items-center justify-between",
-        compact ? "px-[18px] pb-0.5 pt-11" : "px-5 pb-1 pt-12 sm:px-6 sm:pt-[3.25rem]",
+        compact ? "px-[22px] pb-0.5 pt-11" : "px-5 pb-1 pt-12 sm:px-6 sm:pt-[3.25rem]",
       )}
     >
       <p
@@ -275,10 +275,7 @@ function SpringboardMiniWidgets({
   compact?: boolean;
 }) {
   const grid = SPRINGBOARD_ICON_GRID[tier];
-  const gridStyle: Record<string, string> = {
-    ...springboardIconGridStyleProps(tier),
-    "--sb-widget-mb": compact ? "14px" : tier === "ipad" ? "28px" : "22px",
-  };
+  const gridStyle = springboardIconGridStyleProps(tier);
 
   return (
     <div className="springboard-widget-grid" style={gridStyle}>
@@ -362,16 +359,13 @@ function AppIconGrid({
 
   return (
     <div className={cn("w-full", grid.containerClass)}>
-      <div className={cn("springboard-icon-grid", grid.rowGapClass)} style={gridStyle}>
+      <div className="springboard-icon-grid" style={gridStyle}>
         {tabletApps.map((app) => (
           <button
             key={app.id}
             type="button"
             onClick={() => onOpenApp(app.id)}
-            className={cn(
-              "springboard-icon-button group rounded-lg p-0 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-              grid.buttonGapClass,
-            )}
+            className="springboard-icon-button group rounded-lg p-0 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
             aria-label={`Open ${app.name}`}
           >
             <div className="springboard-icon-tile shadow-[0_2px_8px_rgba(0,0,0,0.35)] group-hover:shadow-[0_4px_14px_rgba(0,0,0,0.45)]">
