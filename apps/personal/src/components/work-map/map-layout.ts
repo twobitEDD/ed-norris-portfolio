@@ -1,6 +1,9 @@
 /**
- * Work-map layout — overview tier (employment timeline) vs detail tier (full graph).
+ * Work-map layout — overview tier (employment network) vs detail tier (full graph).
  * Positions are **center-anchored** — pair with React Flow `nodeOrigin={[0.5, 0.5]}`.
+ *
+ * Overview uses a **relationship-cluster layout**: nodes group by career arc and
+ * spread in 2D so the pane fills width and height instead of a single horizontal spine.
  */
 
 import { overviewBranchEdges, PERSON_NODE_ID } from "@/data/career/career-graph";
@@ -10,16 +13,13 @@ import {
   resolvePositionCollisions,
 } from "@/components/work-map/map-node-bounds";
 
-/** Horizontal gap between overview spine node centers (px). */
-const OVERVIEW_X_GAP = 420;
-/** Vertical drop for branch nodes below the spine (px). */
-const OVERVIEW_BRANCH_Y_GAP = 240;
-/** Horizontal offset between branch nodes and their anchor (px). */
-const OVERVIEW_BRANCH_X_OFFSET = 340;
-
 /** Detail-tier column / row spacing between node centers (px). */
 const DETAIL_COL_GAP = 360;
 const DETAIL_ROW_GAP = 200;
+
+/** Target bounding box for overview layout before fitView (px). */
+const OVERVIEW_TARGET_WIDTH = 1080;
+const OVERVIEW_TARGET_HEIGHT = 960;
 
 /** Chronological spine for overview — derived from career graph (person anchor excluded). */
 const OVERVIEW_SPINE_IDS = getOverviewSpineNodes()
@@ -27,23 +27,181 @@ const OVERVIEW_SPINE_IDS = getOverviewSpineNodes()
   .map((n) => n.id);
 
 /**
- * Branch nodes — explicit lane offsets from an anchor (spine or prior branch).
- * Processed in declaration order so chained branches resolve after their parent.
+ * Overview clusters — semantic groupings placed on a 2D lattice.
+ * `chain` lists node ids in left-to-right (or top-to-bottom) order within the cluster.
  */
-const OVERVIEW_BRANCH_PLACEMENTS: Array<{
-  nodeId: string;
-  anchorId: string;
-  offsetX: number;
-  offsetY: number;
-}> = [
-  { nodeId: "exp-node-nice-touch", anchorId: "exp-node-2bit", offsetX: -OVERVIEW_BRANCH_X_OFFSET, offsetY: OVERVIEW_BRANCH_Y_GAP },
-  { nodeId: "client-dell", anchorId: "exp-node-nice-touch", offsetX: -OVERVIEW_BRANCH_X_OFFSET * 0.55, offsetY: OVERVIEW_BRANCH_Y_GAP },
-  { nodeId: "client-wash-u", anchorId: "exp-node-nice-touch", offsetX: OVERVIEW_BRANCH_X_OFFSET * 0.55, offsetY: OVERVIEW_BRANCH_Y_GAP },
-  { nodeId: "project-fish-fight", anchorId: "exp-node-2bit", offsetX: -OVERVIEW_BRANCH_X_OFFSET, offsetY: OVERVIEW_BRANCH_Y_GAP * 2.15 },
-  { nodeId: "project-ergnomes", anchorId: "exp-node-2bit", offsetX: OVERVIEW_BRANCH_X_OFFSET, offsetY: OVERVIEW_BRANCH_Y_GAP * 2.35 },
+type OverviewCluster = {
+  id: string;
+  /** Cluster anchor (center of the chain). */
+  origin: { x: number; y: number };
+  chain: readonly string[];
+  /** Direction the chain extends from origin. */
+  axis: "horizontal" | "vertical";
+  gap: number;
+};
+
+const OVERVIEW_CLUSTERS: OverviewCluster[] = [
+  {
+    id: "games-foundation",
+    origin: { x: -340, y: -300 },
+    chain: [
+      "exp-node-ea",
+      "exp-node-black-lantern",
+      "exp-node-seamless",
+      "exp-node-rocket",
+      "exp-node-2bit-founder",
+    ],
+    axis: "horizontal",
+    gap: 155,
+  },
+  {
+    id: "education",
+    origin: { x: -420, y: 40 },
+    chain: ["exp-node-pps"],
+    axis: "horizontal",
+    gap: 0,
+  },
+  {
+    id: "brand",
+    origin: { x: -120, y: -150 },
+    chain: ["exp-node-adidas"],
+    axis: "horizontal",
+    gap: 0,
+  },
+  {
+    id: "studio-hub",
+    origin: { x: 180, y: -40 },
+    chain: ["exp-node-2bit"],
+    axis: "horizontal",
+    gap: 0,
+  },
+  {
+    id: "agency-east",
+    origin: { x: 400, y: -110 },
+    chain: ["exp-node-uncorked", "client-google"],
+    axis: "horizontal",
+    gap: 165,
+  },
+  {
+    id: "agency-south",
+    origin: { x: 180, y: 110 },
+    chain: ["exp-node-nice-touch"],
+    axis: "horizontal",
+    gap: 0,
+  },
+  {
+    id: "clients",
+    origin: { x: 120, y: 250 },
+    chain: ["client-dell", "client-wash-u"],
+    axis: "horizontal",
+    gap: 175,
+  },
+  {
+    id: "2bit-projects",
+    origin: { x: 60, y: 50 },
+    chain: ["project-fish-fight", "project-ergnomes"],
+    axis: "horizontal",
+    gap: 175,
+  },
+  {
+    id: "environment",
+    origin: { x: 380, y: 200 },
+    chain: ["exp-node-oibw", "exp-node-co2t", "project-ergo"],
+    axis: "vertical",
+    gap: 155,
+  },
 ];
 
 const overviewBranchEdgeIds = new Set(overviewBranchEdges.map((e) => e.id));
+
+function layoutClusterChain(cluster: OverviewCluster): Record<string, { x: number; y: number }> {
+  const positions: Record<string, { x: number; y: number }> = {};
+  const { origin, chain, axis, gap } = cluster;
+  const count = chain.length;
+  if (count === 0) return positions;
+
+  const span = (count - 1) * gap;
+  const startOffset = -span / 2;
+
+  chain.forEach((nodeId, index) => {
+    const offset = startOffset + index * gap;
+    positions[nodeId] =
+      axis === "horizontal"
+        ? { x: origin.x + offset, y: origin.y }
+        : { x: origin.x, y: origin.y + offset };
+  });
+
+  return positions;
+}
+
+function buildOverviewClusterPositions(): Record<string, { x: number; y: number }> {
+  const positions: Record<string, { x: number; y: number }> = {};
+
+  for (const cluster of OVERVIEW_CLUSTERS) {
+    Object.assign(positions, layoutClusterChain(cluster));
+  }
+
+  const personBounds = estimateNodeBoundsById("person-ed");
+  positions["person-ed"] = { x: 0, y: 320 + personBounds.height * 0.15 };
+
+  return positions;
+}
+
+/**
+ * Scale positions so the graph bounding box matches the target aspect ratio,
+ * helping fitView fill a tall tablet pane instead of letterboxing vertically.
+ */
+function normalizeLayoutBounds(
+  positions: Record<string, { x: number; y: number }>,
+  nodeIds: string[],
+  targetWidth: number,
+  targetHeight: number,
+): Record<string, { x: number; y: number }> {
+  if (nodeIds.length === 0) return positions;
+
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+
+  for (const id of nodeIds) {
+    const pos = positions[id];
+    if (!pos) continue;
+    const { width, height } = estimateNodeBoundsById(id);
+    minX = Math.min(minX, pos.x - width / 2);
+    maxX = Math.max(maxX, pos.x + width / 2);
+    minY = Math.min(minY, pos.y - height / 2);
+    maxY = Math.max(maxY, pos.y + height / 2);
+  }
+
+  const width = maxX - minX || 1;
+  const height = maxY - minY || 1;
+  const centerX = (minX + maxX) / 2;
+  const centerY = (minY + maxY) / 2;
+
+  const scale = Math.min(targetWidth / width, targetHeight / height);
+  const targetCenterX = 0;
+  const targetCenterY = 0;
+
+  const normalized: Record<string, { x: number; y: number }> = {};
+  for (const id of nodeIds) {
+    const pos = positions[id];
+    if (!pos) continue;
+    normalized[id] = {
+      x: (pos.x - centerX) * scale + targetCenterX,
+      y: (pos.y - centerY) * scale + targetCenterY,
+    };
+  }
+
+  return normalized;
+}
+
+function buildOverviewPositions(): Record<string, { x: number; y: number }> {
+  const raw = buildOverviewClusterPositions();
+  const allIds = [...new Set([...Object.keys(raw), PERSON_NODE_ID])];
+  const normalized = normalizeLayoutBounds(raw, allIds, OVERVIEW_TARGET_WIDTH, OVERVIEW_TARGET_HEIGHT);
+  return resolvePositionCollisions(normalized, allIds, 72);
+}
 
 /**
  * Detail layout — era clusters as (column, row) grid slots.
@@ -104,33 +262,6 @@ const detailSlots: Record<string, { col: number; row: number }> = {
   "project-carbon": { col: 3, row: 6 },
   "project-web": { col: 5, row: 4 },
 };
-
-function buildOverviewPositions(): Record<string, { x: number; y: number }> {
-  const positions: Record<string, { x: number; y: number }> = {};
-
-  OVERVIEW_SPINE_IDS.forEach((id, index) => {
-    positions[id] = { x: index * OVERVIEW_X_GAP, y: 0 };
-  });
-
-  for (const { nodeId, anchorId, offsetX, offsetY } of OVERVIEW_BRANCH_PLACEMENTS) {
-    const anchor = positions[anchorId];
-    if (!anchor) continue;
-    positions[nodeId] = {
-      x: anchor.x + offsetX,
-      y: anchor.y + offsetY,
-    };
-  }
-
-  const spineMidX = ((OVERVIEW_SPINE_IDS.length - 1) * OVERVIEW_X_GAP) / 2;
-  const personBounds = estimateNodeBoundsById("person-ed");
-  positions["person-ed"] = {
-    x: spineMidX,
-    y: OVERVIEW_BRANCH_Y_GAP * 3.2 + personBounds.height / 2,
-  };
-
-  const allIds = Object.keys(positions);
-  return resolvePositionCollisions(positions, allIds, 84);
-}
 
 function buildDetailPositions(scale: number): Record<string, { x: number; y: number }> {
   const positions: Record<string, { x: number; y: number }> = {};
@@ -199,14 +330,6 @@ export function getEdgeHandles(
   const dx = target.x - source.x;
   const dy = target.y - source.y;
 
-  const tier = resolveTier(options);
-
-  if (tier === "overview" && Math.abs(dy) < 60) {
-    return dx >= 0
-      ? { sourceHandle: "source-right", targetHandle: "target-left" }
-      : { sourceHandle: "source-left", targetHandle: "target-right" };
-  }
-
   if (Math.abs(dx) > Math.abs(dy) * 0.85) {
     return dx > 0
       ? { sourceHandle: "source-right", targetHandle: "target-left" }
@@ -216,3 +339,9 @@ export function getEdgeHandles(
     ? { sourceHandle: "source-bottom", targetHandle: "target-top" }
     : { sourceHandle: "source-top", targetHandle: "target-bottom" };
 }
+
+/** @internal Exported for tests — overview cluster ids in layout order. */
+export const overviewClusterIds = OVERVIEW_CLUSTERS.map((c) => c.id);
+
+/** @internal Exported for tests — spine node ids (chronological, excl. person). */
+export { OVERVIEW_SPINE_IDS };
