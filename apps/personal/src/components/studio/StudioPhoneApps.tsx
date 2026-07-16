@@ -289,14 +289,32 @@ function SpringboardMiniWidgets({
         ? 72
         : 120;
 
+  const photoWidgetPx = widgetCellPx * 2;
+
   return (
     <div className="springboard-widget-grid" style={gridStyle}>
+      <div
+        className={cn("springboard-widget relative", compact && "springboard-widget--compact")}
+        style={{ gridColumn: "span 2", gridRow: "span 2" }}
+      >
+        <Image
+          src={contactPolaroidImage.src}
+          alt={contactPolaroidImage.alt}
+          fill
+          className="object-cover object-center"
+          sizes={`${photoWidgetPx}px`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+        <p className="springboard-widget-caption springboard-widget-caption--feature absolute bottom-2.5 left-3 font-medium text-white/80">
+          Oregon
+        </p>
+      </div>
       <div
         className={cn(
           "springboard-widget flex flex-col justify-center",
           compact && "springboard-widget--compact",
         )}
-        style={{ gridColumn: "span 2" }}
+        style={{ gridColumn: "span 2", gridRow: "span 1" }}
       >
         <div className="springboard-widget-clock-inner flex flex-col justify-center">
           <p className="springboard-widget-time font-semibold tabular-nums leading-none text-white">
@@ -306,27 +324,11 @@ function SpringboardMiniWidgets({
         </div>
       </div>
       <div
-        className={cn("springboard-widget relative aspect-square", compact && "springboard-widget--compact")}
-        style={{ gridColumn: "span 1" }}
-      >
-        <Image
-          src={contactPolaroidImage.src}
-          alt={contactPolaroidImage.alt}
-          fill
-          className="object-cover object-center"
-          sizes={`${widgetCellPx}px`}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-        <p className="springboard-widget-caption absolute bottom-1.5 left-2 font-medium text-white/80">
-          Oregon
-        </p>
-      </div>
-      <div
         className={cn(
           "springboard-widget flex aspect-square flex-col justify-end",
           compact && "springboard-widget--compact",
         )}
-        style={{ gridColumn: "span 1" }}
+        style={{ gridColumn: "span 1", gridRow: "span 1" }}
       >
         <div className="springboard-widget-studio-inner">
           <p className="springboard-widget-studio-label font-medium text-white/45">Norris Studio</p>
