@@ -6,7 +6,7 @@ type ProfileTaglineVariant = "hero" | "paper" | "nav";
 
 const textClasses: Record<ProfileTaglineVariant, string> = {
   hero: "font-mono text-xs uppercase tracking-[0.2em] text-text-muted",
-  paper: "font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft",
+  paper: "font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft lg:text-[11px] xl:text-xs",
   nav: STUDIO_TYPOGRAPHY.navTagline,
 };
 

@@ -55,6 +55,9 @@
   /* Studio layout — laptop defaults; scale up on 2xl / 4K viewports */
   --studio-bento-max: 1200px;
   --studio-device-max: 920px;
+  --studio-hero-max: 920px;
+  --studio-intro-max: 620px;
+  --studio-intro-overlay-max: 250px;
 
   color-scheme: light;
 }
@@ -77,12 +80,34 @@
   color-scheme: dark;
 }
 
+@media (min-width: 1024px) {
+  :root,
+  [data-studio-mode="day"],
+  [data-studio-mode="night"] {
+    --studio-intro-max: 760px;
+    --studio-intro-overlay-max: 270px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root,
+  [data-studio-mode="day"],
+  [data-studio-mode="night"] {
+    --studio-hero-max: min(1180px, 94vw);
+    --studio-intro-max: min(900px, 80vw);
+    --studio-intro-overlay-max: 290px;
+  }
+}
+
 @media (min-width: 1536px) {
   :root,
   [data-studio-mode="day"],
   [data-studio-mode="night"] {
     --studio-bento-max: min(1560px, 92vw);
     --studio-device-max: min(1080px, 76vw);
+    --studio-hero-max: min(1480px, 92vw);
+    --studio-intro-max: min(1040px, 72vw);
+    --studio-intro-overlay-max: 310px;
   }
 }
 
@@ -92,6 +117,9 @@
   [data-studio-mode="night"] {
     --studio-bento-max: min(1680px, 88vw);
     --studio-device-max: min(1200px, 72vw);
+    --studio-hero-max: min(1680px, 88vw);
+    --studio-intro-max: min(1100px, 66vw);
+    --studio-intro-overlay-max: 330px;
   }
 }
 

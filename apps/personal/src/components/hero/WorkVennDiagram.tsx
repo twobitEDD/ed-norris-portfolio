@@ -42,7 +42,7 @@ export function WorkVennDiagram({ className }: WorkVennDiagramProps) {
     >
       <svg
         viewBox="0 0 270 108"
-        className="h-[84px] w-full max-w-[240px] sm:h-[96px] sm:max-w-[270px]"
+        className="h-[84px] w-full max-w-[240px] sm:h-[96px] sm:max-w-[270px] lg:h-[108px] lg:max-w-[300px] xl:h-[120px] xl:max-w-[340px] 2xl:h-[132px] 2xl:max-w-[380px]"
         role="img"
         aria-hidden="true"
       >
