@@ -103,13 +103,13 @@ export const STUDIO_TYPOGRAPHY = {
   label: "font-mono text-[10px] uppercase tracking-[0.18em]",
   labelSmall: "font-mono text-[9px] uppercase tracking-[0.18em]",
   /** Mono label on dark desk / ambient surfaces */
-  ambientLabel: "font-mono text-[10px] uppercase tracking-[0.18em] text-paper-cream/60",
-  ambientLabelMuted: "font-mono text-[10px] uppercase tracking-[0.2em] text-paper-cream/50",
+  ambientLabel: "font-mono text-[10px] uppercase tracking-[0.18em] chrome-text-faint",
+  ambientLabelMuted: "font-mono text-[10px] uppercase tracking-[0.2em] chrome-text-faint",
   /** Navigation on wood header */
   navLink:
-    "shrink-0 whitespace-nowrap min-h-[44px] content-center font-mono text-[11px] uppercase tracking-wider text-paper-cream transition hover:text-white",
-  navBrand: "font-display text-xs font-bold tracking-[0.12em] text-paper-cream sm:text-sm",
-  navTagline: "font-mono text-[9px] uppercase tracking-[0.18em] text-paper-cream/90",
+    "shrink-0 whitespace-nowrap min-h-[44px] content-center font-mono text-[11px] uppercase tracking-wider transition",
+  navBrand: "font-display text-xs font-bold tracking-[0.12em] chrome-text sm:text-sm",
+  navTagline: "font-mono text-[9px] uppercase tracking-[0.18em] chrome-text-tagline",
   editorialHeading: "font-editorial font-semibold text-ink",
   handwritten: "handwritten text-ink",
 } as const;

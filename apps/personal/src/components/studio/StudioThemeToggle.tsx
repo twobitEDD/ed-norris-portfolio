@@ -14,7 +14,7 @@ export function StudioThemeToggle() {
     <button
       type="button"
       onClick={toggleMode}
-      className="ml-1 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-paper-cream/80 transition hover:border-white/20 hover:bg-white/[0.06] hover:text-paper-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-technology"
+      className="ml-1 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 chrome-text-muted transition hover:border-white/20 hover:bg-white/[0.06] hover:chrome-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-technology"
       aria-label={mounted ? (mode === "day" ? "Switch to night mode" : "Switch to day mode") : "Toggle day or night mode"}
       title={mounted ? (mode === "day" ? "Night mode" : "Day mode") : "Theme"}
       suppressHydrationWarning

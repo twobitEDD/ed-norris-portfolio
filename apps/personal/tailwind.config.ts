@@ -9,7 +9,8 @@ const config: Config = {
         "wood-dark": "var(--wood-dark)",
         "wood-mid": "var(--wood-mid)",
         "wood-light": "var(--wood-light)",
-        "paper-cream": "var(--paper-cream)",
+        // Hex CSS var — needs relative-color syntax so /opacity utilities generate valid rules
+        "paper-cream": "rgb(from var(--paper-cream) r g b / <alpha-value>)",
         "paper-aged": "var(--paper-aged)",
         ink: "var(--ink)",
         "ink-soft": "var(--ink-soft)",

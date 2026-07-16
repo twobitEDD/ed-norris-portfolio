@@ -89,6 +89,47 @@ body {
   overflow-x: hidden;
 }
 
+/* Header + footer on dark wood — cream labels never follow screen-text / ink tokens */
+.studio-chrome {
+  color: var(--paper-cream);
+}
+
+.studio-chrome .chrome-text {
+  color: var(--paper-cream);
+}
+
+.studio-chrome .chrome-text-strong {
+  color: #ffffff;
+}
+
+.studio-chrome .chrome-text-muted {
+  color: rgba(245, 240, 228, 0.7);
+}
+
+.studio-chrome .chrome-text-faint {
+  color: rgba(245, 240, 228, 0.5);
+}
+
+.studio-chrome .chrome-text-subtle {
+  color: rgba(245, 240, 228, 0.55);
+}
+
+.studio-chrome .chrome-text-dim {
+  color: rgba(245, 240, 228, 0.25);
+}
+
+.studio-chrome .chrome-text-tagline {
+  color: rgba(245, 240, 228, 0.9);
+}
+
+.studio-chrome .hover\:chrome-text:hover {
+  color: var(--paper-cream);
+}
+
+.studio-chrome .hover\:chrome-text-strong:hover {
+  color: #ffffff;
+}
+
 /* Transparent shell — north-star image carries the atmosphere */
 .studio-surface {
   background: transparent;

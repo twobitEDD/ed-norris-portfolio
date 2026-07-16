@@ -20,8 +20,8 @@ function resolveProfileUrl(...needles: string[]): string | undefined {
 }
 
 const footerLinks: FooterLinkItem[] = [
-  { label: "Contact", href: "/#contact", hoverClass: "hover:text-paper-cream" },
-  { label: "Work Experience", href: "/#timeline", hoverClass: "hover:text-paper-cream" },
+  { label: "Contact", href: "/#contact", hoverClass: "hover:chrome-text" },
+  { label: "Work Experience", href: "/#timeline", hoverClass: "hover:chrome-text" },
   {
     label: "CO2True",
     href: resolveProfileUrl("co2true.com", "co2true") ?? "https://co2true.com",
@@ -47,7 +47,7 @@ export function StudioFooter({ className, showBorder = true }: StudioFooterProps
   return (
     <footer
       className={cn(
-        "mt-16 text-center sm:mt-20",
+        "studio-chrome mt-16 text-center sm:mt-20",
         showBorder && "border-t border-paper-cream/10 pt-8",
         STUDIO_TYPOGRAPHY.ambientLabelMuted,
         className,
@@ -60,7 +60,7 @@ export function StudioFooter({ className, showBorder = true }: StudioFooterProps
         {footerLinks.map((item, index) => (
           <span key={item.label} className="inline-flex items-center gap-x-2 sm:gap-x-3">
             {index > 0 ? (
-              <span aria-hidden className="text-paper-cream/25">
+              <span aria-hidden className="chrome-text-dim">
                 ·
               </span>
             ) : null}
@@ -70,7 +70,7 @@ export function StudioFooter({ className, showBorder = true }: StudioFooterProps
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "transition-colors duration-200 text-paper-cream/50",
+                  "chrome-text-faint transition-colors duration-200",
                   item.hoverClass,
                 )}
               >
@@ -80,7 +80,7 @@ export function StudioFooter({ className, showBorder = true }: StudioFooterProps
               <Link
                 href={item.href}
                 className={cn(
-                  "transition-colors duration-200 text-paper-cream/50",
+                  "chrome-text-faint transition-colors duration-200",
                   item.hoverClass,
                 )}
               >
@@ -89,7 +89,7 @@ export function StudioFooter({ className, showBorder = true }: StudioFooterProps
             )}
           </span>
         ))}
-        <span aria-hidden className="text-paper-cream/25">
+        <span aria-hidden className="chrome-text-dim">
           ·
         </span>
         <span>

@@ -62,14 +62,14 @@ function HomeBrandLink() {
     <Link
       href="/"
       className={cn(
-        "shrink-0 font-mono text-[10px] font-semibold tracking-[0.02em] text-paper-cream/85 transition-colors hover:text-paper-cream sm:text-[11px]",
+        "shrink-0 font-mono text-[10px] font-semibold tracking-[0.02em] chrome-text transition-colors hover:chrome-text-strong sm:text-[11px]",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper-cream/50",
       )}
       aria-label="Home — 2bitdev.com"
     >
-      2bit<span className="text-paper-cream/55">[</span>
-      <span className="text-paper-cream">DEV</span>
-      <span className="text-paper-cream/55">]</span>
+      2bit<span className="chrome-text-subtle">[</span>
+      <span className="chrome-text">DEV</span>
+      <span className="chrome-text-subtle">]</span>
       .com
     </Link>
   );
@@ -103,14 +103,14 @@ export function FixedStudioNavigation() {
     cn(
       STUDIO_TYPOGRAPHY.navLink,
       activeSection === id
-        ? "font-semibold text-white underline decoration-white/45 underline-offset-[6px]"
-        : "text-paper-cream/70 hover:text-paper-cream",
+        ? "chrome-text-strong font-semibold underline decoration-white/45 underline-offset-[6px] hover:chrome-text-strong"
+        : "chrome-text-muted hover:chrome-text",
     );
 
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b border-paper-cream/10 transition-colors duration-300",
+        "studio-chrome fixed inset-x-0 top-0 z-50 border-b border-paper-cream/10 transition-colors duration-300",
         scrolled
           ? "bg-wood-dark/96 shadow-lg backdrop-blur-sm"
           : "bg-studio-black/70 backdrop-blur-sm",
