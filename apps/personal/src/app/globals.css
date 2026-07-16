@@ -1261,7 +1261,8 @@ body {
   margin-top: var(--contact-landscape-copy-gap);
   font-size: var(--contact-landscape-body-size);
   line-height: var(--contact-landscape-body-lh);
-  max-width: var(--contact-landscape-reach-max);
+  width: 100%;
+  max-width: 100%;
 }
 
 .contact-phone-app--landscape .contact-phone-app__header-location {
