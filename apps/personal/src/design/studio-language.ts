@@ -77,44 +77,56 @@ export function resolveSpringboardDeviceTier(layoutWidth: number | null): Spring
   return "tablet";
 }
 
-/** Horizontal gap between springboard icon cells (px) — shared across tiers. */
-export const SPRINGBOARD_ICON_GAP_PX = 12;
+/** Horizontal gap between springboard icon cells (px) — iOS-like inter-icon spacing. */
+export const SPRINGBOARD_ICON_GAP_PX = 16;
+
+/** Horizontal inset from device screen edge to icon grid (px). */
+export const SPRINGBOARD_EDGE_PADDING_PX = 18;
 
 /**
  * Touch-device springboard grid per tier.
  * Icon size is computed at render time: min(maxIconPx, (contentWidth − (cols − 1) × gap) ÷ cols).
- * Grid tracks use repeat(cols, minmax(0, 1fr)) so the row always fills the content box width.
+ * Grid tracks use repeat(cols, minmax(0, 1fr)) — partial rows stay left-aligned like iOS.
  */
 export const SPRINGBOARD_ICON_GRID = {
   phone: {
     columns: 4,
     gapPx: SPRINGBOARD_ICON_GAP_PX,
-    maxIconPx: 56,
-    labelClass: "text-[7px]",
-    categoryLabelClass: "mb-1 text-[6px]",
-    containerClass: "gap-3",
-    buttonGapClass: "gap-0.5",
-    rowGapClass: "",
+    maxIconPx: 60,
+    labelClass: "text-[10px] leading-[1.1]",
+    containerClass: "",
+    buttonGapClass: "gap-1",
+    rowGapClass: "gap-y-[18px]",
+    edgePaddingClass: "px-[18px]",
+    widgetClockSpan: 2,
+    widgetPhotoSpan: 1,
+    widgetStudioSpan: 1,
   },
   tablet: {
     columns: 5,
     gapPx: SPRINGBOARD_ICON_GAP_PX,
-    maxIconPx: 64,
-    labelClass: "text-[8px]",
-    categoryLabelClass: "mb-2 text-[7px]",
-    containerClass: "gap-4",
+    maxIconPx: 68,
+    labelClass: "text-[10px] leading-[1.1] sm:text-[11px]",
+    containerClass: "",
     buttonGapClass: "gap-1",
-    rowGapClass: "",
+    rowGapClass: "gap-y-5",
+    edgePaddingClass: "px-5",
+    widgetClockSpan: 3,
+    widgetPhotoSpan: 1,
+    widgetStudioSpan: 1,
   },
   ipad: {
     columns: 6,
     gapPx: SPRINGBOARD_ICON_GAP_PX,
-    maxIconPx: 72,
-    labelClass: "text-[9px] sm:text-[10px]",
-    categoryLabelClass: "mb-2.5 text-[8px] sm:mb-3 sm:text-[9px]",
-    containerClass: "min-h-0 flex-1 justify-start space-y-4 sm:space-y-5",
+    maxIconPx: 76,
+    labelClass: "text-[11px] leading-[1.1]",
+    containerClass: "min-h-0 flex-1",
     buttonGapClass: "gap-1.5",
-    rowGapClass: "gap-y-4",
+    rowGapClass: "gap-y-6",
+    edgePaddingClass: "px-5 sm:px-6",
+    widgetClockSpan: 4,
+    widgetPhotoSpan: 1,
+    widgetStudioSpan: 1,
   },
 } as const satisfies Record<
   SpringboardDeviceTier,
@@ -123,10 +135,13 @@ export const SPRINGBOARD_ICON_GRID = {
     gapPx: number;
     maxIconPx: number;
     labelClass: string;
-    categoryLabelClass: string;
     containerClass: string;
     buttonGapClass: string;
     rowGapClass: string;
+    edgePaddingClass: string;
+    widgetClockSpan: number;
+    widgetPhotoSpan: number;
+    widgetStudioSpan: number;
   }
 >;
 
@@ -147,21 +162,6 @@ export function computeSpringboardIconPx(
   const trackTotal = contentWidthPx - (columns - 1) * gapPx;
   const raw = trackTotal / columns;
   return Math.min(maxIconPx, Math.max(SPRINGBOARD_ICON_MIN_PX, Math.floor(raw)));
-}
-
-/**
- * 1-based grid-column indices that spread `itemCount` icons across `columns` fractional tracks.
- * Partial rows (e.g. Practice=3 on a 6-col iPad grid) land at evenly spaced columns instead of clustering left.
- */
-export function spreadSpringboardGridColumns(itemCount: number, columns: number): number[] {
-  if (itemCount <= 0) return [];
-  if (itemCount === 1) return [Math.ceil(columns / 2)];
-  if (itemCount >= columns) {
-    return Array.from({ length: itemCount }, (_, i) => (i % columns) + 1);
-  }
-  return Array.from({ length: itemCount }, (_, i) =>
-    Math.round(1 + (i * (columns - 1)) / (itemCount - 1)),
-  );
 }
 
 /** CSS custom properties consumed by `.springboard-icon-grid` in globals.css. */

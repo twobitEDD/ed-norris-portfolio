@@ -27,10 +27,9 @@ import { contactPolaroidImage } from "@/data/career-images";
 import { projects } from "@/data/projects";
 import { creativeSlides, environmentalSlides } from "@/data/discipline-slides";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
-import { tabletAppCategories, tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
+import { tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
 import {
   resolveSpringboardDeviceTier,
-  spreadSpringboardGridColumns,
   SPRINGBOARD_ICON_GRID,
   springboardIconGridStyleProps,
   type SpringboardDeviceTier,
@@ -230,43 +229,33 @@ function DeviceAppHeader({
 
 function SpringboardStatusBar({
   timeStr,
-  dateShortStr,
   compact = false,
 }: {
   timeStr: string;
-  dateShortStr: string;
   compact?: boolean;
 }) {
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center justify-between",
-        compact ? "px-3 pb-0.5 pt-4" : "px-4 pb-1 pt-6 sm:px-5 sm:pt-7",
+        "relative z-[2] flex shrink-0 items-center justify-between",
+        compact ? "px-[18px] pb-0.5 pt-11" : "px-5 pb-1 pt-12 sm:px-6 sm:pt-[3.25rem]",
       )}
     >
-      <div className="min-w-0">
-        <p className="font-mono text-[7px] uppercase tracking-[0.2em] text-white/40 sm:text-[8px]">
-          Norris Studio
-        </p>
-        <p className="mt-0.5">
-          <span
-            className={cn(
-              "font-semibold text-white/90",
-              compact ? "text-[10px]" : "text-[11px] sm:text-xs",
-            )}
-          >
-            {timeStr}
-          </span>
-          {!compact && (
-            <span className="ml-2 hidden text-[10px] text-white/50 sm:inline">{dateShortStr}</span>
-          )}
-        </p>
-      </div>
-      <div className="flex items-center gap-1.5" aria-hidden>
-        <Wifi className={cn("text-white/60", compact ? "h-2.5 w-2.5" : "h-3 w-3")} strokeWidth={2.5} />
-        <span className="font-mono text-[8px] font-medium text-white/55 sm:text-[9px]">5G</span>
+      <p
+        className={cn(
+          "font-semibold tabular-nums text-white",
+          compact ? "text-[13px]" : "text-sm sm:text-[15px]",
+        )}
+      >
+        {timeStr}
+      </p>
+      <div className="flex items-center gap-1" aria-hidden>
+        <Wifi className={cn("text-white", compact ? "h-3 w-3" : "h-3.5 w-3.5")} strokeWidth={2.5} />
+        <span className={cn("font-semibold text-white", compact ? "text-[10px]" : "text-[11px]")}>
+          5G
+        </span>
         <BatteryMedium
-          className={cn("text-white/60", compact ? "h-3 w-3.5" : "h-3.5 w-4")}
+          className={cn("text-white", compact ? "h-3.5 w-4" : "h-4 w-4.5")}
           strokeWidth={2}
         />
       </div>
@@ -277,67 +266,85 @@ function SpringboardStatusBar({
 function SpringboardMiniWidgets({
   timeStr,
   dateShortStr,
+  tier,
   compact = false,
 }: {
   timeStr: string;
   dateShortStr: string;
+  tier: SpringboardDeviceTier;
   compact?: boolean;
 }) {
-  if (compact) {
-    return (
-      <div className="mb-2 grid grid-cols-[minmax(0,1fr)_auto_auto] items-stretch gap-1.5">
-        <div className="flex min-w-0 flex-col justify-center rounded-[14px] border border-white/[0.07] bg-black/20 px-2 py-1.5">
-          <p className="font-editorial text-[1rem] font-semibold leading-none text-white/95">{timeStr}</p>
-          <p className="mt-0.5 truncate text-[8px] text-white/50">{dateShortStr}</p>
-        </div>
-        <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-[14px] border border-white/[0.07]">
-          <Image
-            src={contactPolaroidImage.src}
-            alt={contactPolaroidImage.alt}
-            fill
-            className="object-cover object-center"
-            sizes="44px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-          <p className="absolute bottom-1 left-1.5 font-mono text-[5px] uppercase tracking-[0.12em] text-white/70">
-            Oregon
-          </p>
-        </div>
-        <div className="flex h-11 w-11 shrink-0 flex-col justify-end rounded-[14px] border border-white/[0.07] bg-white/[0.04] px-1.5 py-1.5">
-          <p className="font-mono text-[5px] uppercase tracking-[0.12em] text-white/40">Studio</p>
-          <p className="font-editorial text-sm font-semibold leading-none text-white/90">{tabletApps.length}</p>
-        </div>
-      </div>
-    );
-  }
+  const grid = SPRINGBOARD_ICON_GRID[tier];
+  const gridStyle: Record<string, string> = {
+    ...springboardIconGridStyleProps(tier),
+    "--sb-widget-mb": compact ? "14px" : tier === "ipad" ? "28px" : "22px",
+  };
 
   return (
-    <div className="mb-4 grid grid-cols-4 gap-3 sm:mb-5 sm:gap-3.5">
-      <div className="col-span-2 flex aspect-[2/1] flex-col justify-center rounded-[20px] border border-white/[0.07] bg-black/20 px-3.5 py-3 sm:px-4 sm:py-3.5">
-        <p className="font-editorial text-[1.5rem] font-semibold leading-none text-white/95 sm:text-[1.75rem]">
-          {timeStr}
-        </p>
-        <p className="mt-1 text-[11px] text-white/50 sm:text-xs">{dateShortStr}</p>
+    <div className="springboard-widget-grid" style={gridStyle}>
+      <div
+        className={cn(
+          "springboard-widget flex flex-col justify-center",
+          compact && "springboard-widget--compact",
+        )}
+        style={{ gridColumn: `span ${grid.widgetClockSpan}` }}
+      >
+        <div className={cn("flex flex-col justify-center", compact ? "px-2.5 py-2" : "px-4 py-3.5 sm:px-5 sm:py-4")}>
+          <p
+            className={cn(
+              "font-semibold tabular-nums leading-none text-white",
+              compact ? "text-[1.35rem]" : "text-[2rem] sm:text-[2.25rem]",
+            )}
+          >
+            {timeStr}
+          </p>
+          <p className={cn("mt-0.5 text-white/55", compact ? "text-[9px]" : "text-[11px] sm:text-xs")}>
+            {dateShortStr}
+          </p>
+        </div>
       </div>
-      <div className="relative col-span-1 col-start-3 aspect-square overflow-hidden rounded-[20px] border border-white/[0.07]">
+      <div
+        className={cn("springboard-widget relative aspect-square", compact && "springboard-widget--compact")}
+        style={{ gridColumn: `span ${grid.widgetPhotoSpan}` }}
+      >
         <Image
           src={contactPolaroidImage.src}
           alt={contactPolaroidImage.alt}
           fill
           className="object-cover object-center"
-          sizes="120px"
+          sizes={compact ? "52px" : "140px"}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-        <p className="absolute bottom-2 left-2 font-mono text-[7px] uppercase tracking-[0.14em] text-white/70 sm:left-2.5 sm:text-[8px]">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+        <p
+          className={cn(
+            "absolute bottom-1.5 left-2 font-medium text-white/80",
+            compact ? "text-[7px]" : "text-[9px] sm:text-[10px]",
+          )}
+        >
           Oregon
         </p>
       </div>
-      <div className="col-span-1 col-start-4 flex aspect-square flex-col justify-end rounded-[20px] border border-white/[0.07] bg-white/[0.04] px-2.5 py-2.5 sm:px-3 sm:py-3">
-        <p className="font-mono text-[7px] uppercase tracking-[0.14em] text-white/40 sm:text-[8px]">Studio</p>
-        <p className="mt-0.5 font-editorial text-lg font-semibold leading-none text-white/90 sm:text-xl">
-          {tabletApps.length}
-        </p>
-        <p className="mt-0.5 text-[9px] text-white/45 sm:text-[10px]">apps</p>
+      <div
+        className={cn(
+          "springboard-widget flex aspect-square flex-col justify-end",
+          compact && "springboard-widget--compact",
+        )}
+        style={{ gridColumn: `span ${grid.widgetStudioSpan}` }}
+      >
+        <div className={cn(compact ? "px-2 py-2" : "px-3 py-3 sm:px-3.5 sm:py-3.5")}>
+          <p className={cn("font-medium text-white/45", compact ? "text-[7px]" : "text-[9px] sm:text-[10px]")}>
+            Norris Studio
+          </p>
+          <p
+            className={cn(
+              "font-semibold tabular-nums leading-none text-white",
+              compact ? "text-lg" : "text-2xl sm:text-[1.65rem]",
+            )}
+          >
+            {tabletApps.length}
+          </p>
+          <p className={cn("text-white/45", compact ? "text-[7px]" : "text-[9px] sm:text-[10px]")}>apps</p>
+        </div>
       </div>
     </div>
   );
@@ -354,59 +361,28 @@ function AppIconGrid({
   const gridStyle = springboardIconGridStyleProps(tier);
 
   return (
-    <div className={cn("flex w-full flex-col", grid.containerClass)}>
-      {tabletAppCategories.map((category) => {
-        const apps = tabletApps.filter((app) => app.category === category.id);
-        if (apps.length === 0) return null;
-
-        const spreadCols =
-          apps.length < grid.columns
-            ? spreadSpringboardGridColumns(apps.length, grid.columns)
-            : null;
-
-        return (
-          <div key={category.id} className="min-h-0">
-            <p
-              className={cn(
-                "px-0.5 font-mono uppercase tracking-[0.2em] text-white/35",
-                grid.categoryLabelClass,
-              )}
-            >
-              {category.label}
-            </p>
-            <div
-              className={cn("springboard-icon-grid", grid.rowGapClass)}
-              style={gridStyle}
-            >
-              {apps.map((app, index) => (
-                <button
-                  key={app.id}
-                  type="button"
-                  onClick={() => onOpenApp(app.id)}
-                  style={spreadCols ? { gridColumn: spreadCols[index] } : undefined}
-                  className={cn(
-                    "springboard-icon-button group rounded-lg p-0 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-                    grid.buttonGapClass,
-                  )}
-                  aria-label={`Open ${app.name}`}
-                >
-                  <div className="springboard-icon-tile shadow-[0_3px_10px_rgba(0,0,0,0.4)] transition group-hover:shadow-[0_5px_16px_rgba(0,0,0,0.5)]">
-                    <AppIcon app={app} imageSizes={`${grid.maxIconPx}px`} />
-                  </div>
-                  <span
-                    className={cn(
-                      "w-full truncate text-center font-medium leading-tight text-white/90",
-                      grid.labelClass,
-                    )}
-                  >
-                    {app.name}
-                  </span>
-                </button>
-              ))}
+    <div className={cn("w-full", grid.containerClass)}>
+      <div className={cn("springboard-icon-grid", grid.rowGapClass)} style={gridStyle}>
+        {tabletApps.map((app) => (
+          <button
+            key={app.id}
+            type="button"
+            onClick={() => onOpenApp(app.id)}
+            className={cn(
+              "springboard-icon-button group rounded-lg p-0 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+              grid.buttonGapClass,
+            )}
+            aria-label={`Open ${app.name}`}
+          >
+            <div className="springboard-icon-tile shadow-[0_2px_8px_rgba(0,0,0,0.35)] group-hover:shadow-[0_4px_14px_rgba(0,0,0,0.45)]">
+              <AppIcon app={app} imageSizes={`${grid.maxIconPx}px`} />
             </div>
-          </div>
-        );
-      })}
+            <span className={cn("springboard-icon-label w-full truncate text-center font-medium", grid.labelClass)}>
+              {app.name}
+            </span>
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -899,28 +875,18 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
               </div>
             ) : (
               <>
-                <SpringboardStatusBar
-                  timeStr={timeStr}
-                  dateShortStr={dateShortStr}
-                  compact={isPhoneTier}
-                />
+                <SpringboardStatusBar timeStr={timeStr} compact={isPhoneTier} />
 
                 <div
                   className={cn(
-                    "relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden",
-                    isPhoneTier
-                      ? "px-2.5 pb-4 pt-0"
-                      : springboardTier === "tablet"
-                        ? "px-3.5 pb-5 pt-1"
-                        : "px-4 pb-5 pt-1 sm:px-5 sm:pb-6 sm:pt-2",
+                    "relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden pb-5",
+                    SPRINGBOARD_ICON_GRID[springboardTier].edgePaddingClass,
+                    isPhoneTier ? "pt-0" : "pt-1",
                   )}
                 >
                   <div
                     ref={springboardContentRef}
-                    className={cn(
-                      "flex origin-top flex-col",
-                      isPhoneTier ? "gap-0" : "min-h-0 flex-1",
-                    )}
+                    className="flex origin-top flex-col"
                     style={{
                       transform: springboardScale < 1 ? `scale(${springboardScale})` : undefined,
                       width: springboardScale < 1 ? `${100 / springboardScale}%` : undefined,
@@ -929,6 +895,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                     <SpringboardMiniWidgets
                       timeStr={timeStr}
                       dateShortStr={dateShortStr}
+                      tier={springboardTier}
                       compact={isPhoneTier}
                     />
                     <AppIconGrid onOpenApp={openApp} tier={springboardTier} />
