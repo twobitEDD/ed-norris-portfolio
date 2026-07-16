@@ -298,7 +298,7 @@ function HomeScreen({
           className={cn(
             "contact-phone-app__headline font-editorial font-semibold",
             isLandscape
-              ? "text-[13px] leading-[1.2]"
+              ? undefined
               : isTablet
                 ? "mt-3 text-2xl sm:text-[1.65rem]"
                 : "mt-2 text-lg sm:mt-2.5 sm:text-xl",
@@ -310,7 +310,7 @@ function HomeScreen({
           className={cn(
             "contact-phone-app__body",
             isLandscape
-              ? "mt-0.5 text-[8px] leading-[1.35]"
+              ? undefined
               : isTablet
                 ? "mt-3 text-sm leading-relaxed"
                 : "mt-2.5 text-[11px] leading-relaxed sm:mt-3 sm:text-xs",
