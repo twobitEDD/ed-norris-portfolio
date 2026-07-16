@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Edd Norris — 2bitDEV",
     short_name: "2bitDEV",
     description:
-      "Software Production Specialist | UX & Software & Production — Cottage Grove, Oregon.",
+      "Software Production Specialist — UX & Software & Production. Cottage Grove, Oregon.",
     start_url: "/",
     display: "standalone",
     background_color: "#090b0b",

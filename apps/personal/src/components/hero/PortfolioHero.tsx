@@ -6,6 +6,7 @@ import type { Profile } from "@/data/types";
 import { GlowButton } from "@/components/ui/GlowButton";
 import { TechnicalGrid } from "@/components/ui/TechnicalGrid";
 import { fadeUp, stagger } from "@/lib/motion";
+import { ProfileTagline } from "@/components/ProfileTagline";
 import { IdentityBadges } from "./IdentityBadges";
 import { SplitWorldVisual } from "./SplitWorldVisual";
 
@@ -20,9 +21,9 @@ export function PortfolioHero({ profile }: { profile: Profile }) {
           animate="visible"
           className="relative z-10"
         >
-          <motion.p variants={fadeUp} className="font-mono text-xs uppercase tracking-[0.2em] text-text-muted">
-            {profile.tagline}
-          </motion.p>
+          <motion.div variants={fadeUp}>
+            <ProfileTagline tagline={profile.tagline} variant="hero" />
+          </motion.div>
           <motion.h1 variants={fadeUp} className="hero-title mt-5 font-display font-bold text-text-primary">
             {profile.headline}
           </motion.h1>

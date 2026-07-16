@@ -2,7 +2,10 @@ import type { Profile } from "./types";
 
 export const profile: Profile = {
   name: "Edd Norris",
-  tagline: "Software Production Specialist | UX & Software & Production",
+  tagline: {
+    primary: "Software Production Specialist",
+    secondary: "UX & Software & Production",
+  },
   headline: "I love building solutions, for fun and function.",
   summary:
     "Twenty years from Wii credits to software leadership — building CO2True carbon platforms and ERGO accessible games with human-centered design.",

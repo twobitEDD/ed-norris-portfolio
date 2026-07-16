@@ -3,6 +3,7 @@
 import { STUDIO_TYPOGRAPHY } from "@/design/studio-language";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { ProfileTagline } from "@/components/ProfileTagline";
 import { profile } from "@/data";
 import { cn } from "@/lib/cn";
 import { StudioThemeToggle } from "./StudioThemeToggle";
@@ -46,13 +47,13 @@ function measureSections(
   setActiveSection(next);
 }
 
-function SiteIdentity({ className }: { className?: string }) {
+function SiteIdentity({ className, align = "start" }: { className?: string; align?: "start" | "end" }) {
   return (
     <div className={className} aria-label="Site identity">
       <Link href="/#hero" className={cn(STUDIO_TYPOGRAPHY.navBrand)}>
         {profile.name}
       </Link>
-      <p className={cn("mt-0.5", STUDIO_TYPOGRAPHY.navTagline)}>{profile.tagline}</p>
+      <ProfileTagline tagline={profile.tagline} variant="nav" align={align} className="mt-0.5" />
     </div>
   );
 }
@@ -142,7 +143,7 @@ export function FixedStudioNavigation() {
             <StudioThemeToggle />
           </div>
 
-          {pastHero ? <SiteIdentity className="text-right lg:hidden" /> : null}
+          {pastHero ? <SiteIdentity className="text-right lg:hidden" align="end" /> : null}
         </div>
       </div>
     </header>

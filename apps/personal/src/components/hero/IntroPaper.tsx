@@ -3,6 +3,7 @@ import type { TabletAppId } from "@/data/tablet-apps";
 import { StudioAppLink } from "@/components/studio/StudioAppLink";
 import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { WorkVennDiagram } from "@/components/hero/WorkVennDiagram";
+import { ProfileTagline } from "@/components/ProfileTagline";
 import { Paper } from "@/components/physical-ui/Paper";
 
 const roles = [
@@ -28,9 +29,7 @@ export function IntroPaper() {
           for fun and function.
         </h1>
 
-        <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-soft">
-          {profile.tagline}
-        </p>
+        <ProfileTagline tagline={profile.tagline} variant="paper" className="mt-4" />
 
         <div className="mt-3 max-w-md">
           <ClientLogoStrip size="sm" ids={["adidas", "google", "co2t"]} />

@@ -6,9 +6,14 @@ export type Discipline =
   | "operations"
   | "data";
 
+export type ProfileTagline = {
+  primary: string;
+  secondary: string;
+};
+
 export type Profile = {
   name: string;
-  tagline: string;
+  tagline: ProfileTagline;
   headline: string;
   summary: string;
   proofStrip: string[];
