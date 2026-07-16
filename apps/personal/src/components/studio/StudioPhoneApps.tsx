@@ -29,9 +29,11 @@ import { creativeSlides, environmentalSlides } from "@/data/discipline-slides";
 import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
 import {
+  computeSpringboardWidgetCellPx,
   resolveSpringboardDeviceTier,
   SPRINGBOARD_ICON_GRID,
   springboardIconGridStyleProps,
+  springboardWidgetGridStyleProps,
   type SpringboardDeviceTier,
 } from "@/design/studio-language";
 import { cn } from "@/lib/cn";
@@ -267,15 +269,25 @@ function SpringboardMiniWidgets({
   timeStr,
   dateShortStr,
   tier,
+  contentWidthPx,
   compact = false,
 }: {
   timeStr: string;
   dateShortStr: string;
   tier: SpringboardDeviceTier;
+  contentWidthPx?: number | null;
   compact?: boolean;
 }) {
-  const grid = SPRINGBOARD_ICON_GRID[tier];
-  const gridStyle = springboardIconGridStyleProps(tier);
+  const gridStyle = springboardWidgetGridStyleProps(tier, contentWidthPx);
+  const widgetCellPx =
+    contentWidthPx != null && contentWidthPx > 0
+      ? computeSpringboardWidgetCellPx(
+          contentWidthPx,
+          Number.parseFloat(gridStyle["--sb-gap"] ?? "22"),
+        )
+      : compact
+        ? 72
+        : 120;
 
   return (
     <div className="springboard-widget-grid" style={gridStyle}>
@@ -284,40 +296,28 @@ function SpringboardMiniWidgets({
           "springboard-widget flex flex-col justify-center",
           compact && "springboard-widget--compact",
         )}
-        style={{ gridColumn: `span ${grid.widgetClockSpan}` }}
+        style={{ gridColumn: "span 2" }}
       >
-        <div className={cn("flex flex-col justify-center", compact ? "px-2.5 py-2" : "px-4 py-3.5 sm:px-5 sm:py-4")}>
-          <p
-            className={cn(
-              "font-semibold tabular-nums leading-none text-white",
-              compact ? "text-[1.35rem]" : "text-[2rem] sm:text-[2.25rem]",
-            )}
-          >
+        <div className="springboard-widget-clock-inner flex flex-col justify-center">
+          <p className="springboard-widget-time font-semibold tabular-nums leading-none text-white">
             {timeStr}
           </p>
-          <p className={cn("mt-0.5 text-white/55", compact ? "text-[9px]" : "text-[11px] sm:text-xs")}>
-            {dateShortStr}
-          </p>
+          <p className="springboard-widget-date mt-0.5 text-white/55">{dateShortStr}</p>
         </div>
       </div>
       <div
         className={cn("springboard-widget relative aspect-square", compact && "springboard-widget--compact")}
-        style={{ gridColumn: `span ${grid.widgetPhotoSpan}` }}
+        style={{ gridColumn: "span 1" }}
       >
         <Image
           src={contactPolaroidImage.src}
           alt={contactPolaroidImage.alt}
           fill
           className="object-cover object-center"
-          sizes={compact ? "52px" : "140px"}
+          sizes={`${widgetCellPx}px`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-        <p
-          className={cn(
-            "absolute bottom-1.5 left-2 font-medium text-white/80",
-            compact ? "text-[7px]" : "text-[9px] sm:text-[10px]",
-          )}
-        >
+        <p className="springboard-widget-caption absolute bottom-1.5 left-2 font-medium text-white/80">
           Oregon
         </p>
       </div>
@@ -326,21 +326,14 @@ function SpringboardMiniWidgets({
           "springboard-widget flex aspect-square flex-col justify-end",
           compact && "springboard-widget--compact",
         )}
-        style={{ gridColumn: `span ${grid.widgetStudioSpan}` }}
+        style={{ gridColumn: "span 1" }}
       >
-        <div className={cn(compact ? "px-2 py-2" : "px-3 py-3 sm:px-3.5 sm:py-3.5")}>
-          <p className={cn("font-medium text-white/45", compact ? "text-[7px]" : "text-[9px] sm:text-[10px]")}>
-            Norris Studio
-          </p>
-          <p
-            className={cn(
-              "font-semibold tabular-nums leading-none text-white",
-              compact ? "text-lg" : "text-2xl sm:text-[1.65rem]",
-            )}
-          >
+        <div className="springboard-widget-studio-inner">
+          <p className="springboard-widget-studio-label font-medium text-white/45">Norris Studio</p>
+          <p className="springboard-widget-studio-count font-semibold tabular-nums leading-none text-white">
             {tabletApps.length}
           </p>
-          <p className={cn("text-white/45", compact ? "text-[7px]" : "text-[9px] sm:text-[10px]")}>apps</p>
+          <p className="springboard-widget-studio-label text-white/45">apps</p>
         </div>
       </div>
     </div>
@@ -350,12 +343,15 @@ function SpringboardMiniWidgets({
 function AppIconGrid({
   onOpenApp,
   tier,
+  contentWidthPx,
 }: {
   onOpenApp: (id: TabletAppId) => void;
   tier: SpringboardDeviceTier;
+  contentWidthPx?: number | null;
 }) {
   const grid = SPRINGBOARD_ICON_GRID[tier];
-  const gridStyle = springboardIconGridStyleProps(tier);
+  const gridStyle = springboardIconGridStyleProps(tier, contentWidthPx);
+  const iconMaxPx = Number.parseFloat(gridStyle["--sb-icon-max"] ?? String(grid.maxIconPx));
 
   return (
     <div className={cn("w-full", grid.containerClass)}>
@@ -369,7 +365,7 @@ function AppIconGrid({
             aria-label={`Open ${app.name}`}
           >
             <div className="springboard-icon-tile shadow-[0_2px_8px_rgba(0,0,0,0.35)] group-hover:shadow-[0_4px_14px_rgba(0,0,0,0.45)]">
-              <AppIcon app={app} imageSizes={`${grid.maxIconPx}px`} />
+              <AppIcon app={app} imageSizes={`${iconMaxPx}px`} />
             </div>
             <span className={cn("springboard-icon-label w-full truncate text-center font-medium", grid.labelClass)}>
               {app.name}
@@ -830,6 +826,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   }, [containerWidth, viewportWidth]);
 
   const springboardTier = resolveSpringboardDeviceTier(layoutWidth);
+  const springboardContentWidth = useElementWidth(springboardContentRef);
   const isPhoneTier = springboardTier === "phone";
   const springboardScale = useSpringboardFitScale(
     springboardScreenRef,
@@ -890,9 +887,14 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                       timeStr={timeStr}
                       dateShortStr={dateShortStr}
                       tier={springboardTier}
+                      contentWidthPx={springboardContentWidth}
                       compact={isPhoneTier}
                     />
-                    <AppIconGrid onOpenApp={openApp} tier={springboardTier} />
+                    <AppIconGrid
+                      onOpenApp={openApp}
+                      tier={springboardTier}
+                      contentWidthPx={springboardContentWidth}
+                    />
                   </div>
                 </div>
               </>

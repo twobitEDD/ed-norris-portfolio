@@ -92,9 +92,6 @@ export const SPRINGBOARD_ICON_GRID = {
     labelClass: "text-[10px] leading-[1.15]",
     containerClass: "",
     edgePaddingClass: "px-[22px]",
-    widgetClockSpan: 2,
-    widgetPhotoSpan: 1,
-    widgetStudioSpan: 1,
   },
   tablet: {
     columns: 5,
@@ -105,9 +102,6 @@ export const SPRINGBOARD_ICON_GRID = {
     labelClass: "text-[10px] leading-[1.15] sm:text-[11px]",
     containerClass: "",
     edgePaddingClass: "px-6",
-    widgetClockSpan: 3,
-    widgetPhotoSpan: 1,
-    widgetStudioSpan: 1,
   },
   ipad: {
     columns: 6,
@@ -118,9 +112,6 @@ export const SPRINGBOARD_ICON_GRID = {
     labelClass: "text-[11px] leading-[1.15]",
     containerClass: "min-h-0 flex-1",
     edgePaddingClass: "px-7",
-    widgetClockSpan: 4,
-    widgetPhotoSpan: 1,
-    widgetStudioSpan: 1,
   },
 } as const satisfies Record<
   SpringboardDeviceTier,
@@ -133,39 +124,95 @@ export const SPRINGBOARD_ICON_GRID = {
     labelClass: string;
     containerClass: string;
     edgePaddingClass: string;
-    widgetClockSpan: number;
-    widgetPhotoSpan: number;
-    widgetStudioSpan: number;
   }
 >;
+
+/** Widget row always uses four columns so each 1×1 tile ≈ ¼ content width. */
+export const SPRINGBOARD_WIDGET_COLUMNS = 4;
 
 /** Minimum rendered icon edge (px) so labels stay legible on very narrow containers. */
 export const SPRINGBOARD_ICON_MIN_PX = 32;
 
+/** Scale gutters with springboard content width — ~3.2% of width, clamped for phone/tablet. */
+export function computeSpringboardGapPx(
+  contentWidthPx: number,
+  tier: SpringboardDeviceTier,
+): number {
+  const base = SPRINGBOARD_ICON_GRID[tier].gapPx;
+  if (contentWidthPx <= 0) return base;
+  return Math.round(Math.min(28, Math.max(14, contentWidthPx * 0.032, base * 0.75)));
+}
+
 /**
- * iconSize = min(maxIconPx, floor((contentWidth − (columns − 1) × gapPx) ÷ columns))
+ * iconSize = floor((contentWidth − (columns − 1) × gapPx) ÷ columns)), optionally capped.
  * Clamped to SPRINGBOARD_ICON_MIN_PX.
  */
 export function computeSpringboardIconPx(
   contentWidthPx: number,
   columns: number,
   gapPx: number,
-  maxIconPx: number,
+  maxIconPx?: number,
 ): number {
-  if (contentWidthPx <= 0 || columns <= 0) return maxIconPx;
+  const fallback = maxIconPx ?? SPRINGBOARD_ICON_GRID.ipad.maxIconPx;
+  if (contentWidthPx <= 0 || columns <= 0) return fallback;
   const trackTotal = contentWidthPx - (columns - 1) * gapPx;
-  const raw = trackTotal / columns;
-  return Math.min(maxIconPx, Math.max(SPRINGBOARD_ICON_MIN_PX, Math.floor(raw)));
+  const raw = Math.floor(trackTotal / columns);
+  const sized = Math.max(SPRINGBOARD_ICON_MIN_PX, raw);
+  return maxIconPx !== undefined ? Math.min(maxIconPx, sized) : sized;
 }
 
-/** CSS custom properties consumed by springboard grids in globals.css. */
-export function springboardIconGridStyleProps(tier: SpringboardDeviceTier): Record<string, string> {
-  const { columns, gapPx, maxIconPx, labelGapPx } = SPRINGBOARD_ICON_GRID[tier];
+/** One widget grid cell width — ~¼ of content width minus gutters. */
+export function computeSpringboardWidgetCellPx(contentWidthPx: number, gapPx: number): number {
+  if (contentWidthPx <= 0) return 80;
+  const trackTotal = contentWidthPx - (SPRINGBOARD_WIDGET_COLUMNS - 1) * gapPx;
+  return Math.max(48, Math.floor(trackTotal / SPRINGBOARD_WIDGET_COLUMNS));
+}
+
+function resolveSpringboardGapPx(
+  tier: SpringboardDeviceTier,
+  contentWidthPx?: number | null,
+): number {
+  const base = SPRINGBOARD_ICON_GRID[tier].gapPx;
+  if (contentWidthPx == null || contentWidthPx <= 0) return base;
+  return computeSpringboardGapPx(contentWidthPx, tier);
+}
+
+/** CSS custom properties consumed by the icon grid in globals.css. */
+export function springboardIconGridStyleProps(
+  tier: SpringboardDeviceTier,
+  contentWidthPx?: number | null,
+): Record<string, string> {
+  const { columns, labelGapPx } = SPRINGBOARD_ICON_GRID[tier];
+  const gapPx = resolveSpringboardGapPx(tier, contentWidthPx);
+  const iconMaxPx =
+    contentWidthPx != null && contentWidthPx > 0
+      ? computeSpringboardIconPx(contentWidthPx, columns, gapPx)
+      : SPRINGBOARD_ICON_GRID[tier].maxIconPx;
+
   return {
     "--sb-cols": String(columns),
     "--sb-gap": `${gapPx}px`,
-    "--sb-icon-max": `${maxIconPx}px`,
+    "--sb-icon-max": `${iconMaxPx}px`,
     "--sb-label-gap": `${labelGapPx}px`,
+    "--sb-widget-mb": `${gapPx}px`,
+  };
+}
+
+/** CSS custom properties for the widget row — fixed four columns, device-relative cell size. */
+export function springboardWidgetGridStyleProps(
+  tier: SpringboardDeviceTier,
+  contentWidthPx?: number | null,
+): Record<string, string> {
+  const gapPx = resolveSpringboardGapPx(tier, contentWidthPx);
+  const widgetCellPx =
+    contentWidthPx != null && contentWidthPx > 0
+      ? computeSpringboardWidgetCellPx(contentWidthPx, gapPx)
+      : 80;
+
+  return {
+    "--sb-cols": String(SPRINGBOARD_WIDGET_COLUMNS),
+    "--sb-gap": `${gapPx}px`,
+    "--sb-widget-cell": `${widgetCellPx}px`,
     "--sb-widget-mb": `${gapPx}px`,
   };
 }
