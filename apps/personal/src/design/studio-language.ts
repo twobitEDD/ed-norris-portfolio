@@ -77,55 +77,102 @@ export function resolveSpringboardDeviceTier(layoutWidth: number | null): Spring
   return "tablet";
 }
 
-/** Uniform springboard icon grid per device tier — fixed columns, icon size, and gap. */
+/** Horizontal gap between springboard icon cells (px) — shared across tiers. */
+export const SPRINGBOARD_ICON_GAP_PX = 12;
+
+/**
+ * Touch-device springboard grid per tier.
+ * Icon size is computed at render time: min(maxIconPx, (contentWidth − (cols − 1) × gap) ÷ cols).
+ * Grid tracks use repeat(cols, minmax(0, 1fr)) so the row always fills the content box width.
+ */
 export const SPRINGBOARD_ICON_GRID = {
   phone: {
     columns: 4,
-    iconPx: 56,
-    gridClass: "grid-cols-[repeat(4,56px)] gap-3",
-    buttonClass: "w-[56px] items-center gap-0.5",
-    iconClass: "w-[56px]",
+    gapPx: SPRINGBOARD_ICON_GAP_PX,
+    maxIconPx: 56,
     labelClass: "text-[7px]",
     categoryLabelClass: "mb-1 text-[6px]",
     containerClass: "gap-3",
-    imageSizes: "56px",
+    buttonGapClass: "gap-0.5",
+    rowGapClass: "",
   },
   tablet: {
     columns: 5,
-    iconPx: 64,
-    gridClass: "grid-cols-[repeat(5,64px)] gap-3",
-    buttonClass: "w-[64px] items-center gap-1",
-    iconClass: "w-[64px]",
+    gapPx: SPRINGBOARD_ICON_GAP_PX,
+    maxIconPx: 64,
     labelClass: "text-[8px]",
     categoryLabelClass: "mb-2 text-[7px]",
     containerClass: "gap-4",
-    imageSizes: "64px",
+    buttonGapClass: "gap-1",
+    rowGapClass: "",
   },
   ipad: {
     columns: 6,
-    iconPx: 72,
-    gridClass: "grid-cols-[repeat(6,72px)] gap-3 gap-y-4",
-    buttonClass: "w-[72px] items-center gap-1.5",
-    iconClass: "w-[72px]",
+    gapPx: SPRINGBOARD_ICON_GAP_PX,
+    maxIconPx: 72,
     labelClass: "text-[9px] sm:text-[10px]",
     categoryLabelClass: "mb-2.5 text-[8px] sm:mb-3 sm:text-[9px]",
     containerClass: "min-h-0 flex-1 justify-start space-y-4 sm:space-y-5",
-    imageSizes: "72px",
+    buttonGapClass: "gap-1.5",
+    rowGapClass: "gap-y-4",
   },
 } as const satisfies Record<
   SpringboardDeviceTier,
   {
     columns: number;
-    iconPx: number;
-    gridClass: string;
-    buttonClass: string;
-    iconClass: string;
+    gapPx: number;
+    maxIconPx: number;
     labelClass: string;
     categoryLabelClass: string;
     containerClass: string;
-    imageSizes: string;
+    buttonGapClass: string;
+    rowGapClass: string;
   }
 >;
+
+/** Minimum rendered icon edge (px) so labels stay legible on very narrow containers. */
+export const SPRINGBOARD_ICON_MIN_PX = 32;
+
+/**
+ * iconSize = min(maxIconPx, floor((contentWidth − (columns − 1) × gapPx) ÷ columns))
+ * Clamped to SPRINGBOARD_ICON_MIN_PX.
+ */
+export function computeSpringboardIconPx(
+  contentWidthPx: number,
+  columns: number,
+  gapPx: number,
+  maxIconPx: number,
+): number {
+  if (contentWidthPx <= 0 || columns <= 0) return maxIconPx;
+  const trackTotal = contentWidthPx - (columns - 1) * gapPx;
+  const raw = trackTotal / columns;
+  return Math.min(maxIconPx, Math.max(SPRINGBOARD_ICON_MIN_PX, Math.floor(raw)));
+}
+
+/**
+ * 1-based grid-column indices that spread `itemCount` icons across `columns` fractional tracks.
+ * Partial rows (e.g. Practice=3 on a 6-col iPad grid) land at evenly spaced columns instead of clustering left.
+ */
+export function spreadSpringboardGridColumns(itemCount: number, columns: number): number[] {
+  if (itemCount <= 0) return [];
+  if (itemCount === 1) return [Math.ceil(columns / 2)];
+  if (itemCount >= columns) {
+    return Array.from({ length: itemCount }, (_, i) => (i % columns) + 1);
+  }
+  return Array.from({ length: itemCount }, (_, i) =>
+    Math.round(1 + (i * (columns - 1)) / (itemCount - 1)),
+  );
+}
+
+/** CSS custom properties consumed by `.springboard-icon-grid` in globals.css. */
+export function springboardIconGridStyleProps(tier: SpringboardDeviceTier): Record<string, string> {
+  const { columns, gapPx, maxIconPx } = SPRINGBOARD_ICON_GRID[tier];
+  return {
+    "--sb-cols": String(columns),
+    "--sb-gap": `${gapPx}px`,
+    "--sb-icon-max": `${maxIconPx}px`,
+  };
+}
 
 /** Shared device chrome — one large studio width, consistent bezels. */
 export const STUDIO_DEVICE = {

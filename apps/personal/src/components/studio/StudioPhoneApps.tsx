@@ -30,7 +30,9 @@ import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { tabletAppCategories, tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
 import {
   resolveSpringboardDeviceTier,
+  spreadSpringboardGridColumns,
   SPRINGBOARD_ICON_GRID,
+  springboardIconGridStyleProps,
   type SpringboardDeviceTier,
 } from "@/design/studio-language";
 import { cn } from "@/lib/cn";
@@ -349,12 +351,18 @@ function AppIconGrid({
   tier: SpringboardDeviceTier;
 }) {
   const grid = SPRINGBOARD_ICON_GRID[tier];
+  const gridStyle = springboardIconGridStyleProps(tier);
 
   return (
     <div className={cn("flex w-full flex-col", grid.containerClass)}>
       {tabletAppCategories.map((category) => {
         const apps = tabletApps.filter((app) => app.category === category.id);
         if (apps.length === 0) return null;
+
+        const spreadCols =
+          apps.length < grid.columns
+            ? spreadSpringboardGridColumns(apps.length, grid.columns)
+            : null;
 
         return (
           <div key={category.id} className="min-h-0">
@@ -366,25 +374,24 @@ function AppIconGrid({
             >
               {category.label}
             </p>
-            <div className={cn("grid justify-items-start", grid.gridClass)}>
-              {apps.map((app) => (
+            <div
+              className={cn("springboard-icon-grid", grid.rowGapClass)}
+              style={gridStyle}
+            >
+              {apps.map((app, index) => (
                 <button
                   key={app.id}
                   type="button"
                   onClick={() => onOpenApp(app.id)}
+                  style={spreadCols ? { gridColumn: spreadCols[index] } : undefined}
                   className={cn(
-                    "group flex flex-col rounded-lg p-0 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
-                    grid.buttonClass,
+                    "springboard-icon-button group rounded-lg p-0 transition hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+                    grid.buttonGapClass,
                   )}
                   aria-label={`Open ${app.name}`}
                 >
-                  <div
-                    className={cn(
-                      "aspect-square shadow-[0_3px_10px_rgba(0,0,0,0.4)] transition group-hover:shadow-[0_5px_16px_rgba(0,0,0,0.5)]",
-                      grid.iconClass,
-                    )}
-                  >
-                    <AppIcon app={app} imageSizes={grid.imageSizes} />
+                  <div className="springboard-icon-tile shadow-[0_3px_10px_rgba(0,0,0,0.4)] transition group-hover:shadow-[0_5px_16px_rgba(0,0,0,0.5)]">
+                    <AppIcon app={app} imageSizes={`${grid.maxIconPx}px`} />
                   </div>
                   <span
                     className={cn(

@@ -1838,6 +1838,32 @@ body {
   }
 }
 
+/* Springboard icon grid — fractional columns fill device content width (see studio-language.ts). */
+.springboard-icon-grid {
+  container-type: inline-size;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(var(--sb-cols, 4), minmax(0, 1fr));
+  gap: var(--sb-gap, 12px);
+  justify-items: center;
+}
+
+.springboard-icon-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(
+    100%,
+    var(--sb-icon-max, 72px),
+    calc((100cqw - (var(--sb-cols) - 1) * var(--sb-gap)) / var(--sb-cols))
+  );
+}
+
+.springboard-icon-tile {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
 /* Norris Studio iPad — nature + technology springboard wallpaper */
 .studio-springboard-wallpaper {
   background:
