@@ -1,9 +1,11 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { profile } from "@/data";
+import { resumeValueProps, type ResumeValueProp } from "@/data/resume-value-props";
 import type { ResumePreset } from "@/data/types";
 import { getResumeAccentColor } from "@/lib/resume";
+import { getNextResumeValueProp } from "@/lib/resume/value-prop-rotation";
 import { ObjectShadow } from "@/components/physical-ui/ObjectShadow";
 import { cn } from "@/lib/cn";
 
@@ -41,6 +43,11 @@ export const ResumeBusinessCard = forwardRef<HTMLElement, ResumeBusinessCardProp
   ref,
 ) {
   const accent = accentColor ?? getPresetAccentColor(preset);
+  const [valueProp, setValueProp] = useState<ResumeValueProp>(resumeValueProps[0]);
+
+  useEffect(() => {
+    setValueProp(getNextResumeValueProp());
+  }, []);
 
   return (
     <div className={cn("relative w-full max-w-[320px]", className)}>
@@ -53,8 +60,11 @@ export const ResumeBusinessCard = forwardRef<HTMLElement, ResumeBusinessCardProp
         <div className="business-card__accent" aria-hidden="true" />
         <div className="business-card__body flex min-h-0 flex-1 flex-col justify-between px-5 py-4 sm:px-6 sm:py-[18px]">
           <div>
-            <p className="business-card__eyebrow font-mono text-[7px] uppercase tracking-[0.22em]">
-              Résumé generator
+            <p
+              className="business-card__eyebrow min-h-[2.7em] font-mono text-[6px] uppercase leading-[1.35] tracking-[0.16em] line-clamp-2"
+              suppressHydrationWarning
+            >
+              {valueProp}
             </p>
             <h3 className="business-card__name mt-1.5 font-editorial text-[1.35rem] font-semibold leading-tight tracking-tight">
               {name}
