@@ -30,7 +30,7 @@ const StudioPhoneApps = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="mx-auto flex min-h-[520px] w-full max-w-[920px] items-center justify-center rounded-[28px] border border-dashed border-paper-cream/10 bg-wood-dark/20">
+      <div className="mx-auto flex min-h-[520px] w-full max-w-[min(100%,var(--studio-device-max,920px))] items-center justify-center rounded-[28px] border border-dashed border-paper-cream/10 bg-wood-dark/20">
         <p className="font-mono text-[9px] uppercase tracking-wider text-paper-cream/30">Loading studio…</p>
       </div>
     ),

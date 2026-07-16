@@ -52,6 +52,10 @@
   --shadow-device: 0 4px 5px rgba(0, 0, 0, 0.2), 0 16px 40px rgba(0, 0, 0, 0.28);
   --ease-studio: cubic-bezier(0.22, 1, 0.36, 1);
 
+  /* Studio layout — laptop defaults; scale up on 2xl / 4K viewports */
+  --studio-bento-max: 1200px;
+  --studio-device-max: 920px;
+
   color-scheme: light;
 }
 
@@ -71,6 +75,24 @@
   --shadow-device: 0 4px 5px rgba(0, 0, 0, 0.32), 0 24px 55px rgba(0, 0, 0, 0.48);
 
   color-scheme: dark;
+}
+
+@media (min-width: 1536px) {
+  :root,
+  [data-studio-mode="day"],
+  [data-studio-mode="night"] {
+    --studio-bento-max: min(1560px, 92vw);
+    --studio-device-max: min(1080px, 76vw);
+  }
+}
+
+@media (min-width: 1920px) {
+  :root,
+  [data-studio-mode="day"],
+  [data-studio-mode="night"] {
+    --studio-bento-max: min(1680px, 88vw);
+    --studio-device-max: min(1200px, 72vw);
+  }
 }
 
 html {
@@ -196,7 +218,8 @@ body {
   gap: 3.5rem;
   width: 100%;
   min-width: 0;
-  max-width: 100%;
+  max-width: min(100%, var(--studio-bento-max, 1200px));
+  margin-inline: auto;
 }
 
 @media (min-width: 768px) {
@@ -391,7 +414,7 @@ body {
 .bento-cell--game-object {
   transform-origin: center top;
   width: 100%;
-  max-width: 920px;
+  max-width: var(--studio-device-max, 920px);
   margin-inline: auto;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -886,7 +909,7 @@ body {
 
 .device-frame--phone-large {
   width: 100%;
-  max-width: 920px;
+  max-width: var(--studio-device-max, 920px);
 }
 
 .device-frame--phone-large .screen-surface {
@@ -1177,13 +1200,14 @@ body {
 
 /* Legacy phone contact device — kept for any embedded phone usages */
 .contact-phone-device {
-  --contact-phone-landscape-max: 920px;
+  --contact-phone-landscape-max: var(--studio-device-max, 920px);
   width: 100%;
   max-width: min(100%, var(--contact-phone-landscape-max));
 }
 
 /* Contact landscape phone — bleed into section padding for a larger device */
 .contact-phone-bleed {
+  --contact-phone-landscape-max: var(--studio-device-max, 920px);
   --contact-phone-bleed: clamp(1rem, 5vw, 3.5rem);
   position: relative;
   z-index: 1;
@@ -2020,7 +2044,7 @@ body {
 
 .device-frame--tablet-large {
   width: 100%;
-  max-width: 920px;
+  max-width: var(--studio-device-max, 920px);
 }
 
 .tablet-home-indicator {

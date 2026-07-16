@@ -314,7 +314,7 @@ function SpringboardMiniWidgets({
           "springboard-widget flex flex-col justify-center",
           compact && "springboard-widget--compact",
         )}
-        style={{ gridColumn: "span 2", gridRow: "span 2" }}
+        style={{ gridColumn: "span 2", gridRow: "span 1" }}
       >
         <div className="springboard-widget-clock-inner flex flex-col justify-center">
           <p className="springboard-widget-time font-semibold tabular-nums leading-none text-white">
@@ -918,7 +918,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
             aria-label="Close game"
             onClick={closeGame}
           />
-          <div className="relative z-10 w-full max-w-[min(96vw,920px)]">
+          <div className="relative z-10 w-full max-w-[min(96vw,var(--studio-device-max,920px))]">
             <GameTablet
               arcade
               onClose={closeGame}

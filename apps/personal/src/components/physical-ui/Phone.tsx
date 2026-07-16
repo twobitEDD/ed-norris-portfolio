@@ -53,9 +53,9 @@ export function Phone({
       className={cn(
         "relative",
         isLandscape
-          ? `mx-auto w-full max-w-[min(100%,${STUDIO_DEVICE.phoneLandscapeMaxWidth})]`
+          ? "mx-auto w-full max-w-[min(100%,var(--studio-device-max,920px))]"
           : isLarge
-            ? "mx-auto w-full max-w-[min(100%,920px)]"
+            ? "mx-auto w-full max-w-[min(100%,var(--studio-device-max,920px))]"
             : isLauncher
               ? "mx-auto w-[min(100%,220px)] sm:w-[220px]"
               : "w-[220px] sm:w-[248px]",

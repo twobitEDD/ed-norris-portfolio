@@ -47,18 +47,18 @@ export const DEVICE_SIZE_MATRIX: Record<
 > = {
   phone: {
     sm: { maxWidth: "220px", aspectRatio: "9/19" },
-    md: { maxWidth: "920px", aspectRatio: "19/9" },
-    lg: { maxWidth: "920px", aspectRatio: "3/4" },
+    md: { maxWidth: "var(--studio-device-max, 920px)", aspectRatio: "19/9" },
+    lg: { maxWidth: "var(--studio-device-max, 920px)", aspectRatio: "3/4" },
   },
   tablet: {
     sm: { maxWidth: "480px", aspectRatio: "4/3" },
     md: { maxWidth: "640px", aspectRatio: "4/3" },
-    lg: { maxWidth: "920px", aspectRatio: "4/3" },
+    lg: { maxWidth: "var(--studio-device-max, 920px)", aspectRatio: "4/3" },
   },
   ipad: {
     sm: { maxWidth: "400px", aspectRatio: "3/4" },
     md: { maxWidth: "640px", aspectRatio: "3/4" },
-    lg: { maxWidth: "920px", aspectRatio: "3/4" },
+    lg: { maxWidth: "var(--studio-device-max, 920px)", aspectRatio: "3/4" },
   },
 } as const;
 
@@ -217,10 +217,10 @@ export function springboardWidgetGridStyleProps(
   };
 }
 
-/** Shared device chrome — one large studio width, consistent bezels. */
+/** Shared device chrome — scales via --studio-device-max in globals.css at 2xl+. */
 export const STUDIO_DEVICE = {
-  largeMaxWidth: "920px",
-  phoneLandscapeMaxWidth: "920px",
+  largeMaxWidth: "var(--studio-device-max, 920px)",
+  phoneLandscapeMaxWidth: "var(--studio-device-max, 920px)",
   phonePortraitDefault: "248px",
   phonePortraitCompact: "220px",
   phoneLauncherWidth: "220px",
@@ -241,9 +241,9 @@ export const STUDIO_DEVICE = {
 
 /** Layout rhythm for bento grid and section shells. */
 export const STUDIO_SPACING = {
-  bentoMaxWidth: "1200px",
+  bentoMaxWidth: "var(--studio-bento-max, 1200px)",
   bentoSection: "relative px-4 pb-28 pt-2 sm:px-8 sm:pb-32 sm:pt-4",
-  bentoGrid: "vertical-bento__grid mx-auto w-full min-w-0 max-w-[1200px]",
+  bentoGrid: "vertical-bento__grid w-full min-w-0",
   bentoCellResume: "bento-cell--resume",
   bentoCellWork: "bento-cell--work",
   bentoCellContact: "bento-cell--contact",

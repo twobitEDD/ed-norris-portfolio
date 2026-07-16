@@ -22,7 +22,7 @@ export function ArcadeCabinet({
   return (
     <div
       className={cn(
-        "arcade-cabinet relative mx-auto flex w-full max-w-[min(96vw,920px)] flex-col",
+        "arcade-cabinet relative mx-auto flex w-full max-w-[min(96vw,var(--studio-device-max,920px))] flex-col",
         reducedMotion
           ? closing
             ? "opacity-0"

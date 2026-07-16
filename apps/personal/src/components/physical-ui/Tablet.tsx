@@ -43,7 +43,7 @@ export function Tablet({
     <div
       className={cn(
         "relative",
-        isLarge && isLauncher && "mx-auto w-full max-w-[min(100%,920px)]",
+        isLarge && isLauncher && "mx-auto w-full max-w-[min(100%,var(--studio-device-max,920px))]",
         className,
       )}
     >
