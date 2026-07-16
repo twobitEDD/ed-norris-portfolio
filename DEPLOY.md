@@ -17,22 +17,22 @@ This lets any machine or agent contribute by pushing git commits — no local Ra
 | Field | Value |
 |-------|-------|
 | Project | [twobitENT](https://railway.com/project/3b864b9d-7403-40f2-9a9a-863f393d9e70) |
-| Service | **2bitdev-portfolio** |
-| Service ID | `4abc3283-3867-4802-b9d4-7baebd1e78f8` |
+| Service | **edd-norris-portfolio** |
+| Service ID | `7d600c0a-942c-4e56-b964-7c32eabe6b35` |
 | GitHub | `twobitEDD/ed-norris-portfolio` → branch `main` |
 | Build | Dockerfile at repo root (`railway.toml`) |
 | Start | `npm run start` (delegates to `@ed-norris/personal`) |
-| Railway URL | https://2bitdev-portfolio-production.up.railway.app |
+| Railway URL | https://edd-norris-portfolio-production.up.railway.app |
 | Custom domain | **2bitdev.com** (see DNS below) |
 
 ### Do not use
 
-- **2bitent-site** (`8334c011-9071-46ca-bb97-7929d618d176`) — legacy service; do not CLI-deploy or reconfigure
-- **edd-norris-portfolio** — duplicate empty service; canonical deploy is **2bitdev-portfolio**
+- **2bitent-site** (`8334c011-9071-46ca-bb97-7929d618d176`) — legacy entertainment service; do not CLI-deploy or reconfigure
+- **2bitdev-portfolio** (`4abc3283-3867-4802-b9d4-7baebd1e78f8`) — earlier duplicate from CLI setup; ignore or delete in dashboard when convenient
 
 ## Environment variables
 
-Set in Railway → **2bitdev-portfolio** → Variables.
+Set in Railway → **edd-norris-portfolio** → Variables.
 
 | Variable | Required | Purpose |
 |----------|----------|---------|
@@ -50,16 +50,24 @@ Set in Railway → **2bitdev-portfolio** → Variables.
 
 ## Custom domain — 2bitdev.com
 
-1. In Railway → **2bitdev-portfolio** → **Settings → Networking → Custom Domain**, add `2bitdev.com` (and `www.2bitdev.com` if desired).
-2. At your DNS provider, point to Railway:
+**User action in Railway dashboard + Cloudflare** (do not attach via CLI):
 
-| Type | Name | Value |
-|------|------|-------|
-| CNAME | `www` | `2bitdev-portfolio-production.up.railway.app` |
+1. **Railway** → **edd-norris-portfolio** → **Settings → Networking → Custom Domain**
+   - Add `2bitdev.com` and `www.2bitdev.com`
+   - Copy the CNAME target Railway provides (e.g. `edd-norris-portfolio-production.up.railway.app`)
 
-For apex/root (`@`), use Railway's wizard — many registrars need **ALIAS/ANAME** instead of CNAME.
+2. **Remove** `2bitdev.com` from legacy **2bitent-site** (only after new domain verifies on edd-norris-portfolio)
 
-3. **Migration note:** `2bitdev.com` may still be attached to the legacy **2bitent-site** service. Remove it from that service only after the new domain is verified on **2bitdev-portfolio** (user confirmation recommended).
+3. **Cloudflare DNS** (2bitdev.com zone):
+
+| Type | Name | Value | Proxy |
+|------|------|-------|-------|
+| CNAME | `www` | `edd-norris-portfolio-production.up.railway.app` | DNS only (grey cloud) initially, then proxied after SSL works |
+| CNAME or ALIAS | `@` | Railway apex target from wizard | Per registrar |
+
+4. **Cloudflare SSL/TLS** → set mode to **Full** (not Flexible) so HTTPS terminates correctly between Cloudflare and Railway.
+
+5. Wait for Railway domain verification (green check), then test `https://2bitdev.com`.
 
 ## Local development
 
@@ -73,8 +81,8 @@ npm run dev:clean
 If setting up a fresh service:
 
 ```bash
-railway link -p 3b864b9d-7403-40f2-9a9a-863f393d9e70 -e production -s 2bitdev-portfolio
-railway service source connect --repo twobitEDD/ed-norris-portfolio --branch main --service 2bitdev-portfolio
+railway link -p 3b864b9d-7403-40f2-9a9a-863f393d9e70 -e production -s edd-norris-portfolio
+railway service source connect --repo twobitEDD/ed-norris-portfolio --branch main --service edd-norris-portfolio
 ```
 
 Do **not** run `railway up` for production deploys.
