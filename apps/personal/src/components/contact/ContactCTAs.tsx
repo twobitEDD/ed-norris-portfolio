@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { CONTACT_MAILTO, getSchedulingHref, isExternalScheduling } from "@/lib/contact";
+import { StudioAppLink } from "@/components/studio/StudioAppLink";
+import { getSchedulingHref, isExternalScheduling } from "@/lib/contact";
 import { cn } from "@/lib/cn";
 
 type ContactCTAsProps = {
@@ -38,9 +39,9 @@ export function ContactCTAs({ variant = "desk", className }: ContactCTAsProps) {
 
   return (
     <div className={cn(styles.wrap, className)}>
-      <a href={CONTACT_MAILTO} className={styles.primary}>
-        Email Edd
-      </a>
+      <StudioAppLink appId="reach" className={styles.primary}>
+        Reach out now
+      </StudioAppLink>
       {scheduleExternal ? (
         <a
           href={scheduleHref}
