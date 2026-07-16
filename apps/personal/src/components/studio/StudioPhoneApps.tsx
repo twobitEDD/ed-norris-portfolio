@@ -314,7 +314,7 @@ function SpringboardMiniWidgets({
           "springboard-widget flex flex-col justify-center",
           compact && "springboard-widget--compact",
         )}
-        style={{ gridColumn: "span 2", gridRow: "span 1" }}
+        style={{ gridColumn: "span 2", gridRow: "span 2" }}
       >
         <div className="springboard-widget-clock-inner flex flex-col justify-center">
           <p className="springboard-widget-time font-semibold tabular-nums leading-none text-white">
