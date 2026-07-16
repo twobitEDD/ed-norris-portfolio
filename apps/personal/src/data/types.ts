@@ -16,6 +16,8 @@ export type Profile = {
   tagline: ProfileTagline;
   headline: string;
   summary: string;
+  /** Longer intro copy for xl+ viewports where space allows. */
+  summaryExtended?: string;
   proofStrip: string[];
   location: string;
   availability: string;

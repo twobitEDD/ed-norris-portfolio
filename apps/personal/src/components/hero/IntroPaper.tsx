@@ -29,15 +29,17 @@ function IntroLogosAndVenn({ className }: { className?: string }) {
   );
 }
 
-function IntroBodyCopy() {
+function IntroBodyCopy({ extended = false }: { extended?: boolean }) {
+  const summary = extended && profile.summaryExtended ? profile.summaryExtended : profile.summary;
+
   return (
     <>
-      <p className="max-w-[34ch] text-sm leading-snug text-ink-soft lg:text-[0.95rem] lg:leading-relaxed xl:max-w-none xl:text-base 2xl:text-[1.05rem] 2xl:leading-relaxed">
-        {profile.summary}
+      <p className="max-w-[34ch] text-sm leading-snug text-ink-soft lg:text-[0.95rem] lg:leading-relaxed xl:max-w-[42ch] xl:text-base xl:leading-relaxed 2xl:max-w-[46ch] 2xl:text-[1.05rem] 2xl:leading-relaxed">
+        {summary}
       </p>
 
       <ul
-        className="mt-3.5 flex flex-col gap-1.5 sm:mt-4 lg:mt-4 lg:gap-2 xl:grid xl:grid-cols-2 xl:gap-x-6 xl:gap-y-1.5"
+        className="mt-3.5 flex flex-col gap-1.5 sm:mt-4 lg:mt-4 lg:gap-2"
         aria-label="Roles"
       >
         {roles.map((role) => (
@@ -85,9 +87,9 @@ export function IntroPaper() {
           </div>
         </div>
 
-        <div className="mt-4 hidden xl:mt-5 xl:grid xl:grid-cols-[minmax(0,1.15fr)_minmax(220px,0.85fr)] xl:items-start xl:gap-x-10">
-          <IntroBodyCopy />
-          <IntroLogosAndVenn />
+        <div className="mt-4 hidden max-w-[36rem] xl:mt-6 xl:block">
+          <IntroBodyCopy extended />
+          <IntroLogosAndVenn className="mt-6 xl:mt-7" />
         </div>
       </div>
     </Paper>
