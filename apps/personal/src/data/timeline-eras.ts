@@ -38,7 +38,7 @@ export const timelineEras: TimelineEra[] = [
     summary:
       "Gameplay programming and production across licensed Wii titles, casino gambling games, and team leadership — from volunteer QA at EA Tiburon through Black Lantern Studios, Seamless Entertainment, and Rocket Gaming Systems.",
     disciplines: ["games", "software"],
-    caption: "EA & indie days",
+    caption: "#GameDev Career",
     polaroidGradient: "linear-gradient(160deg, #4a3f6e, #1a1528)",
     detailBody: [
       "This era started with volunteer QA at EA Tiburon while finishing a software degree at Full Sail — a deliberate choice to learn how professional game studios actually ship product, not just how to write code.",
