@@ -39,11 +39,11 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
       }}
       className={cn(
         "flex flex-col items-center justify-center rounded-2xl border text-center shadow-md transition-opacity duration-300 motion-reduce:animate-none",
-        isOverview && "min-h-[80px] min-w-[148px] max-w-[220px] px-4 py-3 sm:min-h-[84px] sm:min-w-[168px] sm:px-4 sm:py-3.5",
-        isOverview && isPerson && "min-w-[150px] max-w-[200px] px-4 py-3 sm:min-w-[170px] sm:px-5 sm:py-4",
-        !isOverview && isPerson && "min-h-[88px] min-w-[150px] max-w-[210px] px-4 py-3.5 sm:min-h-[92px] sm:min-w-[170px] sm:px-5 sm:py-4",
-        !isOverview && isTheme && "min-h-[76px] min-w-[130px] max-w-[200px] px-3.5 py-3 sm:min-h-[80px] sm:min-w-[150px] sm:px-4 sm:py-3.5",
-        !isOverview && !isPerson && !isTheme && "min-h-[72px] min-w-[120px] max-w-[175px] px-3 py-2.5 sm:min-h-[76px] sm:min-w-[140px] sm:px-4 sm:py-3",
+        isOverview && "h-[84px] w-[168px] max-w-[220px] px-4 py-3 sm:h-[88px] sm:w-[188px]",
+        isOverview && isPerson && "h-[88px] w-[172px] sm:h-[92px] sm:w-[192px]",
+        !isOverview && isPerson && "h-[92px] w-[180px] sm:h-[96px] sm:w-[200px] px-4 py-3.5",
+        !isOverview && isTheme && "h-[84px] w-[168px] sm:h-[88px] sm:w-[188px] px-3.5 py-3",
+        !isOverview && !isPerson && !isTheme && "h-[78px] w-[152px] sm:h-[82px] sm:w-[168px] px-3 py-2.5",
         data.dimmed && "pointer-events-none opacity-[0.12]",
         data.highlighted && "opacity-100",
       )}

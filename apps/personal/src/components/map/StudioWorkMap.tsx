@@ -271,15 +271,14 @@ function StudioWorkMapInner({
             onNodeMouseLeave={onNodeMouseLeave}
             nodeTypes={nodeTypes}
             edgeTypes={edgeTypes}
-            nodesDraggable={!isOverview}
+            nodesDraggable={false}
             nodesConnectable={false}
             elementsSelectable
-            snapToGrid={!isOverview}
-            snapGrid={[20, 20]}
+            nodeOrigin={[0.5, 0.5]}
             onlyRenderVisibleElements
             fitView
-            fitViewOptions={{ padding: isOverview ? 0.28 : fullPage ? 0.32 : 0.26 }}
-            minZoom={isOverview ? 0.25 : 0.15}
+            fitViewOptions={{ padding: isOverview ? 0.32 : fullPage ? 0.38 : 0.34 }}
+            minZoom={isOverview ? 0.2 : 0.12}
             maxZoom={isOverview ? 1 : 1.15}
             proOptions={{ hideAttribution: true }}
             className="work-map-flow bg-transparent"
@@ -305,6 +304,11 @@ function StudioWorkMapInner({
               Map loads on scroll
             </p>
           </div>
+        )}
+        {fullPage && !isOverview && !focusSlug && activeFilter === "all" && (
+          <p className="pointer-events-none absolute left-3 top-2 z-10 max-w-[280px] rounded-lg border border-screen-border bg-screen-panel/90 px-2.5 py-2 font-mono text-[9px] uppercase leading-relaxed tracking-wider text-screen-muted sm:text-[10px]">
+            Focus areas only — pick an employer pill or filter to unfold connected roles
+          </p>
         )}
         {fullPage && !isOverview && activeFilter !== "all" && !focusSlug && (
           <p className="pointer-events-none absolute left-3 top-2 z-10 max-w-[240px] font-mono text-[9px] uppercase leading-relaxed tracking-wider text-screen-muted sm:text-[10px]">

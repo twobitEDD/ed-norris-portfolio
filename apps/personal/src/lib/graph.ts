@@ -1,12 +1,14 @@
 import type { Node, Edge } from "@xyflow/react";
 import { graphEdges, graphNodes } from "@/data";
 import {
+  detailHubNodeIdSet,
   employmentOverviewEdges,
   employmentOverviewNodeIdSet,
   getFocusClusterNodeIds,
 } from "@/data/map-tiers";
 import type { Discipline, GraphNode } from "@/data/types";
 import { disciplineColors } from "@/data/types";
+import { estimateNodeBounds } from "@/components/work-map/map-node-bounds";
 import {
   getEdgeHandles,
   getNodePosition,
@@ -132,6 +134,8 @@ export function buildFlowGraph(
     visibleNodes = visibleNodes.filter((n) => themeVisible.has(n.id));
   } else if (focusVisible) {
     visibleNodes = visibleNodes.filter((n) => focusVisible.has(n.id));
+  } else if (!isOverview) {
+    visibleNodes = visibleNodes.filter((n) => detailHubNodeIdSet.has(n.id));
   }
 
   const visibleIds = new Set(visibleNodes.map((n) => n.id));
@@ -152,10 +156,14 @@ export function buildFlowGraph(
         ? !connected && highlightId !== node.id
         : disciplineDimmed;
 
+    const bounds = estimateNodeBounds(node);
+
     return {
       id: node.id,
       type: "mapNode",
       position: getNodePosition(node.id, index, layoutOptions),
+      width: bounds.width,
+      height: bounds.height,
       data: {
         label: node.label,
         subtitle: node.subtitle,

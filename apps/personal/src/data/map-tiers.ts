@@ -67,6 +67,20 @@ export function getFocusClusterNodeIds(slug: string, depth = 2): Set<string> {
   return connected;
 }
 
+/** Detail-tier nodes shown before a focus/theme filter is applied. */
+export const detailHubNodeIds = [
+  "person-ed",
+  "theme-education",
+  "theme-games",
+  "theme-software",
+  "theme-marketing",
+  "theme-product",
+  "theme-production",
+  "practice-environment",
+] as const;
+
+export const detailHubNodeIdSet = new Set<string>(detailHubNodeIds);
+
 export const employmentOverviewLabels = getOverviewLabels() as Record<
   EmploymentOverviewNodeId,
   string

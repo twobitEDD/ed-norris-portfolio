@@ -1,22 +1,25 @@
 /**
  * Work-map layout — overview tier (employment timeline) vs detail tier (full graph).
- * Overview uses a programmatic left-to-right spine with branch drops.
- * Detail uses era-cluster columns with ≥140px spacing.
+ * Positions are **center-anchored** — pair with React Flow `nodeOrigin={[0.5, 0.5]}`.
  */
 
 import { overviewBranchEdges, PERSON_NODE_ID } from "@/data/career/career-graph";
 import { getOverviewSpineNodes } from "@/data/career/derive";
+import {
+  estimateNodeBoundsById,
+  resolvePositionCollisions,
+} from "@/components/work-map/map-node-bounds";
 
-/** Horizontal gap between overview spine nodes (px). */
-const OVERVIEW_X_GAP = 200;
+/** Horizontal gap between overview spine node centers (px). */
+const OVERVIEW_X_GAP = 300;
 /** Vertical drop for branch nodes below the spine (px). */
-const OVERVIEW_BRANCH_Y_GAP = 110;
+const OVERVIEW_BRANCH_Y_GAP = 160;
 /** Horizontal offset between sibling branch nodes (px). */
-const OVERVIEW_BRANCH_X_OFFSET = 90;
+const OVERVIEW_BRANCH_X_OFFSET = 200;
 
-/** Detail-tier column / row spacing (px). */
-const DETAIL_COL_GAP = 160;
-const DETAIL_ROW_GAP = 100;
+/** Detail-tier column / row spacing between node centers (px). */
+const DETAIL_COL_GAP = 300;
+const DETAIL_ROW_GAP = 170;
 
 /** Chronological spine for overview — derived from career graph (person anchor excluded). */
 const OVERVIEW_SPINE_IDS = getOverviewSpineNodes()
@@ -34,90 +37,95 @@ const OVERVIEW_BRANCH_ANCHORS: Record<string, { anchorId: string; branchIndex: n
 
 const overviewBranchEdgeIds = new Set(overviewBranchEdges.map((e) => e.id));
 
-/** Detail layout — era clusters as (column, row) grid slots. */
+/**
+ * Detail layout — era clusters as (column, row) grid slots.
+ * Columns/rows are spaced for ~160–200px cards with center anchoring.
+ */
 const detailSlots: Record<string, { col: number; row: number }> = {
   // Center anchor + theme ring
   "person-ed": { col: 0, row: 0 },
-  "theme-software": { col: 0, row: -3 },
-  "theme-education": { col: -2, row: -2 },
-  "theme-games": { col: 2, row: -2 },
-  "theme-marketing": { col: -2, row: 2 },
-  "theme-product": { col: 2, row: 2 },
-  "theme-production": { col: 0, row: 3 },
-  "practice-environment": { col: -2, row: 4 },
+  "theme-software": { col: 0, row: -4 },
+  "theme-education": { col: -3, row: -2 },
+  "theme-games": { col: 3, row: -2 },
+  "theme-marketing": { col: -3, row: 2 },
+  "theme-product": { col: 3, row: 2 },
+  "theme-production": { col: 0, row: 4 },
+  "practice-environment": { col: -2, row: 5 },
 
   // Education cluster (west)
-  "edu-node-full-sail": { col: -5, row: -2 },
-  "exp-node-pps": { col: -5, row: 0 },
-  "exp-node-innovation": { col: -5, row: 1 },
-  "exp-node-id-tech": { col: -5, row: 2 },
+  "edu-node-full-sail": { col: -6, row: -3 },
+  "exp-node-pps": { col: -6, row: -1 },
+  "exp-node-innovation": { col: -6, row: 0 },
+  "exp-node-id-tech": { col: -6, row: 1 },
 
   // Games chronology (northeast column)
-  "exp-node-ea": { col: 4, row: -5 },
-  "exp-node-bridge-2007": { col: 4, row: -4 },
-  "exp-node-black-lantern": { col: 5, row: -4 },
-  "exp-node-seamless": { col: 5, row: -3 },
-  "exp-node-bridge-2009": { col: 4, row: -3 },
-  "exp-node-rocket": { col: 5, row: -2 },
-  "exp-node-2bit-founder": { col: 4, row: -1 },
-  "exp-node-hatalom": { col: 6, row: -1 },
-  "exp-node-2bit-pause": { col: 4, row: 0 },
-  "exp-node-2bit": { col: 5, row: 0 },
-  "company-2bit": { col: 5, row: 1 },
-  "project-planets-core": { col: 6, row: -2 },
+  "exp-node-ea": { col: 6, row: -6 },
+  "exp-node-bridge-2007": { col: 5, row: -5 },
+  "exp-node-black-lantern": { col: 7, row: -5 },
+  "exp-node-seamless": { col: 7, row: -4 },
+  "exp-node-bridge-2009": { col: 5, row: -4 },
+  "exp-node-rocket": { col: 7, row: -3 },
+  "exp-node-2bit-founder": { col: 6, row: -2 },
+  "exp-node-hatalom": { col: 8, row: -2 },
+  "exp-node-2bit-pause": { col: 5, row: -1 },
+  "exp-node-2bit": { col: 7, row: -1 },
+  "company-2bit": { col: 7, row: 0 },
+  "project-planets-core": { col: 9, row: -3 },
 
-  // Agency / marketing crossover (east)
-  "exp-node-adidas": { col: 3, row: -2 },
-  "exp-node-uncorked": { col: 6, row: 0 },
-  "exp-node-fresh": { col: 7, row: 0 },
-  "exp-node-opus": { col: 7, row: 1 },
-  "exp-node-nice-touch": { col: 6, row: 2 },
-  "exp-node-trustless": { col: 7, row: -1 },
-  "exp-node-ergnomes": { col: 7, row: 2 },
+  // Agency / marketing crossover (east) — staggered columns
+  "exp-node-adidas": { col: 4, row: -3 },
+  "client-google": { col: 3, row: -2 },
+  "exp-node-uncorked": { col: 8, row: 0 },
+  "exp-node-trustless": { col: 9, row: 0 },
+  "exp-node-fresh": { col: 10, row: 0 },
+  "exp-node-opus": { col: 10, row: 1 },
+  "exp-node-nice-touch": { col: 8, row: 2 },
+  "exp-node-ergnomes": { col: 10, row: 2 },
 
   // Clients (east, below agencies)
-  "client-google": { col: 3, row: -1 },
-  "client-dell": { col: 6, row: 3 },
-  "client-wash-u": { col: 7, row: 3 },
+  "client-dell": { col: 9, row: 3 },
+  "client-wash-u": { col: 10, row: 3 },
 
   // Environmental arc (southwest)
-  "exp-node-oibw": { col: -4, row: 4 },
-  "exp-node-co2t": { col: -3, row: 5 },
-  "company-co2t": { col: -2, row: 5 },
+  "exp-node-oibw": { col: -5, row: 5 },
+  "exp-node-co2t": { col: -4, row: 6 },
+  "company-co2t": { col: -3, row: 7 },
 
   // Projects (southeast)
-  "project-ergo": { col: 3, row: 4 },
-  "project-fish-fight": { col: 4, row: 5 },
-  "project-ergnomes": { col: 5, row: 5 },
-  "project-carbon": { col: 2, row: 5 },
-  "project-web": { col: 4, row: 3 },
+  "project-ergo": { col: 4, row: 5 },
+  "project-fish-fight": { col: 5, row: 6 },
+  "project-ergnomes": { col: 6, row: 6 },
+  "project-carbon": { col: 3, row: 6 },
+  "project-web": { col: 5, row: 4 },
 };
 
 function buildOverviewPositions(): Record<string, { x: number; y: number }> {
   const positions: Record<string, { x: number; y: number }> = {};
 
-  // Spine — single horizontal lane, left → right
   OVERVIEW_SPINE_IDS.forEach((id, index) => {
     positions[id] = { x: index * OVERVIEW_X_GAP, y: 0 };
   });
 
-  // Branch nodes drop below their anchor
   for (const [nodeId, { anchorId, branchIndex }] of Object.entries(OVERVIEW_BRANCH_ANCHORS)) {
     const anchor = positions[anchorId];
     if (!anchor) continue;
     const row = Math.floor(branchIndex / 2) + 1;
-    const colOffset = branchIndex % 2;
+    const colOffset = branchIndex % 2 === 0 ? -1 : 1;
     positions[nodeId] = {
       x: anchor.x + colOffset * OVERVIEW_BRANCH_X_OFFSET,
       y: anchor.y + row * OVERVIEW_BRANCH_Y_GAP,
     };
   }
 
-  // Person anchor — centered below spine midpoint
   const spineMidX = ((OVERVIEW_SPINE_IDS.length - 1) * OVERVIEW_X_GAP) / 2;
-  positions["person-ed"] = { x: spineMidX, y: OVERVIEW_BRANCH_Y_GAP * 2.2 };
+  const personBounds = estimateNodeBoundsById("person-ed");
+  positions["person-ed"] = {
+    x: spineMidX,
+    y: OVERVIEW_BRANCH_Y_GAP * 2.4 + personBounds.height / 2,
+  };
 
-  return positions;
+  const allIds = Object.keys(positions);
+  return resolvePositionCollisions(positions, allIds, 56);
 }
 
 function buildDetailPositions(scale: number): Record<string, { x: number; y: number }> {
@@ -128,10 +136,11 @@ function buildDetailPositions(scale: number): Record<string, { x: number; y: num
       y: slot.row * DETAIL_ROW_GAP * scale,
     };
   }
-  return positions;
+  return resolvePositionCollisions(positions, Object.keys(positions), 60);
 }
 
 const employmentOverviewPositions = buildOverviewPositions();
+const detailPositions = buildDetailPositions(1);
 
 export type MapTier = "overview" | "detail";
 
@@ -155,7 +164,13 @@ export function getLayoutPositions(options?: MapLayoutOptions): Record<string, {
   if (tier === "overview") return { ...employmentOverviewPositions };
 
   const scale = options?.scale ?? 1;
-  return buildDetailPositions(scale);
+  if (scale === 1) return { ...detailPositions };
+
+  const scaled: Record<string, { x: number; y: number }> = {};
+  for (const [id, pos] of Object.entries(detailPositions)) {
+    scaled[id] = { x: pos.x * scale, y: pos.y * scale };
+  }
+  return scaled;
 }
 
 export function getNodePosition(nodeId: string, _index: number, options?: MapLayoutOptions) {
@@ -182,8 +197,7 @@ export function getEdgeHandles(
 
   const tier = resolveTier(options);
 
-  // Overview spine: prefer horizontal routing along the timeline
-  if (tier === "overview" && Math.abs(dy) < 40) {
+  if (tier === "overview" && Math.abs(dy) < 60) {
     return dx >= 0
       ? { sourceHandle: "source-right", targetHandle: "target-left" }
       : { sourceHandle: "source-left", targetHandle: "target-right" };
