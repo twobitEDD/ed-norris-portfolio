@@ -101,6 +101,25 @@ export function ScheduleBookingForm({ className }: ScheduleBookingFormProps) {
     [],
   );
 
+  const availableDateSet = useMemo(() => new Set(dates), [dates]);
+
+  const minDate = dates[0] ?? "";
+  const maxDate = dates[dates.length - 1] ?? "";
+
+  const selectedDateLabel = selectedDate ? formatDateLabel(selectedDate) : "";
+
+  const dateUnavailable =
+    selectedDate.length > 0 && !loadingDates && dates.length > 0 && !availableDateSet.has(selectedDate);
+
+  function handleDateChange(value: string) {
+    setSelectedDate(value);
+    if (value && !availableDateSet.has(value)) {
+      setErrorMessage("Only Tuesdays and Thursdays have open slots in the booking window.");
+    } else {
+      setErrorMessage("");
+    }
+  }
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSubmitState("submitting");
@@ -172,24 +191,53 @@ export function ScheduleBookingForm({ className }: ScheduleBookingFormProps) {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <label className="block text-xs text-ink-soft">
-          Preferred date
-          <select
+        <div className="block text-xs text-ink-soft">
+          <label htmlFor="schedule-preferred-date">Preferred date</label>
+          <input
+            id="schedule-preferred-date"
             required
+            type="date"
             value={selectedDate}
-            onChange={(event) => setSelectedDate(event.target.value)}
+            onChange={(event) => handleDateChange(event.target.value)}
             disabled={loadingDates || dates.length === 0}
-            className="mt-1 w-full min-h-[44px] rounded border border-ink/20 bg-white/60 px-3 py-2 text-sm text-ink"
-          >
-            {loadingDates && <option value="">Loading dates…</option>}
-            {!loadingDates && dates.length === 0 && <option value="">No dates available</option>}
-            {dates.map((date) => (
-              <option key={date} value={date}>
-                {formatDateLabel(date)}
-              </option>
-            ))}
-          </select>
-        </label>
+            min={minDate || undefined}
+            max={maxDate || undefined}
+            aria-invalid={dateUnavailable || undefined}
+            aria-describedby={
+              dateUnavailable
+                ? "schedule-date-error"
+                : selectedDateLabel
+                  ? "schedule-date-label"
+                  : "schedule-date-hint"
+            }
+            className={cn(
+              "mt-1 w-full min-h-[44px] rounded border bg-white/60 px-3 py-2 text-sm text-ink",
+              "border-ink/20 [color-scheme:light]",
+              dateUnavailable && "border-red-400/70",
+            )}
+          />
+          {loadingDates ? (
+            <p id="schedule-date-hint" className="mt-1 text-[11px] text-ink-soft">
+              Loading available dates…
+            </p>
+          ) : dates.length === 0 ? (
+            <p id="schedule-date-hint" className="mt-1 text-[11px] text-ink-soft">
+              No dates available right now.
+            </p>
+          ) : dateUnavailable ? (
+            <p id="schedule-date-error" className="mt-1 text-[11px] text-red-900" role="alert">
+              Pick a Tuesday or Thursday within the next {SCHEDULE_CONFIG.bookingWindowWeeks} weeks.
+            </p>
+          ) : selectedDateLabel ? (
+            <p id="schedule-date-label" className="mt-1 text-[11px] text-ink-soft">
+              {selectedDateLabel} · Tuesdays &amp; Thursdays only
+            </p>
+          ) : (
+            <p id="schedule-date-hint" className="mt-1 text-[11px] text-ink-soft">
+              Tuesdays &amp; Thursdays · next {SCHEDULE_CONFIG.bookingWindowWeeks} weeks
+            </p>
+          )}
+        </div>
 
         <label className="block text-xs text-ink-soft">
           Time ({timezoneLabel})
@@ -233,6 +281,7 @@ export function ScheduleBookingForm({ className }: ScheduleBookingFormProps) {
         disabled={
           submitState === "submitting" ||
           !selectedDate ||
+          dateUnavailable ||
           !selectedTime ||
           loadingDates ||
           loadingSlots

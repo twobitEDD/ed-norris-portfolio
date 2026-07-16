@@ -34,6 +34,12 @@ const footerLinks: FooterLinkItem[] = [
     external: true,
     hoverClass: "hover:text-games",
   },
+  {
+    label: "2bitENT (2bitENT.com)",
+    href: resolveProfileUrl("2bitent.com", "2bitent") ?? "https://2bitent.com",
+    external: true,
+    hoverClass: "hover:text-games",
+  },
 ];
 
 type StudioFooterProps = {
