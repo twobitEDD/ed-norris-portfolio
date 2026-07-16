@@ -100,7 +100,7 @@ export const timelineEras: TimelineEra[] = [
       { label: "Planet's Core", href: "/projects/planets-core" },
       { label: "Fish Fight", href: "https://fishfight.app", external: true },
       { label: "ERGnomes", href: "/projects/ergnomes" },
-      { label: "PokePocket", href: "/projects/pokepocket" },
+      { label: "PokePocket", href: "https://pokepocket.cards", external: true },
       { label: "2bit Entertainment", href: "/projects/2bit-entertainment" },
       { label: "Creative work", href: "/work#creative" },
     ],

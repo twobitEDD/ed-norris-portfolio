@@ -1,0 +1,20 @@
+# Edd Norris portfolio (apps/personal) — deploy to 2bitDEV.com on Railway.
+# Monorepo root: npm workspaces build/start delegate to @ed-norris/personal.
+
+[build]
+builder = "nixpacks"
+buildCommand = "npm ci && npm run build"
+watchPatterns = [
+  "apps/personal/**",
+  "packages/**",
+  "package.json",
+  "package-lock.json",
+  "railway.toml",
+]
+
+[deploy]
+startCommand = "npm run start"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+healthcheckPath = "/"
+healthcheckTimeout = 300

@@ -213,6 +213,7 @@ export const projects: Project[] = [
     challenge: "Design games that reward quick sessions without sacrificing depth or replay value.",
     approach:
       "Lean prototyping with human-centered UX — easy to pick up, satisfying to master, built for pocket-sized play sessions.",
+    links: [{ label: "PokePocket", url: "https://pokepocket.cards" }],
     featured: false,
     resumePriority: 10,
   },
