@@ -1,3 +1,5 @@
+import { technologyAdvisoryImage } from "./career-images";
+
 export type ExpertiseSlideLink = {
   label: string;
   href: string;
@@ -15,6 +17,11 @@ export type ExpertiseSlide = {
   partnerNotes?: string[];
   technologies: string[];
   links: ExpertiseSlideLink[];
+  image?: {
+    src: string;
+    alt: string;
+    objectPosition?: string;
+  };
   theme: "co2true" | "ergo" | "consulting";
   glow: "green" | "purple" | "cyan";
 };
@@ -56,6 +63,7 @@ export const expertiseSlides: ExpertiseSlide[] = [
     partnerIds: ["adidas", "google", "dell", "washu", "agencies"],
     technologies: ["TypeScript", "React", "Next.js", "BigQuery", "Unity", "AR/VR"],
     links: [{ label: "View all work", href: "/work" }],
+    image: technologyAdvisoryImage,
     theme: "consulting",
     glow: "cyan",
   },

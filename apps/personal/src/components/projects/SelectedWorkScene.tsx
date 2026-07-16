@@ -12,11 +12,7 @@ import { StudioScene } from "@/components/studio/StudioScene";
 import { StudioObject } from "@/components/studio/StudioObject";
 import { StudioReveal } from "@/components/studio/StudioReveal";
 
-const fallbackPhotos: Record<string, string> = {
-  "proj-ergo": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80",
-  "proj-2bit-games":
-    "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80",
-};
+const fallbackPhotos: Record<string, string> = {};
 
 const rotations = [-6, 4, -3, 5, -4];
 const offsets = [0, 28, 10, 36, 16];

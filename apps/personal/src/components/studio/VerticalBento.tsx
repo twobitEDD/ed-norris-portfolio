@@ -41,7 +41,7 @@ const focusItems = [
   "ERGO.games platform",
   "Carbon tracking infrastructure",
   "Sustainable agriculture systems",
-  "Games that bring people together",
+  "Technology that brings people together",
 ];
 
 export function VerticalBento() {

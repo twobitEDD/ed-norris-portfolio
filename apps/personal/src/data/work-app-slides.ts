@@ -47,6 +47,7 @@ function fromExpertise(slide: ExpertiseSlide): WorkAppSlide {
     technologies: slide.technologies,
     links: slide.links,
     accent: accentMap[slide.glow],
+    image: slide.image,
   };
 }
 

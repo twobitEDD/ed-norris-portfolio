@@ -117,7 +117,7 @@ export const creativeSlides: DisciplineSlide[] = [
     ],
     glow: "purple",
     image: {
-      src: "/career/era-ergo.jpg",
+      src: "/career/era-2bit.jpg",
       alt: "ERGO.games — ergonomic gaming platform",
     },
     decor: "ergo",

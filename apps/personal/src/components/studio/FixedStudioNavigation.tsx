@@ -57,6 +57,24 @@ function SiteIdentity({ className }: { className?: string }) {
   );
 }
 
+function HomeBrandLink() {
+  return (
+    <Link
+      href="/"
+      className={cn(
+        "shrink-0 font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-paper-cream/85 transition-colors hover:text-paper-cream sm:text-[11px]",
+        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper-cream/50",
+      )}
+      aria-label="Home — 2bitdev.com"
+    >
+      2bit<span className="text-paper-cream/55">[</span>
+      <span className="text-paper-cream">DEV</span>
+      <span className="text-paper-cream/55">]</span>
+      .com
+    </Link>
+  );
+}
+
 export function FixedStudioNavigation() {
   const [scrolled, setScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
@@ -92,52 +110,40 @@ export function FixedStudioNavigation() {
   return (
     <header
       className={cn(
-        "group fixed inset-x-0 top-0 z-50 border-b border-paper-cream/10 transition-colors duration-300",
+        "fixed inset-x-0 top-0 z-50 border-b border-paper-cream/10 transition-colors duration-300",
         scrolled
           ? "bg-wood-dark/96 shadow-lg backdrop-blur-sm"
           : "bg-studio-black/70 backdrop-blur-sm",
       )}
     >
-      <Link
-        href="/"
-        className={cn(
-          "absolute left-3 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-md border border-paper-cream/20 bg-paper-cream/5 font-display text-sm font-bold text-paper-cream opacity-0 transition-all duration-300 sm:left-6",
-          "group-hover:opacity-100 group-focus-within:opacity-100",
-          "hover:border-paper-cream/35 hover:bg-paper-cream/10",
-          "focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-paper-cream/50",
-        )}
-        aria-label="Home"
-        title="Home"
-      >
-        E
-      </Link>
-
       <div className="mx-auto flex w-full max-w-[1600px] items-start justify-between gap-4 px-3 py-2.5 sm:px-6 sm:py-3 lg:gap-6 lg:px-8 lg:py-4">
-          {pastHero ? <SiteIdentity className="hidden min-w-0 lg:block" /> : null}
+        {pastHero ? <SiteIdentity className="hidden min-w-0 lg:block" /> : null}
 
-          <div className="ml-auto flex min-w-0 flex-col items-end gap-1 lg:shrink-0">
-            <div className="flex w-full items-center justify-end gap-2 sm:gap-3 lg:gap-4">
-              <nav
-                className="flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] lg:flex-none lg:overflow-visible [&::-webkit-scrollbar]:hidden"
-                aria-label="Primary"
-              >
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.id}
-                    href={link.href}
-                    className={linkClass(link.id)}
-                    aria-current={activeSection === link.id ? "page" : undefined}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </nav>
-              <StudioThemeToggle />
-            </div>
+        <div className="ml-auto flex min-w-0 flex-col items-end gap-1 lg:shrink-0">
+          <HomeBrandLink />
 
-            {pastHero ? <SiteIdentity className="text-right lg:hidden" /> : null}
+          <div className="flex w-full items-center justify-end gap-2 sm:gap-3 lg:gap-4">
+            <nav
+              className="flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] lg:flex-none lg:overflow-visible [&::-webkit-scrollbar]:hidden"
+              aria-label="Primary"
+            >
+              {navLinks.map((link) => (
+                <Link
+                  key={link.id}
+                  href={link.href}
+                  className={linkClass(link.id)}
+                  aria-current={activeSection === link.id ? "page" : undefined}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+            <StudioThemeToggle />
           </div>
+
+          {pastHero ? <SiteIdentity className="text-right lg:hidden" /> : null}
         </div>
+      </div>
     </header>
   );
 }

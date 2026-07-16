@@ -23,28 +23,39 @@ export const co2tBrand = {
   },
 } as const;
 
+/** Technology advisory portrait — user-provided studio photo. */
+export const technologyAdvisoryImage: CareerImageEntry = {
+  src: "/career/technology-advisory.jpg",
+  alt: "Edd Norris — technology advisory in studio",
+  status: "confirmed",
+  objectPosition: "center 30%",
+};
+
 /** Timeline era polaroid images (keys match timeline-eras.ts ids). */
 export const eraImages: Record<string, CareerImageEntry> = {
   "era-games": {
     src: "/career/era-games.jpg",
-    alt: "Game industry foundation — arcade glow and controllers",
-    status: "placeholder",
+    alt: "Looking up through an evergreen forest canopy in Oregon",
+    status: "confirmed",
+    objectPosition: "center center",
   },
   "era-2bit": {
     src: "/career/era-2bit.jpg",
-    alt: "2bit Entertainment studio — indie game development desk",
-    status: "placeholder",
+    alt: "Child hiking on a forest trail with a walking stick",
+    status: "confirmed",
+    objectPosition: "center 40%",
   },
   "era-education": {
     src: "/career/era-education.jpg",
-    alt: "Education and public service — mentoring students in a colorful STEM classroom computer lab",
-    status: "placeholder",
+    alt: "Child on a forest trail — education and mentoring roots in Oregon",
+    status: "confirmed",
     objectPosition: "center 35%",
   },
   "era-software": {
     src: "/career/era-software.jpg",
-    alt: "Software and brand prototyping — innovation lab workspace",
-    status: "placeholder",
+    alt: "Child on a mossy forest trail in the Pacific Northwest",
+    status: "confirmed",
+    objectPosition: "center center",
   },
   "era-environment": {
     src: co2tBrand.mascot.src,
@@ -53,9 +64,8 @@ export const eraImages: Record<string, CareerImageEntry> = {
     objectPosition: "center 20%",
   },
   "era-advisory": {
-    src: "/career/era-ergo.jpg",
+    ...technologyAdvisoryImage,
     alt: "Technology advisory — cross-disciplinary consulting on modern and legacy systems",
-    status: "placeholder",
   },
 };
 
@@ -64,32 +74,32 @@ export const experienceImages: Record<string, CareerImageEntry> = {
   "exp-ea": {
     src: "/career/era-games.jpg",
     alt: "EA Tiburon volunteer QA",
-    status: "needs_review",
+    status: "confirmed",
   },
   "exp-seamless": {
     src: "/career/era-games.jpg",
     alt: "Seamless Entertainment — Family Fun Football",
-    status: "needs_review",
+    status: "confirmed",
   },
   "exp-rocket": {
     src: "/career/era-games.jpg",
     alt: "Rocket Gaming Systems — slot titles",
-    status: "needs_review",
+    status: "confirmed",
   },
   "exp-2bit-founder": {
     src: "/career/era-2bit.jpg",
     alt: "2bit Entertainment founder era",
-    status: "needs_review",
+    status: "confirmed",
   },
   "exp-2bit-senior": {
     src: "/career/era-2bit.jpg",
     alt: "2bit Entertainment senior interactive developer",
-    status: "needs_review",
+    status: "confirmed",
   },
   "exp-adidas": {
     src: "/career/era-software.jpg",
     alt: "adidas Future Team",
-    status: "needs_review",
+    status: "confirmed",
   },
   "exp-oibw": {
     src: co2tBrand.biocharGuide.src,
@@ -153,6 +163,18 @@ export const projectImages: Record<string, CareerImageEntry> = {
     status: "confirmed",
     objectPosition: "left top",
   },
+  "proj-ergo": {
+    src: "/career/era-2bit.jpg",
+    alt: "ERGO.games — indie game platform",
+    status: "confirmed",
+    objectPosition: "center 40%",
+  },
+  "proj-2bit-games": {
+    src: "/career/era-2bit.jpg",
+    alt: "2Bit Entertainment — indie game studio",
+    status: "confirmed",
+    objectPosition: "center 40%",
+  },
 };
 
 export function getEraImage(eraId: string): CareerImageEntry | undefined {
@@ -171,8 +193,20 @@ export function getProjectImage(projectId: string): CareerImageEntry | undefined
   return projectImages[projectId];
 }
 
-/** Oregon photos for the contact desk polaroid stack — click to cycle. */
+/** Oregon and childhood trail photos for the contact desk polaroid stack — click to cycle. */
 export const contactPolaroidImages: CareerImageEntry[] = [
+  {
+    src: "/career/child-trail-walk.jpg",
+    alt: "Child walking on a forest trail in Oregon",
+    status: "confirmed",
+    objectPosition: "center center",
+  },
+  {
+    src: "/career/child-trail-stick.jpg",
+    alt: "Child on a forest trail with a walking stick",
+    status: "confirmed",
+    objectPosition: "center center",
+  },
   {
     src: "/career/contact-oregon-fog-road.jpg",
     alt: "Foggy road through snowy evergreen forest near Cottage Grove, Oregon",
