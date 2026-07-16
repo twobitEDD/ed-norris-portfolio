@@ -188,7 +188,7 @@ body {
 .studio-desk-flow {
   position: relative;
   max-width: 100%;
-  overflow-x: clip;
+  overflow-x: visible;
   padding-top: 4rem;
   background:
     linear-gradient(180deg, transparent 0%, rgba(30, 20, 14, 0.72) 4%, rgba(30, 20, 14, 0.94) 12%, #1a120c 100%);
@@ -236,8 +236,10 @@ body {
 /* Vertical bento scroll layout */
 .vertical-bento {
   position: relative;
-  max-width: 100%;
-  overflow-x: clip;
+  width: 100%;
+  max-width: min(100%, var(--studio-bento-max, 1200px));
+  margin-inline: auto;
+  overflow: visible;
 }
 
 .vertical-bento__grid {
@@ -246,8 +248,7 @@ body {
   gap: 3.5rem;
   width: 100%;
   min-width: 0;
-  max-width: min(100%, var(--studio-bento-max, 1200px));
-  margin-inline: auto;
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {
@@ -1239,10 +1240,14 @@ body {
   --contact-phone-bleed: clamp(1rem, 5vw, 3.5rem);
   position: relative;
   z-index: 1;
+  overflow: visible;
   width: min(var(--contact-phone-landscape-max, 920px), calc(100% + var(--contact-phone-bleed) * 2));
   max-width: min(var(--contact-phone-landscape-max, 920px), calc(100vw - 0.25rem));
   margin-left: calc(-1 * var(--contact-phone-bleed));
   margin-right: calc(-1 * var(--contact-phone-bleed));
+  /* Rotation + device shadow extend past the in-flow box — reserve space so bezels stay visible */
+  padding-block: clamp(1rem, 2.5vw, 1.75rem);
+  padding-inline: clamp(0.5rem, 1.5vw, 1rem);
 }
 
 @media (min-width: 1024px) {
@@ -1254,7 +1259,13 @@ body {
 }
 
 .bento-cell--contact {
-  overflow-x: visible;
+  overflow: visible;
+}
+
+.bento-cell--contact .studio-object,
+.bento-cell--contact .contact-phone-device,
+.bento-cell--contact .contact-phone-device .device-frame--phone-landscape {
+  overflow: visible;
 }
 
 .contact-phone-device .screen-surface {
