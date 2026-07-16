@@ -1,0 +1,8 @@
+# Keep Railway CLI uploads lean — screenshots are dev/review artifacts only.
+screenshots/
+node_modules/
+.next/
+.git/
+*.tsbuildinfo
+.env*
+.vercel/

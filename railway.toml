@@ -2,14 +2,15 @@
 # Monorepo root: npm workspaces build/start delegate to @ed-norris/personal.
 
 [build]
-builder = "nixpacks"
-buildCommand = "npm ci && npm run build"
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
 watchPatterns = [
   "apps/personal/**",
   "packages/**",
   "package.json",
   "package-lock.json",
   "railway.toml",
+  ".railwayignore",
 ]
 
 [deploy]
