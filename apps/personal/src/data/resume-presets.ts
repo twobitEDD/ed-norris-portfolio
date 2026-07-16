@@ -1,7 +1,7 @@
 import type { Practice, ResumePreset } from "./types";
 
 /** Default résumé builder preset. */
-export const DEFAULT_RESUME_PRESET_ID = "softwareLeadership";
+export const DEFAULT_RESUME_PRESET_ID = "fullExperience";
 
 export const practices: Practice[] = [
   {
