@@ -32,8 +32,11 @@ function relativeLuminance(hex: string) {
 /** Pick a readable accent on dark node surfaces (WCAG-friendly). */
 function readableAccentOnDark(accent: string): string {
   const lum = relativeLuminance(accent);
-  if (lum < 0.45) {
-    return mixRgb(accent, "#ffffff", 0.42);
+  if (lum < 0.52) {
+    return mixRgb(accent, "#ffffff", 0.5);
+  }
+  if (lum < 0.62) {
+    return mixRgb(accent, "#ffffff", 0.28);
   }
   return accent;
 }
@@ -78,9 +81,9 @@ export function getMapNodeSurface(
   }
 
   return {
-    background: mixRgb(accent, SURFACE_PANEL, 0.16),
+    background: mixRgb(accent, SURFACE_PANEL, 0.12),
     labelColor: TEXT_ON_DARK,
-    subtitleColor: TEXT_MUTED_ON_DARK,
-    borderColor: emphasis ? accent : `${accent}66`,
+    subtitleColor: mixRgb(accent, TEXT_MUTED_ON_DARK, 0.35),
+    borderColor: emphasis ? accent : `${accent}77`,
   };
 }

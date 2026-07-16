@@ -3,6 +3,7 @@ import { graphEdges, graphNodes } from "@/data";
 import {
   detailHubNodeIdSet,
   employmentOverviewEdges,
+  employmentOverviewLabels,
   employmentOverviewNodeIdSet,
   getFocusClusterNodeIds,
 } from "@/data/map-tiers";
@@ -158,6 +159,8 @@ export function buildFlowGraph(
 
     const bounds = estimateNodeBounds(node);
 
+    const overviewLabel = isOverview ? employmentOverviewLabels[node.id] : undefined;
+
     return {
       id: node.id,
       type: "mapNode",
@@ -165,8 +168,8 @@ export function buildFlowGraph(
       width: bounds.width,
       height: bounds.height,
       data: {
-        label: node.label,
-        subtitle: node.subtitle,
+        label: overviewLabel ?? node.label,
+        subtitle: isOverview ? undefined : node.subtitle,
         nodeType: node.type,
         disciplines: node.disciplines,
         description: node.description,

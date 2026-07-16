@@ -39,8 +39,8 @@ function MapNodeComponent({ data, selected }: NodeProps<MapNodeType>) {
       }}
       className={cn(
         "flex flex-col items-center justify-center rounded-2xl border text-center shadow-md transition-opacity duration-300 motion-reduce:animate-none",
-        isOverview && "h-[84px] w-[168px] max-w-[220px] px-4 py-3 sm:h-[88px] sm:w-[188px]",
-        isOverview && isPerson && "h-[88px] w-[172px] sm:h-[92px] sm:w-[192px]",
+        isOverview && "h-[84px] w-[172px] max-w-[240px] px-4 py-3 sm:h-[88px] sm:w-[192px]",
+        isOverview && isPerson && "h-[88px] w-[176px] sm:h-[92px] sm:w-[196px]",
         !isOverview && isPerson && "h-[92px] w-[180px] sm:h-[96px] sm:w-[200px] px-4 py-3.5",
         !isOverview && isTheme && "h-[84px] w-[168px] sm:h-[88px] sm:w-[188px] px-3.5 py-3",
         !isOverview && !isPerson && !isTheme && "h-[78px] w-[152px] sm:h-[82px] sm:w-[168px] px-3 py-2.5",

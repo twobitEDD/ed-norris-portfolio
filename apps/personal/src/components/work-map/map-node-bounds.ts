@@ -15,9 +15,9 @@ export function estimateNodeBounds(node: Pick<GraphNode, "type" | "subtitle" | "
     return { width: Math.min(200, 140 + labelLen * 1.8), height: hasSubtitle ? 88 : 76 };
   }
   if (node.type === "company" || node.type === "project") {
-    return { width: Math.min(175, 130 + labelLen * 1.6), height: hasSubtitle ? 80 : 72 };
+    return { width: Math.min(190, 140 + labelLen * 1.7), height: hasSubtitle ? 80 : 72 };
   }
-  return { width: Math.min(170, 125 + labelLen * 1.5), height: hasSubtitle ? 82 : 70 };
+  return { width: Math.min(185, 135 + labelLen * 1.55), height: hasSubtitle ? 82 : 70 };
 }
 
 export function estimateNodeBoundsById(nodeId: string): NodeBounds {

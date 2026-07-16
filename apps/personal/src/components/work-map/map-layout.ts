@@ -11,29 +11,37 @@ import {
 } from "@/components/work-map/map-node-bounds";
 
 /** Horizontal gap between overview spine node centers (px). */
-const OVERVIEW_X_GAP = 300;
+const OVERVIEW_X_GAP = 420;
 /** Vertical drop for branch nodes below the spine (px). */
-const OVERVIEW_BRANCH_Y_GAP = 160;
-/** Horizontal offset between sibling branch nodes (px). */
-const OVERVIEW_BRANCH_X_OFFSET = 200;
+const OVERVIEW_BRANCH_Y_GAP = 240;
+/** Horizontal offset between branch nodes and their anchor (px). */
+const OVERVIEW_BRANCH_X_OFFSET = 340;
 
 /** Detail-tier column / row spacing between node centers (px). */
-const DETAIL_COL_GAP = 300;
-const DETAIL_ROW_GAP = 170;
+const DETAIL_COL_GAP = 360;
+const DETAIL_ROW_GAP = 200;
 
 /** Chronological spine for overview — derived from career graph (person anchor excluded). */
 const OVERVIEW_SPINE_IDS = getOverviewSpineNodes()
   .filter((n) => n.id !== PERSON_NODE_ID)
   .map((n) => n.id);
 
-/** Branch nodes anchored to a parent on the spine / branch tree. */
-const OVERVIEW_BRANCH_ANCHORS: Record<string, { anchorId: string; branchIndex: number }> = {
-  "exp-node-nice-touch": { anchorId: "exp-node-2bit", branchIndex: 0 },
-  "client-dell": { anchorId: "exp-node-nice-touch", branchIndex: 0 },
-  "client-wash-u": { anchorId: "exp-node-nice-touch", branchIndex: 1 },
-  "project-fish-fight": { anchorId: "exp-node-2bit", branchIndex: 2 },
-  "project-ergnomes": { anchorId: "exp-node-2bit", branchIndex: 3 },
-};
+/**
+ * Branch nodes — explicit lane offsets from an anchor (spine or prior branch).
+ * Processed in declaration order so chained branches resolve after their parent.
+ */
+const OVERVIEW_BRANCH_PLACEMENTS: Array<{
+  nodeId: string;
+  anchorId: string;
+  offsetX: number;
+  offsetY: number;
+}> = [
+  { nodeId: "exp-node-nice-touch", anchorId: "exp-node-2bit", offsetX: -OVERVIEW_BRANCH_X_OFFSET, offsetY: OVERVIEW_BRANCH_Y_GAP },
+  { nodeId: "client-dell", anchorId: "exp-node-nice-touch", offsetX: -OVERVIEW_BRANCH_X_OFFSET * 0.55, offsetY: OVERVIEW_BRANCH_Y_GAP },
+  { nodeId: "client-wash-u", anchorId: "exp-node-nice-touch", offsetX: OVERVIEW_BRANCH_X_OFFSET * 0.55, offsetY: OVERVIEW_BRANCH_Y_GAP },
+  { nodeId: "project-fish-fight", anchorId: "exp-node-2bit", offsetX: -OVERVIEW_BRANCH_X_OFFSET, offsetY: OVERVIEW_BRANCH_Y_GAP * 2.15 },
+  { nodeId: "project-ergnomes", anchorId: "exp-node-2bit", offsetX: OVERVIEW_BRANCH_X_OFFSET, offsetY: OVERVIEW_BRANCH_Y_GAP * 2.35 },
+];
 
 const overviewBranchEdgeIds = new Set(overviewBranchEdges.map((e) => e.id));
 
@@ -72,19 +80,19 @@ const detailSlots: Record<string, { col: number; row: number }> = {
   "company-2bit": { col: 7, row: 0 },
   "project-planets-core": { col: 9, row: -3 },
 
-  // Agency / marketing crossover (east) — staggered columns
+  // Agency / marketing crossover (east) — staggered columns with breathing room
   "exp-node-adidas": { col: 4, row: -3 },
-  "client-google": { col: 3, row: -2 },
-  "exp-node-uncorked": { col: 8, row: 0 },
-  "exp-node-trustless": { col: 9, row: 0 },
-  "exp-node-fresh": { col: 10, row: 0 },
-  "exp-node-opus": { col: 10, row: 1 },
-  "exp-node-nice-touch": { col: 8, row: 2 },
-  "exp-node-ergnomes": { col: 10, row: 2 },
+  "client-google": { col: 2, row: -2 },
+  "exp-node-uncorked": { col: 9, row: -1 },
+  "exp-node-trustless": { col: 11, row: 0 },
+  "exp-node-fresh": { col: 11, row: 1 },
+  "exp-node-opus": { col: 12, row: 1 },
+  "exp-node-nice-touch": { col: 8, row: 3 },
+  "exp-node-ergnomes": { col: 11, row: 3 },
 
   // Clients (east, below agencies)
-  "client-dell": { col: 9, row: 3 },
-  "client-wash-u": { col: 10, row: 3 },
+  "client-dell": { col: 7, row: 4 },
+  "client-wash-u": { col: 9, row: 4 },
 
   // Environmental arc (southwest)
   "exp-node-oibw": { col: -5, row: 5 },
@@ -106,14 +114,12 @@ function buildOverviewPositions(): Record<string, { x: number; y: number }> {
     positions[id] = { x: index * OVERVIEW_X_GAP, y: 0 };
   });
 
-  for (const [nodeId, { anchorId, branchIndex }] of Object.entries(OVERVIEW_BRANCH_ANCHORS)) {
+  for (const { nodeId, anchorId, offsetX, offsetY } of OVERVIEW_BRANCH_PLACEMENTS) {
     const anchor = positions[anchorId];
     if (!anchor) continue;
-    const row = Math.floor(branchIndex / 2) + 1;
-    const colOffset = branchIndex % 2 === 0 ? -1 : 1;
     positions[nodeId] = {
-      x: anchor.x + colOffset * OVERVIEW_BRANCH_X_OFFSET,
-      y: anchor.y + row * OVERVIEW_BRANCH_Y_GAP,
+      x: anchor.x + offsetX,
+      y: anchor.y + offsetY,
     };
   }
 
@@ -121,11 +127,11 @@ function buildOverviewPositions(): Record<string, { x: number; y: number }> {
   const personBounds = estimateNodeBoundsById("person-ed");
   positions["person-ed"] = {
     x: spineMidX,
-    y: OVERVIEW_BRANCH_Y_GAP * 2.4 + personBounds.height / 2,
+    y: OVERVIEW_BRANCH_Y_GAP * 3.2 + personBounds.height / 2,
   };
 
   const allIds = Object.keys(positions);
-  return resolvePositionCollisions(positions, allIds, 56);
+  return resolvePositionCollisions(positions, allIds, 84);
 }
 
 function buildDetailPositions(scale: number): Record<string, { x: number; y: number }> {
@@ -136,7 +142,7 @@ function buildDetailPositions(scale: number): Record<string, { x: number; y: num
       y: slot.row * DETAIL_ROW_GAP * scale,
     };
   }
-  return resolvePositionCollisions(positions, Object.keys(positions), 60);
+  return resolvePositionCollisions(positions, Object.keys(positions), 76);
 }
 
 const employmentOverviewPositions = buildOverviewPositions();

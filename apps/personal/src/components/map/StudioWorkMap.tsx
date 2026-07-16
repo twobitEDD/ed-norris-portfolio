@@ -93,7 +93,7 @@ function StudioWorkMapInner({
     () => ({
       tier,
       preview: isOverview,
-      scale: fullPage && !isOverview ? 1 : 1,
+      scale: fullPage && !isOverview ? 1.28 : 1,
     }),
     [tier, isOverview, fullPage],
   );
@@ -124,9 +124,9 @@ function StudioWorkMapInner({
       window.requestAnimationFrame(() => {
         fitView({
           nodes: [{ id: nodeId }],
-          padding: isOverview ? 0.38 : 0.45,
+          padding: isOverview ? 0.44 : 0.48,
           duration: 450,
-          maxZoom: isOverview ? 1 : 0.95,
+          maxZoom: isOverview ? 0.92 : 0.95,
         });
       });
     },
@@ -168,18 +168,18 @@ function StudioWorkMapInner({
     if (fullPage) {
       router.push("/map");
     }
-    fitView({ padding: isOverview ? 0.36 : 0.28, duration: 400 });
+    fitView({ padding: isOverview ? 0.42 : 0.32, duration: 400 });
   }, [fitView, fullPage, isOverview, router]);
 
   const rootMinH = fullPage
     ? "min-h-[min(80vh,720px)]"
     : isOverview
-      ? "min-h-[460px] sm:min-h-[500px]"
+      ? "min-h-[500px] sm:min-h-[540px]"
       : "min-h-[300px] sm:min-h-[320px]";
   const canvasMinH = fullPage
     ? "min-h-[min(60vh,560px)]"
     : isOverview
-      ? "min-h-[360px] sm:min-h-[400px]"
+      ? "min-h-[400px] sm:min-h-[440px]"
       : "min-h-[220px] sm:min-h-[260px]";
 
   const focusLabel = focusSlug
@@ -277,9 +277,9 @@ function StudioWorkMapInner({
             nodeOrigin={[0.5, 0.5]}
             onlyRenderVisibleElements
             fitView
-            fitViewOptions={{ padding: isOverview ? 0.32 : fullPage ? 0.38 : 0.34 }}
-            minZoom={isOverview ? 0.2 : 0.12}
-            maxZoom={isOverview ? 1 : 1.15}
+            fitViewOptions={{ padding: isOverview ? 0.4 : fullPage ? 0.42 : 0.36 }}
+            minZoom={isOverview ? 0.14 : 0.1}
+            maxZoom={isOverview ? 0.95 : 1.15}
             proOptions={{ hideAttribution: true }}
             className="work-map-flow bg-transparent"
           >
@@ -344,7 +344,7 @@ function StudioWorkMapInner({
             setSelectedNode(null);
             setActiveFilter("all");
             if (focusSlug) clearFocus();
-            else fitView({ padding: isOverview ? 0.32 : 0.28, duration: 400 });
+            else fitView({ padding: isOverview ? 0.4 : 0.3, duration: 400 });
           }}
           className="rounded px-2 py-1 font-mono text-[10px] uppercase text-screen-muted hover:text-screen-text sm:text-[11px]"
         >
