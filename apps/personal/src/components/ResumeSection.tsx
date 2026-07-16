@@ -109,7 +109,7 @@ export function ResumeSection({ person, presets, entries }: Props) {
           <p className="text-sm font-bold uppercase tracking-[0.14em] text-forest">
             {person.name.toUpperCase()}
           </p>
-          <h3 className="mt-1 text-2xl font-bold sm:text-3xl">Software & Product Innovator</h3>
+          <h3 className="mt-1 text-2xl font-bold sm:text-3xl">Software Production Specialist</h3>
           <p className="mt-1 text-sm text-[#626966]">
             {person.location} · Software systems · Environmental technology · Interactive products
           </p>

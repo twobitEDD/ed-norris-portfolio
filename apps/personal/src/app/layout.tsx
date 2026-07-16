@@ -15,7 +15,7 @@ const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://2bitdev.com"),
-  title: "Edd Norris — Technical Designer",
+  title: "Edd Norris — Software Production Specialist",
   description:
     "I love building solutions, for fun and function. Software & technology production specialist in Cottage Grove, Oregon.",
   applicationName: "2bitDEV",

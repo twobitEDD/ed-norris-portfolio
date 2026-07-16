@@ -71,7 +71,7 @@ export const resumePresets: ResumePreset[] = [
     id: "fullExperience",
     label: "Full Experience",
     description: "Complete career history — game development, casino titles, military simulation, consumer software, and sustainability.",
-    targetRole: "Software & Product Innovator",
+    targetRole: "Software Production Specialist",
     tone: "executive",
     pages: 3,
     disciplines: ["environment", "software", "games", "marketing", "operations", "data"],
