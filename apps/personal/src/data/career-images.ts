@@ -35,27 +35,24 @@ export const technologyAdvisoryImage: CareerImageEntry = {
 export const eraImages: Record<string, CareerImageEntry> = {
   "era-games": {
     src: "/career/era-games.jpg",
-    alt: "Looking up through an evergreen forest canopy in Oregon",
-    status: "confirmed",
-    objectPosition: "center center",
+    alt: "Game industry foundation — arcade glow and controllers",
+    status: "placeholder",
   },
   "era-2bit": {
     src: "/career/era-2bit.jpg",
-    alt: "Child hiking on a forest trail with a walking stick",
-    status: "confirmed",
-    objectPosition: "center 40%",
+    alt: "2bit Entertainment studio — indie game development desk",
+    status: "placeholder",
   },
   "era-education": {
     src: "/career/era-education.jpg",
-    alt: "Child on a forest trail — education and mentoring roots in Oregon",
-    status: "confirmed",
+    alt: "Education and public service — mentoring students in a colorful STEM classroom computer lab",
+    status: "placeholder",
     objectPosition: "center 35%",
   },
   "era-software": {
     src: "/career/era-software.jpg",
-    alt: "Child on a mossy forest trail in the Pacific Northwest",
-    status: "confirmed",
-    objectPosition: "center center",
+    alt: "Software and brand prototyping — innovation lab workspace",
+    status: "placeholder",
   },
   "era-environment": {
     src: co2tBrand.mascot.src,
@@ -64,8 +61,9 @@ export const eraImages: Record<string, CareerImageEntry> = {
     objectPosition: "center 20%",
   },
   "era-advisory": {
-    ...technologyAdvisoryImage,
+    src: "/career/era-ergo.jpg",
     alt: "Technology advisory — cross-disciplinary consulting on modern and legacy systems",
+    status: "placeholder",
   },
 };
 
@@ -74,32 +72,32 @@ export const experienceImages: Record<string, CareerImageEntry> = {
   "exp-ea": {
     src: "/career/era-games.jpg",
     alt: "EA Tiburon volunteer QA",
-    status: "confirmed",
+    status: "needs_review",
   },
   "exp-seamless": {
     src: "/career/era-games.jpg",
     alt: "Seamless Entertainment — Family Fun Football",
-    status: "confirmed",
+    status: "needs_review",
   },
   "exp-rocket": {
     src: "/career/era-games.jpg",
     alt: "Rocket Gaming Systems — slot titles",
-    status: "confirmed",
+    status: "needs_review",
   },
   "exp-2bit-founder": {
     src: "/career/era-2bit.jpg",
     alt: "2bit Entertainment founder era",
-    status: "confirmed",
+    status: "needs_review",
   },
   "exp-2bit-senior": {
     src: "/career/era-2bit.jpg",
     alt: "2bit Entertainment senior interactive developer",
-    status: "confirmed",
+    status: "needs_review",
   },
   "exp-adidas": {
     src: "/career/era-software.jpg",
     alt: "adidas Future Team",
-    status: "confirmed",
+    status: "needs_review",
   },
   "exp-oibw": {
     src: co2tBrand.biocharGuide.src,
@@ -166,14 +164,12 @@ export const projectImages: Record<string, CareerImageEntry> = {
   "proj-ergo": {
     src: "/career/era-2bit.jpg",
     alt: "ERGO.games — indie game platform",
-    status: "confirmed",
-    objectPosition: "center 40%",
+    status: "placeholder",
   },
   "proj-2bit-games": {
     src: "/career/era-2bit.jpg",
     alt: "2bit Entertainment — indie game studio",
-    status: "confirmed",
-    objectPosition: "center 40%",
+    status: "placeholder",
   },
 };
 
