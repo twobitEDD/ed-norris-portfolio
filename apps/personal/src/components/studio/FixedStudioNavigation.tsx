@@ -50,11 +50,18 @@ function measureActiveSection(): StudioNavSectionId {
 
 function SiteIdentity({ className, align = "start" }: { className?: string; align?: "start" | "end" }) {
   return (
-    <div className={className} aria-label="Site identity">
-      <Link href="/#hero" className={cn(STUDIO_TYPOGRAPHY.navBrand)}>
+    <div
+      className={cn(
+        "flex flex-col gap-0.5",
+        align === "end" ? "items-end text-right" : "items-start text-left",
+        className,
+      )}
+      aria-label="Site identity"
+    >
+      <Link href="/#hero" className={cn(STUDIO_TYPOGRAPHY.navBrand, "block")}>
         {profile.name}
       </Link>
-      <ProfileTagline tagline={profile.tagline} variant="nav" align={align} className="mt-0.5" />
+      <ProfileTagline tagline={profile.tagline} variant="nav" align={align} />
     </div>
   );
 }

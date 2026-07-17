@@ -30,7 +30,8 @@ export function ProfileTagline({
   return (
     <div
       className={cn(
-        "inline-flex w-max max-w-full flex-col gap-1",
+        variant === "nav" ? "flex" : "inline-flex",
+        "w-max max-w-full flex-col gap-1",
         align === "end" && "items-end text-right",
         className,
       )}
