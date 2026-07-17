@@ -50,7 +50,7 @@ export const ResumeBusinessCard = forwardRef<HTMLElement, ResumeBusinessCardProp
   }, []);
 
   return (
-    <div className={cn("relative w-full max-w-[320px]", className)}>
+    <div className={cn("relative mx-auto w-full min-w-0 max-w-[min(320px,100%)]", className)}>
       <ObjectShadow depth={3} />
       <article
         ref={ref}

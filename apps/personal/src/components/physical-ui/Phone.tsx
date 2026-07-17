@@ -51,14 +51,14 @@ export function Phone({
   return (
     <div
       className={cn(
-        "relative",
+        "relative w-full max-w-full min-w-0",
         isLandscape
-          ? "mx-auto w-full max-w-[min(100%,var(--studio-device-max,920px))]"
+          ? "mx-auto max-w-[min(100%,var(--studio-device-max,920px))]"
           : isLarge
-            ? "mx-auto w-full max-w-[min(100%,var(--studio-device-max,920px))]"
+            ? "mx-auto max-w-[min(100%,var(--studio-device-max,920px))]"
             : isLauncher
               ? "mx-auto w-[min(100%,220px)] sm:w-[220px]"
-              : "w-[220px] sm:w-[248px]",
+              : "w-[min(100%,220px)] sm:w-[248px]",
         className,
       )}
     >
@@ -68,6 +68,7 @@ export function Phone({
           STUDIO_DEVICE.classes.framePhone,
           isLandscape && STUDIO_DEVICE.classes.phoneLandscape,
           isLarge && STUDIO_DEVICE.classes.phoneLarge,
+          "w-full max-w-full min-w-0",
           glow !== "none" && glowClass[glow],
         )}
       >
@@ -75,6 +76,7 @@ export function Phone({
           className={cn(
             STUDIO_DEVICE.classes.screen,
             screenTheme === "warm" && STUDIO_DEVICE.classes.screenWarm,
+            "w-full max-w-full min-w-0",
             isLandscape && "aspect-[19/9] min-h-0",
             isLarge && isLauncher && !isLandscape && "aspect-[3/4] w-full min-h-0",
             !isLarge && isLauncher && !isLandscape && "aspect-[9/19] min-h-[400px]",

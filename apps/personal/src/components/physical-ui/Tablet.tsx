@@ -42,8 +42,8 @@ export function Tablet({
   return (
     <div
       className={cn(
-        "relative",
-        isLarge && isLauncher && "mx-auto w-full max-w-[min(100%,var(--studio-device-max,920px))]",
+        "relative w-full max-w-full min-w-0",
+        isLarge && isLauncher && "mx-auto max-w-[min(100%,var(--studio-device-max,920px))]",
         className,
       )}
     >
@@ -56,6 +56,7 @@ export function Tablet({
               ? STUDIO_DEVICE.classes.frameTabletLauncher
               : STUDIO_DEVICE.classes.frame,
           isLarge && isLauncher && STUDIO_DEVICE.classes.tabletLarge,
+          "w-full max-w-full min-w-0",
           glow !== "none" && glowClass[glow],
         )}
       >
@@ -63,13 +64,14 @@ export function Tablet({
           className={cn(
             STUDIO_DEVICE.classes.screen,
             screenTheme === "warm" && STUDIO_DEVICE.classes.screenWarm,
+            "w-full max-w-full min-w-0",
             resolvedOrientation === "landscape"
               ? isFork
                 ? "aspect-[4/3] min-h-[200px]"
-                : "aspect-[4/3] min-h-[240px]"
+                : "aspect-[4/3] min-h-0 max-lg:min-h-0"
               : isLauncher
                 ? "aspect-[3/4] w-full min-h-0"
-                : "aspect-[3/4] min-h-[280px]",
+                : "aspect-[3/4] min-h-[280px] max-lg:min-h-0",
           )}
         >
           {showCamera && <div className="tablet-camera-dot" aria-hidden="true" />}

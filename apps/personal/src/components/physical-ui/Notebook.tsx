@@ -12,7 +12,7 @@ export function Notebook({
   title?: string;
 }) {
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative w-full min-w-0 max-w-full", className)}>
       <ObjectShadow depth={3} />
       <div className={STUDIO_SURFACES.notebook}>
         <div className={STUDIO_SURFACES.notebookPage}>

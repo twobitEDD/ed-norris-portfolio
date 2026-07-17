@@ -121,9 +121,12 @@ export function VerticalBento() {
         </BentoCell>
 
         <BentoCell id="resume" span="wide" deferPaint className={STUDIO_SPACING.bentoCellResume}>
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,320px)_1fr] lg:items-start lg:gap-10">
-            <div className="flex flex-col items-center gap-5 lg:items-start">
-              <StudioObject rotate={-2.2} className="flex w-full justify-center lg:justify-start">
+          <div className="resume-bento-grid grid w-full min-w-0 max-w-full gap-8 overflow-x-clip lg:grid-cols-[minmax(0,320px)_1fr] lg:items-start lg:gap-10">
+            <div className="resume-bento-card-column flex w-full min-w-0 max-w-full flex-col items-center gap-5 lg:items-start">
+              <StudioObject
+                rotate={-2.2}
+                className="resume-bento-card-object mx-auto w-full max-w-[320px] lg:mx-0 lg:max-w-full"
+              >
                 <ResumeBusinessCard
                   ref={businessCardRef}
                   name={resumeContent.name}
@@ -137,8 +140,8 @@ export function VerticalBento() {
               <ClientLogoStrip size="sm" variant="on-dark" className="max-w-[320px]" />
             </div>
 
-            <div className="space-y-5">
-              <Notebook title="Download My Resume">
+            <div className="resume-bento-tools-column min-w-0 w-full max-w-full space-y-5">
+              <Notebook title="Download My Resume" className="w-full min-w-0 max-w-full">
                 <label className="mt-3 block text-xs text-ink-soft">
                   Preset
                   <select
@@ -183,9 +186,9 @@ export function VerticalBento() {
         </BentoCell>
 
         <BentoCell id="contact" span="wide" deferPaint className={STUDIO_SPACING.bentoCellContact}>
-          <div className="contact-bento-layout flex flex-col gap-8 lg:grid lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-12">
-            <div className="contact-phone-bleed">
-              <StudioObject rotate={-1.2} className="w-full">
+          <div className="contact-bento-layout flex min-w-0 max-w-full flex-col gap-8 lg:grid lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-12">
+            <div className="contact-phone-bleed min-w-0 max-w-full">
+              <StudioObject rotate={-1.2} className="w-full min-w-0 max-w-full">
                 <ContactPhoneApp className="w-full" />
               </StudioObject>
             </div>

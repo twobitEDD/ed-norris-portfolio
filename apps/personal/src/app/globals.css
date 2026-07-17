@@ -123,6 +123,15 @@
   }
 }
 
+/* Mobile — cap studio device scale to viewport (desktop lg+ unchanged) */
+@media (max-width: 1023px) {
+  :root,
+  [data-studio-mode="day"],
+  [data-studio-mode="night"] {
+    --studio-device-max: min(100vw - 2rem, 100%);
+  }
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6.5rem;
@@ -351,7 +360,6 @@ body {
   /* Rotation + grid min-width:auto pushes paper off-screen on narrow viewports */
   .timeline-desk-cluster .studio-object,
   .bento-cell--contact .studio-object,
-  .bento-cell--resume .studio-object,
   .bento-cell--game .studio-object {
     transform: none !important;
     margin-inline: 0;
@@ -385,13 +393,33 @@ body {
 
 @media (max-width: 767px) {
   .bento-cell--contact,
-  .bento-cell--resume,
   .bento-cell--game {
     overflow-x: clip;
   }
 
   .bento-cell--contact .contact-phone-bleed {
     overflow-x: visible;
+  }
+}
+
+/* Resume stays single-column until lg — contain overflow and drop desk rotation */
+@media (max-width: 1023px) {
+  .bento-cell--resume {
+    overflow-x: clip;
+  }
+
+  .resume-bento-grid,
+  .resume-bento-grid > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .bento-cell--resume .resume-bento-card-object {
+    transform: none !important;
+    margin-inline: auto;
+    width: 100%;
+    max-width: min(320px, 100%);
+    min-width: 0;
   }
 }
 
@@ -690,6 +718,22 @@ body {
     linear-gradient(180deg, var(--paper-cream) 0%, #efe6d2 100%);
   padding: 1rem 1.25rem 1rem 1.5rem;
   color: var(--ink);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1023px) {
+  .bento-cell--resume .notebook-surface,
+  .bento-cell--resume .notebook-surface__page {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .bento-cell--resume .notebook-surface__page {
+    padding: 0.75rem 0.875rem 0.75rem 1.125rem;
+  }
 }
 
 [data-studio-mode="night"] .notebook-surface__page {
@@ -929,6 +973,22 @@ body {
   background: linear-gradient(165deg, var(--device-bezel-from), var(--device-bezel-to));
   border: 1px solid var(--device-ring);
   box-shadow: var(--shadow-device);
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1023px) {
+  .bento-cell--resume .device-frame,
+  .bento-cell--contact .device-frame {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .bento-cell--contact .studio-object {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
 }
 
 .device-frame--phone {
@@ -1260,9 +1320,19 @@ body {
     padding-inline: 0;
   }
 
+  .bento-cell--contact .contact-phone-device .device-frame--phone-landscape {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .bento-cell--contact .contact-phone-device .device-frame--phone-landscape .screen-surface {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 0;
     aspect-ratio: 19 / 10;
-    min-height: clamp(240px, 58vw, 340px);
+    height: auto;
   }
 
   .contact-bento-layout {
@@ -2291,10 +2361,26 @@ body {
 }
 
 /* Resume bento tablet — fill column height instead of capping at 50vh */
+.resume-viewer-tablet {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.resume-viewer-tablet .device-frame {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
 .resume-viewer-tablet .screen-surface {
   display: flex;
   flex-direction: column;
   min-height: min(68vh, 640px);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .resume-viewer-tablet__screen {
@@ -2302,6 +2388,39 @@ body {
   flex: 1;
   min-height: 0;
   width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 1023px) {
+  .resume-viewer-tablet .screen-surface {
+    /* Width-constrained: min-height + aspect-ratio was forcing ~875px horizontal overflow */
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    max-height: min(52vh, 400px);
+  }
+}
+
+@media (max-width: 479px) {
+  .contact-phone-app--landscape .contact-phone-app__home-grid {
+    grid-template-columns: 1fr;
+    gap: 0.625rem;
+    height: auto;
+    min-height: min-content;
+  }
+
+  .contact-phone-app--landscape .contact-phone-app__reach-col {
+    padding-right: 0;
+  }
+
+  .contact-phone-app--landscape .contact-phone-app__contact-list {
+    overflow: visible;
+    flex: none;
+  }
+
+  .contact-phone-app--landscape {
+    --contact-landscape-reach-max: none;
+  }
 }
 
 .tablet-home-indicator {
