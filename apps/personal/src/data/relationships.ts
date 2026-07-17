@@ -32,7 +32,7 @@ export const graphNodes: GraphNode[] = [
     disciplines: ["games"],
     description: "Gameplay, interactive media, and player-centered design — tight feedback loops that feel intuitive.",
     connectionNarrative:
-      "Iron Chef America: Supreme Cuisine and Family Fun Football (both Nintendo Wii), casino gambling titles at Rocket Gaming, then founding 2bit Entertainment and shipping Planet's Core — games taught feedback loops, team shipping cadence, and why people return to a system.",
+      "Iron Chef America: Supreme Cuisine and Family Fun Football (both Nintendo Wii), casino gambling titles at Rocket Gaming, then founding 2bit Entertainment and developing Planet's Core (did not ship) — games taught feedback loops, team shipping cadence, and why people return to a system.",
   },
   {
     id: "theme-software",
@@ -181,9 +181,9 @@ export const graphNodes: GraphNode[] = [
     period: "2012 – 2014",
     experienceId: "exp-2bit-founder",
     description:
-      "Founded and operated an indie studio — shipping Planet's Core with technical design, art integration, team leadership, and business strategy.",
+      "Founded and operated an indie studio — developing Planet's Core with technical design, art integration, team leadership, and business strategy. The title did not ship.",
     connectionNarrative:
-      "Founder-era indie game development after Rocket Gaming — established the studio in July 2012 and shipped Planet's Core before winding down operations.",
+      "Founder-era indie game development after Rocket Gaming — established the studio in July 2012 and developed Planet's Core (did not ship) before winding down operations.",
   },
   {
     id: "exp-node-hatalom",
@@ -196,7 +196,7 @@ export const graphNodes: GraphNode[] = [
     description:
       "Proprietary military simulation software — game-based training systems and defense simulation courseware for classified training environments.",
     connectionNarrative:
-      "Applied game-industry UX discipline to serious-game and simulation deliverables as 2bit software production work after Planet's Core shipped and before the studio pause.",
+      "Applied game-industry UX discipline to serious-game and simulation deliverables as 2bit software production work after Planet's Core development ended and before the studio pause.",
   },
   {
     id: "exp-node-2bit-pause",
@@ -360,7 +360,7 @@ export const graphNodes: GraphNode[] = [
     description:
       "Indie game studio (Planet's Core, Fish Fight, ERGnomes, PokePocket) and software production business — games, interactive experiences, and agency-backed client work.",
     connectionNarrative:
-      "Operational 2012–2014 shipping Planet's Core; catalog grew with Fish Fight, ERGnomes, and PokePocket. Re-established in 2018 with contract engagements through Nice Touch, Uncorked, and others for Google, Dell, Washington University, and additional clients.",
+      "Operational 2012–2014 developing Planet's Core (did not ship); catalog grew with Fish Fight, ERGnomes, and PokePocket. Re-established in 2018 with contract engagements through Nice Touch, Uncorked, and others for Google, Dell, Washington University, and additional clients.",
   },
   {
     id: "company-co2t",
@@ -419,7 +419,7 @@ export const graphNodes: GraphNode[] = [
     label: "Planet's Core",
     disciplines: ["games"],
     period: "2012 – 2014",
-    description: "2bit indie game — operational studio shipping title during founder era.",
+    description: "2bit indie game — founder-era title in development during operational studio period (did not ship).",
     projectId: "proj-planets-core",
   },
   {

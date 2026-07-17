@@ -31,7 +31,7 @@ export const storyStops: StoryStop[] = [
     nodeId: "theme-games",
     headline: "Human-centered game design",
     copy:
-      "Credited Wii releases — Iron Chef America: Supreme Cuisine at Black Lantern Studios and Family Fun Football at Seamless Entertainment — plus several casino gambling titles at Rocket Gaming Systems. Founded 2bit Entertainment and shipped Planet's Core (2012–2014), then Fish Fight, ERGnomes, and PokePocket. Re-established the studio in 2018 as a software production business with the same focus on tight feedback loops, intuitive UX, and shipping under pressure.",
+      "Credited Wii releases — Iron Chef America: Supreme Cuisine at Black Lantern Studios and Family Fun Football at Seamless Entertainment — plus several casino gambling titles at Rocket Gaming Systems. Founded 2bit Entertainment and developed Planet's Core (2012–2014; did not ship), then Fish Fight, ERGnomes, and PokePocket. Re-established the studio in 2018 as a software production business with the same focus on tight feedback loops, intuitive UX, and shipping under pressure.",
   },
   {
     nodeId: "theme-software",
@@ -49,13 +49,13 @@ export const storyStops: StoryStop[] = [
     nodeId: "project-planets-core",
     headline: "Planet's Core — founder-era indie game",
     copy:
-      "Founder-era 2bit studio (2012–2014): technical design, art integration, and shipping Planet's Core before the studio paused and re-emerged in 2018.",
+      "Founder-era 2bit studio (2012–2014): technical design, art integration, and developing Planet's Core — founder-era title that did not ship — before the studio paused and re-emerged in 2018.",
   },
   {
     nodeId: "company-2bit",
     headline: "Two phases, one studio",
     copy:
-      "2bit Entertainment: operational indie studio shipping Planet's Core, Fish Fight, ERGnomes, and PokePocket (2012–2014 founder era and 2018–present catalog), then re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and smaller brands.",
+      "2bit Entertainment: operational indie studio developing Planet's Core (2012–2014; did not ship), then Fish Fight, ERGnomes, and PokePocket in the 2018–present catalog — re-established in 2018 as a software production business contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and smaller brands.",
   },
   {
     nodeId: "theme-marketing",

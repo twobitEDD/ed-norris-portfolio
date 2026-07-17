@@ -196,7 +196,7 @@ export const experiences: Experience[] = [
     organization: "2bit Entertainment",
     period: { start: "Jul 2012", end: "May 2014" },
     summary:
-      "Founded and operated an indie studio (2012–2014), shipping Planet's Core — technical design, art integration, team leadership, and business strategy.",
+      "Founded and operated an indie studio (2012–2014), developing Planet's Core — technical design, art integration, team leadership, and business strategy. The title did not ship.",
     details: [
       "Led founder-era indie game development after Rocket Gaming.",
       "Established the studio in July 2012.",
