@@ -2394,11 +2394,13 @@ body {
 
 @media (max-width: 1023px) {
   .resume-viewer-tablet .screen-surface {
-    /* Width-constrained: min-height + aspect-ratio was forcing ~875px horizontal overflow */
+    /* Width-constrained portrait ratio — taller preview without min-height overflow */
     min-height: 0;
     height: auto;
-    aspect-ratio: 4 / 3;
-    max-height: min(52vh, 400px);
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 3 / 4;
+    max-height: min(62vh, 480px);
   }
 }
 
