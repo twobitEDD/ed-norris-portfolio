@@ -30,6 +30,7 @@ import { TimelinePaper } from "@/components/timeline/TimelinePaper";
 import { tabletApps, type TabletApp, type TabletAppId } from "@/data/tablet-apps";
 import {
   computeSpringboardWidgetCellPx,
+  isSpringboardCalendarTier,
   isSpringboardTabletLargeTier,
   resolveSpringboardDeviceTier,
   SPRINGBOARD_ICON_GRID,
@@ -289,7 +290,7 @@ function SpringboardMiniWidgets({
     day: "numeric",
   });
   const isIpadTier = isSpringboardTabletLargeTier(tier);
-  const showCalendar = isIpadTier;
+  const showCalendar = isSpringboardCalendarTier(tier);
   const gridStyle = springboardWidgetGridStyleProps(tier, contentWidthPx);
   const widgetCellPx =
     contentWidthPx != null && contentWidthPx > 0
@@ -330,7 +331,7 @@ function SpringboardMiniWidgets({
       ) : (
         <div
           className={cn(
-            "springboard-widget flex flex-col justify-center",
+            "springboard-widget springboard-widget--digital-clock flex flex-col justify-center",
             compact && "springboard-widget--compact",
           )}
           style={{ gridColumn: "3 / span 2", gridRow: "1" }}

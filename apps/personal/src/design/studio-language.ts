@@ -130,9 +130,14 @@ export const SPRINGBOARD_ICON_GRID = {
 /** Widget row always uses four columns so each 1×1 tile ≈ ¼ content width. */
 export const SPRINGBOARD_WIDGET_COLUMNS = 4;
 
-/** Tablet-large (iPad) springboard — calendar widget and expanded widget row. */
+/** Tablet-large (iPad) springboard — combined clock widget with analog dial. */
 export function isSpringboardTabletLargeTier(tier: SpringboardDeviceTier): boolean {
   return tier === "ipad";
+}
+
+/** Tablet and iPad — show compact calendar in the widget row (phone stays 2-up). */
+export function isSpringboardCalendarTier(tier: SpringboardDeviceTier): boolean {
+  return tier !== "phone";
 }
 
 /** Widget grid row count — two rows for all tiers (iPad: studio + calendar share row 2). */
