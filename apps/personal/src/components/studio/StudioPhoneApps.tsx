@@ -342,12 +342,23 @@ function SpringboardMiniWidgets({
           style={{ gridColumn: "3", gridRow: "2" }}
         />
       ) : null}
+      {showCalendar && live ? (
+        <SpringboardCalendarWidget
+          now={now}
+          size="compact"
+          compact={compact}
+          style={{ gridColumn: "4", gridRow: "2" }}
+        />
+      ) : null}
       <div
         className={cn(
           "springboard-widget flex h-full min-h-0 flex-col justify-end",
           compact && "springboard-widget--compact",
         )}
-        style={{ gridColumn: showClockface ? "4" : "3 / span 2", gridRow: "2" }}
+        style={{
+          gridColumn: showCalendar ? "4" : showClockface ? "4" : "3 / span 2",
+          gridRow: showCalendar ? "3" : "2",
+        }}
       >
         <div className="springboard-widget-studio-inner">
           <p className="springboard-widget-studio-label font-medium text-white/45">Norris Studio</p>
@@ -357,13 +368,6 @@ function SpringboardMiniWidgets({
           <p className="springboard-widget-studio-label text-white/45">apps</p>
         </div>
       </div>
-      {showCalendar && live ? (
-        <SpringboardCalendarWidget
-          now={now}
-          compact={compact}
-          style={{ gridColumn: "3 / span 2", gridRow: "3 / span 2" }}
-        />
-      ) : null}
     </div>
   );
 }

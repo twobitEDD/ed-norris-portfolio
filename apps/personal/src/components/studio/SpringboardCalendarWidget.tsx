@@ -4,6 +4,9 @@ import { cn } from "@/lib/cn";
 
 type SpringboardCalendarWidgetProps = {
   now: Date;
+  /** `compact` — 1×1 tile; `large` — full month grid (legacy / unused on springboard). */
+  size?: "compact" | "large";
+  /** Phone-tier widget chrome (tighter corner radius). */
   compact?: boolean;
   className?: string;
   style?: React.CSSProperties;
@@ -26,6 +29,7 @@ function buildMonthCells(year: number, month: number): (number | null)[] {
 
 export function SpringboardCalendarWidget({
   now,
+  size = "large",
   compact = false,
   className,
   style,
@@ -35,11 +39,13 @@ export function SpringboardCalendarWidget({
   const today = now.getDate();
   const monthLabel = now.toLocaleDateString([], { month: "long" });
   const cells = buildMonthCells(year, month);
+  const isCompact = size === "compact";
 
   return (
     <div
       className={cn(
         "springboard-widget springboard-widget--calendar flex min-h-0 flex-col",
+        isCompact && "springboard-widget--calendar-compact",
         compact && "springboard-widget--compact",
         className,
       )}
@@ -48,9 +54,11 @@ export function SpringboardCalendarWidget({
     >
       <div className="springboard-calendar-header">
         <p className="springboard-calendar-month font-semibold text-white">{monthLabel}</p>
-        <p className="springboard-calendar-weekday font-medium text-white/55">
-          {now.toLocaleDateString([], { weekday: "long" })}
-        </p>
+        {!isCompact ? (
+          <p className="springboard-calendar-weekday font-medium text-white/55">
+            {now.toLocaleDateString([], { weekday: "long" })}
+          </p>
+        ) : null}
       </div>
       <div className="springboard-calendar-grid" aria-hidden>
         {WEEKDAY_LABELS.map((label, i) => (

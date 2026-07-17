@@ -2175,6 +2175,36 @@ body {
   font-weight: 700;
 }
 
+/* Compact 1×1 calendar — month title + mini grid */
+.springboard-widget--calendar-compact .springboard-calendar-header {
+  padding: clamp(0.3rem, 2.4cqi, 0.55rem) clamp(0.4rem, 2.8cqi, 0.65rem) 0;
+}
+
+.springboard-widget--calendar-compact .springboard-calendar-month {
+  font-size: clamp(0.62rem, 4.8cqi, 0.95rem);
+  line-height: 1.05;
+}
+
+.springboard-widget--calendar-compact .springboard-calendar-grid {
+  gap: clamp(0px, 0.35cqi, 2px);
+  padding: clamp(0.15rem, 1.4cqi, 0.35rem) clamp(0.35rem, 2.4cqi, 0.55rem)
+    clamp(0.25rem, 1.8cqi, 0.45rem);
+}
+
+.springboard-widget--calendar-compact .springboard-calendar-weekday-label {
+  font-size: clamp(0.34rem, 2cqi, 0.5rem);
+  padding-bottom: 0.05rem;
+}
+
+.springboard-widget--calendar-compact .springboard-calendar-day {
+  font-size: clamp(0.34rem, 2.1cqi, 0.52rem);
+  font-weight: 500;
+}
+
+.springboard-widget--calendar-compact .springboard-calendar-day--today {
+  font-weight: 700;
+}
+
 /* Norris Studio — nature + technology springboard wallpaper */
 .studio-springboard-wallpaper {
   background:
