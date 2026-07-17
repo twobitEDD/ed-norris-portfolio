@@ -41,7 +41,7 @@ import { cn } from "@/lib/cn";
 import { useElementWidth } from "@/lib/use-element-width";
 import { useLiveNow } from "@/lib/use-live-now";
 import { SpringboardCalendarWidget } from "@/components/studio/SpringboardCalendarWidget";
-import { SpringboardClockfaceWidget } from "@/components/studio/SpringboardClockfaceWidget";
+import { SpringboardCombinedClockWidget } from "@/components/studio/SpringboardCombinedClockWidget";
 import {
   parseStudioAppFromLocation,
   scrollToStudioApps,
@@ -288,8 +288,8 @@ function SpringboardMiniWidgets({
     month: "short",
     day: "numeric",
   });
-  const showCalendar = isSpringboardTabletLargeTier(tier);
-  const showClockface = isSpringboardTabletLargeTier(tier);
+  const isIpadTier = isSpringboardTabletLargeTier(tier);
+  const showCalendar = isIpadTier;
   const gridStyle = springboardWidgetGridStyleProps(tier, contentWidthPx);
   const widgetCellPx =
     contentWidthPx != null && contentWidthPx > 0
@@ -321,27 +321,28 @@ function SpringboardMiniWidgets({
           Oregon
         </p>
       </div>
-      <div
-        className={cn(
-          "springboard-widget flex flex-col justify-center",
-          compact && "springboard-widget--compact",
-        )}
-        style={{ gridColumn: "3 / span 2", gridRow: "1" }}
-      >
-        <div className="springboard-widget-clock-inner flex flex-col justify-center">
-          <p className="springboard-widget-time font-semibold tabular-nums leading-none text-white">
-            {timeStr}
-          </p>
-          <p className="springboard-widget-date mt-0.5 text-white/55">{dateShortStr}</p>
-        </div>
-      </div>
-      {showClockface ? (
-        <SpringboardClockfaceWidget
+      {isIpadTier ? (
+        <SpringboardCombinedClockWidget
           now={now}
           compact={compact}
-          style={{ gridColumn: "3", gridRow: "2" }}
+          style={{ gridColumn: "3 / span 2", gridRow: "1" }}
         />
-      ) : null}
+      ) : (
+        <div
+          className={cn(
+            "springboard-widget flex flex-col justify-center",
+            compact && "springboard-widget--compact",
+          )}
+          style={{ gridColumn: "3 / span 2", gridRow: "1" }}
+        >
+          <div className="springboard-widget-clock-inner flex flex-col justify-center">
+            <p className="springboard-widget-time font-semibold tabular-nums leading-none text-white">
+              {timeStr}
+            </p>
+            <p className="springboard-widget-date mt-0.5 text-white/55">{dateShortStr}</p>
+          </div>
+        </div>
+      )}
       {showCalendar && live ? (
         <SpringboardCalendarWidget
           now={now}
@@ -356,8 +357,8 @@ function SpringboardMiniWidgets({
           compact && "springboard-widget--compact",
         )}
         style={{
-          gridColumn: showCalendar ? "4" : showClockface ? "4" : "3 / span 2",
-          gridRow: showCalendar ? "3" : "2",
+          gridColumn: showCalendar ? "3" : "3 / span 2",
+          gridRow: "2",
         }}
       >
         <div className="springboard-widget-studio-inner">

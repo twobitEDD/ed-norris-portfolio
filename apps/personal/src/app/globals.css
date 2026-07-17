@@ -2081,6 +2081,42 @@ body {
   font-size: clamp(1rem, 8.5cqi, 2rem);
 }
 
+/* Combined digital + analog clock — iPad 2-column widget */
+.springboard-widget--combined-clock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(0.35rem, 2.5cqi, 0.75rem);
+  min-height: 0;
+}
+
+.springboard-combined-clock-digital {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: clamp(0.5rem, 3.5cqi, 1.25rem) 0 clamp(0.5rem, 3.5cqi, 1.25rem)
+    clamp(0.625rem, 4cqi, 1.35rem);
+}
+
+.springboard-combined-clockface {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(2.75rem, 22cqi, 5.5rem);
+  height: 100%;
+  padding: clamp(0.35rem, 2.5cqi, 0.65rem) clamp(0.5rem, 3cqi, 0.85rem)
+    clamp(0.35rem, 2.5cqi, 0.65rem) 0;
+}
+
+.springboard-widget--combined-clock .springboard-widget-time {
+  font-size: clamp(1rem, 9cqi, 2.25rem);
+}
+
+.springboard-widget--combined-clock .springboard-widget-date {
+  font-size: clamp(0.5rem, 2.8cqi, 0.8rem);
+}
+
 /* Analog clockface widget — iOS-style frosted dial */
 .springboard-widget--clockface {
   background:

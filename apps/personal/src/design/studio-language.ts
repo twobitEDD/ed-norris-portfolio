@@ -135,9 +135,9 @@ export function isSpringboardTabletLargeTier(tier: SpringboardDeviceTier): boole
   return tier === "ipad";
 }
 
-/** Widget grid row count — iPad adds a third row for Norris Studio below the compact calendar. */
+/** Widget grid row count — two rows for all tiers (iPad: studio + calendar share row 2). */
 export function springboardWidgetRowCount(tier: SpringboardDeviceTier): number {
-  return isSpringboardTabletLargeTier(tier) ? 3 : 2;
+  return 2;
 }
 
 /** Minimum rendered icon edge (px) so labels stay legible on very narrow containers. */
