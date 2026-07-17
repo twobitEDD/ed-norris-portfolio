@@ -883,7 +883,9 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     return Math.min(...widths);
   }, [containerWidth, viewportWidth]);
 
-  const springboardTier = resolveSpringboardDeviceTier(layoutWidth);
+  // Tier breakpoints follow the viewport so tablet/iPad features (calendar, wider grid)
+  // activate at md/lg even when the bento cell constrains device width below 768px.
+  const springboardTier = resolveSpringboardDeviceTier(viewportWidth ?? layoutWidth);
   const springboardContentWidth = useElementWidth(springboardLayoutRef);
   const isPhoneTier = springboardTier === "phone";
   const springboardScale = useSpringboardFitScale(
