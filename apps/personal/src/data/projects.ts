@@ -145,8 +145,8 @@ export const projects: Project[] = [
     skills: ["game design", "Unity", "team management"],
     technologies: ["Unity", "C#"],
     summary:
-      "Indie game built during 2bit's operational studio era (2012–2014) — technical design, art integration, and founder-led shipping.",
-    challenge: "Ship a complete indie title as a small operational studio after Rocket Gaming.",
+      "Indie game built during 2bit's operational studio era (2012–2014) — technical design, art integration, and founder-led development. Did not ship.",
+    challenge: "Develop a complete indie title as a small operational studio after Rocket Gaming.",
     approach: "Founder-led development with tight feedback loops and lean team cadence.",
     links: [{ label: "GitHub", url: "https://github.com/twobitENT" }],
     featured: false,

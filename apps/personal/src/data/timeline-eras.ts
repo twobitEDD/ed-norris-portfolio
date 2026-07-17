@@ -66,18 +66,20 @@ export const timelineEras: TimelineEra[] = [
     title: "2bit Entertainment",
     organization: "Founder · Indie games · Software production",
     summary:
-      "Operational indie studio 2012–2014 shipping Planet's Core, then Fish Fight, ERGnomes, and PokePocket alongside agency contracts. Studio on hold 2014–2018 during teaching jobs and public-service work. Re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and additional clients.",
+      "Operational indie studio 2012–2014 that released Planet's Core as its shipped studio title, plus military simulation software at Hatalom Systems (2014), then later catalog releases — Fish Fight, ERGnomes, and PokePocket — alongside agency contracts after re-establishing in 2018. Studio on hold 2014–2018 during teaching jobs and public-service work. Re-established in 2018 as a software production business — contracting through Nice Touch, Uncorked, and other agencies for Google, Dell, Washington University, and additional clients.",
     disciplines: ["games", "marketing", "operations"],
     caption: "2bit studio",
     polaroidGradient: "linear-gradient(160deg, #6b5a8a, #2a2038)",
     detailBody: [
-      "Founded 2bit Entertainment in 2012 after Rocket Gaming, shipping Planet's Core as an indie studio — technical design, art integration, team leadership, and business strategy on a founder's timeline.",
-      "The studio catalog grew across both phases: Planet's Core in the founder era; Fish Fight (fishFight.app) for ocean-conservation web play; ERGnomes.io for NFT ecosystem technical design on the Ergo Platform; and PokePocket as accessible pocket-format game experiments — shipped alongside agency-backed client work, not instead of it.",
+      "Founded 2bit Entertainment in 2012 after Rocket Gaming and released Planet's Core as the studio's shipped indie game (2012–2014) — technical design, art integration, team leadership, and business strategy on a founder's timeline.",
+      "A six-month engineering engagement at Hatalom Systems (2014) applied the same game-industry craft to proprietary military simulation and game-based training software — part of 2bit's software production work after Planet's Core shipped and before the studio pause.",
+      "The studio catalog grew across both phases: Planet's Core as the founder-era release; Fish Fight (fishFight.app) for ocean-conservation web play; ERGnomes.io for NFT ecosystem technical design on the Ergo Platform; and PokePocket as accessible pocket-format game experiments — shipped alongside agency-backed client work, not instead of it.",
       "Studio operations paused 2014–2018 while working teaching and mentoring jobs in Portland. The brand stayed alive; the honest gap is part of the story, not a footnote.",
       "Re-established in April 2018 as a software production business, delivering contract work through agency partnerships — Nice Touch, Uncorked, Fresh, Opus — for clients including Google, Dell, Washington University, and continued adidas support after the full-time Future Team role concluded.",
     ],
     highlights: [
-      "Planet's Core — founder-era indie game shipped (2012–2014)",
+      "Planet's Core — released as 2bit Entertainment's shipped studio game (2012–2014)",
+      "Hatalom Systems — military simulation software under 2bit software production (2014)",
       "Fish Fight — ocean conservation web game at fishFight.app",
       "ERGnomes.io — NFT ecosystem technical design on Ergo Platform",
       "PokePocket — pocket-format casual game experiments",
@@ -86,6 +88,7 @@ export const timelineEras: TimelineEra[] = [
     ],
     employers: [
       "2bit Entertainment",
+      "Hatalom Systems",
       "Nice Touch",
       "Uncorked Studios",
       "Fresh Consulting",
@@ -107,21 +110,19 @@ export const timelineEras: TimelineEra[] = [
   {
     id: "era-education",
     period: "2014–2018",
-    title: "Teaching years — simulation & public service",
-    organization: "Hatalom Systems · Portland Public Schools · Innovation Academy · iD Tech",
+    title: "Teaching years — public service",
+    organization: "Portland Public Schools · Innovation Academy PDX · iD Tech Camps",
     summary:
-      "Military simulation software at Hatalom Systems, then teaching and mentoring jobs — special education educator at Portland Public Schools, afterschool club mentor at Innovation Academy PDX, and summer instructor at iD Tech Camps — while 2bit studio operations were on hold.",
+      "Teaching and mentoring jobs — special education educator at Portland Public Schools, afterschool club mentor at Innovation Academy PDX, and summer instructor at iD Tech Camps — while 2bit studio operations were on hold (2014–2018).",
     disciplines: ["operations"],
     caption: "Teaching years",
     polaroidGradient: "linear-gradient(160deg, #6a5a4a, #2a2218)",
     detailBody: [
-      "After the 2012–2014 indie studio era, a six-month engineering role at Hatalom Systems built proprietary military simulation and game-based training software — applying game-industry craft to defense simulation deliverables.",
       "While 2bit studio operations were on hold, this period was deliberate employment — not a career gap. A special education educator role at Portland Public Schools shaped a lasting interest in accessible technology and inclusive design.",
       "Volunteer mentoring at Innovation Academy PDX ran an afterschool game-development club, teaching software development and design principles to high school students alongside classroom support.",
       "Summer employment at iD Tech Camps (Lewis & Clark College) combined paid game-development instruction with the same ethos: meet learners where they are, build confidence through making, and show that creative technology is for everyone.",
     ],
     highlights: [
-      "Software engineer at Hatalom Systems — proprietary military simulation software (2014)",
       "Special education educator at Portland Public Schools (2014–2017)",
       "Afterschool game-development club mentor at Innovation Academy PDX",
       "Summer game-development instructor at iD Tech Camps",
@@ -129,7 +130,6 @@ export const timelineEras: TimelineEra[] = [
       "Parallel to adidas Future Team role (2017–2018)",
     ],
     employers: [
-      "Hatalom Systems",
       "Portland Public Schools",
       "Innovation Academy PDX",
       "iD Tech Camps",

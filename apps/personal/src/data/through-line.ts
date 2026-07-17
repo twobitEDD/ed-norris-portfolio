@@ -31,7 +31,7 @@ export const storyStops: StoryStop[] = [
     nodeId: "theme-games",
     headline: "Human-centered game design",
     copy:
-      "Credited Wii releases — Iron Chef America: Supreme Cuisine at Black Lantern Studios and Family Fun Football at Seamless Entertainment — plus several casino gambling titles at Rocket Gaming Systems. Founded 2bit Entertainment and shipped Planet's Core (2012–2014), Fish Fight, ERGnomes, and PokePocket. Re-established the studio in 2018 as a software production business with the same focus on tight feedback loops, intuitive UX, and shipping under pressure.",
+      "Credited Wii releases — Iron Chef America: Supreme Cuisine at Black Lantern Studios and Family Fun Football at Seamless Entertainment — plus several casino gambling titles at Rocket Gaming Systems. Founded 2bit Entertainment and shipped Planet's Core (2012–2014), then Fish Fight, ERGnomes, and PokePocket. Re-established the studio in 2018 as a software production business with the same focus on tight feedback loops, intuitive UX, and shipping under pressure.",
   },
   {
     nodeId: "theme-software",
@@ -47,7 +47,7 @@ export const storyStops: StoryStop[] = [
   },
   {
     nodeId: "project-planets-core",
-    headline: "Planet's Core — indie game shipped",
+    headline: "Planet's Core — founder-era indie game",
     copy:
       "Founder-era 2bit studio (2012–2014): technical design, art integration, and shipping Planet's Core before the studio paused and re-emerged in 2018.",
   },

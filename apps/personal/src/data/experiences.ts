@@ -260,10 +260,10 @@ export const experiences: Experience[] = [
     organization: "2bit Entertainment",
     period: { start: "Jun 2014", end: "Mar 2018" },
     summary:
-      "After Planet's Core studio operations wound down, 2bit remained on hold while taking teaching and community mentoring jobs — re-established as a software production business in April 2018.",
+      "After the founder-era studio wound down, took a deliberate break from software for teaching and humanities — 2bit remained on hold until re-established as a software production business in April 2018.",
     details: [
       "Honest studio pause between the 2012–2014 founder era and the 2018 agency-backed re-launch.",
-      "Parallel employment: Portland Public Schools (2014–2017), Innovation Academy mentoring, and iD Tech summer instruction.",
+      "Deliberate break from software production: Portland Public Schools (2014–2017), Innovation Academy mentoring, and iD Tech summer instruction.",
     ],
     disciplines: ["games", "operations"],
     skills: ["independent development", "teaching", "mentoring"],

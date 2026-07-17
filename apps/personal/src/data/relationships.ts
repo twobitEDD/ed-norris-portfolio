@@ -196,7 +196,7 @@ export const graphNodes: GraphNode[] = [
     description:
       "Proprietary military simulation software — game-based training systems and defense simulation courseware for classified training environments.",
     connectionNarrative:
-      "Applied game-industry UX discipline to serious-game and simulation deliverables — parallel to the final months of 2bit founder-era studio work.",
+      "Applied game-industry UX discipline to serious-game and simulation deliverables as 2bit software production work after Planet's Core shipped and before the studio pause.",
   },
   {
     id: "exp-node-2bit-pause",
@@ -207,9 +207,9 @@ export const graphNodes: GraphNode[] = [
     period: "2014 – 2018",
     experienceId: "exp-2bit-pause",
     description:
-      "After Planet's Core studio operations wound down, 2bit remained on hold while taking teaching and community mentoring jobs — parallel employment at PPS, Innovation Academy, and iD Tech.",
+      "Deliberate break from software for teaching and humanities — 2bit remained on hold while working at PPS, Innovation Academy, and iD Tech.",
     connectionNarrative:
-      "Honest studio pause between the 2012–2014 founder era and the 2018 agency-backed re-launch — parallel community work at PPS, Innovation Academy, and iD Tech.",
+      "Honest studio pause between the 2012–2014 founder era and the 2018 agency-backed re-launch — teaching and mentoring at PPS, Innovation Academy, and iD Tech.",
   },
   {
     id: "exp-node-2bit",
@@ -360,7 +360,7 @@ export const graphNodes: GraphNode[] = [
     description:
       "Indie game studio (Planet's Core, Fish Fight, ERGnomes, PokePocket) and software production business — games, interactive experiences, and agency-backed client work.",
     connectionNarrative:
-      "Operational 2012–2014 on Planet's Core; catalog grew with Fish Fight, ERGnomes, and PokePocket. Re-established in 2018 with contract engagements through Nice Touch, Uncorked, and others for Google, Dell, Washington University, and additional clients.",
+      "Operational 2012–2014 shipping Planet's Core; catalog grew with Fish Fight, ERGnomes, and PokePocket. Re-established in 2018 with contract engagements through Nice Touch, Uncorked, and others for Google, Dell, Washington University, and additional clients.",
   },
   {
     id: "company-co2t",
@@ -468,7 +468,7 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-seamless-rocket", source: "exp-node-seamless", target: "exp-node-rocket", relationship: "led-to", connectionNote: "casino games era" },
   { id: "e-games-rocket", source: "theme-games", target: "exp-node-rocket", relationship: "built-with", connectionNote: "game math & SCRUM" },
   { id: "e-rocket-2bit-founder", source: "exp-node-rocket", target: "exp-node-2bit-founder", relationship: "led-to", connectionNote: "founded studio" },
-  { id: "e-2bit-founder-hatalom", source: "exp-node-2bit-founder", target: "exp-node-hatalom", relationship: "built-with", connectionNote: "parallel simulation work" },
+  { id: "e-2bit-founder-hatalom", source: "exp-node-2bit-founder", target: "exp-node-hatalom", relationship: "led-to", connectionNote: "2bit software production" },
   { id: "e-2bit-founder-pause", source: "exp-node-2bit-founder", target: "exp-node-2bit-pause", relationship: "led-to", connectionNote: "studio wound down" },
   { id: "e-hatalom-pause", source: "exp-node-hatalom", target: "exp-node-2bit-pause", relationship: "led-to", connectionNote: "transition period" },
   { id: "e-pause-pps", source: "exp-node-2bit-pause", target: "exp-node-pps", relationship: "led-to", connectionNote: "teaching chapter" },
@@ -534,8 +534,8 @@ export const graphEdges: GraphEdge[] = [
   { id: "e-env-carbon", source: "practice-environment", target: "project-carbon", relationship: "built-with", connectionNote: "carbon reporting" },
 
   // Planet's Core — founder-era indie game
-  { id: "e-games-planets-core", source: "theme-games", target: "project-planets-core", relationship: "created", connectionNote: "indie game shipped" },
-  { id: "e-2bit-founder-planets-core", source: "exp-node-2bit-founder", target: "project-planets-core", relationship: "created", connectionNote: "founder era ship" },
+  { id: "e-games-planets-core", source: "theme-games", target: "project-planets-core", relationship: "created", connectionNote: "founder-era indie game" },
+  { id: "e-2bit-founder-planets-core", source: "exp-node-2bit-founder", target: "project-planets-core", relationship: "created", connectionNote: "founder era dev" },
   { id: "e-2bit-pause-planets-core", source: "exp-node-2bit-pause", target: "project-planets-core", relationship: "managed", connectionNote: "catalog legacy" },
   { id: "e-company-planets-core", source: "company-2bit", target: "project-planets-core", relationship: "created", connectionNote: "2012–2014 studio" },
 
