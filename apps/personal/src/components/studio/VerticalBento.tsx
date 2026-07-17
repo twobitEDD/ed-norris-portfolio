@@ -1,6 +1,6 @@
 "use client";
 
-import { STUDIO_DEVICE, STUDIO_SPACING, STUDIO_TYPOGRAPHY } from "@/design/studio-language";
+import { STUDIO_SPACING, STUDIO_TYPOGRAPHY } from "@/design/studio-language";
 import dynamic from "next/dynamic";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { resumePresets } from "@/data";
@@ -170,9 +170,12 @@ export function VerticalBento() {
                 </button>
               </Notebook>
 
-              <Tablet glow="amber" className="w-full">
-                <div className={cn(STUDIO_DEVICE.classes.screenContent, "max-h-[50vh] overflow-y-auto p-2")}>
-                  <ResumePreview content={resumeContent} className="!min-h-0 !border-0 !shadow-none" />
+              <Tablet glow="amber" className="resume-viewer-tablet w-full">
+                <div className="resume-viewer-tablet__screen flex min-h-0 flex-1 flex-col overflow-hidden p-2 sm:p-3">
+                  <ResumePreview
+                    content={resumeContent}
+                    className="!min-h-0 !flex-1 !border-0 !shadow-none overflow-y-auto"
+                  />
                 </div>
               </Tablet>
             </div>
@@ -180,7 +183,7 @@ export function VerticalBento() {
         </BentoCell>
 
         <BentoCell id="contact" span="wide" deferPaint className={STUDIO_SPACING.bentoCellContact}>
-          <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-12">
+          <div className="contact-bento-layout flex flex-col gap-8 lg:grid lg:grid-cols-[1fr_1fr] lg:items-start lg:gap-12">
             <div className="contact-phone-bleed">
               <StudioObject rotate={-1.2} className="w-full">
                 <ContactPhoneApp className="w-full" />

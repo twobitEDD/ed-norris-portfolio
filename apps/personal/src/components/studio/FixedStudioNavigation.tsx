@@ -2,10 +2,14 @@
 
 import { STUDIO_TYPOGRAPHY } from "@/design/studio-language";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ProfileTagline } from "@/components/ProfileTagline";
 import { profile } from "@/data";
 import { cn } from "@/lib/cn";
+import {
+  studioNavSectionFromHash,
+  type StudioNavSectionId,
+} from "@/lib/studio-app-nav";
 import { StudioThemeToggle } from "./StudioThemeToggle";
 
 const navLinks = [
@@ -14,37 +18,34 @@ const navLinks = [
   { id: "timeline", href: "/#timeline", label: "Timeline" },
   { id: "resume", href: "/#resume", label: "Resume" },
   { id: "contact", href: "/#contact", label: "Contact" },
-] as const;
+] as const satisfies ReadonlyArray<{ id: StudioNavSectionId; href: string; label: string }>;
 
-type SectionId = (typeof navLinks)[number]["id"];
+/** Matches `html { scroll-padding-top }` — section tops land just below the fixed header. */
+const HEADER_ACTIVATION_PX = 104;
 
-/** Activation line sits just below the fixed header bar. */
-const HEADER_LINE_PX = 80;
+/** Cream/paper bento cells where a transparent header hurts contrast. */
+const LIGHT_SECTIONS = new Set<StudioNavSectionId>(["hero", "timeline", "resume"]);
 
-function measureSections(
-  setPastHero: (value: boolean) => void,
-  setActiveSection: (value: SectionId) => void,
-) {
-  const heroEl = document.getElementById("hero");
-  if (heroEl) {
-    setPastHero(heroEl.getBoundingClientRect().bottom <= HEADER_LINE_PX);
-  } else {
-    setPastHero(window.scrollY > 60);
-  }
+function readScrollPaddingTop(): number {
+  if (typeof window === "undefined") return HEADER_ACTIVATION_PX;
+  const raw = getComputedStyle(document.documentElement).scrollPaddingTop;
+  const parsed = Number.parseFloat(raw);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : HEADER_ACTIVATION_PX;
+}
 
-  const scrollMarker = window.scrollY + HEADER_LINE_PX;
-  let next: SectionId = navLinks[0].id;
+function measureActiveSection(): StudioNavSectionId {
+  const activationLine = readScrollPaddingTop();
+  let next: StudioNavSectionId = navLinks[0].id;
 
   for (const { id } of navLinks) {
     const el = document.getElementById(id);
     if (!el) continue;
-    const sectionTop = el.getBoundingClientRect().top + window.scrollY;
-    if (sectionTop <= scrollMarker + 4) {
+    if (el.getBoundingClientRect().top <= activationLine) {
       next = id;
     }
   }
 
-  setActiveSection(next);
+  return next;
 }
 
 function SiteIdentity({ className, align = "start" }: { className?: string; align?: "start" | "end" }) {
@@ -79,28 +80,66 @@ function HomeBrandLink() {
 export function FixedStudioNavigation() {
   const [scrolled, setScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
-  const [activeSection, setActiveSection] = useState<SectionId>("hero");
+  const [activeSection, setActiveSection] = useState<StudioNavSectionId>("hero");
+
+  const syncNavState = useCallback(() => {
+    setScrolled(window.scrollY > 40);
+
+    const heroEl = document.getElementById("hero");
+    if (heroEl) {
+      setPastHero(heroEl.getBoundingClientRect().bottom <= readScrollPaddingTop());
+    } else {
+      setPastHero(window.scrollY > 60);
+    }
+
+    const fromHash = studioNavSectionFromHash();
+    const fromScroll = measureActiveSection();
+    setActiveSection(fromHash ?? fromScroll);
+  }, []);
 
   useEffect(() => {
     let raf = 0;
 
     const onScroll = () => {
-      setScrolled(window.scrollY > 40);
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => measureSections(setPastHero, setActiveSection));
+      raf = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 40);
+        const heroEl = document.getElementById("hero");
+        if (heroEl) {
+          setPastHero(heroEl.getBoundingClientRect().bottom <= readScrollPaddingTop());
+        } else {
+          setPastHero(window.scrollY > 60);
+        }
+        setActiveSection(measureActiveSection());
+      });
     };
 
-    onScroll();
+    const onHashChange = () => {
+      const fromHash = studioNavSectionFromHash();
+      if (fromHash) setActiveSection(fromHash);
+      window.setTimeout(() => setActiveSection(measureActiveSection()), 180);
+    };
+
+    syncNavState();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
+    window.addEventListener("hashchange", onHashChange);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      window.removeEventListener("hashchange", onHashChange);
     };
-  }, []);
+  }, [syncNavState]);
 
-  const linkClass = (id: SectionId) =>
+  const onNavClick = (id: StudioNavSectionId) => {
+    setActiveSection(id);
+    requestAnimationFrame(syncNavState);
+  };
+
+  const solidChrome = scrolled || LIGHT_SECTIONS.has(activeSection);
+
+  const linkClass = (id: StudioNavSectionId) =>
     cn(
       STUDIO_TYPOGRAPHY.navLink,
       activeSection === id
@@ -111,10 +150,10 @@ export function FixedStudioNavigation() {
   return (
     <header
       className={cn(
-        "studio-chrome fixed inset-x-0 top-0 z-50 border-b border-paper-cream/10 transition-colors duration-300",
-        scrolled
-          ? "bg-wood-dark/96 shadow-lg backdrop-blur-sm"
-          : "bg-studio-black/70 backdrop-blur-sm",
+        "studio-chrome fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300",
+        solidChrome
+          ? "border-paper-cream/15 bg-wood-dark/[0.98] shadow-lg backdrop-blur-md"
+          : "border-paper-cream/10 bg-studio-black/88 backdrop-blur-sm",
       )}
     >
       <div className="mx-auto flex w-full max-w-[1600px] items-start justify-between gap-4 px-3 py-2.5 sm:px-6 sm:py-3 lg:gap-6 lg:px-8 lg:py-4">
@@ -135,6 +174,7 @@ export function FixedStudioNavigation() {
                   href={link.href}
                   className={linkClass(link.id)}
                   aria-current={activeSection === link.id ? "page" : undefined}
+                  onClick={() => onNavClick(link.id)}
                 >
                   {link.label}
                 </Link>

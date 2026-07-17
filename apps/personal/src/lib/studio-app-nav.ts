@@ -3,6 +3,18 @@ import { tabletApps, type TabletAppId } from "@/data/tablet-apps";
 export const STUDIO_GAME_SECTION_ID = "game";
 export const STUDIO_APP_NAV_EVENT = "studio-app-nav";
 
+/** Primary nav section ids — must match `FixedStudioNavigation` and bento cell ids. */
+export const STUDIO_NAV_SECTION_IDS = ["hero", "game", "timeline", "resume", "contact"] as const;
+
+export type StudioNavSectionId = (typeof STUDIO_NAV_SECTION_IDS)[number];
+
+/** Hash fragment without query (e.g. `#game?app=work` → `game`). */
+export function studioNavSectionFromHash(hash?: string): StudioNavSectionId | null {
+  const raw = hash ?? (typeof window !== "undefined" ? window.location.hash : "");
+  const id = raw.replace(/^#/, "").split("?")[0];
+  return STUDIO_NAV_SECTION_IDS.includes(id as StudioNavSectionId) ? (id as StudioNavSectionId) : null;
+}
+
 export function isValidStudioAppId(app: string | null): app is TabletAppId {
   return Boolean(app && tabletApps.some((a) => a.id === app));
 }

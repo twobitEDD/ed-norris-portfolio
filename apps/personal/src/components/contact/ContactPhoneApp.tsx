@@ -154,12 +154,12 @@ function AppListRow({
     "contact-phone-app__row flex w-full items-center gap-2.5 rounded-xl px-2.5 text-left",
     nested && "contact-phone-app__row--nested",
     isLandscape
-      ? "min-h-[34px] gap-2 py-1"
+          ? "min-h-[34px] gap-2 py-1"
       : isTablet
         ? "min-h-[48px] gap-3 px-3 py-2.5"
         : compact
-          ? "min-h-[40px] py-1.5"
-          : "min-h-[44px] py-2",
+          ? "min-h-[44px] py-2"
+          : "min-h-[48px] py-2.5 sm:min-h-[44px]",
   );
 
   if (href) {
@@ -340,7 +340,7 @@ function HomeScreen({
         <p
           className={cn(
             "contact-phone-app__label shrink-0 font-mono uppercase tracking-[0.16em]",
-            isLandscape ? "mb-1 text-[7px]" : isTablet ? "mb-2 text-[9px]" : "mb-1.5 text-[8px]",
+            isLandscape ? "mb-1 text-[8px]" : isTablet ? "mb-2 text-[9px]" : "mb-2 text-[9px] sm:text-[10px]",
           )}
         >
           Get in touch

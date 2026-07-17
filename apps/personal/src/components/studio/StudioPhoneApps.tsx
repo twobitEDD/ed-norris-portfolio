@@ -274,11 +274,13 @@ function SpringboardMiniWidgets({
   tier,
   contentWidthPx,
   compact = false,
+  live = true,
 }: {
   now: Date;
   tier: SpringboardDeviceTier;
   contentWidthPx?: number | null;
   compact?: boolean;
+  live?: boolean;
 }) {
   const timeStr = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
   const dateShortStr = now.toLocaleDateString([], {
@@ -287,6 +289,7 @@ function SpringboardMiniWidgets({
     day: "numeric",
   });
   const showCalendar = isSpringboardTabletLargeTier(tier);
+  const showClockface = isSpringboardTabletLargeTier(tier);
   const gridStyle = springboardWidgetGridStyleProps(tier, contentWidthPx);
   const widgetCellPx =
     contentWidthPx != null && contentWidthPx > 0
@@ -332,17 +335,19 @@ function SpringboardMiniWidgets({
           <p className="springboard-widget-date mt-0.5 text-white/55">{dateShortStr}</p>
         </div>
       </div>
-      <SpringboardClockfaceWidget
-        now={now}
-        compact={compact}
-        style={{ gridColumn: "3", gridRow: "2" }}
-      />
+      {showClockface ? (
+        <SpringboardClockfaceWidget
+          now={now}
+          compact={compact}
+          style={{ gridColumn: "3", gridRow: "2" }}
+        />
+      ) : null}
       <div
         className={cn(
           "springboard-widget flex h-full min-h-0 flex-col justify-end",
           compact && "springboard-widget--compact",
         )}
-        style={{ gridColumn: "4", gridRow: "2" }}
+        style={{ gridColumn: showClockface ? "4" : "3 / span 2", gridRow: "2" }}
       >
         <div className="springboard-widget-studio-inner">
           <p className="springboard-widget-studio-label font-medium text-white/45">Norris Studio</p>
@@ -352,7 +357,7 @@ function SpringboardMiniWidgets({
           <p className="springboard-widget-studio-label text-white/45">apps</p>
         </div>
       </div>
-      {showCalendar ? (
+      {showCalendar && live ? (
         <SpringboardCalendarWidget
           now={now}
           compact={compact}
@@ -701,7 +706,7 @@ function useSpringboardFitScale(
       const available = layout.clientHeight;
       const needed = content.scrollHeight;
       if (available > 0 && needed > available) {
-        setScale(Math.max(0.82, available / needed));
+        setScale(Math.max(0.88, available / needed));
       } else {
         setScale(1);
       }
@@ -741,6 +746,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
   const [gameFullscreen, setGameFullscreen] = useState(false);
   const [closing, setClosing] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [springboardVisible, setSpringboardVisible] = useState(true);
 
   useEffect(() => {
     const syncFromLocation = (scrollToSection = false) => {
@@ -777,6 +783,18 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     const onResize = () => setViewportWidth(window.innerWidth);
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    const el = springboardScreenRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setSpringboardVisible(entry.isIntersecting),
+      { rootMargin: "120px 0px", threshold: 0.05 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   const goHome = useCallback(() => {
@@ -845,10 +863,10 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     };
   }, [closeGame, gameFullscreen, gameOpen]);
 
-  const now = useLiveNow();
+  const isAppOpen = screen !== "home";
+  const now = useLiveNow(springboardVisible && !isAppOpen);
   const timeStr = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 
-  const isAppOpen = screen !== "home";
   const inDeviceContent =
     isAppOpen &&
     renderInDeviceScreen(screen, { onBack: goHome, onExpandGame: openFullscreenGame });
@@ -927,6 +945,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                       tier={springboardTier}
                       contentWidthPx={springboardContentWidth}
                       compact={isPhoneTier}
+                      live={springboardVisible}
                     />
                     <AppIconGrid
                       onOpenApp={openApp}
