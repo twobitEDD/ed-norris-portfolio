@@ -94,7 +94,7 @@
   [data-studio-mode="day"],
   [data-studio-mode="night"] {
     --studio-hero-max: min(1180px, 94vw);
-    --studio-intro-max: min(760px, 68vw);
+    --studio-intro-max: min(900px, 80vw);
     --studio-intro-overlay-max: 290px;
   }
 }
@@ -106,7 +106,7 @@
     --studio-bento-max: min(1560px, 92vw);
     --studio-device-max: min(1080px, 76vw);
     --studio-hero-max: min(1480px, 92vw);
-    --studio-intro-max: min(820px, 62vw);
+    --studio-intro-max: min(1040px, 72vw);
     --studio-intro-overlay-max: 310px;
   }
 }
@@ -118,7 +118,7 @@
     --studio-bento-max: min(1680px, 88vw);
     --studio-device-max: min(1200px, 72vw);
     --studio-hero-max: min(1680px, 88vw);
-    --studio-intro-max: min(860px, 58vw);
+    --studio-intro-max: min(1100px, 66vw);
     --studio-intro-overlay-max: 330px;
   }
 }
