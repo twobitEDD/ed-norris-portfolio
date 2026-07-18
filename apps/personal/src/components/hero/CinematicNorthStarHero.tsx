@@ -46,14 +46,14 @@ export function CinematicNorthStarHero() {
         <div className="flex items-start justify-center">
           <div
             id="intro"
-            className="relative w-full min-w-0 max-w-[min(100%,var(--studio-intro-max,620px))] sm:pr-[min(42%,calc(var(--studio-intro-overlay-max,250px)+1.5rem))] xl:pr-0"
+            className="relative w-full min-w-0 max-w-[min(100%,var(--studio-intro-max,620px))] sm:pr-[min(42%,calc(var(--studio-intro-overlay-max,250px)+1.5rem))]"
           >
             <StudioObject rotate={-1.2} className="relative z-10">
               <IntroPaper />
             </StudioObject>
             <StudioObject
               rotate={2.4}
-              className="relative z-20 mx-auto mt-5 w-full max-w-[260px] sm:absolute sm:right-0 sm:top-[44%] sm:mt-0 sm:w-[min(40%,var(--studio-intro-overlay-max,250px))] sm:max-w-[var(--studio-intro-overlay-max,250px)] sm:-translate-y-1/2 lg:right-[-0.5rem] xl:relative xl:right-auto xl:top-auto xl:mx-auto xl:mt-6 xl:w-full xl:max-w-[min(100%,var(--studio-intro-overlay-max,290px))] xl:translate-y-0 2xl:mt-7 2xl:max-w-[min(100%,var(--studio-intro-overlay-max,310px))]"
+              className="relative z-20 mx-auto mt-5 w-full max-w-[260px] sm:absolute sm:right-0 sm:top-[44%] sm:mt-0 sm:w-[min(40%,var(--studio-intro-overlay-max,250px))] sm:max-w-[var(--studio-intro-overlay-max,250px)] sm:-translate-y-1/2 lg:right-[-0.5rem] 2xl:right-[-0.75rem]"
             >
               <IntroPaperOverlay />
             </StudioObject>
