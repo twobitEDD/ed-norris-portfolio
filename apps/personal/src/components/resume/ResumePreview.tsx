@@ -1,5 +1,10 @@
+import Image from "next/image";
 import type { ResumeContent } from "@/lib/resume";
+import { profilePhoto } from "@/data/career-images";
 import { cn } from "@/lib/cn";
+
+/** Slightly larger than PDF (56px) for on-screen preview legibility. */
+const PROFILE_PHOTO_SIZE = 68;
 
 function ResumeCornerLines({ accent, className }: { accent: string; className?: string }) {
   return (
@@ -53,19 +58,40 @@ export function ResumePreview({ content, className }: { content: ResumeContent; 
 
       <div className="relative">
         <header className="border-b border-slate-200 pb-5">
-          <h2 className="font-display text-3xl font-bold tracking-tight">{content.name}</h2>
-          <div
-            className="mt-2 h-0.5 w-14"
-            style={{ backgroundColor: accent }}
-            aria-hidden="true"
-          />
-          <p className="mt-2 text-lg font-medium text-slate-700">{content.targetRole}</p>
-          <p className="mt-1 text-sm text-slate-500">{content.location}</p>
-          {content.links.length > 0 && (
-            <p className="mt-2 text-xs text-slate-500">
-              {content.links.map((l) => l.label).join(" · ")}
-            </p>
-          )}
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0 flex-1">
+              <h2 className="font-display text-3xl font-bold tracking-tight">{content.name}</h2>
+              <div
+                className="mt-2 h-0.5 w-14"
+                style={{ backgroundColor: accent }}
+                aria-hidden="true"
+              />
+              <p className="mt-2 text-lg font-medium text-slate-700">{content.targetRole}</p>
+              <p className="mt-1 text-sm text-slate-500">{content.location}</p>
+              {content.links.length > 0 && (
+                <p className="mt-2 text-xs text-slate-500">
+                  {content.links.map((l) => l.label).join(" · ")}
+                </p>
+              )}
+            </div>
+            <div
+              className="shrink-0 overflow-hidden rounded-full border-2 border-white shadow-[0_1px_2px_rgba(0,0,0,0.12),0_2px_6px_rgba(0,0,0,0.08)]"
+              aria-hidden="true"
+            >
+              <Image
+                src={profilePhoto.src}
+                alt=""
+                width={PROFILE_PHOTO_SIZE}
+                height={PROFILE_PHOTO_SIZE}
+                className="object-cover"
+                style={{
+                  width: PROFILE_PHOTO_SIZE,
+                  height: PROFILE_PHOTO_SIZE,
+                  objectPosition: profilePhoto.objectPosition ?? "center",
+                }}
+              />
+            </div>
+          </div>
         </header>
 
         <section className="mt-6">
