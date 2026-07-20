@@ -5,6 +5,7 @@ import { ClientLogoStrip } from "@/components/hero/ClientLogoStrip";
 import { WorkVennDiagram } from "@/components/hero/WorkVennDiagram";
 import { ProfileTagline } from "@/components/ProfileTagline";
 import { Paper } from "@/components/physical-ui/Paper";
+import { cn } from "@/lib/cn";
 
 const roles = [
   "builder",
@@ -17,24 +18,47 @@ const roles = [
 
 const clientIds = ["adidas", "google", "co2t"] as const;
 
-function IntroLogosAndVenn({ className }: { className?: string }) {
+function IntroLogosAndVenn({
+  className,
+  layout = "stacked",
+}: {
+  className?: string;
+  layout?: "stacked" | "corner";
+}) {
+  const isCorner = layout === "corner";
+
   return (
-    <div className={className}>
-      <div className="max-w-md xl:max-w-none">
-        <ClientLogoStrip size="sm" ids={[...clientIds]} className="xl:hidden" />
-        <ClientLogoStrip size="md" ids={[...clientIds]} className="hidden xl:block" />
+    <div className={cn(isCorner && "flex flex-col items-end", className)}>
+      <div className={cn("max-w-md", isCorner ? "w-full max-w-[280px] 2xl:max-w-[320px]" : "xl:max-w-none")}>
+        <ClientLogoStrip size="sm" ids={[...clientIds]} className={isCorner ? "hidden" : "xl:hidden"} />
+        <ClientLogoStrip
+          size="md"
+          ids={[...clientIds]}
+          className={isCorner ? "block" : "hidden xl:block"}
+        />
       </div>
-      <WorkVennDiagram className="mt-3 sm:mt-4 xl:mt-5" />
+      <WorkVennDiagram
+        className={cn(
+          "mt-3 sm:mt-4",
+          isCorner ? "mt-4 w-full max-w-[280px] 2xl:max-w-[320px] [&_svg]:ml-auto" : "xl:mt-5",
+        )}
+      />
     </div>
   );
 }
 
-function IntroBodyCopy({ extended = false }: { extended?: boolean }) {
+function IntroBodyCopy({
+  extended = false,
+  className,
+}: {
+  extended?: boolean;
+  className?: string;
+}) {
   const summary = extended && profile.summaryExtended ? profile.summaryExtended : profile.summary;
 
   return (
-    <>
-      <p className="max-w-[34ch] text-sm leading-snug text-ink-soft lg:text-[0.95rem] lg:leading-relaxed xl:max-w-[42ch] xl:text-base xl:leading-relaxed 2xl:max-w-[46ch] 2xl:text-[1.05rem] 2xl:leading-relaxed">
+    <div className={className}>
+      <p className="max-w-[34ch] text-sm leading-snug text-ink-soft lg:text-[0.95rem] lg:leading-relaxed xl:max-w-none xl:text-base xl:leading-relaxed 2xl:text-[1.05rem] 2xl:leading-relaxed">
         {summary}
       </p>
 
@@ -60,7 +84,7 @@ function IntroBodyCopy({ extended = false }: { extended?: boolean }) {
           </StudioAppLink>
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
@@ -87,9 +111,9 @@ export function IntroPaper() {
           </div>
         </div>
 
-        <div className="mt-4 hidden max-w-[36rem] xl:mt-6 xl:block">
-          <IntroBodyCopy extended />
-          <IntroLogosAndVenn className="mt-6 xl:mt-7" />
+        <div className="intro-paper-extended relative mt-4 hidden xl:mt-6 xl:block">
+          <IntroBodyCopy extended className="intro-paper-extended__copy min-w-0" />
+          <IntroLogosAndVenn layout="corner" className="intro-paper-extended__visuals" />
         </div>
       </div>
     </Paper>

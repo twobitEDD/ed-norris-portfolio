@@ -701,6 +701,47 @@ body {
   color: var(--paper-ink);
 }
 
+/* Intro paper — xl+ two-zone layout: wide copy left, logos/venn bottom-right */
+@media (min-width: 1280px) {
+  .intro-paper-extended {
+    --intro-paper-copy-max: min(62%, 40rem);
+    --intro-paper-visuals-width: min(36%, 18.5rem);
+    --intro-paper-visuals-reserve: 10.5rem;
+    min-height: var(--intro-paper-visuals-reserve);
+    padding-bottom: 0.25rem;
+  }
+
+  .intro-paper-extended__copy {
+    max-width: var(--intro-paper-copy-max);
+    padding-right: 1.5rem;
+  }
+
+  .intro-paper-extended__visuals {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    width: var(--intro-paper-visuals-width);
+    padding-bottom: 0.125rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  .intro-paper-extended {
+    --intro-paper-copy-max: min(64%, 44rem);
+    --intro-paper-visuals-width: min(34%, 20rem);
+    --intro-paper-visuals-reserve: 11.5rem;
+  }
+}
+
+@media (min-width: 1920px) {
+  .intro-paper-extended {
+    --intro-paper-copy-max: min(65%, 46rem);
+    --intro-paper-visuals-width: min(32%, 21rem);
+    --intro-paper-visuals-reserve: 12rem;
+  }
+}
+
 /* Notebook — ruled pad on desk, shares paper tokens */
 .notebook-surface {
   border-radius: 2px;
