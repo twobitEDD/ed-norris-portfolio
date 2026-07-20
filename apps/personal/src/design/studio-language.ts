@@ -260,6 +260,7 @@ export const STUDIO_SPACING = {
   heroMaxWidth: "var(--studio-hero-max, 920px)",
   introMaxWidth: "var(--studio-intro-max, 620px)",
   introOverlayMaxWidth: "var(--studio-intro-overlay-max, 250px)",
+  introOverlayMobileMaxWidth: "var(--studio-intro-overlay-mobile-max, 340px)",
   bentoMaxWidth: "var(--studio-bento-max, 1200px)",
   bentoSection: "relative px-4 pb-28 pt-2 sm:px-8 sm:pb-32 sm:pt-4",
   bentoGrid: "vertical-bento__grid w-full min-w-0",

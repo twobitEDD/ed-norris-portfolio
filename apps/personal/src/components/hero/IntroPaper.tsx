@@ -58,7 +58,7 @@ function IntroBodyCopy({
 
   return (
     <div className={className}>
-      <p className="max-w-[34ch] text-sm leading-snug text-ink-soft lg:text-[0.95rem] lg:leading-relaxed xl:max-w-none xl:text-base xl:leading-relaxed 2xl:text-[1.05rem] 2xl:leading-relaxed">
+      <p className="max-w-none text-[0.9375rem] leading-snug text-ink-soft sm:max-w-[38ch] sm:text-sm lg:text-[0.95rem] lg:leading-relaxed xl:max-w-none xl:text-base xl:leading-relaxed 2xl:text-[1.05rem] 2xl:leading-relaxed">
         {summary}
       </p>
 
@@ -67,7 +67,7 @@ function IntroBodyCopy({
         aria-label="Roles"
       >
         {roles.map((role) => (
-          <li key={role} className="handwritten text-sm text-ink-soft lg:text-base xl:text-[1.05rem]">
+          <li key={role} className="handwritten text-[0.9375rem] text-ink-soft sm:text-sm lg:text-base xl:text-[1.05rem]">
             · {role}
           </li>
         ))}
@@ -90,13 +90,13 @@ function IntroBodyCopy({
 
 export function IntroPaper() {
   return (
-    <Paper className="h-full [&_.paper-surface]:lg:px-10 [&_.paper-surface]:lg:py-11 [&_.paper-surface]:xl:px-12 [&_.paper-surface]:xl:py-12">
+    <Paper className="h-full [&_.paper-surface]:max-sm:px-3.5 [&_.paper-surface]:max-sm:py-5 [&_.paper-surface]:lg:px-10 [&_.paper-surface]:lg:py-11 [&_.paper-surface]:xl:px-12 [&_.paper-surface]:xl:py-12">
       <div className="min-w-0">
-        <p className="handwritten text-lg text-ink lg:text-xl xl:text-[1.35rem]">Hi, I&apos;m</p>
-        <p className="mt-0.5 font-editorial text-[1.35rem] font-semibold tracking-[-0.02em] text-ink sm:text-[1.65rem] lg:text-[1.9rem] xl:text-[2.15rem] 2xl:text-[2.4rem]">
+        <p className="handwritten text-xl text-ink sm:text-lg lg:text-xl xl:text-[1.35rem]">Hi, I&apos;m</p>
+        <p className="mt-0.5 font-editorial text-[1.5rem] font-semibold tracking-[-0.02em] text-ink sm:text-[1.65rem] lg:text-[1.9rem] xl:text-[2.15rem] 2xl:text-[2.4rem]">
           {profile.name}
         </p>
-        <h1 className="mt-2 max-w-[22ch] font-editorial text-[1.75rem] font-semibold leading-[1.1] tracking-[-0.025em] text-ink sm:text-[2.5rem] lg:max-w-[24ch] lg:text-[2.85rem] xl:text-[3.2rem] 2xl:text-[3.55rem]">
+        <h1 className="mt-2 max-w-none font-editorial text-[2rem] font-semibold leading-[1.08] tracking-[-0.025em] text-ink sm:max-w-[22ch] sm:text-[2.5rem] lg:max-w-[24ch] lg:text-[2.85rem] xl:text-[3.2rem] 2xl:text-[3.55rem]">
           I love building solutions,
           <br />
           for fun and function.

@@ -56,8 +56,10 @@
   --studio-bento-max: 1200px;
   --studio-device-max: 920px;
   --studio-hero-max: 920px;
+  --studio-hero-px: 0.625rem;
   --studio-intro-max: 620px;
   --studio-intro-overlay-max: 250px;
+  --studio-intro-overlay-mobile-max: 340px;
 
   color-scheme: light;
 }
@@ -129,6 +131,14 @@
   [data-studio-mode="day"],
   [data-studio-mode="night"] {
     --studio-device-max: min(100vw - 2rem, 100%);
+  }
+}
+
+@media (min-width: 640px) {
+  :root,
+  [data-studio-mode="day"],
+  [data-studio-mode="night"] {
+    --studio-hero-px: 2rem;
   }
 }
 
