@@ -188,6 +188,14 @@ export function getProjectImage(projectId: string): CareerImageEntry | undefined
   return projectImages[projectId];
 }
 
+/** Professional headshot for résumé PDF and business card. */
+export const profilePhoto: CareerImageEntry = {
+  src: "/images/edd-norris-profile.png",
+  alt: "Edd Norris — professional headshot",
+  status: "confirmed",
+  objectPosition: "center center",
+};
+
 /** Oregon and childhood trail photos for the contact desk polaroid stack — click to cycle. */
 export const contactPolaroidImages: CareerImageEntry[] = [
   {

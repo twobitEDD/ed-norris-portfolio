@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { forwardRef, useEffect, useState } from "react";
 import { profile } from "@/data";
+import { profilePhoto } from "@/data/career-images";
 import { resumeValueProps, type ResumeValueProp } from "@/data/resume-value-props";
 import type { ResumePreset } from "@/data/types";
 import { getResumeAccentColor } from "@/lib/resume";
@@ -59,18 +61,30 @@ export const ResumeBusinessCard = forwardRef<HTMLElement, ResumeBusinessCardProp
       >
         <div className="business-card__accent" aria-hidden="true" />
         <div className="business-card__body flex min-h-0 flex-1 flex-col justify-between px-5 py-4 sm:px-6 sm:py-[18px]">
-          <div>
-            <p
-              className="business-card__eyebrow min-h-[2.7em] font-mono text-[6px] uppercase leading-[1.35] tracking-[0.16em] line-clamp-2"
-              suppressHydrationWarning
-            >
-              {valueProp}
-            </p>
-            <h3 className="business-card__name mt-1.5 font-editorial text-[1.35rem] font-semibold leading-tight tracking-tight">
-              {name}
-            </h3>
-            <p className="business-card__role mt-0.5 text-[11px] font-medium leading-snug">{targetRole}</p>
-            <p className="business-card__summary mt-2 line-clamp-3 text-[9px] leading-relaxed">{summary}</p>
+          <div className="business-card__header flex items-start justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <p
+                className="business-card__eyebrow min-h-[2.7em] font-mono text-[6px] uppercase leading-[1.35] tracking-[0.16em] line-clamp-2"
+                suppressHydrationWarning
+              >
+                {valueProp}
+              </p>
+              <h3 className="business-card__name mt-1.5 font-editorial text-[1.35rem] font-semibold leading-tight tracking-tight">
+                {name}
+              </h3>
+              <p className="business-card__role mt-0.5 text-[11px] font-medium leading-snug">{targetRole}</p>
+              <p className="business-card__summary mt-2 line-clamp-3 text-[9px] leading-relaxed">{summary}</p>
+            </div>
+            <div className="business-card__avatar shrink-0" aria-hidden="true">
+              <Image
+                src={profilePhoto.src}
+                alt=""
+                width={52}
+                height={52}
+                className="business-card__avatar-image"
+                style={{ objectPosition: profilePhoto.objectPosition ?? "center" }}
+              />
+            </div>
           </div>
 
           <div className="mt-2 flex items-end justify-between gap-3">

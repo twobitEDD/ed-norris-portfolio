@@ -1,15 +1,20 @@
+import path from "node:path";
 import {
   Document,
   Page,
   Text,
   View,
+  Image,
   StyleSheet,
   pdf,
   Svg,
   Line,
 } from "@react-pdf/renderer";
 import type { ResumeContent } from "@/lib/resume";
+import { profilePhoto } from "@/data/career-images";
 import { disciplineColors } from "@/data/types";
+
+const profilePhotoPath = path.join(process.cwd(), "public", profilePhoto.src.replace(/^\//, ""));
 
 const baseStyles = StyleSheet.create({
   page: {
@@ -32,7 +37,25 @@ const baseStyles = StyleSheet.create({
     paddingBottom: 16,
     marginBottom: 4,
   },
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    gap: 16,
+  },
+  headerText: {
+    flex: 1,
+    minWidth: 0,
+  },
+  profilePhoto: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    objectFit: "cover",
+    flexShrink: 0,
+  },
   section: { marginTop: 14 },
+  entryBlock: { marginTop: 8 },
   sectionTitleRow: { flexDirection: "row", alignItems: "center", marginBottom: 6 },
   sectionDash: { width: 12, height: 1, marginRight: 6 },
   sectionTitle: {
@@ -43,7 +66,7 @@ const baseStyles = StyleSheet.create({
     textTransform: "uppercase",
   },
   body: { fontSize: 10, lineHeight: 1.5, color: "#334155" },
-  jobTitle: { fontSize: 11, fontWeight: "bold", marginTop: 8 },
+  jobTitle: { fontSize: 11, fontWeight: "bold" },
   jobMeta: { fontSize: 9, color: "#64748b" },
 });
 
@@ -98,10 +121,15 @@ function ResumeDocument({ content }: { content: ResumeContent }) {
         <CornerLines accentColor={accentColor} />
 
         <View style={baseStyles.headerBorder}>
-          <Text style={baseStyles.name}>{content.name}</Text>
-          <View style={[baseStyles.accentRule, { backgroundColor: accentColor }]} />
-          <Text style={baseStyles.role}>{content.targetRole}</Text>
-          <Text style={baseStyles.meta}>{content.location}</Text>
+          <View style={baseStyles.headerRow}>
+            <View style={baseStyles.headerText}>
+              <Text style={baseStyles.name}>{content.name}</Text>
+              <View style={[baseStyles.accentRule, { backgroundColor: accentColor }]} />
+              <Text style={baseStyles.role}>{content.targetRole}</Text>
+              <Text style={baseStyles.meta}>{content.location}</Text>
+            </View>
+            <Image src={profilePhotoPath} style={baseStyles.profilePhoto} />
+          </View>
         </View>
 
         <View style={baseStyles.section}>
@@ -112,7 +140,7 @@ function ResumeDocument({ content }: { content: ResumeContent }) {
         <View style={baseStyles.section}>
           <SectionTitle label="Experience" accentColor={accentColor} />
           {content.experiences.map((exp) => (
-            <View key={exp.id}>
+            <View key={exp.id} wrap={false} style={baseStyles.entryBlock}>
               <Text style={baseStyles.jobTitle}>
                 {exp.title} — {exp.organization}
               </Text>
@@ -128,7 +156,7 @@ function ResumeDocument({ content }: { content: ResumeContent }) {
           <View style={baseStyles.section}>
             <SectionTitle label="Education" accentColor={accentColor} />
             {content.education.map((entry) => (
-              <View key={entry.id}>
+              <View key={entry.id} wrap={false} style={baseStyles.entryBlock}>
                 <Text style={baseStyles.jobTitle}>
                   {entry.title} — {entry.organization}
                 </Text>
@@ -146,7 +174,7 @@ function ResumeDocument({ content }: { content: ResumeContent }) {
           <View style={baseStyles.section}>
             <SectionTitle label="Selected Projects" accentColor={accentColor} />
             {content.projects.map((p) => (
-              <View key={p.id}>
+              <View key={p.id} wrap={false} style={baseStyles.entryBlock}>
                 <Text style={baseStyles.jobTitle}>{p.title}</Text>
                 <Text style={baseStyles.body}>{p.summary}</Text>
               </View>
