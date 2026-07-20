@@ -235,7 +235,7 @@ export const experiences: Experience[] = [
     ],
     disciplines: ["games"],
     skills: ["gameplay programming", "Wii development"],
-    projects: [],
+    projects: ["proj-family-fun-football"],
     featured: true,
   },
   {
@@ -283,7 +283,7 @@ export const experiences: Experience[] = [
     ],
     disciplines: ["games"],
     skills: ["leadership", "gameplay programming", "Wii development"],
-    projects: [],
+    projects: ["proj-iron-chef-america"],
     featured: true,
   },
   {

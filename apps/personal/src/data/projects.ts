@@ -132,6 +132,66 @@ export const projects: Project[] = [
     resumePriority: 4,
   },
   {
+    id: "proj-iron-chef-america",
+    slug: "iron-chef-america-supreme-cuisine",
+    title: "Iron Chef America: Supreme Cuisine",
+    organization: "Black Lantern Studios",
+    startDate: "2007",
+    endDate: "2008",
+    status: "completed",
+    disciplines: ["games"],
+    industries: ["entertainment"],
+    roles: ["Gameplay Lead Programmer"],
+    skills: ["leadership", "gameplay programming", "Wii development"],
+    technologies: ["C#", "Wii SDK"],
+    summary:
+      "Credited Nintendo Wii release — gameplay lead on a licensed Iron Chef America title with strict publisher deadlines, hardware memory constraints, and team delivery.",
+    challenge:
+      "Ship a licensed Wii title under tight publisher timelines while managing gameplay systems, art integration, and console memory limits.",
+    approach:
+      "Led gameplay programming shortly after joining Black Lantern — coordinated team delivery, publisher adjustment requests, and art integration on Wii hardware.",
+    outcomes: [
+      "Shipped Iron Chef America: Supreme Cuisine for Nintendo Wii — first credited retail release.",
+      "Managed gameplay systems and team delivery under publisher deadline pressure.",
+    ],
+    metrics: [
+      { label: "Platform", value: "Nintendo Wii" },
+      { label: "Credit", value: "Gameplay lead" },
+    ],
+    featured: true,
+    resumePriority: 5,
+  },
+  {
+    id: "proj-family-fun-football",
+    slug: "family-fun-football",
+    title: "Family Fun Football",
+    organization: "Seamless Entertainment",
+    startDate: "2008",
+    endDate: "2009",
+    status: "completed",
+    disciplines: ["games"],
+    industries: ["entertainment"],
+    roles: ["Gameplay Programmer"],
+    skills: ["gameplay programming", "Wii development", "game design"],
+    technologies: ["C#", "Wii SDK"],
+    summary:
+      "Credited Nintendo Wii release — gameplay documentation, art integration, and design on an all-ages football title rebooting Tecmo Bowl-style mechanics.",
+    challenge:
+      "Deliver accessible, family-friendly football gameplay on Wii with polished art integration and clear design documentation.",
+    approach:
+      "Gameplay programming and design on Seamless's sole Wii title — transferred from Black Lantern when the studio spun up to focus on shipping Family Fun Football.",
+    outcomes: [
+      "Shipped Family Fun Football for Nintendo Wii — credited retail release.",
+      "Rebooted Tecmo Bowl-style mechanics for an all-ages football experience.",
+    ],
+    metrics: [
+      { label: "Platform", value: "Nintendo Wii" },
+      { label: "Genre", value: "Sports / family" },
+    ],
+    featured: true,
+    resumePriority: 6,
+  },
+  {
     id: "proj-planets-core",
     slug: "planets-core",
     title: "Planet's Core",
@@ -150,7 +210,7 @@ export const projects: Project[] = [
     approach: "Founder-led development with tight feedback loops and lean team cadence.",
     links: [{ label: "GitHub", url: "https://github.com/twobitENT" }],
     featured: false,
-    resumePriority: 7,
+    resumePriority: 9,
   },
   {
     id: "proj-fish-fight",
@@ -171,7 +231,7 @@ export const projects: Project[] = [
       "Lightweight web-first gameplay with real-world conservation hooks and shareable moments.",
     links: [{ label: "fishFight.app", url: "https://fishfight.app" }],
     featured: false,
-    resumePriority: 8,
+    resumePriority: 10,
   },
   {
     id: "proj-ergnomes",
@@ -194,7 +254,7 @@ export const projects: Project[] = [
       "Technical design across the full stack — from collectible art pipelines to on-chain interactions and player-facing UX.",
     links: [{ label: "ERGnomes.io", url: "https://ergnomes.io" }],
     featured: false,
-    resumePriority: 9,
+    resumePriority: 11,
   },
   {
     id: "proj-pokepocket",
@@ -215,7 +275,7 @@ export const projects: Project[] = [
       "Lean prototyping with human-centered UX — easy to pick up, satisfying to master, built for pocket-sized play sessions.",
     links: [{ label: "PokePocket", url: "https://pokepocket.cards" }],
     featured: false,
-    resumePriority: 10,
+    resumePriority: 12,
   },
   {
     id: "proj-web-platforms",
@@ -230,7 +290,7 @@ export const projects: Project[] = [
     technologies: ["React", "Node.js", "CMS"],
     summary: "Product sites, dashboards, and operational tools for diverse clients.",
     featured: false,
-    resumePriority: 5,
+    resumePriority: 7,
   },
   {
     id: "proj-brand-systems",
@@ -245,6 +305,6 @@ export const projects: Project[] = [
     technologies: ["Figma", "Adobe CC"],
     summary: "Identity systems, narrative, and go-to-market assets.",
     featured: false,
-    resumePriority: 6,
+    resumePriority: 8,
   },
 ];
