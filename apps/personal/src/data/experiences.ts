@@ -228,9 +228,10 @@ export const experiences: Experience[] = [
     organization: "Seamless Entertainment",
     period: { start: "Jul 2008", end: "Oct 2009" },
     summary:
-      "Family Fun Football (Nintendo Wii) — credited release; gameplay documentation, art integration, and design.",
+      "Family Fun Football (Nintendo Wii) — credited release; gameplay programming, animation handling, and UI production.",
     details: [
       "Shipped Family Fun Football for Nintendo Wii — reboot of Tecmo Bowl mechanics for an all-ages football experience.",
+      "Fine-tuned gameplay feel, improved animation handling, and built in-game UI.",
       "Transferred from Black Lantern Studios when Seamless was spun up to focus on a single Wii title.",
     ],
     disciplines: ["games"],

@@ -172,17 +172,18 @@ export const projects: Project[] = [
     disciplines: ["games"],
     industries: ["entertainment"],
     roles: ["Gameplay Programmer"],
-    skills: ["gameplay programming", "Wii development", "game design"],
+    skills: ["gameplay programming", "Wii development", "animation", "UI production"],
     technologies: ["C#", "Wii SDK"],
     summary:
-      "Credited Nintendo Wii release — gameplay documentation, art integration, and design on an all-ages football title rebooting Tecmo Bowl-style mechanics.",
+      "Credited Nintendo Wii release — gameplay programming on an all-ages football title rebooting Tecmo Bowl-style mechanics, including fine-tuning gameplay, animation handling, and UI production.",
     challenge:
-      "Deliver accessible, family-friendly football gameplay on Wii with polished art integration and clear design documentation.",
+      "Deliver accessible, family-friendly football gameplay on Wii with responsive controls, solid animation, and clear in-game UI.",
     approach:
-      "Gameplay programming and design on Seamless's sole Wii title — transferred from Black Lantern when the studio spun up to focus on shipping Family Fun Football.",
+      "Gameplay programming on Seamless's sole Wii title — fine-tuned core mechanics, improved animation handling, and built UI — transferred from Black Lantern when the studio spun up to focus on shipping Family Fun Football.",
     outcomes: [
       "Shipped Family Fun Football for Nintendo Wii — credited retail release.",
       "Rebooted Tecmo Bowl-style mechanics for an all-ages football experience.",
+      "Fine-tuned gameplay feel, animation handling, and in-game UI for the retail build.",
     ],
     metrics: [
       { label: "Platform", value: "Nintendo Wii" },

@@ -160,7 +160,7 @@ export const graphNodes: GraphNode[] = [
     disciplines: ["games"],
     period: "2008 – 2009",
     experienceId: "exp-seamless",
-    description: "Family Fun Football (Wii) — gameplay, art integration, and design.",
+    description: "Family Fun Football (Wii) — gameplay programming, animation handling, and UI production.",
   },
   {
     id: "exp-node-rocket",
