@@ -70,11 +70,11 @@ function IntroBodyCopy({
       </p>
 
       <ul
-        className="mt-3.5 flex flex-col gap-1.5 sm:mt-4 lg:mt-4 lg:gap-2"
+        className="mt-3.5 flex flex-col gap-2 sm:mt-4 sm:gap-2.5 lg:mt-4 lg:gap-3"
         aria-label="Roles"
       >
         {roles.map((role) => (
-          <li key={role} className="handwritten text-[0.9375rem] text-ink-soft sm:text-sm lg:text-base xl:text-[1.05rem]">
+          <li key={role} className="handwritten text-lg text-ink-soft lg:text-xl xl:text-xl 2xl:text-[1.35rem]">
             · {role}
           </li>
         ))}
