@@ -54,7 +54,7 @@ export function CinematicNorthStarHero() {
               </StudioObject>
               <StudioObject
                 rotate={2.4}
-                className="relative z-20 mx-auto mt-4 w-full max-w-[min(100%,var(--studio-intro-overlay-mobile-max,340px))] sm:absolute sm:right-[-1.25rem] sm:top-[44%] sm:mt-0 sm:w-[min(44%,var(--studio-intro-overlay-max,250px))] sm:max-w-[var(--studio-intro-overlay-max,250px)] sm:-translate-y-1/2 md:right-[-1.75rem] lg:right-[-2rem] xl:right-[-2.5rem] 2xl:right-[-3rem]"
+                className="relative z-20 mx-auto mt-4 w-full max-w-[min(100%,var(--studio-intro-overlay-mobile-max,340px))] sm:absolute sm:right-[-1.25rem] sm:top-[75%] sm:mt-0 sm:w-[min(44%,var(--studio-intro-overlay-max,250px))] sm:max-w-[var(--studio-intro-overlay-max,250px)] sm:-translate-y-1/2 md:right-[-1.75rem] lg:right-[-2rem] xl:right-[-2.5rem] 2xl:right-[-3rem]"
               >
                 <IntroPaperOverlay />
               </StudioObject>
