@@ -58,7 +58,14 @@ function IntroBodyCopy({
 
   return (
     <div className={className}>
-      <p className="max-w-none text-[0.9375rem] leading-snug text-ink-soft sm:max-w-[38ch] sm:text-sm lg:text-[0.95rem] lg:leading-relaxed xl:max-w-none xl:text-base xl:leading-relaxed 2xl:text-[1.05rem] 2xl:leading-relaxed">
+      <p
+        className={cn(
+          "text-[0.9375rem] leading-snug text-ink-soft sm:text-sm lg:text-[0.95rem] lg:leading-relaxed",
+          extended
+            ? "max-w-none sm:max-w-[38ch] xl:max-w-none xl:text-base xl:leading-relaxed 2xl:text-[1.05rem] 2xl:leading-relaxed"
+            : "max-w-[34ch] sm:max-w-[26ch] md:max-w-[28ch] lg:max-w-[30ch]",
+        )}
+      >
         {summary}
       </p>
 
