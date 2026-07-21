@@ -14,7 +14,7 @@ export const projects: Project[] = [
     skills: ["platform strategy", "product design", "Next.js"],
     technologies: ["Next.js", "TypeScript", "PostgreSQL"],
     summary:
-      "A browser-based console for independent web games with local/online multiplayer, a game marketplace with a private ownership model, and human-centric UX.",
+      "A browser-based console for independent web games with local/online multiplayer, a game marketplace with a private ownership model, and human-centered UX.",
     challenge: "Create a scalable hub that feels welcoming while supporting diverse indie game integrations.",
     approach:
       "Designed modular game embedding, a game marketplace with a private ownership model, and progressive disclosure.",

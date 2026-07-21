@@ -89,7 +89,7 @@ export const tabletApps: TabletApp[] = [
     tagline: "Local/online multiplayer indie games",
     description:
       ergo?.summary ??
-      "A browser-based console for independent web games with local and online multiplayer, a game marketplace with a private ownership model, and human-centric UX for players and creators.",
+      "A browser-based console for independent web games with local/online multiplayer, a game marketplace with a private ownership model, and human-centered UX for players and creators.",
     href: "https://ergo.games",
     iconBg: "linear-gradient(145deg, #1a1035 0%, #4a2d8a 55%, #8c5cc7 100%)",
     iconAccent: "#c9a0ff",
