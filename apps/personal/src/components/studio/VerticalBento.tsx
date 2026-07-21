@@ -46,7 +46,7 @@ const focusItems = [
 
 export function VerticalBento() {
   const [config, setConfig] = useState<ResumeConfig>(getDefaultResumeConfig());
-  const businessCardRef = useRef<HTMLElement>(null);
+  const businessCardRef = useRef<HTMLDivElement>(null);
   const resumeContent = useMemo(() => buildResumeContent(config), [config]);
   const activePreset = useMemo(
     () => resumePresets.find((p) => p.id === config.presetId) ?? resumePresets[0],

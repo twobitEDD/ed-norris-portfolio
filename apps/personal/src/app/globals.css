@@ -940,6 +940,105 @@ body {
   color: var(--business-card-ink-faint);
 }
 
+.business-card__links {
+  color: var(--business-card-ink-faint);
+}
+
+.business-card__links-sep {
+  color: color-mix(in srgb, var(--business-card-ink-faint) 70%, transparent);
+}
+
+.business-card__link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 150ms var(--ease-studio);
+}
+
+.business-card__link:hover {
+  color: var(--business-card-ink-muted);
+  text-decoration: underline;
+}
+
+.business-card-flip {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+}
+
+.business-card-flip:focus-visible {
+  border-radius: 3px;
+  outline: 2px solid var(--environment);
+  outline-offset: 3px;
+}
+
+.business-card-flip__inner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3.5 / 2;
+  transform-style: preserve-3d;
+  transition: transform 520ms var(--ease-studio);
+}
+
+.business-card-flip[data-flipped] .business-card-flip__inner {
+  transform: rotateY(180deg);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .business-card-flip:hover:not([data-flipped]) .business-card-flip__inner,
+  .business-card-flip:focus-within:not([data-flipped]) .business-card-flip__inner {
+    transform: rotateY(180deg);
+  }
+}
+
+.business-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+
+.business-card__back {
+  transform: rotateY(180deg);
+}
+
+.business-card__back-body {
+  position: relative;
+  z-index: 1;
+}
+
+.business-card__qr-wrap {
+  padding: 7px;
+  background: rgba(255, 252, 245, 0.92);
+  border: 1px solid rgba(60, 48, 32, 0.1);
+  border-radius: 2px;
+  box-shadow:
+    inset 0 0 0 1px rgba(126, 166, 106, 0.22),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.business-card__qr-label {
+  color: var(--business-card-ink-faint);
+}
+
+.business-card-flip--capture .business-card-flip__inner {
+  transform: none !important;
+}
+
+.business-card-flip--capture .business-card__face {
+  position: relative;
+  inset: auto;
+  transform: none !important;
+  backface-visibility: visible;
+}
+
+.business-card-flip--capture[data-capture-face="front"] .business-card__back {
+  display: none;
+}
+
+.business-card-flip--capture[data-capture-face="back"] .business-card__front {
+  display: none;
+}
+
 .handwritten {
   font-family: var(--font-caveat), cursive;
 }
