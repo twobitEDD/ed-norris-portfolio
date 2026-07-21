@@ -85,7 +85,7 @@ export const storyStops: StoryStop[] = [
     nodeId: "project-ergo",
     headline: "Human-centered platforms",
     copy:
-      "ERGO.games brings the arc full circle: accessible, human-centered platforms and indie catalog systems — the same commitment to making complex things feel worth people's time.",
+      "ERGO.games brings the arc full circle: family-friendly platforms and indie catalog systems for ages 8–99 — the same commitment to making complex things feel worth people's time.",
   },
   {
     nodeId: "person-ed",

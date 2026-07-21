@@ -86,10 +86,10 @@ export const tabletApps: TabletApp[] = [
     id: "ergo",
     name: "ERGO",
     domain: "ergo.games",
-    tagline: "Accessible indie games",
+    tagline: "Family-friendly indie games",
     description:
       ergo?.summary ??
-      "An accessible browser-based console for independent web games — entitlements, catalog systems, and human-centered UX for players and creators.",
+      "A family-friendly browser-based console for independent web games (ages 8–99) — entitlements, catalog systems, and human-centered UX for players and creators.",
     href: "https://ergo.games",
     iconBg: "linear-gradient(145deg, #1a1035 0%, #4a2d8a 55%, #8c5cc7 100%)",
     iconAccent: "#c9a0ff",

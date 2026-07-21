@@ -8,9 +8,9 @@ export const profile: Profile = {
   },
   headline: "I love building solutions, for fun and function.",
   summary:
-    "Twenty years experience from Nintendo Wii credits to software leadership — building CO2True carbon platforms and ERGO accessible games with human-centered design.",
+    "Twenty years experience from Nintendo Wii credits to software leadership. I connect product vision, engineering craft, and creative production to ship tools people actually use — from climate accountability to human-centric design.",
   summaryExtended:
-    "Twenty years experience from Nintendo Wii credits to software leadership — building CO2True carbon platforms and ERGO accessible games with human-centered design. I connect product vision, engineering craft, and creative production to ship tools people actually use — from climate accountability to inclusive play.",
+    "Twenty years experience from Nintendo Wii credits to software leadership — from CO2True carbon platforms to ERGO.games family-friendly play for everyone, ages 8–99. I connect product vision, engineering craft, and creative production to ship tools people actually use — from climate accountability to human-centric design.",
   proofStrip: ["Iron Chef Wii", "Family Fun Football", "CO2True"],
   location: "Cottage Grove, Oregon",
   availability:

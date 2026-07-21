@@ -14,7 +14,7 @@ export const projects: Project[] = [
     skills: ["platform strategy", "product design", "Next.js"],
     technologies: ["Next.js", "TypeScript", "PostgreSQL"],
     summary:
-      "An accessible browser-based console for independent web games with entitlements, catalog systems, and human-centered UX.",
+      "A family-friendly browser-based console for independent web games (ages 8–99) with entitlements, catalog systems, and human-centered UX.",
     challenge: "Create a scalable hub that feels welcoming while supporting diverse indie game integrations.",
     approach:
       "Designed modular game embedding, TSI-style entitlements, and a curated catalog with progressive disclosure.",
