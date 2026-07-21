@@ -79,8 +79,10 @@ export const ResumeBusinessCard = forwardRef<HTMLElement, ResumeBusinessCardProp
               <Image
                 src={profilePhoto.src}
                 alt=""
-                width={52}
-                height={52}
+                width={208}
+                height={208}
+                quality={100}
+                sizes="52px"
                 className="business-card__avatar-image"
                 style={{ objectPosition: profilePhoto.objectPosition ?? "center" }}
               />
