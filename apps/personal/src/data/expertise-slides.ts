@@ -47,7 +47,7 @@ export const expertiseSlides: ExpertiseSlide[] = [
     id: "ergo",
     eyebrow: "Game platform",
     title: "ERGO.games",
-    body: "Online gaming hub for family-friendly play, ages 8–99 — games for everyone, always easy to play, never easy to win.",
+    body: "Online gaming hub for local/online multiplayer — games for everyone that are easy to pick up but never easy to win.",
     partnerIds: [],
     partnerNotes: ["Indie developers", "2bit Entertainment"],
     technologies: ["Next.js", "TypeScript", "PostgreSQL", "Web games"],

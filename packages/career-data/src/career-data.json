@@ -290,10 +290,10 @@
       "title": "ERGO.games",
       "start": "2024",
       "end": null,
-      "summary": "A family-friendly browser-based console for independent web games (ages 8–99).",
+      "summary": "A browser-based console for independent web games with local/online multiplayer.",
       "actions": [
         "Designed platform strategy and product architecture for a human-centered game hub.",
-        "Built Next.js experiences, entitlement models, and catalog systems."
+        "Built Next.js experiences and a game marketplace with a private ownership model."
       ],
       "outcomes": [
         "Created a scalable foundation for indie web games and interactive entertainment."

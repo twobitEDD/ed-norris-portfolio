@@ -107,7 +107,7 @@ export const creativeSlides: DisciplineSlide[] = [
     id: "ergo",
     eyebrow: "Game platform",
     title: "ERGO.games",
-    body: "Browser-based gaming hub for family-friendly play, ages 8–99 — indie catalog, entitlements, and human-centered UX where games are easy to pick up but never easy to win.",
+    body: "Browser-based gaming hub for local/online multiplayer — a game marketplace with a private ownership model and human-centric UX where games are easy to pick up but never easy to win.",
     partnerNotes: ["Indie developers", "2bit Entertainment"],
     partnerIds: [],
     technologies: ["Next.js", "TypeScript", "PostgreSQL", "Web games"],
@@ -118,7 +118,7 @@ export const creativeSlides: DisciplineSlide[] = [
     glow: "purple",
     image: {
       src: "/career/era-2bit.jpg",
-      alt: "ERGO.games — family-friendly gaming platform",
+      alt: "ERGO.games — local/online multiplayer gaming platform",
     },
     decor: "ergo",
   },
