@@ -326,7 +326,7 @@ function SpringboardMiniWidgets({
         <SpringboardCombinedClockWidget
           now={now}
           compact={compact}
-          style={{ gridColumn: "3 / span 2", gridRow: "1" }}
+          style={{ gridColumn: "4", gridRow: "1" }}
         />
       ) : (
         <div
@@ -359,7 +359,7 @@ function SpringboardMiniWidgets({
         )}
         style={{
           gridColumn: showCalendar ? "3" : "3 / span 2",
-          gridRow: "2",
+          gridRow: showCalendar ? "1 / span 2" : "2",
         }}
       >
         <div className="springboard-widget-studio-inner">
