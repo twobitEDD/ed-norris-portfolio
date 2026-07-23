@@ -10,7 +10,7 @@ type SpringboardCombinedClockWidgetProps = {
   style?: React.CSSProperties;
 };
 
-/** iPad-tier widget: digital time + analog clockface in one 2-column tile. */
+/** iPad-tier widget: digital time + analog clockface in one column — matches calendar tile width. */
 export function SpringboardCombinedClockWidget({
   now,
   compact = false,
