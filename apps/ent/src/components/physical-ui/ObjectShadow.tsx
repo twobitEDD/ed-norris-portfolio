@@ -1,0 +1,18 @@
+import { ENT_DEVICE } from "@/design/ent-language";
+import { cn } from "@/lib/cn";
+
+const depthClass: Record<number, string> = {
+  1: "object-shadow object-shadow--1",
+  2: "object-shadow object-shadow--2",
+  3: "object-shadow object-shadow--3",
+  4: "object-shadow object-shadow--4",
+};
+
+export function ObjectShadow({ depth = 2 }: { depth?: 1 | 2 | 3 | 4 }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={cn("pointer-events-none absolute inset-0 -z-10 rounded-[inherit]", depthClass[depth])}
+    />
+  );
+}
