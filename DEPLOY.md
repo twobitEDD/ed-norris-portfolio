@@ -22,17 +22,27 @@ Standalone **2bitENT** agency site.
 | [Settings](https://railway.com/project/3b864b9d-7403-40f2-9a9a-863f393d9e70/service/9803a8a5-536f-44ab-aef6-21651ed48de9/settings) | |
 | Domain | **2bitent.com** |
 
-### Railway setup (one-time)
+### Railway setup (one-time) — pick ONE path
 
-On **2bitent-com** service settings:
+#### Path A — GitHub Actions deploy (fastest if you have a Railway token)
+
+1. Create token: https://railway.com/account/tokens
+2. Add repo secret **`RAILWAY_TOKEN`** at https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions
+3. Re-run workflow: **Actions → Deploy 2bitENT site → Run workflow** (branch `2bitent-site`)
+
+This deploys to **2bitent-com** without changing the portfolio service.
+
+#### Path B — Railway GitHub integration
+
+On [2bitent-com settings](https://railway.com/project/3b864b9d-7403-40f2-9a9a-863f393d9e70/service/9803a8a5-536f-44ab-aef6-21651ed48de9/settings):
 
 1. **Source** → `twobitEDD/ed-norris-portfolio`
 2. **Branch** → `2bitent-site` (not `main`)
-3. **Builder** → Dockerfile (`Dockerfile` at branch root)
+3. **Builder** → Dockerfile
 4. **Variables** → `NEXT_PUBLIC_SITE_URL=https://2bitent.com`
 5. **Redeploy**
 
-**Do not change** the **2bitdev-portfolio** service — it stays on `main` + `Dockerfile`.
+**Do not change** **2bitdev-portfolio** — it stays on `main`.
 
 ### Previous source (replace)
 
