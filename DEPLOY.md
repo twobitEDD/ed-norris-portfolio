@@ -32,7 +32,8 @@ railway link -w "CO2T Team" -p 3b864b9d-7403-40f2-9a9a-863f393d9e70 -e productio
 
 ### Do not use
 
-- **2bitent-site** (`8334c011-9071-46ca-bb97-7929d618d176`) — 2bitENT agency site; use `Dockerfile.ent` + `DEPLOY-ENT.md`
+- **2bitent-site** (`9803a8a5-536f-44ab-aef6-21651ed48de9`) — 2bitENT agency site; use `Dockerfile.ent` + `DEPLOY-ENT.md`
+- **2bitent-site (legacy)** (`8334c011-9071-46ca-bb97-7929d618d176`) — deprecated; do not deploy
 - **edd-norris-portfolio** (`7d600c0a-942c-4e56-b964-7c32eabe6b35`) — duplicate; GitHub source disconnected; stale `railway up` deploy only. Remove in dashboard when convenient. Do not reconnect GitHub here.
 
 ## Duplicate deploy status (2026-07-15)

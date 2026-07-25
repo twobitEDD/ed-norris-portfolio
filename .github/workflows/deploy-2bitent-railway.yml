@@ -4,7 +4,7 @@
 # Create at https://railway.com/account/tokens
 #
 # Railway service must also be configured (one-time):
-#   Service: 2bitent-site (8334c011-9071-46ca-bb97-7929d618d176)
+#   Service: 2bitent-site (9803a8a5-536f-44ab-aef6-21651ed48de9)
 #   Variables: RAILWAY_DOCKERFILE_PATH=Dockerfile.ent
 #              NEXT_PUBLIC_SITE_URL=https://2bitent.com
 #   Source: twobitEDD/ed-norris-portfolio → main
@@ -52,5 +52,5 @@ jobs:
             exit 1
           fi
           railway redeploy \
-            --service 8334c011-9071-46ca-bb97-7929d618d176 \
+            --service 9803a8a5-536f-44ab-aef6-21651ed48de9 \
             --yes
