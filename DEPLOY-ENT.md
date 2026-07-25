@@ -2,6 +2,47 @@
 
 Agency site (`apps/ent`) for **2bit Entertainment / 2bitENT**.
 
+## Why no builds after merge?
+
+The overhaul **is on `main`** (merged via PR #6), but **2bitent.com still serves the old site** because the Railway **2bitent-site** service was never reconfigured to build from this monorepo.
+
+| What happened | Status |
+|---------------|--------|
+| Code merged to `main` | ✅ Done |
+| `apps/ent` builds locally (`npm run build:ent`) | ✅ Works |
+| Railway **2bitent-site** connected to monorepo + `Dockerfile.ent` | ❌ **Not done** |
+| GitHub Action `deploy-2bitent-railway.yml` has `RAILWAY_TOKEN` secret | ❌ **Likely missing** |
+
+The **2bitdev-portfolio** service only watches `apps/personal/**` via root `railway.toml` — ENT changes do not trigger that service.
+
+GitHub's **Deploy to GitHub Pages** workflow is unrelated (optional static fallback for 2bitDEV); it does not deploy 2bitent.com.
+
+## One-time Railway setup (required)
+
+In [Railway → twobitENT project → 2bitent-site](https://railway.com/project/3b864b9d-7403-40f2-9a9a-863f393d9e70):
+
+1. **Settings → Source** → Connect `twobitEDD/ed-norris-portfolio` branch `main`
+2. **Settings → Build** → Builder: **Dockerfile**
+3. **Variables** (service-level):
+   - `RAILWAY_DOCKERFILE_PATH` = `Dockerfile.ent`
+   - `NEXT_PUBLIC_SITE_URL` = `https://2bitent.com`
+4. **Settings → Deploy** → Watch paths (optional but recommended):
+   - `apps/ent/**`
+   - `Dockerfile.ent`
+   - `package.json`
+   - `package-lock.json`
+5. Click **Deploy** / **Redeploy** to build from current `main`
+
+## GitHub Actions deploy (optional backup)
+
+Workflow: `.github/workflows/deploy-2bitent-railway.yml`
+
+Add repo secret **`RAILWAY_TOKEN`** ([Railway account tokens](https://railway.com/account/tokens)).
+
+On push to `main` touching `apps/ent/**`, the workflow runs `railway redeploy` on **2bitent-site**.
+
+You can also trigger manually: **Actions → Deploy 2bitENT to Railway → Run workflow**.
+
 ## Standard workflow
 
 **Deploy via GitHub → Railway.** Do not use `railway up` CLI uploads for production.
