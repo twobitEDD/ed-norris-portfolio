@@ -1,4 +1,4 @@
-# 2bitent-site
+# twobitent-site
 
 **Standalone** marketing site for [2bit Entertainment (2bitENT)](https://2bitent.com).
 
@@ -6,32 +6,27 @@
 
 | | |
 |---|---|
-| **Source of truth (live now)** | [`ed-norris-portfolio` → `2bitent-site` branch](https://github.com/twobitEDD/ed-norris-portfolio/tree/2bitent-site) |
-| **Target repo** (publish pending) | https://github.com/twobitEDD/2bitent-site |
-| **Release archive** | [v0.1.0-2bitent-site](https://github.com/twobitEDD/ed-norris-portfolio/releases/tag/v0.1.0-2bitent-site) (includes `2bitent-site-source.tar.gz`) |
+| **Canonical repo** | https://github.com/twobitENT/twobitent-site |
+| **Staging branch** (until published) | [`ed-norris-portfolio` → `2bitent-site`](https://github.com/twobitEDD/ed-norris-portfolio/tree/2bitent-site) |
 
 Standalone site code — **not** part of [2bitDEV portfolio](https://github.com/twobitEDD/ed-norris-portfolio) `main`.
 
-### Publish to `twobitEDD/2bitent-site`
+### Publish to `twobitENT/twobitent-site`
 
-The Cursor/GitHub integration cannot create new repos in the `twobitEDD` account. One-time setup:
-
-1. [Create empty repo `2bitent-site`](https://github.com/new?name=2bitent-site&description=2bitENT.com+agency+site)
-2. Add **`GH_PAT`** (classic token, `repo` scope) at [repo secrets](https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions)
-3. Run **Actions → Publish 2bitent-site repository** (or push to `2bitent-site` branch)
+1. [Create empty repo `twobitent-site`](https://github.com/organizations/twobitENT/repositories/new?name=twobitent-site&description=2bitENT.com+agency+site) in the **twobitENT** org (no README)
+2. Add **`GH_PAT`** (classic token, `repo` scope, twobitENT org access) at [repo secrets](https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions)
+3. Run **Actions → Publish twobitent-site repository** — or locally: `./scripts/publish-to-twobitent-site.sh`
 
 ## Design
 
-Inspired by the 2bitDEV personal portfolio aesthetic (iPad/iPhone device frames, cream paper surfaces, polaroid project photos) but built for **2bitENT agency** positioning:
+AI-augmented production studio — charcoal desk aesthetic with device frames, paper surfaces, and polaroid work:
 
-- Charcoal production studio (not personal wood desk)
-- *More effective hours. Same team.* — AI-augmented software & production
-- Service springboard, before/after workflow story, shipped work polaroids
+- *More effective hours. Same team.*
+- Before/after workflow story, service springboard, shipped work polaroids
 
 ## Stack
 
-- Next.js 15 (App Router)
-- React 19 · TypeScript · Tailwind CSS · Framer Motion
+Next.js 15 · React 19 · TypeScript · Tailwind CSS · Framer Motion
 
 ## Local development
 
@@ -40,15 +35,13 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
 ## Deploy
 
-Railway → **2bitent.com**. Point the **2bitent-com** service at branch `2bitent-site` on this repo. See [DEPLOY.md](./DEPLOY.md).
+Railway → **2bitent.com**. Point **2bitent-com** at `twobitENT/twobitent-site` → `main` → `Dockerfile`. See [DEPLOY.md](./DEPLOY.md).
 
-## Related repos
+## Related
 
 | Repo | Site |
 |------|------|
-| `twobitEDD/ed-norris-portfolio` | [2bitdev.com](https://2bitdev.com) — personal portfolio |
-| `twobitEDD/2bitent-site` | [2bitent.com](https://2bitent.com) — agency site (this repo) |
+| `twobitEDD/ed-norris-portfolio` | [2bitdev.com](https://2bitdev.com) |
+| `twobitENT/twobitent-site` | [2bitent.com](https://2bitent.com) |

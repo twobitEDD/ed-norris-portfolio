@@ -1,12 +1,12 @@
-# Publishes standalone 2bitENT site code to twobitEDD/2bitent-site.
+# Publishes standalone 2bitENT site code to twobitENT/twobitent-site.
 #
-# Setup (one-time, by repo owner):
-#   1. Create empty repo: https://github.com/new?name=2bitent-site&description=2bitENT.com+agency+site
-#   2. Add secret GH_PAT (repo scope) at:
+# Setup (one-time):
+#   1. Create empty repo: https://github.com/organizations/twobitENT/repositories/new?name=twobitent-site
+#   2. Add secret GH_PAT (repo scope, twobitENT org access) at:
 #      https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions
 #   3. Re-run this workflow (or push to 2bitent-site branch)
 
-name: Publish 2bitent-site repository
+name: Publish twobitent-site repository
 
 on:
   workflow_dispatch:
@@ -30,15 +30,15 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Publish to twobitEDD/2bitent-site
+      - name: Publish to twobitENT/twobitent-site
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
-          TARGET="twobitEDD/2bitent-site"
-          CREATE_URL="https://github.com/new?name=2bitent-site&description=2bitENT.com+agency+site"
+          TARGET="twobitENT/twobitent-site"
+          CREATE_URL="https://github.com/organizations/twobitENT/repositories/new?name=twobitent-site&description=2bitENT.com+agency+site"
 
           if [ -n "${GH_PAT:-}" ]; then
             export GH_TOKEN="$GH_PAT"
@@ -64,7 +64,7 @@ jobs:
             echo ""
             echo "To publish the standalone 2bitENT site repo:"
             echo "  1. Create the empty repo: ${CREATE_URL}"
-            echo "  2. Add GH_PAT (classic token with repo scope) to:"
+            echo "  2. Add GH_PAT (classic token with repo scope + twobitENT org access) to:"
             echo "     https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions"
             echo "  3. Re-run this workflow"
             echo ""
@@ -76,7 +76,7 @@ jobs:
           echo "Creating ${TARGET}..."
           gh repo create "$TARGET" \
             --public \
-            --description "2bitENT.com — agency site" \
+            --description "2bitENT.com — AI-augmented production studio" \
             --source=. \
             --remote=ent \
             --push

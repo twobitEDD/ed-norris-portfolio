@@ -10,7 +10,7 @@ Standalone **2bitENT** agency site.
 | Branch | **`2bitent-site`** (standalone site at repo root — not `main`) |
 | Portfolio (`main`) | **Untouched** — still deploys 2bitdev.com only |
 
-> **Goal:** Move to dedicated `twobitEDD/2bitent-site` repo when created. Until then this branch is the ENT source of truth.
+> **Goal:** Canonical home is `twobitENT/twobitent-site`. Until published, branch `2bitent-site` here is the source of truth.
 
 ## Railway service
 
@@ -32,12 +32,12 @@ Standalone **2bitENT** agency site.
 
 This deploys to **2bitent-com** without changing the portfolio service.
 
-#### Path B — Railway GitHub integration
+#### Path B — Railway GitHub integration (recommended once repo exists)
 
 On [2bitent-com settings](https://railway.com/project/3b864b9d-7403-40f2-9a9a-863f393d9e70/service/9803a8a5-536f-44ab-aef6-21651ed48de9/settings):
 
-1. **Source** → `twobitEDD/ed-norris-portfolio`
-2. **Branch** → `2bitent-site` (not `main`)
+1. **Source** → `twobitENT/twobitent-site` (or interim: `twobitEDD/ed-norris-portfolio` branch `2bitent-site`)
+2. **Branch** → `main` (or `2bitent-site` for interim)
 3. **Builder** → Dockerfile
 4. **Variables** → `NEXT_PUBLIC_SITE_URL=https://2bitent.com`
 5. **Redeploy**
