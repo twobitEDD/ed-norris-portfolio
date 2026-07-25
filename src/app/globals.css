@@ -26,8 +26,8 @@
   --device-bezel-to: #6e6e72;
   --device-ring: rgba(0, 0, 0, 0.12);
 
-  --technology: #4da4c9;
-  --software: #4da4c9;
+  --technology: #33ccff;
+  --software: #33ccff;
   --branding: #e8a838;
   --campaigns: #9b6fd4;
   --interactive: #7c5cc7;
@@ -77,9 +77,28 @@ body {
 /* Ambient studio glow */
 .ent-ambient-glow {
   background:
-    radial-gradient(ellipse 60% 45% at 15% 10%, rgba(77, 164, 201, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 45% at 15% 10%, rgba(51, 204, 255, 0.14) 0%, transparent 55%),
     radial-gradient(ellipse 50% 40% at 85% 20%, rgba(232, 168, 56, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse 70% 50% at 50% 100%, rgba(20, 26, 36, 0.9) 0%, transparent 60%);
+}
+
+/* Studio floor texture — desk surface for polaroid/work sections */
+.ent-studio-floor {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(18, 22, 30, 0.95) 0%, transparent 70%),
+    linear-gradient(180deg, transparent 0%, rgba(8, 10, 14, 0.6) 100%);
+}
+
+/* Hero device composition */
+.hero-device-float {
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.45));
+}
+
+/* Mission paper — larger torn edges */
+.mission-paper {
+  box-shadow:
+    var(--shadow-paper),
+    0 32px 64px rgba(0, 0, 0, 0.35);
 }
 
 /* Paper */

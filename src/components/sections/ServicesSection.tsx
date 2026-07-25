@@ -7,12 +7,13 @@ import { springboardIconGridStyleProps } from "@/design/ent-language";
 import { cn } from "@/lib/cn";
 
 function ServicesSpringboard() {
-  const gridStyle = springboardIconGridStyleProps(4, 20, 80);
+  const gridStyle = springboardIconGridStyleProps(4, 16, 72);
 
   return (
     <div className="ent-springboard-wallpaper relative flex h-full min-h-0 flex-col overflow-hidden">
-      <div className="relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden px-5 pb-6 pt-4">
-        <p className="mb-4 font-mono text-[9px] uppercase tracking-[0.2em] text-white/50">2bitENT Services</p>
+      <div className="relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden px-4 pb-5 pt-3">
+        <p className="mb-1 text-xs text-white/70">We help teams build</p>
+        <p className="mb-4 font-display text-sm font-semibold text-white">Digital products worth shipping.</p>
         <div className="springboard-icon-grid flex-1 content-center" style={gridStyle}>
           {services.map((service) => {
             const Icon = service.icon;
@@ -24,19 +25,12 @@ function ServicesSpringboard() {
                 >
                   <Icon className="h-[42%] w-[42%] text-white" strokeWidth={1.75} />
                 </div>
-                <span className={cn("springboard-icon-label text-center font-medium", "text-[10px] leading-tight")}>
+                <span className={cn("springboard-icon-label text-center font-medium", "text-[9px] leading-tight")}>
                   {service.shortTitle}
                 </span>
               </div>
             );
           })}
-        </div>
-        <div
-          className="springboard-widget mt-2 flex flex-col justify-end px-4 py-3"
-          style={{ gridColumn: "span 2" }}
-        >
-          <p className="font-mono text-[8px] uppercase tracking-[0.14em] text-white/45">Studio tagline</p>
-          <p className="mt-1 text-sm font-medium text-white">Whatever your team needs to ship</p>
         </div>
       </div>
     </div>
@@ -55,27 +49,27 @@ export function ServicesSection() {
         >
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-technology">Services</p>
           <h2 className="mt-3 font-display text-3xl font-bold text-screen-text sm:text-4xl">
-            Whatever your team needs to ship
+            Strategy. Design. Engineering. AI.
           </h2>
           <p className="mt-4 text-screen-muted">
-            Technology, brand, campaign, and interactive production — delivered by specialists who
-            integrate AI into real workflows, not slide decks.
+            Four integrated capabilities — delivered by specialists who embed AI into real workflows, not slide decks.
           </p>
-          <div className="mt-10 space-y-6">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
             {services.map((service) => {
               const Icon = service.icon;
               return (
-                <div key={service.id} className="flex gap-4">
+                <div
+                  key={service.id}
+                  className="rounded-xl border border-white/5 bg-ent-slate/50 p-4 transition hover:border-technology/20"
+                >
                   <div
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+                    className="mb-3 flex h-9 w-9 items-center justify-center rounded-lg"
                     style={{ background: service.gradient }}
                   >
-                    <Icon className="h-5 w-5 text-white" strokeWidth={1.75} />
+                    <Icon className="h-4 w-4 text-white" strokeWidth={1.75} />
                   </div>
-                  <div>
-                    <h3 className="font-display text-lg font-semibold text-screen-text">{service.title}</h3>
-                    <p className="mt-1 text-sm leading-relaxed text-screen-muted">{service.description}</p>
-                  </div>
+                  <h3 className="font-display text-sm font-semibold text-screen-text">{service.title}</h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-screen-muted">{service.description}</p>
                 </div>
               );
             })}
@@ -87,9 +81,21 @@ export function ServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.55, delay: 0.1 }}
+          className="relative"
         >
-          <DeviceViewer device="ipad" size="lg" glow="cyan">
+          <DeviceViewer device="phone" size="md" glow="cyan" className="mx-auto max-w-[320px] rotate-[3deg] lg:ml-auto">
             <ServicesSpringboard />
+          </DeviceViewer>
+          <DeviceViewer
+            device="ipad"
+            size="sm"
+            glow="none"
+            className="absolute -right-2 top-8 hidden w-[55%] rotate-[-4deg] opacity-90 lg:block"
+          >
+            <div className="ent-springboard-wallpaper flex h-full flex-col justify-end p-5">
+              <p className="font-display text-lg font-bold text-white">Integrated production.</p>
+              <p className="mt-1 text-xs text-white/60">For ambitious teams and brands.</p>
+            </div>
           </DeviceViewer>
         </motion.div>
       </div>

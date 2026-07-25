@@ -16,7 +16,7 @@ const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || site.domain),
-  title: "2bitENT — Software & Production Studio",
+  title: "2bitENT — More effective hours. Same team.",
   description: site.description,
   applicationName: "2bitENT",
   openGraph: {
