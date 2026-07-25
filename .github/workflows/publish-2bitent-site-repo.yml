@@ -1,4 +1,10 @@
-# Creates twobitEDD/2bitent-site from this branch and pushes standalone site code.
+# Publishes standalone 2bitENT site code to twobitEDD/2bitent-site.
+#
+# Setup (one-time, by repo owner):
+#   1. Create empty repo: https://github.com/new?name=2bitent-site&description=2bitENT.com+agency+site
+#   2. Add secret GH_PAT (repo scope) at:
+#      https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions
+#   3. Re-run this workflow (or push to 2bitent-site branch)
 
 name: Publish 2bitent-site repository
 
@@ -6,8 +12,6 @@ on:
   workflow_dispatch:
   push:
     branches: [2bitent-site]
-    paths:
-      - ".github/workflows/publish-2bitent-site-repo.yml"
 
 permissions:
   contents: write
@@ -26,28 +30,55 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create twobitEDD/2bitent-site if missing and push
+      - name: Publish to twobitEDD/2bitent-site
         env:
-          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
+
+          TARGET="twobitEDD/2bitent-site"
+          CREATE_URL="https://github.com/new?name=2bitent-site&description=2bitENT.com+agency+site"
+
+          if [ -n "${GH_PAT:-}" ]; then
+            export GH_TOKEN="$GH_PAT"
+            echo "Using GH_PAT for publish."
+          else
+            export GH_TOKEN="$GITHUB_TOKEN"
+            echo "::warning::GH_PAT secret is not set. Cannot create ${TARGET}; will only push if the repo already exists."
+          fi
+
           gh auth status
 
-          if gh repo view twobitEDD/2bitent-site >/dev/null 2>&1; then
+          if gh repo view "$TARGET" >/dev/null 2>&1; then
             echo "Repository exists — pushing latest to main."
-            git remote add ent "https://x-access-token:${GH_TOKEN}@github.com/twobitEDD/2bitent-site.git" 2>/dev/null || \
-              git remote set-url ent "https://x-access-token:${GH_TOKEN}@github.com/twobitEDD/2bitent-site.git"
+            git remote add ent "https://x-access-token:${GH_TOKEN}@github.com/${TARGET}.git" 2>/dev/null || \
+              git remote set-url ent "https://x-access-token:${GH_TOKEN}@github.com/${TARGET}.git"
             git push ent HEAD:main --force
-            echo "https://github.com/twobitEDD/2bitent-site"
+            echo "Published: https://github.com/${TARGET}"
             exit 0
           fi
 
-          echo "Creating twobitEDD/2bitent-site..."
-          gh repo create twobitEDD/2bitent-site \
+          if [ -z "${GH_PAT:-}" ]; then
+            echo "::error::${TARGET} does not exist yet and GH_PAT is not configured."
+            echo ""
+            echo "To publish the standalone 2bitENT site repo:"
+            echo "  1. Create the empty repo: ${CREATE_URL}"
+            echo "  2. Add GH_PAT (classic token with repo scope) to:"
+            echo "     https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions"
+            echo "  3. Re-run this workflow"
+            echo ""
+            echo "Until then, code lives on branch 2bitent-site:"
+            echo "  https://github.com/twobitEDD/ed-norris-portfolio/tree/2bitent-site"
+            exit 1
+          fi
+
+          echo "Creating ${TARGET}..."
+          gh repo create "$TARGET" \
             --public \
             --description "2bitENT.com — agency site" \
             --source=. \
             --remote=ent \
             --push
 
-          echo "Published: https://github.com/twobitEDD/2bitent-site"
+          echo "Published: https://github.com/${TARGET}"

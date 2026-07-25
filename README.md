@@ -6,11 +6,19 @@
 
 | | |
 |---|---|
-| **Canonical repo** | https://github.com/twobitEDD/2bitent-site |
-| **Staging branch** (until repo exists) | [`ed-norris-portfolio` → `2bitent-site`](https://github.com/twobitEDD/ed-norris-portfolio/tree/2bitent-site) |
-| **Release archive** | [v0.1.0-2bitent-site](https://github.com/twobitEDD/ed-norris-portfolio/releases/tag/v0.1.0-2bitent-site) |
+| **Source of truth (live now)** | [`ed-norris-portfolio` → `2bitent-site` branch](https://github.com/twobitEDD/ed-norris-portfolio/tree/2bitent-site) |
+| **Target repo** (publish pending) | https://github.com/twobitEDD/2bitent-site |
+| **Release archive** | [v0.1.0-2bitent-site](https://github.com/twobitEDD/ed-norris-portfolio/releases/tag/v0.1.0-2bitent-site) (includes `2bitent-site-source.tar.gz`) |
 
-Not part of [2bitDEV portfolio](https://github.com/twobitEDD/ed-norris-portfolio) `main` branch.
+Standalone site code — **not** part of [2bitDEV portfolio](https://github.com/twobitEDD/ed-norris-portfolio) `main`.
+
+### Publish to `twobitEDD/2bitent-site`
+
+The Cursor/GitHub integration cannot create new repos in the `twobitEDD` account. One-time setup:
+
+1. [Create empty repo `2bitent-site`](https://github.com/new?name=2bitent-site&description=2bitENT.com+agency+site)
+2. Add **`GH_PAT`** (classic token, `repo` scope) at [repo secrets](https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions)
+3. Run **Actions → Publish 2bitent-site repository** (or push to `2bitent-site` branch)
 
 ## Design
 
