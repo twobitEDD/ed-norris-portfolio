@@ -1,0 +1,25 @@
+# 2bitENT agency site — deploy to 2bitent.com on Railway.
+#
+# Deploy via GitHub push only — see DEPLOY.md (do NOT use `railway up`).
+#
+# Railway (twobitENT project):
+#   Service: 2bitent-site (9803a8a5-536f-44ab-aef6-21651ed48de9)
+#   Domain:  2bitent.com
+
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
+watchPatterns = [
+  "src/**",
+  "public/**",
+  "package.json",
+  "package-lock.json",
+  "railway.toml",
+  "Dockerfile",
+]
+
+[deploy]
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+healthcheckPath = "/"
+healthcheckTimeout = 300

@@ -1,0 +1,38 @@
+# Deploy 2bitENT branch to Railway (service 2bitent-com).
+# Does NOT affect 2bitdev-portfolio on main.
+#
+# Requires GitHub secret: RAILWAY_TOKEN
+
+name: Deploy 2bitENT site
+
+on:
+  push:
+    branches: [2bitent-site]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-2bitent-site-branch
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli@4.6.3
+
+      - name: Redeploy 2bitent-com on Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "::warning::RAILWAY_TOKEN not set — skipping CLI redeploy. Configure Railway GitHub source to branch 2bitent-site instead."
+            exit 0
+          fi
+          railway redeploy --service 9803a8a5-536f-44ab-aef6-21651ed48de9 --yes
