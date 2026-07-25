@@ -359,11 +359,11 @@ function SpringboardMiniWidgets({
         )}
         style={{
           gridColumn: showCalendar ? "3" : "3 / span 2",
-          gridRow: showCalendar ? "1 / span 2" : "2",
+          gridRow: "2",
         }}
       >
         <div className="springboard-widget-studio-inner">
-          <p className="springboard-widget-studio-label font-medium text-white/45">Norris Studio</p>
+          <p className="springboard-widget-studio-label font-medium text-white/45">2bitDEV.com</p>
           <p className="springboard-widget-studio-count font-semibold tabular-nums leading-none text-white">
             {tabletApps.length}
           </p>
