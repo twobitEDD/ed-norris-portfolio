@@ -44,6 +44,11 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Deploy
 
+| Target | URL |
+|--------|-----|
+| **Preview (GitHub Pages)** | https://twobitEDD.github.io/ed-norris-portfolio/2bitent/ |
+| **Production** | [2bitent.com](https://2bitent.com) via Railway → see [DEPLOY.md](./DEPLOY.md) |
+
 Railway → **2bitent.com**. See [DEPLOY.md](./DEPLOY.md).
 
 ## Related repos
