@@ -1,5 +1,4 @@
 # Creates twobitEDD/2bitent-site from this branch and pushes standalone site code.
-# Trigger manually after ensuring org allows workflow to create repositories.
 
 name: Publish 2bitent-site repository
 
@@ -20,47 +19,35 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: 2bitent-site
+          fetch-depth: 0
 
       - name: Configure git
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Install GitHub CLI
-        run: npm install -g gh@2.63.2
-
       - name: Create twobitEDD/2bitent-site if missing and push
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          TOKEN="${GH_PAT:-$GH_TOKEN}"
+          gh auth status
 
           if gh repo view twobitEDD/2bitent-site >/dev/null 2>&1; then
-            echo "Repository twobitEDD/2bitent-site already exists — pushing latest."
-            git remote add ent "https://x-access-token:${TOKEN}@github.com/twobitEDD/2bitent-site.git"
+            echo "Repository exists — pushing latest to main."
+            git remote add ent "https://x-access-token:${GH_TOKEN}@github.com/twobitEDD/2bitent-site.git" 2>/dev/null || \
+              git remote set-url ent "https://x-access-token:${GH_TOKEN}@github.com/twobitEDD/2bitent-site.git"
             git push ent HEAD:main --force
+            echo "https://github.com/twobitEDD/2bitent-site"
             exit 0
           fi
 
           echo "Creating twobitEDD/2bitent-site..."
-          if [ -n "${GH_PAT:-}" ]; then
-            gh repo create twobitEDD/2bitent-site \
-              --public \
-              --description "2bitENT.com — agency site" \
-              --source=. \
-              --remote=origin \
-              --push
-          else
-            gh api -X POST /orgs/twobitEDD/repos \
-              -f name=2bitent-site \
-              -f description='2bitENT.com — agency site' \
-              -F private=false \
-              || gh repo create 2bitent-site --public --description "2bitENT.com — agency site"
-            git remote add ent "https://x-access-token:${TOKEN}@github.com/twobitEDD/2bitent-site.git" 2>/dev/null || \
-              git remote set-url ent "https://x-access-token:${TOKEN}@github.com/twobitEDD/2bitent-site.git"
-            git push -u ent HEAD:main --force
-          fi
+          gh repo create twobitEDD/2bitent-site \
+            --public \
+            --description "2bitENT.com — agency site" \
+            --source=. \
+            --remote=ent \
+            --push
 
           echo "Published: https://github.com/twobitEDD/2bitent-site"

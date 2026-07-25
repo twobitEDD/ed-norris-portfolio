@@ -2,7 +2,15 @@
 
 **Standalone** marketing site for [2bit Entertainment (2bitENT)](https://2bitent.com).
 
-This is its **own repository** — not part of [ed-norris-portfolio](https://github.com/twobitEDD/ed-norris-portfolio) / 2bitDEV.com.
+## Repository
+
+| | |
+|---|---|
+| **Canonical repo** | https://github.com/twobitEDD/2bitent-site |
+| **Staging branch** (until repo exists) | [`ed-norris-portfolio` → `2bitent-site`](https://github.com/twobitEDD/ed-norris-portfolio/tree/2bitent-site) |
+| **Release archive** | [v0.1.0-2bitent-site](https://github.com/twobitEDD/ed-norris-portfolio/releases/tag/v0.1.0-2bitent-site) |
+
+Not part of [2bitDEV portfolio](https://github.com/twobitEDD/ed-norris-portfolio) `main` branch.
 
 ## Design
 
