@@ -1,0 +1,56 @@
+# Deploy 2bitENT (apps/ent) to Railway on push to main.
+#
+# Requires GitHub repo secret: RAILWAY_TOKEN
+# Create at https://railway.com/account/tokens
+#
+# Railway service must also be configured (one-time):
+#   Service: 2bitent-site (8334c011-9071-46ca-bb97-7929d618d176)
+#   Variables: RAILWAY_DOCKERFILE_PATH=Dockerfile.ent
+#              NEXT_PUBLIC_SITE_URL=https://2bitent.com
+#   Source: twobitEDD/ed-norris-portfolio → main
+#
+# See DEPLOY-ENT.md for full setup.
+
+name: Deploy 2bitENT to Railway
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/ent/**"
+      - "Dockerfile.ent"
+      - "railway.ent.toml"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/deploy-2bitent-railway.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-2bitent
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli@4.6.3
+
+      - name: Deploy to 2bitent-site
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "::error::RAILWAY_TOKEN secret is not set. Add it in GitHub repo Settings → Secrets."
+            exit 1
+          fi
+          railway redeploy \
+            --service 8334c011-9071-46ca-bb97-7929d618d176 \
+            --yes
