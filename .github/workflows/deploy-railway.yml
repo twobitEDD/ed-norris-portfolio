@@ -1,7 +1,8 @@
-# Deploy 2bitENT branch to Railway (service 2bitent-com).
-# Does NOT affect 2bitdev-portfolio on main.
+# Deploy 2bitENT branch to Railway service 2bitent-com.
+# Does NOT touch 2bitdev-portfolio on main.
 #
-# Requires GitHub secret: RAILWAY_TOKEN
+# Requires GitHub repo secret: RAILWAY_TOKEN
+# Create at https://railway.com/account/tokens
 
 name: Deploy 2bitENT site
 
@@ -23,16 +24,31 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://2bitent.com
 
       - name: Install Railway CLI
         run: npm install -g @railway/cli@4.6.3
 
-      - name: Redeploy 2bitent-com on Railway
+      - name: Deploy to 2bitent-com
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
           if [ -z "$RAILWAY_TOKEN" ]; then
-            echo "::warning::RAILWAY_TOKEN not set — skipping CLI redeploy. Configure Railway GitHub source to branch 2bitent-site instead."
-            exit 0
+            echo "::error::RAILWAY_TOKEN secret is missing."
+            echo "Add it at: https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions"
+            echo "Token from: https://railway.com/account/tokens"
+            exit 1
           fi
-          railway redeploy --service 9803a8a5-536f-44ab-aef6-21651ed48de9 --yes
+          railway up \
+            --service 9803a8a5-536f-44ab-aef6-21651ed48de9 \
+            --environment production \
+            --detach \
+            --ci
