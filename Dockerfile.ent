@@ -1,0 +1,26 @@
+# 2bitENT site — Railway production image (monorepo root).
+FROM node:20-alpine AS deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY apps/ent/package.json apps/ent/
+RUN npm ci --workspace=@ed-norris/ent
+
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY package.json package-lock.json ./
+COPY apps/ent apps/ent
+RUN npm run build --workspace=@ed-norris/ent
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
+COPY --from=builder /app/package.json /app/package-lock.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/apps/ent ./apps/ent
+
+EXPOSE 3000
+CMD ["npm", "run", "start:ent"]

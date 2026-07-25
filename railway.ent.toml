@@ -1,0 +1,28 @@
+# 2bitENT agency site (apps/ent) — deploy to 2bitent.com on Railway.
+# Monorepo root: npm run build:ent / start:ent delegate to @ed-norris/ent.
+#
+# Deploy via GitHub push only — see DEPLOY-ENT.md.
+#
+# Railway (twobitENT project):
+#   Service: 2bitent-site (8334c011-9071-46ca-bb97-7929d618d176)
+#   GitHub:  twobitEDD/ed-norris-portfolio → main (configure in dashboard)
+#   Domain:  2bitent.com
+#
+# Use Dockerfile.ent as the service Dockerfile path in Railway settings.
+
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile.ent"
+watchPatterns = [
+  "apps/ent/**",
+  "package.json",
+  "package-lock.json",
+  "railway.ent.toml",
+]
+
+[deploy]
+startCommand = "npm run start:ent"
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+healthcheckPath = "/"
+healthcheckTimeout = 300
