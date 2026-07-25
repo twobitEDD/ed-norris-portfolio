@@ -9,7 +9,7 @@
 #   Domain:  2bitdev.com (attach in dashboard — see DEPLOY.md)
 #   URL:     https://2bitdev-portfolio-production.up.railway.app
 #
-# FORBIDDEN: never CLI deploy to 2bitent-site (8334c011-9071-46ca-bb97-7929d618d176).
+# 2bitENT agency site uses Dockerfile.ent on service 9803a8a5-536f-44ab-aef6-21651ed48de9 — see DEPLOY-ENT.md.
 
 [build]
 builder = "dockerfile"
