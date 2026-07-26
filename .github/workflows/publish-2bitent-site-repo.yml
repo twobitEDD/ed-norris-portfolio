@@ -1,9 +1,8 @@
 # Publishes standalone 2bitENT site to twobitENT/twobitent-site.
 #
-# Requires GH_PAT (classic, repo scope) with twobitENT org access:
-#   https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions
-#
-# Without GH_PAT, use "Export twobitent-site bundle" workflow instead (no secrets).
+# Auth (pick one — add at repo secrets):
+#   GH_PAT          — classic token, repo scope, twobitENT org access
+#   TWOBITENT_DEPLOY_KEY — SSH private key (deploy key with write on twobitent-site)
 
 name: Publish twobitent-site repository
 
@@ -33,24 +32,34 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Single-commit standalone history (no portfolio monorepo ancestry)
           git checkout --orphan standalone-main
           git add -A
-          git commit -m "Initial commit: 2bitENT agency site"
+          git commit -m "feat: 2bitENT agency site — AI-augmented production studio"
 
-      - name: Publish with GH_PAT
+      - name: Publish via deploy key (private repo)
+        if: ${{ secrets.TWOBITENT_DEPLOY_KEY != '' }}
+        env:
+          TWOBITENT_DEPLOY_KEY: ${{ secrets.TWOBITENT_DEPLOY_KEY }}
+          TARGET: ${{ github.event.inputs.target || 'twobitENT/twobitent-site' }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          printf '%s\n' "$TWOBITENT_DEPLOY_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts
+          git remote add ent "git@github.com:${TARGET}.git" 2>/dev/null || \
+            git remote set-url ent "git@github.com:${TARGET}.git"
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519 -o IdentitiesOnly=yes" \
+            git push ent standalone-main:main --force
+          echo "Published via deploy key: https://github.com/${TARGET}"
+
+      - name: Publish via GH_PAT
+        if: ${{ secrets.TWOBITENT_DEPLOY_KEY == '' && secrets.GH_PAT != '' }}
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
           TARGET: ${{ github.event.inputs.target || 'twobitENT/twobitent-site' }}
         run: |
           set -euo pipefail
-
-          if [ -z "${GH_PAT:-}" ]; then
-            echo "::warning::GH_PAT not set — skipping automated publish."
-            echo "Use workflow **Export twobitent-site bundle** (no secrets) or add GH_PAT."
-            exit 0
-          fi
-
           export GH_TOKEN="$GH_PAT"
           gh auth status
 
@@ -64,5 +73,11 @@ jobs:
           git remote add ent "https://x-access-token:${GH_TOKEN}@github.com/${TARGET}.git" 2>/dev/null || \
             git remote set-url ent "https://x-access-token:${GH_TOKEN}@github.com/${TARGET}.git"
           git push ent standalone-main:main --force
+          echo "Published via GH_PAT: https://github.com/${TARGET}"
 
-          echo "Published: https://github.com/${TARGET}"
+      - name: No publish credentials configured
+        if: ${{ secrets.TWOBITENT_DEPLOY_KEY == '' && secrets.GH_PAT == '' }}
+        run: |
+          echo "::warning::Neither TWOBITENT_DEPLOY_KEY nor GH_PAT is set — cannot push to twobitENT/twobitent-site."
+          echo "Add one secret at: https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions"
+          echo "Or run locally: git clone -b 2bitent-site --single-branch https://github.com/twobitEDD/ed-norris-portfolio.git . && git remote set-url origin https://github.com/twobitENT/twobitent-site.git && git push -u origin HEAD:main --force"
