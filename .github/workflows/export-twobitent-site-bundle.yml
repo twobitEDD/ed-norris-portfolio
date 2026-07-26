@@ -1,0 +1,80 @@
+# Exports standalone 2bitENT site as downloadable bundle + zip.
+# No secrets required — use when GH_PAT / org repo creation is blocked.
+#
+# After workflow completes:
+#   1. Download artifact "twobitent-site-bundle" from Actions run
+#   2. Create empty repo: https://github.com/organizations/twobitENT/repositories/new?name=twobitent-site
+#   3. Run: ./scripts/bootstrap-twobitent-repo.sh /path/to/twobitent-site.bundle
+
+name: Export twobitent-site bundle
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [2bitent-site]
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 2bitent-site
+
+      - name: Build standalone git bundle and zip
+        run: |
+          set -euo pipefail
+          git bundle create twobitent-site.bundle HEAD
+          git archive --format=zip --output=twobitent-site.zip HEAD
+          ls -lh twobitent-site.bundle twobitent-site.zip
+
+      - name: Upload workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: twobitent-site-bundle
+          path: |
+            twobitent-site.bundle
+            twobitent-site.zip
+          retention-days: 90
+
+      - name: Attach to GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          TAG="v0.2.0-twobitent-site"
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" \
+              --target 2bitent-site \
+              --title "2bitENT standalone site export" \
+              --notes "Download \`twobitent-site.bundle\` or \`twobitent-site.zip\` to bootstrap \`twobitENT/twobitent-site\`. See scripts/bootstrap-twobitent-repo.sh."
+          fi
+          gh release upload "$TAG" twobitent-site.bundle twobitent-site.zip --clobber
+
+      - name: Job summary
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          ## Export ready
+
+          **No GitHub secrets required.**
+
+          ### Bootstrap `twobitENT/twobitent-site` locally
+
+          1. [Create empty repo](https://github.com/organizations/twobitENT/repositories/new?name=twobitent-site) (no README)
+          2. Download `twobitent-site.bundle` from this run's artifacts (or [release v0.2.0-twobitent-site](https://github.com/twobitEDD/ed-norris-portfolio/releases/tag/v0.2.0-twobitent-site))
+          3. Run:
+          ```bash
+          git clone /path/to/twobitent-site.bundle twobitent-site
+          cd twobitent-site
+          git branch -M main
+          git remote add origin https://github.com/twobitENT/twobitent-site.git
+          git push -u origin main
+          ```
+
+          ### Or transfer from personal account
+
+          Create `twobitEDD/twobitent-site` on your user account, push there, then **Settings → Transfer ownership → twobitENT**.
+          EOF

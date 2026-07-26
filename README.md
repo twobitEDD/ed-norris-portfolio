@@ -6,16 +6,21 @@
 
 | | |
 |---|---|
-| **Canonical repo** | https://github.com/twobitENT/twobitent-site |
-| **Staging branch** (until published) | [`ed-norris-portfolio` → `2bitent-site`](https://github.com/twobitEDD/ed-norris-portfolio/tree/2bitent-site) |
+| **Site code (branch)** | [`2bitent-site` branch](https://github.com/twobitEDD/ed-norris-portfolio/tree/2bitent-site) |
+| **Target repo** | https://github.com/twobitENT/twobitent-site |
 
-Standalone site code — **not** part of [2bitDEV portfolio](https://github.com/twobitEDD/ed-norris-portfolio) `main`.
+> `main` on this repo is the **2bitDEV portfolio** — all ENT work is on branch `2bitent-site`.
 
-### Publish to `twobitENT/twobitent-site`
+### Get code into `twobitENT/twobitent-site`
 
-1. [Create empty repo `twobitent-site`](https://github.com/organizations/twobitENT/repositories/new?name=twobitent-site&description=2bitENT.com+agency+site) in the **twobitENT** org (no README)
-2. Add **`GH_PAT`** (classic token, `repo` scope, twobitENT org access) at [repo secrets](https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions)
-3. Run **Actions → Publish twobitent-site repository** — or locally: `./scripts/publish-to-twobitent-site.sh`
+The Cursor bot **cannot** create org repos. Pick one path:
+
+| Path | Secrets? | Steps |
+|------|----------|-------|
+| **A. Bundle export** | None | Actions → **Export twobitent-site bundle** → download artifact → [create empty repo](https://github.com/organizations/twobitENT/repositories/new?name=twobitent-site) → run `./scripts/bootstrap-twobitent-repo.sh ./twobitent-site.bundle` |
+| **B. GH_PAT auto-publish** | `GH_PAT` | Add [classic token](https://github.com/settings/tokens) (`repo` + twobitENT org) to [repo secrets](https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions) → Actions → **Publish twobitent-site repository** |
+| **C. Personal account transfer** | None | Create `twobitEDD/twobitent-site` on your user → push branch → **Settings → Transfer ownership → twobitENT** |
+| **D. One-liner clone** | None | After empty repo exists: `git clone -b 2bitent-site --single-branch https://github.com/twobitEDD/ed-norris-portfolio.git . && git remote set-url origin https://github.com/twobitENT/twobitent-site.git && git push -u origin HEAD:main` |
 
 ## Design
 
