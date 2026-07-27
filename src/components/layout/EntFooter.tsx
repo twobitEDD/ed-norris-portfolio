@@ -5,6 +5,7 @@ const footerNav = [
   { label: "Work", href: "#work" },
   { label: "Services", href: "#services" },
   { label: "Process", href: "#process" },
+  { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -30,6 +31,9 @@ export function EntFooter() {
             <a href={`mailto:${site.email}`} className="chrome-text-muted hover:chrome-text-strong transition">
               Email
             </a>
+            <Link href={site.linkedIn} className="chrome-text-muted hover:chrome-text-strong transition">
+              LinkedIn
+            </Link>
             <Link href="https://2bitdev.com" className="chrome-text-muted hover:chrome-text-strong transition">
               2bitDEV
             </Link>

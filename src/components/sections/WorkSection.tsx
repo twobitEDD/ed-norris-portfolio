@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Polaroid } from "@/components/physical-ui/Polaroid";
 import { featuredProjects } from "@/data/projects";
 
-const rotations = [-4, 2, -2];
+const rotations = [-4, 2, -2, 3];
 
 export function WorkSection() {
   return (
@@ -14,14 +14,13 @@ export function WorkSection() {
       <div className="ent-studio-floor pointer-events-none absolute inset-x-0 bottom-0 h-1/2 opacity-50" aria-hidden />
       <div className="relative mx-auto max-w-6xl">
         <div className="mb-14 text-center">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-technology">Selected work</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-technology">Recent work</p>
           <h2 className="mt-3 font-display text-3xl font-bold text-screen-text sm:text-4xl">
             Platforms, brands, and experiences we&apos;ve shipped
           </h2>
         </div>
 
-        {/* Polaroid strip — concept 04 layout */}
-        <div className="flex flex-col items-center gap-10 sm:flex-row sm:items-end sm:justify-center sm:gap-6 lg:gap-10">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           {featuredProjects.map((project, index) => (
             <motion.article
               key={project.id}
@@ -29,7 +28,7 @@ export function WorkSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.45, delay: index * 0.08 }}
-              className="group w-full max-w-[280px]"
+              className="group mx-auto w-full max-w-[280px]"
               style={{ transform: `rotate(${rotations[index]}deg)` }}
             >
               <Link href={project.href ?? "#"} target={project.href ? "_blank" : undefined} className="block">
@@ -37,6 +36,7 @@ export function WorkSection() {
                   caption={project.title}
                   subtitle={project.caption}
                   gradient={project.gradient}
+                  imageSrc={project.imageSrc}
                   rotation={0}
                   size="lg"
                   className="transition group-hover:scale-[1.02]"

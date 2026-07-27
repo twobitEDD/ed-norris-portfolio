@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Paper } from "@/components/physical-ui/Paper";
-import { missionPoints } from "@/data/site";
+import { missionPoints, site } from "@/data/site";
 
 export function MissionSection() {
   return (
@@ -19,19 +19,19 @@ export function MissionSection() {
           <Paper torn className="mission-paper mx-auto max-w-4xl px-6 py-10 sm:px-12 sm:py-14">
             <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
               <div>
-                <p className="handwritten text-lg text-ink-soft">Production partners, not just vendors.</p>
+                <p className="handwritten text-lg text-ink-soft">Advisors who build, not just recommend.</p>
                 <h2 className="mt-4 font-display text-3xl font-bold leading-[1.1] text-ink sm:text-4xl">
-                  Whatever your team needs to{" "}
+                  Whatever your business needs to{" "}
                   <span className="relative inline-block">
-                    ship
+                    grow responsibly
                     <svg
                       className="absolute -bottom-1 left-0 w-full text-technology"
-                      viewBox="0 0 120 16"
+                      viewBox="0 0 160 16"
                       fill="none"
                       aria-hidden
                     >
                       <path
-                        d="M4 12 C 30 4, 50 14, 116 6"
+                        d="M4 12 C 40 4, 70 14, 156 6"
                         stroke="currentColor"
                         strokeWidth="2.5"
                         strokeLinecap="round"
@@ -39,11 +39,13 @@ export function MissionSection() {
                     </svg>
                   </span>
                 </h2>
+                <p className="handwritten mt-4 text-lg text-technology/90">{site.secondaryTagline}</p>
               </div>
               <div>
                 <p className="text-sm leading-relaxed text-ink-soft sm:text-base">
-                  We&apos;re AI-augmented production specialists. From first brief to final launch, we help
-                  teams move faster, scale smarter, and deliver work that performs.
+                  With nonprofit and for-profit organizations, we build software and systems that make a
+                  sustainable future possible — from carbon traceability at CO2True to brand and production
+                  work for Google, adidas, and Dell.
                 </p>
                 <ul className="mt-8 space-y-4">
                   {missionPoints.map((point) => (

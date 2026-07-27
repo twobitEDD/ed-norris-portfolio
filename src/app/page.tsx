@@ -1,3 +1,4 @@
+import { AboutSection } from "@/components/sections/AboutSection";
 import { BeforeAfterSection } from "@/components/sections/BeforeAfterSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -13,6 +14,7 @@ export default function HomePage() {
       <BeforeAfterSection />
       <ServicesSection />
       <WorkSection />
+      <AboutSection />
       <ContactSection />
     </>
   );

@@ -12,8 +12,8 @@ function ServicesSpringboard() {
   return (
     <div className="ent-springboard-wallpaper relative flex h-full min-h-0 flex-col overflow-hidden">
       <div className="relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden px-4 pb-5 pt-3">
-        <p className="mb-1 text-xs text-white/70">We help teams build</p>
-        <p className="mb-4 font-display text-sm font-semibold text-white">Digital products worth shipping.</p>
+        <p className="mb-1 text-xs text-white/70">We help businesses</p>
+        <p className="mb-4 font-display text-sm font-semibold text-white">Advance with accountable impact.</p>
         <div className="springboard-icon-grid flex-1 content-center" style={gridStyle}>
           {services.map((service) => {
             const Icon = service.icon;
@@ -49,10 +49,10 @@ export function ServicesSection() {
         >
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-technology">Services</p>
           <h2 className="mt-3 font-display text-3xl font-bold text-screen-text sm:text-4xl">
-            Strategy. Design. Engineering. AI.
+            Advisory. Software. Brand. Campaigns.
           </h2>
           <p className="mt-4 text-screen-muted">
-            Four integrated capabilities — delivered by specialists who embed AI into real workflows, not slide decks.
+            Four integrated capabilities — environmental guidance backed by systems we&apos;ve actually built and shipped.
           </p>
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
             {services.map((service) => {
@@ -93,8 +93,8 @@ export function ServicesSection() {
             className="absolute -right-2 top-8 hidden w-[55%] rotate-[-4deg] opacity-90 lg:block"
           >
             <div className="ent-springboard-wallpaper flex h-full flex-col justify-end p-5">
-              <p className="font-display text-lg font-bold text-white">Integrated production.</p>
-              <p className="mt-1 text-xs text-white/60">For ambitious teams and brands.</p>
+              <p className="font-display text-lg font-bold text-white">Evidence-led growth.</p>
+              <p className="mt-1 text-xs text-white/60">For businesses that need to advance responsibly.</p>
             </div>
           </DeviceViewer>
         </motion.div>

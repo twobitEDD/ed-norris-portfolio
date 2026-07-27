@@ -399,3 +399,21 @@ body {
     --ent-device-max: min(920px, 76vw);
   }
 }
+
+/* Desk props — torn notes & sticky notes from concept mockups */
+.desk-prop {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.desk-prop--note {
+  background: linear-gradient(168deg, #f5efe0 0%, #e8dcc8 100%);
+  padding: 12px 14px;
+  clip-path: polygon(0% 3%, 4% 0%, 96% 2%, 100% 6%, 98% 94%, 94% 100%, 3% 98%, 0% 92%);
+}
+
+.desk-prop--sticky {
+  background: linear-gradient(160deg, #f7e98a 0%, #edd96a 100%);
+  padding: 14px 16px;
+  width: 130px;
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.25);
+}

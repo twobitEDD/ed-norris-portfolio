@@ -19,11 +19,11 @@ export function ContactSection() {
           <Paper variant="desk" pinned className="text-center">
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-soft">Start the conversation</p>
             <h2 className="mt-4 font-display text-3xl font-bold text-ink sm:text-4xl">
-              Tell us what your team needs to ship
+              Tell us what your business needs to advance responsibly
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-ink-soft">
-              Technology, branding, marketing, or production challenges — we respond quickly and bring
-              clarity to the next steps.
+              Environmental accountability, software, branding, or production — we respond quickly and bring
+              clarity to programs you can defend.
             </p>
             <a
               href={`mailto:${site.email}`}

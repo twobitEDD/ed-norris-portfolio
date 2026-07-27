@@ -16,11 +16,11 @@ const caveat = Caveat({ subsets: ["latin"], variable: "--font-caveat" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || site.domain),
-  title: "2bitENT — More effective hours. Same team.",
+  title: `2bitENT — ${site.headline} ${site.headlineAccent}`,
   description: site.description,
   applicationName: "2bitENT",
   openGraph: {
-    title: "2bitENT — More effective hours. Same team.",
+    title: `2bitENT — ${site.headline} ${site.headlineAccent}`,
     description: site.description,
     url: site.domain,
     siteName: "2bitENT",
