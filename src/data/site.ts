@@ -22,6 +22,58 @@ export const heroHighlights = [
   { label: "Leadership", value: "VP Ops", detail: "CO2T.earth & CO2True" },
 ] as const;
 
+/** Example custom apps for the hero tablet — pitched to small-business owners. */
+export const heroBusinessApps = [
+  {
+    id: "farmproof",
+    name: "FarmProof",
+    tagline: "Soil to sale",
+    detail: "Track every batch from field to customer",
+    gradient: "linear-gradient(145deg, #1a4a2e, #3d9b6a)",
+    glyph: "🌱",
+  },
+  {
+    id: "claimready",
+    name: "ClaimReady",
+    tagline: "Market with proof",
+    detail: "Green claims your team can defend",
+    gradient: "linear-gradient(145deg, #2a5f4a, #5cb88a)",
+    glyph: "✓",
+  },
+  {
+    id: "shoprun",
+    name: "ShopRun",
+    tagline: "Your storefront",
+    detail: "Orders, inventory, and customers in one place",
+    gradient: "linear-gradient(145deg, #2a6f8f, #4da4c9)",
+    glyph: "🛒",
+  },
+  {
+    id: "brandvault",
+    name: "BrandVault",
+    tagline: "Always on-brand",
+    detail: "Logos, colors, and assets your whole team uses",
+    gradient: "linear-gradient(145deg, #8a5a20, #e8a838)",
+    glyph: "◆",
+  },
+  {
+    id: "golive",
+    name: "GoLive",
+    tagline: "Launch day ready",
+    detail: "Campaign assets when you're ready to ship",
+    gradient: "linear-gradient(145deg, #6b3a8a, #9b6fd4)",
+    glyph: "▶",
+  },
+  {
+    id: "oneboard",
+    name: "OneBoard",
+    tagline: "Ditch the spreadsheet",
+    detail: "A dashboard built around how you actually work",
+    gradient: "linear-gradient(145deg, #4a4a5a, #7a7a8e)",
+    glyph: "▦",
+  },
+] as const;
+
 export const clientLogos = [
   { name: "Google", src: "/images/brands/clients/google.svg", width: 72 },
   { name: "adidas", src: "/images/brands/clients/adidas.svg", width: 56 },
