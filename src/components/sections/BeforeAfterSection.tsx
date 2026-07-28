@@ -61,6 +61,9 @@ export function BeforeAfterSection() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
           >
+            <p className="mb-4 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-screen-muted">
+              With 2bitENT
+            </p>
             <With2bitEntApp />
           </motion.div>
         </div>
