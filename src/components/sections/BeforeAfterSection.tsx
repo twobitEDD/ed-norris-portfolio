@@ -1,63 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { Paper } from "@/components/physical-ui/Paper";
 import { MessagePaperStack } from "@/components/ui/MessagePaperStack";
 import { ProductStrip } from "@/components/ui/ProductStrip";
+import { With2bitEntApp } from "@/components/ui/With2bitEntApp";
 import { practiceProof } from "@/data/site";
-
-const pipelineStages = ["Field data", "Product sale", "Impact report", "Credit workflow", "Public trust"];
-
-function With2bitEntPanel() {
-  return (
-    <Paper variant="desk" className="with-2bitent-panel relative overflow-hidden border border-technology/20">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-technology/8 via-transparent to-emerald-500/5" aria-hidden />
-      <div className="relative">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-technology">With 2bitENT</p>
-            <p className="mt-1 font-display text-xl font-bold text-ink sm:text-2xl">Impact traceability</p>
-          </div>
-          <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider text-emerald-700">
-            Auditable
-          </span>
-        </div>
-
-        <div className="mt-5 flex flex-wrap gap-1.5">
-          {pipelineStages.map((stage) => (
-            <span
-              key={stage}
-              className="inline-flex items-center gap-1 rounded-md border border-technology/25 bg-technology/10 px-2 py-1 font-mono text-[8px] uppercase tracking-wide text-ink"
-            >
-              <Check className="h-3 w-3 text-technology" strokeWidth={2.5} />
-              {stage}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          <div className="rounded-xl border border-technology/20 bg-technology/10 px-4 py-3">
-            <p className="font-display text-base font-bold text-ink">Field → customer</p>
-            <p className="mt-1 font-mono text-[8px] uppercase tracking-wider text-ink-soft">Connected, auditable data</p>
-          </div>
-          <div className="rounded-xl border border-ink/10 bg-white/40 px-4 py-3">
-            <p className="font-mono text-[8px] uppercase tracking-wider text-ink-soft">Reporting</p>
-            <p className="mt-2 text-sm text-ink">Biochar programs ✓</p>
-            <p className="text-sm text-ink">Credit issuance ✓</p>
-          </div>
-        </div>
-
-        <div className="mt-5 rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-3">
-          <p className="font-mono text-[8px] uppercase tracking-wider text-emerald-800">Public communication</p>
-          <p className="mt-1 font-display text-lg font-bold text-emerald-900">Defensible</p>
-          <p className="mt-1 text-sm text-ink-soft">Grow with evidence stakeholders can trust.</p>
-        </div>
-      </div>
-    </Paper>
-  );
-}
 
 export function BeforeAfterSection() {
   return (
@@ -111,7 +61,7 @@ export function BeforeAfterSection() {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
           >
-            <With2bitEntPanel />
+            <With2bitEntApp />
           </motion.div>
         </div>
 
