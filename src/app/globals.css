@@ -94,6 +94,16 @@ body {
   filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.45));
 }
 
+@media (max-width: 1023px) {
+  .hero-device-float [data-device="ipad"] {
+    width: 100%;
+  }
+
+  .hero-device-float .device-frame--tablet-launcher .screen-surface {
+    min-height: 0;
+  }
+}
+
 /* Mission paper — larger torn edges */
 .mission-paper {
   box-shadow:

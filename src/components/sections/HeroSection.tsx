@@ -9,34 +9,92 @@ import { DeviceViewer } from "@/components/physical-ui/DeviceViewer";
 import { ClientLogoBar } from "@/components/ui/ClientLogoBar";
 import { DeskProps } from "@/components/ui/DeskProps";
 import { springboardIconGridStyleProps } from "@/design/ent-language";
-import { heroBusinessApps, site } from "@/data/site";
+import { heroBusinessApps, heroHighlights, site } from "@/data/site";
 import { cn } from "@/lib/cn";
 
+function ClockWidget() {
+  return (
+    <div className="springboard-widget flex flex-col items-center justify-center px-2 py-2.5 sm:px-3 sm:py-4">
+      <div className="relative h-10 w-10 rounded-full border-2 border-white/25 sm:h-12 sm:w-12">
+        <div className="absolute left-1/2 top-1/2 h-4 w-0.5 origin-bottom -translate-x-1/2 -translate-y-full rounded-full bg-white/90 sm:h-5" />
+        <div className="absolute left-1/2 top-1/2 h-3 w-0.5 origin-bottom -translate-x-1/2 -translate-y-full rotate-[55deg] rounded-full bg-technology sm:h-3.5" />
+      </div>
+      <p className="mt-1.5 font-mono text-[6px] uppercase tracking-wider text-white/45 sm:mt-2 sm:text-[7px]">
+        Focus time
+      </p>
+    </div>
+  );
+}
+
+function HeroStatWidget({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="springboard-widget flex flex-col justify-center px-2 py-2 sm:px-2.5 sm:py-2">
+      <p className="font-mono text-[6px] uppercase tracking-wider text-white/45 sm:text-[7px]">{label}</p>
+      <p className="font-display text-base font-bold text-white sm:text-lg">{value}</p>
+    </div>
+  );
+}
+
+function OwnerAppsWidget() {
+  return (
+    <div className="springboard-widget col-span-3 flex items-center gap-2.5 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3">
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-technology/20 text-sm sm:h-10 sm:w-10 sm:text-lg">
+        ✦
+      </div>
+      <div className="min-w-0 flex-1">
+        <p className="font-mono text-[6px] uppercase tracking-wider text-white/45 sm:text-[7px]">Built for you</p>
+        <p className="font-display text-xs font-bold text-white sm:text-sm">Custom apps, not cookie-cutter SaaS</p>
+        <p className="text-[9px] text-technology sm:text-[10px]">Your workflow · Your data · Your brand</p>
+      </div>
+    </div>
+  );
+}
+
 function BusinessAppsScreen() {
-  const gridStyle = springboardIconGridStyleProps(3, 12, 58);
+  const gridStyle = springboardIconGridStyleProps(3, 10, 52);
 
   return (
     <div className="ent-springboard-wallpaper relative flex h-full min-h-0 flex-col overflow-hidden">
-      <div className="relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden px-4 pb-4 pt-3">
-        <p className="mb-0.5 text-sm font-medium text-white/90">Your business.</p>
-        <p className="font-display text-base font-bold text-white sm:text-lg">Your software.</p>
-        <p className="mb-4 mt-1 font-mono text-[7px] uppercase tracking-[0.14em] text-white/45">
+      <div className="relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden px-3 pb-3 pt-2.5 sm:px-4 sm:pb-4 sm:pt-3">
+        <p className="mb-0.5 text-xs font-medium text-white/90 sm:text-sm">Your business.</p>
+        <p className="font-display text-sm font-bold text-white sm:text-lg">Your software.</p>
+        <p className="mb-2.5 mt-0.5 font-mono text-[6px] uppercase tracking-[0.14em] text-white/45 sm:mb-3 sm:mt-1 sm:text-[7px]">
           Custom apps — easier than you thought
         </p>
-        <div className="springboard-icon-grid flex-1 content-start" style={gridStyle}>
+
+        <div
+          className="springboard-widget-grid mb-2.5 sm:mb-3"
+          style={{ "--sb-cols": "3", "--sb-gap": "6px", "--sb-widget-rows": "1" } as React.CSSProperties}
+        >
+          <ClockWidget />
+          {heroHighlights.slice(0, 2).map((stat) => (
+            <HeroStatWidget key={stat.label} label={stat.label} value={stat.value} />
+          ))}
+        </div>
+
+        <div
+          className="springboard-widget-grid mb-2.5 sm:mb-3"
+          style={{ "--sb-cols": "3", "--sb-gap": "6px", "--sb-widget-rows": "1" } as React.CSSProperties}
+        >
+          <OwnerAppsWidget />
+        </div>
+
+        <div className="springboard-icon-grid min-h-0 flex-1 content-start" style={gridStyle}>
           {heroBusinessApps.map((app) => (
             <div key={app.id} className="springboard-icon-button">
               <div
-                className="springboard-icon-tile flex items-center justify-center rounded-[22%] text-lg shadow-lg"
+                className="springboard-icon-tile flex items-center justify-center rounded-[22%] text-base shadow-lg sm:text-lg"
                 style={{ background: app.gradient }}
                 title={app.detail}
               >
                 <span className="text-white drop-shadow-sm">{app.glyph}</span>
               </div>
-              <span className="springboard-icon-label text-center text-[8px] font-semibold leading-tight">
+              <span className="springboard-icon-label text-center text-[7px] font-semibold leading-tight sm:text-[8px]">
                 {app.name}
               </span>
-              <span className="text-center text-[6px] leading-tight text-white/50">{app.tagline}</span>
+              <span className="hidden text-center text-[6px] leading-tight text-white/50 sm:block">
+                {app.tagline}
+              </span>
             </div>
           ))}
         </div>
@@ -57,10 +115,10 @@ function HeroPitchNote({ className }: { className?: string }) {
   );
 }
 
-/** Tablet + desk note on lg+; tablet only on mobile. Same slot, simple swap. */
+/** Tablet + desk note on lg+; stacked note below on smaller screens. */
 function HeroDevices() {
   return (
-    <div className="hero-device-float relative mx-auto w-full max-w-[520px] lg:max-w-none">
+    <div className="hero-device-float relative mx-auto w-full max-w-[min(100%,420px)] sm:max-w-[480px] md:max-w-[540px] lg:max-w-none">
       <div className="hidden lg:block">
         <DeviceViewer device="ipad" size="md" glow="cyan" className="rotate-[-2deg]">
           <BusinessAppsScreen />
@@ -69,10 +127,13 @@ function HeroDevices() {
           <HeroPitchNote />
         </div>
       </div>
-      <div className="lg:hidden">
-        <DeviceViewer device="ipad" size="sm" glow="cyan" className="mx-auto max-w-[300px] rotate-[-1deg]">
+      <div className="flex flex-col items-center gap-5 lg:hidden">
+        <DeviceViewer device="ipad" size="sm" glow="cyan" className="w-full rotate-[-1deg]">
           <BusinessAppsScreen />
         </DeviceViewer>
+        <div className="w-full max-w-[min(100%,300px)] sm:max-w-[340px]">
+          <HeroPitchNote className="rotate-[-1deg]" />
+        </div>
       </div>
     </div>
   );
