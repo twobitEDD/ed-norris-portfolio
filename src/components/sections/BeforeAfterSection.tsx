@@ -1,81 +1,61 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Check, Minus } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import Link from "next/link";
 import { Paper } from "@/components/physical-ui/Paper";
-import { DeviceViewer } from "@/components/physical-ui/DeviceViewer";
+import { MessagePaperStack } from "@/components/ui/MessagePaperStack";
 import { ProductStrip } from "@/components/ui/ProductStrip";
 import { practiceProof } from "@/data/site";
 
 const pipelineStages = ["Field data", "Product sale", "Impact report", "Credit workflow", "Public trust"];
 
-function BeforeScreen() {
+function With2bitEntPanel() {
   return (
-    <div className="flex h-full flex-col bg-gradient-to-b from-[#1a1418] to-[#0e0c10] p-4">
-      <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-red-400/70">Before</p>
-      <p className="mt-2 truncate font-mono text-[9px] text-white/40">Sustainability_Claims_FINAL.xlsx</p>
-      <div className="mt-3 flex-1 space-y-1 overflow-hidden rounded-lg border border-white/5 bg-black/30 p-2">
-        {[
-          "Marketing claims ahead of data",
-          "Disconnected field records",
-          "No audit trail for credits",
-          "Manual spreadsheet reporting",
-          "Stakeholder trust at risk",
-        ].map((row, i) => (
-          <div key={row} className="flex items-center justify-between gap-2 border-b border-white/5 py-1.5 text-[9px]">
-            <span className="truncate text-white/60">{row}</span>
-            <span className={`shrink-0 font-mono text-[7px] uppercase ${i % 2 === 0 ? "text-red-400/80" : "text-amber/80"}`}>
-              {i % 2 === 0 ? "Exposed" : "At risk"}
-            </span>
+    <Paper variant="desk" className="with-2bitent-panel relative overflow-hidden border border-technology/20">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-technology/8 via-transparent to-emerald-500/5" aria-hidden />
+      <div className="relative">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-technology">With 2bitENT</p>
+            <p className="mt-1 font-display text-xl font-bold text-ink sm:text-2xl">Impact traceability</p>
           </div>
-        ))}
-      </div>
-      <div className="mt-3 rounded-lg border border-red-400/20 bg-red-950/40 px-3 py-2">
-        <p className="font-mono text-[7px] uppercase tracking-wider text-red-300/60">Greenwashing risk</p>
-        <p className="text-lg font-bold text-red-300">HIGH</p>
-      </div>
-    </div>
-  );
-}
-
-function AfterScreen() {
-  return (
-    <div className="flex h-full flex-col bg-gradient-to-b from-[#0c1418] to-[#081018] p-4">
-      <div className="flex items-center justify-between">
-        <p className="font-mono text-[8px] uppercase tracking-[0.2em] text-technology">With 2bitENT</p>
-        <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 font-mono text-[7px] uppercase text-emerald-400">
-          Auditable
-        </span>
-      </div>
-      <p className="mt-2 font-mono text-[9px] text-white/50">Impact traceability</p>
-      <div className="mt-3 flex flex-wrap gap-1">
-        {pipelineStages.map((stage) => (
-          <span
-            key={stage}
-            className="flex items-center gap-0.5 rounded-md border border-technology/20 bg-technology/10 px-1.5 py-1 font-mono text-[7px] text-technology"
-          >
-            <Check className="h-2.5 w-2.5" />
-            {stage}
+          <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 font-mono text-[8px] uppercase tracking-wider text-emerald-700">
+            Auditable
           </span>
-        ))}
-      </div>
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        <div className="rounded-lg border border-technology/25 bg-technology/10 px-3 py-2">
-          <p className="font-display text-sm font-bold text-white">Field → customer</p>
-          <p className="font-mono text-[7px] uppercase text-technology/80">connected data</p>
         </div>
-        <div className="rounded-lg border border-white/10 bg-black/25 px-3 py-2">
-          <p className="font-mono text-[7px] uppercase text-white/45">Reporting</p>
-          <p className="mt-1 text-[10px] text-white/80">Biochar programs ✓</p>
-          <p className="text-[10px] text-white/80">Credit issuance ✓</p>
+
+        <div className="mt-5 flex flex-wrap gap-1.5">
+          {pipelineStages.map((stage) => (
+            <span
+              key={stage}
+              className="inline-flex items-center gap-1 rounded-md border border-technology/25 bg-technology/10 px-2 py-1 font-mono text-[8px] uppercase tracking-wide text-ink"
+            >
+              <Check className="h-3 w-3 text-technology" strokeWidth={2.5} />
+              {stage}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border border-technology/20 bg-technology/10 px-4 py-3">
+            <p className="font-display text-base font-bold text-ink">Field → customer</p>
+            <p className="mt-1 font-mono text-[8px] uppercase tracking-wider text-ink-soft">Connected, auditable data</p>
+          </div>
+          <div className="rounded-xl border border-ink/10 bg-white/40 px-4 py-3">
+            <p className="font-mono text-[8px] uppercase tracking-wider text-ink-soft">Reporting</p>
+            <p className="mt-2 text-sm text-ink">Biochar programs ✓</p>
+            <p className="text-sm text-ink">Credit issuance ✓</p>
+          </div>
+        </div>
+
+        <div className="mt-5 rounded-xl border border-emerald-500/25 bg-emerald-500/10 px-4 py-3">
+          <p className="font-mono text-[8px] uppercase tracking-wider text-emerald-800">Public communication</p>
+          <p className="mt-1 font-display text-lg font-bold text-emerald-900">Defensible</p>
+          <p className="mt-1 text-sm text-ink-soft">Grow with evidence stakeholders can trust.</p>
         </div>
       </div>
-      <div className="mt-auto rounded-lg border border-emerald-500/20 bg-emerald-950/30 px-3 py-2">
-        <p className="font-mono text-[7px] uppercase text-emerald-400/80">Public communication</p>
-        <p className="text-lg font-bold text-emerald-300">Defensible</p>
-      </div>
-    </div>
+    </Paper>
   );
 }
 
@@ -95,40 +75,43 @@ export function BeforeAfterSection() {
           </p>
         </div>
 
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_auto_1.15fr] lg:gap-8">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
           >
-            <p className="mb-3 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-screen-muted">Before</p>
-            <DeviceViewer device="ipad" size="md" glow="none">
-              <BeforeScreen />
-            </DeviceViewer>
+            <p className="mb-4 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-screen-muted">Before</p>
+            <MessagePaperStack />
           </motion.div>
 
-          <Paper compact className="mx-auto max-w-[200px] rotate-[-2deg]" pinned>
-            <p className="handwritten text-center text-xl leading-snug text-ink">Understand impact before you market it</p>
-            <div className="mt-3 flex justify-center gap-1 text-ink-soft">
-              <Minus className="h-4 w-4 rotate-45" />
-              <span className="font-mono text-[8px] uppercase tracking-wider">2bitENT</span>
-              <Minus className="h-4 w-4 -rotate-45" />
-            </div>
-          </Paper>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.45, delay: 0.08 }}
+            className="flex flex-col items-center gap-3"
+          >
+            <ArrowRight className="hidden h-5 w-5 text-technology lg:block" aria-hidden />
+            <Paper compact className="max-w-[220px] rotate-[-2deg]" pinned>
+              <p className="handwritten text-center text-xl leading-snug text-ink">
+                Understand impact before you market it
+              </p>
+              <p className="mt-3 text-center font-mono text-[8px] uppercase tracking-[0.16em] text-ink-soft">
+                2bitENT advisory
+              </p>
+            </Paper>
+            <ArrowRight className="hidden h-5 w-5 rotate-180 text-technology lg:block" aria-hidden />
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.5 }}
           >
-            <p className="mb-3 text-center font-mono text-[9px] uppercase tracking-[0.2em] text-technology">
-              With 2bitENT
-            </p>
-            <DeviceViewer device="ipad" size="md" glow="cyan">
-              <AfterScreen />
-            </DeviceViewer>
+            <With2bitEntPanel />
           </motion.div>
         </div>
 

@@ -466,3 +466,19 @@ body {
   color: #1b211e;
   background: rgba(255, 255, 255, 0.5);
 }
+
+/* Before: stacked message papers */
+.message-paper-stack__item {
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.28));
+}
+
+.message-paper-stack__alert .desk-prop--sticky {
+  width: auto;
+  min-width: 140px;
+}
+
+.with-2bitent-panel {
+  box-shadow:
+    0 0 0 1px rgba(51, 204, 255, 0.12),
+    0 20px 48px rgba(0, 0, 0, 0.35);
+}

@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ResponsiveDevicePaper } from "@/components/ui/ResponsiveDevicePaper";
-import { ServicesSpringboardPaperFacts, ServicesTabletPaperFacts } from "@/components/ui/ServicesDeviceFacts";
+import { DeviceViewer } from "@/components/physical-ui/DeviceViewer";
 import { services } from "@/data/services";
 import { springboardIconGridStyleProps } from "@/design/ent-language";
 import { cn } from "@/lib/cn";
@@ -33,22 +32,6 @@ function ServicesSpringboard() {
             );
           })}
         </div>
-      </div>
-    </div>
-  );
-}
-
-function ServicesTabletScreen() {
-  return (
-    <div className="ent-springboard-wallpaper flex h-full flex-col justify-end p-5">
-      <p className="font-display text-lg font-bold text-white">Evidence-led growth.</p>
-      <p className="mt-1 text-xs text-white/60">For businesses that need to advance responsibly.</p>
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        {services.slice(0, 4).map((service) => (
-          <div key={service.id} className="rounded-lg border border-white/10 bg-black/25 px-2 py-2">
-            <p className="font-mono text-[7px] uppercase text-technology">{service.shortTitle}</p>
-          </div>
-        ))}
       </div>
     </div>
   );
@@ -98,25 +81,29 @@ export function ServicesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.55, delay: 0.1 }}
+          className="relative mx-auto w-full max-w-[320px] lg:ml-auto lg:max-w-none"
         >
-          <ResponsiveDevicePaper
-            desktop={{
-              device: "ipad",
-              size: "md",
-              glow: "cyan",
-              className: "rotate-[-2deg]",
-              children: <ServicesTabletScreen />,
-            }}
-            mobile={{
-              device: "phone",
-              size: "md",
-              glow: "cyan",
-              className: "mx-auto max-w-[320px] rotate-[2deg]",
-              children: <ServicesSpringboard />,
-            }}
-            desktopPaper={<ServicesSpringboardPaperFacts />}
-            mobilePaper={<ServicesTabletPaperFacts />}
-          />
+          <div className="hidden lg:block">
+            <DeviceViewer device="phone" size="md" glow="cyan" className="rotate-[3deg]">
+              <ServicesSpringboard />
+            </DeviceViewer>
+            <DeviceViewer
+              device="ipad"
+              size="sm"
+              glow="none"
+              className="absolute -right-2 top-8 hidden w-[55%] rotate-[-4deg] opacity-90 xl:block"
+            >
+              <div className="ent-springboard-wallpaper flex h-full flex-col justify-end p-5">
+                <p className="font-display text-lg font-bold text-white">Evidence-led growth.</p>
+                <p className="mt-1 text-xs text-white/60">For businesses that need to advance responsibly.</p>
+              </div>
+            </DeviceViewer>
+          </div>
+          <div className="lg:hidden">
+            <DeviceViewer device="phone" size="md" glow="cyan" className="rotate-[2deg]">
+              <ServicesSpringboard />
+            </DeviceViewer>
+          </div>
         </motion.div>
       </div>
     </section>
