@@ -78,8 +78,8 @@ export function Phone({
             screenTheme === "warm" && STUDIO_DEVICE.classes.screenWarm,
             "w-full max-w-full min-w-0",
             isLandscape && "aspect-[19/9] min-h-0",
-            isLarge && isLauncher && !isLandscape && "aspect-[3/4] w-full min-h-0",
-            !isLarge && isLauncher && !isLandscape && "aspect-[9/19] min-h-[400px]",
+            isLarge && isLauncher && !isLandscape && "aspect-[3/4] w-full min-h-0 max-h-[min(92vh,1200px)]",
+            !isLarge && isLauncher && !isLandscape && "aspect-[9/19] min-h-0",
             !isLauncher && !isLandscape && "max-h-[440px] overflow-y-auto",
           )}
         >

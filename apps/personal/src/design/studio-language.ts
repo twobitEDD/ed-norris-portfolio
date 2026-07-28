@@ -72,9 +72,46 @@ export type SpringboardDeviceTier = "phone" | "tablet" | "ipad";
 
 /** Resolve springboard device tier from the effective layout width. */
 export function resolveSpringboardDeviceTier(layoutWidth: number | null): SpringboardDeviceTier {
-  if (layoutWidth === null || layoutWidth >= STUDIO_SPRINGBOARD_IPAD_WIDTH) return "ipad";
+  if (layoutWidth === null) return "phone";
+  if (layoutWidth >= STUDIO_SPRINGBOARD_IPAD_WIDTH) return "ipad";
   if (layoutWidth < STUDIO_SPRINGBOARD_COMPACT_WIDTH) return "phone";
   return "tablet";
+}
+
+/**
+ * Chrome tier follows the viewport so calendar / iPad widgets activate at md/lg
+ * even when the bento cell constrains device width below 768px.
+ */
+export function resolveSpringboardChromeTier(viewportWidth: number | null): SpringboardDeviceTier {
+  return resolveSpringboardDeviceTier(viewportWidth);
+}
+
+/**
+ * Grid tier uses the narrower of viewport and container so icon columns match
+ * the painted device width and avoid cramped or overlapping tiles.
+ */
+export function resolveSpringboardGridTier(
+  viewportWidth: number | null,
+  containerWidth: number | null,
+): SpringboardDeviceTier {
+  const widths = [viewportWidth, containerWidth].filter((w): w is number => w != null && w > 0);
+  if (widths.length === 0) return "phone";
+  return resolveSpringboardDeviceTier(Math.min(...widths));
+}
+
+/** Reduce column count when content width cannot fit the tier's default columns. */
+export function resolveSpringboardIconColumns(
+  tier: SpringboardDeviceTier,
+  contentWidthPx: number,
+  gapPx: number,
+): number {
+  const maxCols = SPRINGBOARD_ICON_GRID[tier].columns;
+  if (contentWidthPx <= 0) return maxCols;
+  for (let cols = maxCols; cols >= 4; cols--) {
+    const iconPx = computeSpringboardIconPx(contentWidthPx, cols, gapPx);
+    if (iconPx >= SPRINGBOARD_ICON_MIN_PX) return cols;
+  }
+  return 4;
 }
 
 /**
@@ -197,8 +234,12 @@ export function springboardIconGridStyleProps(
   tier: SpringboardDeviceTier,
   contentWidthPx?: number | null,
 ): Record<string, string> {
-  const { columns, labelGapPx } = SPRINGBOARD_ICON_GRID[tier];
+  const { labelGapPx } = SPRINGBOARD_ICON_GRID[tier];
   const gapPx = resolveSpringboardGapPx(tier, contentWidthPx);
+  const columns =
+    contentWidthPx != null && contentWidthPx > 0
+      ? resolveSpringboardIconColumns(tier, contentWidthPx, gapPx)
+      : SPRINGBOARD_ICON_GRID[tier].columns;
   const iconMaxPx =
     contentWidthPx != null && contentWidthPx > 0
       ? computeSpringboardIconPx(contentWidthPx, columns, gapPx)
