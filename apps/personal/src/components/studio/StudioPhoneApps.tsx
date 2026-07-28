@@ -32,7 +32,8 @@ import {
   computeSpringboardWidgetCellPx,
   isSpringboardCalendarTier,
   isSpringboardTabletLargeTier,
-  resolveSpringboardDeviceTier,
+  resolveSpringboardChromeTier,
+  resolveSpringboardGridTier,
   SPRINGBOARD_ICON_GRID,
   springboardIconGridStyleProps,
   springboardWidgetGridStyleProps,
@@ -359,7 +360,7 @@ function SpringboardMiniWidgets({
         )}
         style={{
           gridColumn: showCalendar ? "3" : "3 / span 2",
-          gridRow: showCalendar ? "1 / span 2" : "2",
+          gridRow: "2",
         }}
       >
         <div className="springboard-widget-studio-inner">
@@ -695,6 +696,7 @@ function useSpringboardFitScale(
   contentRef: React.RefObject<HTMLDivElement | null>,
   enabled: boolean,
   layoutKey: string,
+  compact: boolean,
 ) {
   const [scale, setScale] = useState(1);
 
@@ -709,10 +711,22 @@ function useSpringboardFitScale(
     if (!layout || !content) return;
 
     const fit = () => {
-      const available = layout.clientHeight;
-      const needed = content.scrollHeight;
-      if (available > 0 && needed > available) {
-        setScale(Math.max(0.88, available / needed));
+      const availableH = layout.clientHeight;
+      const availableW = layout.clientWidth;
+      const contentRect = content.getBoundingClientRect();
+      const neededH = Math.max(content.scrollHeight, contentRect.height);
+      const neededW = Math.max(content.scrollWidth, contentRect.width);
+      if (availableH <= 0 || availableW <= 0) {
+        setScale(1);
+        return;
+      }
+
+      const scaleH = neededH > availableH ? availableH / neededH : 1;
+      const scaleW = neededW > availableW ? availableW / neededW : 1;
+      const next = Math.min(scaleH, scaleW);
+      if (next < 1) {
+        const floor = compact ? 0.82 : 0.86;
+        setScale(Math.max(floor, next));
       } else {
         setScale(1);
       }
@@ -721,19 +735,27 @@ function useSpringboardFitScale(
     // Reset before measuring so width compensation on the content node cannot
     // inflate grid tracks and keep scale pinned after a tier/breakpoint change.
     setScale(1);
-    fit();
 
-    const observer = new ResizeObserver(fit);
+    let raf = 0;
+    const measure = () => {
+      window.cancelAnimationFrame(raf);
+      raf = window.requestAnimationFrame(fit);
+    };
+
+    measure();
+
+    const observer = new ResizeObserver(measure);
     observer.observe(layout);
     observer.observe(content);
 
-    const afterTransition = window.setTimeout(fit, 320);
+    const afterTransition = window.setTimeout(measure, 320);
 
     return () => {
       observer.disconnect();
       window.clearTimeout(afterTransition);
+      window.cancelAnimationFrame(raf);
     };
-  }, [contentRef, enabled, layoutKey, layoutRef]);
+  }, [compact, contentRef, enabled, layoutKey, layoutRef]);
 
   return scale;
 }
@@ -883,23 +905,23 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
     return Math.min(...widths);
   }, [containerWidth, viewportWidth]);
 
-  // Tier breakpoints follow the viewport so tablet/iPad features (calendar, wider grid)
-  // activate at md/lg even when the bento cell constrains device width below 768px.
-  const springboardTier = resolveSpringboardDeviceTier(viewportWidth ?? layoutWidth);
+  const springboardChromeTier = resolveSpringboardChromeTier(viewportWidth ?? layoutWidth);
+  const springboardGridTier = resolveSpringboardGridTier(viewportWidth, containerWidth);
   const springboardContentWidth = useElementWidth(springboardLayoutRef);
-  const isPhoneTier = springboardTier === "phone";
+  const isPhoneTier = springboardChromeTier === "phone";
   const springboardScale = useSpringboardFitScale(
     springboardLayoutRef,
     springboardContentRef,
     !isAppOpen,
-    springboardTier,
+    `${springboardChromeTier}:${springboardGridTier}`,
+    isPhoneTier,
   );
 
   return (
     <>
       <div ref={containerRef} className={cn("w-full", className)}>
         <DeviceViewer
-          device={springboardTier}
+          device={springboardChromeTier}
           size="lg"
           glow="cyan"
           mode="launcher"
@@ -933,7 +955,7 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                   ref={springboardLayoutRef}
                   className={cn(
                     "relative z-[1] flex min-h-0 flex-1 flex-col overflow-hidden pb-5",
-                    SPRINGBOARD_ICON_GRID[springboardTier].edgePaddingClass,
+                    SPRINGBOARD_ICON_GRID[springboardGridTier].edgePaddingClass,
                     isPhoneTier ? "pt-0" : "pt-1",
                   )}
                 >
@@ -950,14 +972,14 @@ export function StudioPhoneApps({ className }: StudioPhoneAppsProps) {
                   >
                     <SpringboardMiniWidgets
                       now={now}
-                      tier={springboardTier}
+                      tier={springboardChromeTier}
                       contentWidthPx={springboardContentWidth}
                       compact={isPhoneTier}
                       live={springboardVisible}
                     />
                     <AppIconGrid
                       onOpenApp={openApp}
-                      tier={springboardTier}
+                      tier={springboardGridTier}
                       contentWidthPx={springboardContentWidth}
                     />
                   </div>

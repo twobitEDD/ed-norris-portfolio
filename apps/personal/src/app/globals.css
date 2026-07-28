@@ -489,7 +489,15 @@ body {
 }
 
 .studio-springboard-device {
+  min-width: 0;
+  max-width: 100%;
   transition: max-width 300ms ease-out;
+}
+
+.studio-springboard-device .device-frame,
+.studio-springboard-device .screen-surface {
+  min-width: 0;
+  max-width: 100%;
 }
 
 @media (min-width: 640px) {
@@ -2235,8 +2243,9 @@ body {
 
 [data-device="tablet"] .springboard-icon-grid,
 [data-device="ipad"] .springboard-icon-grid {
-  flex: 1;
-  align-content: space-evenly;
+  flex: 1 1 auto;
+  min-height: 0;
+  align-content: start;
 }
 
 .springboard-icon-button {
@@ -2397,27 +2406,37 @@ body {
   font-size: clamp(0.45rem, 5.5cqi, 0.65rem);
 }
 
-/* Tablet+ — larger digital clock ceiling */
+/* Tablet+ — larger digital clock ceiling (wide chrome only; skip compact phone emulation) */
 @media (min-width: 768px) {
-  .springboard-widget--digital-clock .springboard-widget-time {
+  .studio-springboard-device:not(.studio-springboard-device--compact)
+    .springboard-widget--digital-clock
+    .springboard-widget-time {
     font-size: clamp(0.875rem, 11.5cqi, 3.25rem);
   }
 
-  .springboard-widget--digital-clock .springboard-widget-date {
+  .studio-springboard-device:not(.studio-springboard-device--compact)
+    .springboard-widget--digital-clock
+    .springboard-widget-date {
     font-size: clamp(0.55rem, 5.5cqi, 0.95rem);
   }
 
-  .springboard-widget--combined-clock .springboard-widget-time {
+  .studio-springboard-device:not(.studio-springboard-device--compact)
+    .springboard-widget--combined-clock
+    .springboard-widget-time {
     font-size: clamp(0.75rem, 10cqi, 2.75rem);
   }
 }
 
 @media (min-width: 1024px) {
-  .springboard-widget--digital-clock .springboard-widget-time {
+  .studio-springboard-device:not(.studio-springboard-device--compact)
+    .springboard-widget--digital-clock
+    .springboard-widget-time {
     font-size: clamp(1rem, 10.5cqi, 4rem);
   }
 
-  .springboard-widget--combined-clock .springboard-widget-time {
+  .studio-springboard-device:not(.studio-springboard-device--compact)
+    .springboard-widget--combined-clock
+    .springboard-widget-time {
     font-size: clamp(0.875rem, 9.5cqi, 3.25rem);
   }
 }
@@ -2578,6 +2597,19 @@ body {
   width: 100%;
   min-height: 0;
   max-height: min(88vh, 780px);
+}
+
+/* Tablet / iPad chrome — lock portrait launcher ratio while max-width animates */
+.studio-springboard-device:not(.studio-springboard-device--compact)[data-device="tablet"]
+  .device-frame--tablet-launcher
+  .screen-surface,
+.studio-springboard-device:not(.studio-springboard-device--compact)[data-device="ipad"]
+  .device-frame--tablet-launcher
+  .screen-surface {
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  min-height: 0;
+  max-height: min(92vh, 1200px);
 }
 
 /* Portrait iPad springboard — studio apps section */

@@ -91,7 +91,7 @@ export function DeviceViewer({
 
   return (
     <div
-      className={cn("relative mx-auto w-full", className)}
+      className={cn("relative mx-auto w-full min-w-0 max-w-full", className)}
       style={{
         maxWidth: `min(100%, ${maxWidth})`,
         ...(matrix.aspectRatio && size !== "lg" ? { aspectRatio: matrix.aspectRatio } : undefined),
