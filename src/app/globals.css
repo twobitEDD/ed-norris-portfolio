@@ -417,3 +417,52 @@ body {
   width: 130px;
   box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.25);
 }
+
+/* Contact app (device + paper) */
+.ent-contact-app {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.ent-contact-row {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.22);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.ent-contact-row:hover {
+  border-color: rgba(51, 204, 255, 0.25);
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.ent-contact-label {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(27, 33, 30, 0.55);
+}
+
+.ent-contact-input {
+  border: 1px solid rgba(27, 33, 30, 0.12);
+  background: rgba(255, 255, 255, 0.65);
+  color: #1b211e;
+}
+
+.ent-contact-input:focus {
+  outline: 2px solid rgba(51, 204, 255, 0.45);
+  outline-offset: 1px;
+}
+
+.ent-contact-btn-primary {
+  background: #1b211e;
+  color: #f5efe0;
+}
+
+.ent-contact-btn-primary:hover {
+  background: #2a302c;
+}
+
+.ent-contact-btn-secondary {
+  border: 1px solid rgba(27, 33, 30, 0.15);
+  color: #1b211e;
+  background: rgba(255, 255, 255, 0.5);
+}

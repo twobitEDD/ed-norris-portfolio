@@ -5,9 +5,10 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Paper } from "@/components/physical-ui/Paper";
 import { Polaroid } from "@/components/physical-ui/Polaroid";
-import { DeviceViewer } from "@/components/physical-ui/DeviceViewer";
 import { ClientLogoBar } from "@/components/ui/ClientLogoBar";
 import { DeskProps } from "@/components/ui/DeskProps";
+import { HeroDashboardPaperFacts, HeroPhonePaperFacts } from "@/components/ui/HeroDeviceFacts";
+import { ResponsiveDevicePaper } from "@/components/ui/ResponsiveDevicePaper";
 import { heroHighlights, site } from "@/data/site";
 
 function ClockWidget() {
@@ -124,6 +125,14 @@ function PhoneAlertScreen() {
         <p className="mt-1.5 text-xs font-medium text-white">Field batch verified</p>
         <p className="mt-0.5 text-[10px] text-white/55">Ready for credit issuance</p>
       </div>
+      <div className="mt-4 space-y-2 px-1">
+        {heroHighlights.map((item) => (
+          <div key={item.label} className="rounded-lg border border-white/8 bg-black/25 px-3 py-2">
+            <p className="font-mono text-[7px] uppercase text-white/45">{item.label}</p>
+            <p className="font-display text-sm font-bold text-white">{item.value}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -136,7 +145,7 @@ export function HeroSection() {
       <DeskProps />
 
       <div className="relative mx-auto max-w-6xl">
-        <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-8">
+        <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -198,18 +207,26 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto w-full max-w-[520px] lg:max-w-none"
+            className="hero-device-float relative z-10"
           >
-            <div className="hero-device-float relative">
-              <DeviceViewer device="ipad" size="md" glow="cyan" className="rotate-[-2deg]">
-                <DashboardScreen />
-              </DeviceViewer>
-              <div className="absolute -bottom-4 -left-4 z-20 w-[34%] min-w-[120px] max-w-[170px] sm:-left-10">
-                <DeviceViewer device="phone" size="sm" glow="amber" className="rotate-[6deg]">
-                  <PhoneAlertScreen />
-                </DeviceViewer>
-              </div>
-            </div>
+            <ResponsiveDevicePaper
+              desktop={{
+                device: "ipad",
+                size: "md",
+                glow: "cyan",
+                className: "rotate-[-2deg]",
+                children: <DashboardScreen />,
+              }}
+              mobile={{
+                device: "phone",
+                size: "md",
+                glow: "amber",
+                className: "mx-auto max-w-[280px]",
+                children: <PhoneAlertScreen />,
+              }}
+              desktopPaper={<HeroPhonePaperFacts />}
+              mobilePaper={<HeroDashboardPaperFacts />}
+            />
           </motion.div>
         </div>
 

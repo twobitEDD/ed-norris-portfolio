@@ -2,7 +2,7 @@ export const site = {
   name: "2bitENT",
   fullName: "2bit Entertainment",
   domain: "https://2bitent.com",
-  email: "hello@2bitent.com",
+  email: "admin@2bitent.com",
   tagline: "Built from Nature. Backed by Science.",
   secondaryTagline: "More effective hours. Same team.",
   headline: "Advance responsibly.",
