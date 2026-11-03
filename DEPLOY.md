@@ -1,52 +1,33 @@
 # Deploy — 2bitent.com
 
-Standalone **2bitENT** agency site.
+Standalone **2bitENT** agency site. **Hosted on serv0** (self-hosted, behind Cloudflare) since 2026-11-03. Railway is retired for this site: do not run `railway up` and do not add Railway config back.
 
-## Repository
+## Source
 
 | Field | Value |
 |-------|-------|
 | GitHub | `twobitEDD/ed-norris-portfolio` |
-| Branch | **`2bitent-site`** (standalone site at repo root — not `main`) |
-| Portfolio (`main`) | **Untouched** — still deploys 2bitdev.com only |
+| Branch | **`2bitent-site`** (standalone site at repo root, not `main`) |
+| Portfolio (`main`) | Deploys 2bitdev.com separately, also on serv0 |
 
-> **Goal:** Canonical home is `twobitENT/twobitent-site`. Until published, branch `2bitent-site` here is the source of truth.
+## How a change goes live
 
-## Railway service
+1. Push (or merge) to branch **`2bitent-site`**.
+2. serv0 checks the branch at **:15 and :45 UTC** (07:15 / 07:45 … PST) and rebuilds only when it moved.
+3. Check https://2bitent.com.
+
+No GitHub secret or Actions workflow is involved.
+
+## serv0 details
 
 | Field | Value |
 |-------|-------|
-| Project | [twobitENT](https://railway.com/project/3b864b9d-7403-40f2-9a9a-863f393d9e70) |
-| Service | **2bitent-com** |
-| Service ID | `9803a8a5-536f-44ab-aef6-21651ed48de9` |
-| [Settings](https://railway.com/project/3b864b9d-7403-40f2-9a9a-863f393d9e70/service/9803a8a5-536f-44ab-aef6-21651ed48de9/settings) | |
-| Domain | **2bitent.com** |
-
-### Railway setup (one-time) — pick ONE path
-
-#### Path A — GitHub Actions deploy (fastest if you have a Railway token)
-
-1. Create token: https://railway.com/account/tokens
-2. Add repo secret **`RAILWAY_TOKEN`** at https://github.com/twobitEDD/ed-norris-portfolio/settings/secrets/actions
-3. Re-run workflow: **Actions → Deploy 2bitENT site → Run workflow** (branch `2bitent-site`)
-
-This deploys to **2bitent-com** without changing the portfolio service.
-
-#### Path B — Railway GitHub integration (recommended once repo exists)
-
-On [2bitent-com settings](https://railway.com/project/3b864b9d-7403-40f2-9a9a-863f393d9e70/service/9803a8a5-536f-44ab-aef6-21651ed48de9/settings):
-
-1. **Source** → `twobitENT/twobitent-site` (or interim: `twobitEDD/ed-norris-portfolio` branch `2bitent-site`)
-2. **Branch** → `main` (or `2bitent-site` for interim)
-3. **Builder** → Dockerfile
-4. **Variables** → `NEXT_PUBLIC_SITE_URL=https://2bitent.com`
-5. **Redeploy**
-
-**Do not change** **2bitdev-portfolio** — it stays on `main`.
-
-### Previous source (replace)
-
-Railway was pointed at `twobitEDD/2bitdev-site` (old Chakra/voxel site). Switch to branch `2bitent-site` on this repo instead.
+| Compose project | `/srv/ergo/apps/owner-sites` (service `twobitent-site`, loopback `127.0.0.1:17003`) |
+| Build | this repo's `Dockerfile` (Next.js, port 3000) |
+| Routing | Cloudflare (proxied A → serv0) → Caddy `2bitent.com` → `twobitent-site:3000` |
+| Env | `NEXT_PUBLIC_SITE_URL` is optional (defaults to `https://2bitent.com`); env file lives only on the box |
+| Auto-deploy log | `/srv/ergo/apps/owner-sites/logs/auto-deploy.log` |
+| Deploy right now | on serv0: `cd /srv/ergo/apps/owner-sites && ./deploy.sh twobitent-site` |
 
 ## Local development
 

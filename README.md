@@ -42,7 +42,7 @@ npm run dev
 
 ## Deploy
 
-Railway → **2bitent.com**. Point **2bitent-com** at `twobitENT/twobitent-site` → `main` → `Dockerfile`. See [DEPLOY.md](./DEPLOY.md).
+serv0 → **2bitent.com**. Pushes to branch `2bitent-site` go live by themselves within 30 minutes. Railway is retired for this site. See [DEPLOY.md](./DEPLOY.md).
 
 ## Related
 
