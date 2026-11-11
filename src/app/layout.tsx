@@ -19,12 +19,27 @@ export const metadata: Metadata = {
   title: `2bitENT — ${site.headline} ${site.headlineAccent}`,
   description: site.description,
   applicationName: "2bitENT",
+  alternates: { canonical: "/" },
   openGraph: {
     title: `2bitENT — ${site.headline} ${site.headlineAccent}`,
     description: site.description,
     url: site.domain,
     siteName: "2bitENT",
     type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: `2bitENT: ${site.headline} ${site.headlineAccent} 2bitent.com`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `2bitENT — ${site.headline} ${site.headlineAccent}`,
+    description: site.description,
+    images: ["/og-image.jpg"],
   },
 };
 
