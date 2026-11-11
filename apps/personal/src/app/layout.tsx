@@ -19,6 +19,29 @@ export const metadata: Metadata = {
   description:
     "I love building solutions, for fun and function. Software & technology production specialist in Cottage Grove, Oregon.",
   applicationName: "2bitDEV",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "2bitDEV",
+    title: "Edd Norris — Software Production Specialist",
+    description:
+      "I love building solutions, for fun and function. Software & technology production specialist in Cottage Grove, Oregon.",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Edd Norris: I love building solutions, for fun and function. 2bitdev.com",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Edd Norris — Software Production Specialist",
+    description: "I love building solutions, for fun and function. Software & technology production in Cottage Grove, Oregon.",
+    images: ["/og-image.jpg"],
+  },
   appleWebApp: {
     capable: true,
     title: "2bitDEV",
